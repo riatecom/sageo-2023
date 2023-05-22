@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="86.436996mm"
+   height="80.259521mm"
+   viewBox="0 0 86.436996 80.259521"
+   version="1.1"
+   id="svg861"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="gitlab.svg">
+  <defs
+     id="defs855" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="191.10978"
+     inkscape:cy="481.7814"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1366"
+     inkscape:window-height="768"
+     inkscape:window-x="1392"
+     inkscape:window-y="1"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata858">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-55.268871,-20.695338)">
+    <path
+       d="m 73.841141,20.699827 c -2.676136,-0.0248 -5.061655,1.681197 -5.909027,4.220985 L 55.584892,61.962477 c -0.802005,2.410177 -0.04548,5.064125 1.905811,6.691842 l 37.041665,30.868054 c 2.290305,1.909977 5.619752,1.909977 7.909982,0 l 37.04167,-30.868054 c 1.95128,-1.627471 2.70785,-4.281665 1.90581,-6.691842 L 129.04261,24.920812 c -1.73909,-5.222874 -8.92563,-5.732638 -11.38273,-0.808919 L 107.02433,45.394269 H 89.950597 L 79.315053,24.111893 c -1.037661,-2.075321 -3.152951,-3.39411 -5.4737,-3.412031 z"
+       fill-rule="evenodd"
+       id="path835"
+       sodipodi:nodetypes="ccccccccccccccc"
+       style="stroke-width:0.352777;fill:#ffffff;fill-opacity:1" />
+  </g>
+</svg>
