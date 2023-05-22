@@ -1,0 +1,182 @@
+---
+title: "Installation des logiciels nécessaires"
+subtitle: "Atelier Sageo, Québec, Juin 2023"
+author: "Timothée Giraud, Nicolas Lambert, Matthieu Viry, Ronan Ysebaert (UAR RIATE, CNRS, Université Paris Cité)"
+format:
+  html:
+    theme: sandstone
+    fontsize: 0.9em
+    code-tools: true
+    toc: true
+    toc-depth: 3
+    linkcolor: "#8631ad"
+execute: 
+  cache: false
+---
+
+Afin de suivre l'atelier, il est nécessaire de disposer des logiciels suivants :
+
+- [R](https://www.r-project.org/)
+- [R Studio](https://posit.co/download/rstudio-desktop/)
+- [Python](https://www.python.org/)
+- [Quarto](https://quarto.org/)
+- Plusieurs packages R et Python
+
+Au cours de l'atelier, une fois les instructions d'installation effectuées, toutes les manipulations nécessaires à la production d'un document avec quarto seront réalisées directement depuis l'IDE R Studio.
+
+# Windows 10 / Windows 11
+
+### Installation de R
+
+- Se rendre à l'URL [https://cran.r-project.org/bin/windows/base/](https://cran.r-project.org/bin/windows/base/)
+- Cliquer sur *"Download R-4.3.0 for Windows"* pour télécharger l'installeur sur votre ordinateur
+- Exécutez l'installeur - aller jusqu'au bout de l'installeur en laissant les options par défaut
+
+### Installation R Studio
+
+- Télécharger l'installeur de R Studio à partir de ce lien : [https://download1.rstudio.org/electron/windows/RStudio-2023.03.1-446.exe](https://download1.rstudio.org/electron/windows/RStudio-2023.03.1-446.exe)
+- Exécutez l'installeur - aller jusqu'au bout de l'installeur en laissant les options par défaut
+
+
+### Installation de Python
+
+- Télécharger le fichier [https://www.python.org/ftp/python/3.11.3/python-3.11.3-amd64.exe](https://www.python.org/ftp/python/3.11.3/python-3.11.3-amd64.exe)
+- L'exécuter et cocher l'option *"Add python.exe to PATH"* puis cliquer sur *"Install Now"*
+- À la fin de l'installation, il est suggéré de changer la limite de longueur des noms de fichiers, ceci est souhaitable, cliquez donc sur *"Disable path length limit"*
+- Fermer l'installeur
+
+### Installation des dépendances Python requises
+
+- Ouvrir l'interpréteur de commande du système (appuyer sur la touche "windows" puis saisir CMD dans la barre de recherche et ouvrir l'application "Invite de commandes" qui est proposée)
+- Créer un envrionnement virtuel :
+
+```powershell
+python -m venv env-quarto
+```
+
+- Activer l'environnement virtuel tout juste créé :
+
+```powershell
+.\env-quarto\Scripts\activate.bat
+```
+
+- Installer les dépendances Python requises :
+
+```powershell
+python -m pip install numpy geopandas rasterio
+```
+
+- Fermer le terminal
+
+### Installation des dépendances R requises
+
+- Ouvrir R Studio et saisir la commande suivante dans l'intépréteur R :
+
+```r
+install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf'))
+```
+
+### Vous disposez de tout le nécessaire pour l'atelier !
+
+Les instructions pour utiliser l'environnement virtuel Python créé depuis R Studio et depuis votre document quarto vous seront fournis lors de l'atelier.
+
+# Linux (Ubuntu 22 / Debian 11)
+
+### Installation de R et des dépendances pour R Studio
+
+```bash
+sudo apt install r-base curl libssl-dev libpq5 libclang-dev
+```
+
+### Installation de R Studio
+
+```bash
+curl https://download1.rstudio.org/electron/jammy/amd64/rstudio-2023.03.1-446-amd64.deb --output rstudio-2023.03.1-446-amd64.deb
+sudo dpkg -i rstudio-2023.03.1-446-amd64.deb
+```
+
+### Utilisation de la version de Python livrée avec le système et création d'un environnement virtuel
+
+- Ouvrir un terminal
+
+- Saisir les commandes suivantes :
+
+```bash
+sudo apt install python3-venv
+python3 -m venv env-quarto
+source env-quarto/bin/activate
+python -m pip install numpy geopandas rasterio
+```
+
+- Fermer le terminal
+
+### Installation des dépendances R requises 
+
+- Ouvrir R Studio et saisir la commande suivante dans l'intépréteur R :
+
+```r
+install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf'))
+```
+
+### Vous disposez de tout le nécessaire pour l'atelier !
+
+Les instructions pour utiliser l'environnement virtuel Python créé depuis R Studio et depuis votre document quarto vous seront fournis lors de l'atelier.
+
+
+# Mac OS X
+
+### Installation de R
+
+- Se rendre à l'URL [https://cran.r-project.org/bin/macosx/](https://cran.r-project.org/bin/macosx/)
+- Selon votre machine, télécharger l'installeur approprié en cliquant sur :
+  * R-4.3.0-arm64.pkg
+  * R-4.3.0-x86_64.pkg
+- Exécutez l'installeur - aller jusqu'au bout de l'installeur en laissant les options par défaut
+
+### Installation de R Studio
+
+- Télécharger l'installeur à partir de ce lien : [https://download1.rstudio.org/electron/macos/RStudio-2023.03.1-446.dmg](https://download1.rstudio.org/electron/macos/RStudio-2023.03.1-446.dmg)
+- L'exécuter
+
+
+### Installation de Python
+
+- Télécharger le fichier [https://www.python.org/ftp/python/3.11.3/python-3.11.3-macos11.pkg](https://www.python.org/ftp/python/3.11.3/python-3.11.3-macos11.pkg)
+- L'exécuter et cliquer sur *"Install Now"*
+- Fermer l'installeur
+
+
+### Installation des dépendances Python requises
+
+- Ouvrir un terminal système (soit depuis *Finder*, ouvrir le dossier /Application/Utilitaires et cliquer deux fois sur *Terminal*, soit depuis l'icone *Launchpad* dans le Dock, saisir "Terminal" dans le champ de recherche, puis cliquer sur *Terminal*)
+- Créer un envrionnement virtuel :
+
+```sh
+python -m venv env-quarto
+```
+
+- Activer l'environnement virtuel tout juste créé :
+
+```sh
+source env-quarto/bin/activate
+```
+
+- Installer les dépendances Python requises :
+
+```sh
+python -m pip install numpy geopandas rasterio
+```
+
+- Fermer le terminal
+
+### Installation des dépendances R requises
+
+- Ouvrir R Studio et saisir la commande suivante dans l'intépréteur R :
+
+```r
+install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf'))
+```
+
+### Vous disposez de tout le nécessaire pour l'atelier !
+
+Les instructions pour utiliser l'environnement virtuel Python créé depuis R Studio et depuis votre document quarto vous seront fournis lors de l'atelier.

@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.475">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Timothée Giraud, Nicolas Lambert, Matthieu Viry, Ronan Ysebaert (UAR RIATE, CNRS, Université Paris Cité)">
+
+<title>Installation des logiciels nécessaires</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="installation-instructions_files/libs/clipboard/clipboard.min.js"></script>
+<script src="installation-instructions_files/libs/quarto-html/quarto.js"></script>
+<script src="installation-instructions_files/libs/quarto-html/popper.min.js"></script>
+<script src="installation-instructions_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="installation-instructions_files/libs/quarto-html/anchor.min.js"></script>
+<link href="installation-instructions_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="installation-instructions_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="installation-instructions_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="installation-instructions_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="installation-instructions_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#windows-10-windows-11" id="toc-windows-10-windows-11" class="nav-link active" data-scroll-target="#windows-10-windows-11">Windows 10 / Windows 11</a>
+  <ul class="collapse">
+  <li><a href="#installation-de-r" id="toc-installation-de-r" class="nav-link" data-scroll-target="#installation-de-r">Installation de R</a></li>
+  <li><a href="#installation-r-studio" id="toc-installation-r-studio" class="nav-link" data-scroll-target="#installation-r-studio">Installation R Studio</a></li>
+  <li><a href="#installation-de-python" id="toc-installation-de-python" class="nav-link" data-scroll-target="#installation-de-python">Installation de Python</a></li>
+  <li><a href="#installation-des-dépendances-python-requises" id="toc-installation-des-dépendances-python-requises" class="nav-link" data-scroll-target="#installation-des-dépendances-python-requises">Installation des dépendances Python requises</a></li>
+  <li><a href="#installation-des-dépendances-r-requises" id="toc-installation-des-dépendances-r-requises" class="nav-link" data-scroll-target="#installation-des-dépendances-r-requises">Installation des dépendances R requises</a></li>
+  <li><a href="#vous-disposez-de-tout-le-nécessaire-pour-latelier" id="toc-vous-disposez-de-tout-le-nécessaire-pour-latelier" class="nav-link" data-scroll-target="#vous-disposez-de-tout-le-nécessaire-pour-latelier">Vous disposez de tout le nécessaire pour l’atelier !</a></li>
+  </ul></li>
+  <li><a href="#linux-ubuntu-22-debian-11" id="toc-linux-ubuntu-22-debian-11" class="nav-link" data-scroll-target="#linux-ubuntu-22-debian-11">Linux (Ubuntu 22 / Debian 11)</a>
+  <ul class="collapse">
+  <li><a href="#installation-de-r-et-des-dépendances-pour-r-studio" id="toc-installation-de-r-et-des-dépendances-pour-r-studio" class="nav-link" data-scroll-target="#installation-de-r-et-des-dépendances-pour-r-studio">Installation de R et des dépendances pour R Studio</a></li>
+  <li><a href="#installation-de-r-studio" id="toc-installation-de-r-studio" class="nav-link" data-scroll-target="#installation-de-r-studio">Installation de R Studio</a></li>
+  <li><a href="#utilisation-de-la-version-de-python-livrée-avec-le-système-et-création-dun-environnement-virtuel" id="toc-utilisation-de-la-version-de-python-livrée-avec-le-système-et-création-dun-environnement-virtuel" class="nav-link" data-scroll-target="#utilisation-de-la-version-de-python-livrée-avec-le-système-et-création-dun-environnement-virtuel">Utilisation de la version de Python livrée avec le système et création d’un environnement virtuel</a></li>
+  <li><a href="#installation-des-dépendances-r-requises-1" id="toc-installation-des-dépendances-r-requises-1" class="nav-link" data-scroll-target="#installation-des-dépendances-r-requises-1">Installation des dépendances R requises</a></li>
+  <li><a href="#vous-disposez-de-tout-le-nécessaire-pour-latelier-1" id="toc-vous-disposez-de-tout-le-nécessaire-pour-latelier-1" class="nav-link" data-scroll-target="#vous-disposez-de-tout-le-nécessaire-pour-latelier-1">Vous disposez de tout le nécessaire pour l’atelier !</a></li>
+  </ul></li>
+  <li><a href="#mac-os-x" id="toc-mac-os-x" class="nav-link" data-scroll-target="#mac-os-x">Mac OS X</a>
+  <ul class="collapse">
+  <li><a href="#installation-de-r-1" id="toc-installation-de-r-1" class="nav-link" data-scroll-target="#installation-de-r-1">Installation de R</a></li>
+  <li><a href="#installation-de-r-studio-1" id="toc-installation-de-r-studio-1" class="nav-link" data-scroll-target="#installation-de-r-studio-1">Installation de R Studio</a></li>
+  <li><a href="#installation-de-python-1" id="toc-installation-de-python-1" class="nav-link" data-scroll-target="#installation-de-python-1">Installation de Python</a></li>
+  <li><a href="#installation-des-dépendances-python-requises-1" id="toc-installation-des-dépendances-python-requises-1" class="nav-link" data-scroll-target="#installation-des-dépendances-python-requises-1">Installation des dépendances Python requises</a></li>
+  <li><a href="#installation-des-dépendances-r-requises-2" id="toc-installation-des-dépendances-r-requises-2" class="nav-link" data-scroll-target="#installation-des-dépendances-r-requises-2">Installation des dépendances R requises</a></li>
+  <li><a href="#vous-disposez-de-tout-le-nécessaire-pour-latelier-2" id="toc-vous-disposez-de-tout-le-nécessaire-pour-latelier-2" class="nav-link" data-scroll-target="#vous-disposez-de-tout-le-nécessaire-pour-latelier-2">Vous disposez de tout le nécessaire pour l’atelier !</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Installation des logiciels nécessaires</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<p class="subtitle lead">Atelier Sageo, Québec, Juin 2023</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Timothée Giraud, Nicolas Lambert, Matthieu Viry, Ronan Ysebaert (UAR RIATE, CNRS, Université Paris Cité) </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Afin de suivre l’atelier, il est nécessaire de disposer des logiciels suivants :</p>
+<ul>
+<li><a href="https://www.r-project.org/">R</a></li>
+<li><a href="https://posit.co/download/rstudio-desktop/">R Studio</a></li>
+<li><a href="https://www.python.org/">Python</a></li>
+<li><a href="https://quarto.org/">Quarto</a></li>
+<li>Plusieurs packages R et Python</li>
+</ul>
+<p>Au cours de l’atelier, une fois les instructions d’installation effectuées, toutes les manipulations nécessaires à la production d’un document avec quarto seront réalisées directement depuis l’IDE R Studio.</p>
+<section id="windows-10-windows-11" class="level1">
+<h1>Windows 10 / Windows 11</h1>
+<section id="installation-de-r" class="level3">
+<h3 class="anchored" data-anchor-id="installation-de-r">Installation de R</h3>
+<ul>
+<li>Se rendre à l’URL <a href="https://cran.r-project.org/bin/windows/base/">https://cran.r-project.org/bin/windows/base/</a></li>
+<li>Cliquer sur <em>“Download R-4.3.0 for Windows”</em> pour télécharger l’installeur sur votre ordinateur</li>
+<li>Exécutez l’installeur - aller jusqu’au bout de l’installeur en laissant les options par défaut</li>
+</ul>
+</section>
+<section id="installation-r-studio" class="level3">
+<h3 class="anchored" data-anchor-id="installation-r-studio">Installation R Studio</h3>
+<ul>
+<li>Télécharger l’installeur de R Studio à partir de ce lien : <a href="https://download1.rstudio.org/electron/windows/RStudio-2023.03.1-446.exe">https://download1.rstudio.org/electron/windows/RStudio-2023.03.1-446.exe</a></li>
+<li>Exécutez l’installeur - aller jusqu’au bout de l’installeur en laissant les options par défaut</li>
+</ul>
+</section>
+<section id="installation-de-python" class="level3">
+<h3 class="anchored" data-anchor-id="installation-de-python">Installation de Python</h3>
+<ul>
+<li>Télécharger le fichier <a href="https://www.python.org/ftp/python/3.11.3/python-3.11.3-amd64.exe">https://www.python.org/ftp/python/3.11.3/python-3.11.3-amd64.exe</a></li>
+<li>L’exécuter et cocher l’option <em>“Add python.exe to PATH”</em> puis cliquer sur <em>“Install Now”</em></li>
+<li>À la fin de l’installation, il est suggéré de changer la limite de longueur des noms de fichiers, ceci est souhaitable, cliquez donc sur <em>“Disable path length limit”</em></li>
+<li>Fermer l’installeur</li>
+</ul>
+</section>
+<section id="installation-des-dépendances-python-requises" class="level3">
+<h3 class="anchored" data-anchor-id="installation-des-dépendances-python-requises">Installation des dépendances Python requises</h3>
+<ul>
+<li>Ouvrir l’interpréteur de commande du système (appuyer sur la touche “windows” puis saisir CMD dans la barre de recherche et ouvrir l’application “Invite de commandes” qui est proposée)</li>
+<li>Créer un envrionnement virtuel :</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m venv env<span class="op">-</span>quarto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Activer l’environnement virtuel tout juste créé :</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\env<span class="op">-</span>quarto\Scripts\activate<span class="op">.</span><span class="fu">bat</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Installer les dépendances Python requises :</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m pip install numpy geopandas rasterio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Fermer le terminal</li>
+</ul>
+</section>
+<section id="installation-des-dépendances-r-requises" class="level3">
+<h3 class="anchored" data-anchor-id="installation-des-dépendances-r-requises">Installation des dépendances R requises</h3>
+<ul>
+<li>Ouvrir R Studio et saisir la commande suivante dans l’intépréteur R :</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">'markdown'</span>, <span class="st">'rmarkdown'</span>, <span class="st">'reticulate'</span>, <span class="st">'sf'</span>, <span class="st">'readxl'</span>, <span class="st">'mapsf'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="vous-disposez-de-tout-le-nécessaire-pour-latelier" class="level3">
+<h3 class="anchored" data-anchor-id="vous-disposez-de-tout-le-nécessaire-pour-latelier">Vous disposez de tout le nécessaire pour l’atelier !</h3>
+<p>Les instructions pour utiliser l’environnement virtuel Python créé depuis R Studio et depuis votre document quarto vous seront fournis lors de l’atelier.</p>
+</section>
+</section>
+<section id="linux-ubuntu-22-debian-11" class="level1">
+<h1>Linux (Ubuntu 22 / Debian 11)</h1>
+<section id="installation-de-r-et-des-dépendances-pour-r-studio" class="level3">
+<h3 class="anchored" data-anchor-id="installation-de-r-et-des-dépendances-pour-r-studio">Installation de R et des dépendances pour R Studio</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install r-base curl libssl-dev libpq5 libclang-dev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="installation-de-r-studio" class="level3">
+<h3 class="anchored" data-anchor-id="installation-de-r-studio">Installation de R Studio</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://download1.rstudio.org/electron/jammy/amd64/rstudio-2023.03.1-446-amd64.deb <span class="at">--output</span> rstudio-2023.03.1-446-amd64.deb</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dpkg <span class="at">-i</span> rstudio-2023.03.1-446-amd64.deb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="utilisation-de-la-version-de-python-livrée-avec-le-système-et-création-dun-environnement-virtuel" class="level3">
+<h3 class="anchored" data-anchor-id="utilisation-de-la-version-de-python-livrée-avec-le-système-et-création-dun-environnement-virtuel">Utilisation de la version de Python livrée avec le système et création d’un environnement virtuel</h3>
+<ul>
+<li><p>Ouvrir un terminal</p></li>
+<li><p>Saisir les commandes suivantes :</p></li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install python3-venv</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv env-quarto</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> env-quarto/bin/activate</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install numpy geopandas rasterio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Fermer le terminal</li>
+</ul>
+</section>
+<section id="installation-des-dépendances-r-requises-1" class="level3">
+<h3 class="anchored" data-anchor-id="installation-des-dépendances-r-requises-1">Installation des dépendances R requises</h3>
+<ul>
+<li>Ouvrir R Studio et saisir la commande suivante dans l’intépréteur R :</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">'markdown'</span>, <span class="st">'rmarkdown'</span>, <span class="st">'reticulate'</span>, <span class="st">'sf'</span>, <span class="st">'readxl'</span>, <span class="st">'mapsf'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="vous-disposez-de-tout-le-nécessaire-pour-latelier-1" class="level3">
+<h3 class="anchored" data-anchor-id="vous-disposez-de-tout-le-nécessaire-pour-latelier-1">Vous disposez de tout le nécessaire pour l’atelier !</h3>
+<p>Les instructions pour utiliser l’environnement virtuel Python créé depuis R Studio et depuis votre document quarto vous seront fournis lors de l’atelier.</p>
+</section>
+</section>
+<section id="mac-os-x" class="level1">
+<h1>Mac OS X</h1>
+<section id="installation-de-r-1" class="level3">
+<h3 class="anchored" data-anchor-id="installation-de-r-1">Installation de R</h3>
+<ul>
+<li>Se rendre à l’URL <a href="https://cran.r-project.org/bin/macosx/">https://cran.r-project.org/bin/macosx/</a></li>
+<li>Selon votre machine, télécharger l’installeur approprié en cliquant sur :
+<ul>
+<li>R-4.3.0-arm64.pkg</li>
+<li>R-4.3.0-x86_64.pkg</li>
+</ul></li>
+<li>Exécutez l’installeur - aller jusqu’au bout de l’installeur en laissant les options par défaut</li>
+</ul>
+</section>
+<section id="installation-de-r-studio-1" class="level3">
+<h3 class="anchored" data-anchor-id="installation-de-r-studio-1">Installation de R Studio</h3>
+<ul>
+<li>Télécharger l’installeur à partir de ce lien : <a href="https://download1.rstudio.org/electron/macos/RStudio-2023.03.1-446.dmg">https://download1.rstudio.org/electron/macos/RStudio-2023.03.1-446.dmg</a></li>
+<li>L’exécuter</li>
+</ul>
+</section>
+<section id="installation-de-python-1" class="level3">
+<h3 class="anchored" data-anchor-id="installation-de-python-1">Installation de Python</h3>
+<ul>
+<li>Télécharger le fichier <a href="https://www.python.org/ftp/python/3.11.3/python-3.11.3-macos11.pkg">https://www.python.org/ftp/python/3.11.3/python-3.11.3-macos11.pkg</a></li>
+<li>L’exécuter et cliquer sur <em>“Install Now”</em></li>
+<li>Fermer l’installeur</li>
+</ul>
+</section>
+<section id="installation-des-dépendances-python-requises-1" class="level3">
+<h3 class="anchored" data-anchor-id="installation-des-dépendances-python-requises-1">Installation des dépendances Python requises</h3>
+<ul>
+<li>Ouvrir un terminal système (soit depuis <em>Finder</em>, ouvrir le dossier /Application/Utilitaires et cliquer deux fois sur <em>Terminal</em>, soit depuis l’icone <em>Launchpad</em> dans le Dock, saisir “Terminal” dans le champ de recherche, puis cliquer sur <em>Terminal</em>)</li>
+<li>Créer un envrionnement virtuel :</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv env-quarto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Activer l’environnement virtuel tout juste créé :</li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> env-quarto/bin/activate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Installer les dépendances Python requises :</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install numpy geopandas rasterio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Fermer le terminal</li>
+</ul>
+</section>
+<section id="installation-des-dépendances-r-requises-2" class="level3">
+<h3 class="anchored" data-anchor-id="installation-des-dépendances-r-requises-2">Installation des dépendances R requises</h3>
+<ul>
+<li>Ouvrir R Studio et saisir la commande suivante dans l’intépréteur R :</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">'markdown'</span>, <span class="st">'rmarkdown'</span>, <span class="st">'reticulate'</span>, <span class="st">'sf'</span>, <span class="st">'readxl'</span>, <span class="st">'mapsf'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="vous-disposez-de-tout-le-nécessaire-pour-latelier-2" class="level3">
+<h3 class="anchored" data-anchor-id="vous-disposez-de-tout-le-nécessaire-pour-latelier-2">Vous disposez de tout le nécessaire pour l’atelier !</h3>
+<p>Les instructions pour utiliser l’environnement virtuel Python créé depuis R Studio et depuis votre document quarto vous seront fournis lors de l’atelier.</p>
+<!-- -->
+
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb13" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Installation des logiciels nécessaires"</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Atelier Sageo, Québec, Juin 2023"</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Timothée Giraud, Nicolas Lambert, Matthieu Viry, Ronan Ysebaert (UAR RIATE, CNRS, Université Paris Cité)"</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: sandstone</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">    fontsize: 0.9em</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 3</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">    linkcolor: "#8631ad"</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">  cache: false</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>Afin de suivre l'atelier, il est nécessaire de disposer des logiciels suivants :</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">R</span><span class="co">](https://www.r-project.org/)</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">R Studio</span><span class="co">](https://posit.co/download/rstudio-desktop/)</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Python</span><span class="co">](https://www.python.org/)</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Quarto</span><span class="co">](https://quarto.org/)</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Plusieurs packages R et Python</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>Au cours de l'atelier, une fois les instructions d'installation effectuées, toutes les manipulations nécessaires à la production d'un document avec quarto seront réalisées directement depuis l'IDE R Studio.</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="fu"># Windows 10 / Windows 11</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation de R</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Se rendre à l'URL <span class="co">[</span><span class="ot">https://cran.r-project.org/bin/windows/base/</span><span class="co">](https://cran.r-project.org/bin/windows/base/)</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cliquer sur *"Download R-4.3.0 for Windows"* pour télécharger l'installeur sur votre ordinateur</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Exécutez l'installeur - aller jusqu'au bout de l'installeur en laissant les options par défaut</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation R Studio</span></span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Télécharger l'installeur de R Studio à partir de ce lien : <span class="co">[</span><span class="ot">https://download1.rstudio.org/electron/windows/RStudio-2023.03.1-446.exe</span><span class="co">](https://download1.rstudio.org/electron/windows/RStudio-2023.03.1-446.exe)</span></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Exécutez l'installeur - aller jusqu'au bout de l'installeur en laissant les options par défaut</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation de Python</span></span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Télécharger le fichier <span class="co">[</span><span class="ot">https://www.python.org/ftp/python/3.11.3/python-3.11.3-amd64.exe</span><span class="co">](https://www.python.org/ftp/python/3.11.3/python-3.11.3-amd64.exe)</span></span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>L'exécuter et cocher l'option *"Add python.exe to PATH"* puis cliquer sur *"Install Now"*</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>À la fin de l'installation, il est suggéré de changer la limite de longueur des noms de fichiers, ceci est souhaitable, cliquez donc sur *"Disable path length limit"*</span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fermer l'installeur</span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation des dépendances Python requises</span></span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ouvrir l'interpréteur de commande du système (appuyer sur la touche "windows" puis saisir CMD dans la barre de recherche et ouvrir l'application "Invite de commandes" qui est proposée)</span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Créer un envrionnement virtuel :</span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a><span class="in">```powershell</span></span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a><span class="in">python -m venv env-quarto</span></span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Activer l'environnement virtuel tout juste créé :</span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a><span class="in">```powershell</span></span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a><span class="in">.\env-quarto\Scripts\activate.bat</span></span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Installer les dépendances Python requises :</span>
+<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a><span class="in">```powershell</span></span>
+<span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a><span class="in">python -m pip install numpy geopandas rasterio</span></span>
+<span id="cb13-67"><a href="#cb13-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-68"><a href="#cb13-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-69"><a href="#cb13-69" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fermer le terminal</span>
+<span id="cb13-70"><a href="#cb13-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-71"><a href="#cb13-71" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation des dépendances R requises</span></span>
+<span id="cb13-72"><a href="#cb13-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-73"><a href="#cb13-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ouvrir R Studio et saisir la commande suivante dans l'intépréteur R :</span>
+<span id="cb13-74"><a href="#cb13-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-75"><a href="#cb13-75" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb13-76"><a href="#cb13-76" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">'markdown'</span>, <span class="st">'rmarkdown'</span>, <span class="st">'reticulate'</span>, <span class="st">'sf'</span>, <span class="st">'readxl'</span>, <span class="st">'mapsf'</span>))</span>
+<span id="cb13-77"><a href="#cb13-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-78"><a href="#cb13-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-79"><a href="#cb13-79" aria-hidden="true" tabindex="-1"></a><span class="fu">### Vous disposez de tout le nécessaire pour l'atelier !</span></span>
+<span id="cb13-80"><a href="#cb13-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-81"><a href="#cb13-81" aria-hidden="true" tabindex="-1"></a>Les instructions pour utiliser l'environnement virtuel Python créé depuis R Studio et depuis votre document quarto vous seront fournis lors de l'atelier.</span>
+<span id="cb13-82"><a href="#cb13-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-83"><a href="#cb13-83" aria-hidden="true" tabindex="-1"></a><span class="fu"># Linux (Ubuntu 22 / Debian 11)</span></span>
+<span id="cb13-84"><a href="#cb13-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-85"><a href="#cb13-85" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation de R et des dépendances pour R Studio</span></span>
+<span id="cb13-86"><a href="#cb13-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-87"><a href="#cb13-87" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb13-88"><a href="#cb13-88" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install r-base curl libssl-dev libpq5 libclang-dev</span>
+<span id="cb13-89"><a href="#cb13-89" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-90"><a href="#cb13-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-91"><a href="#cb13-91" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation de R Studio</span></span>
+<span id="cb13-92"><a href="#cb13-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-93"><a href="#cb13-93" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb13-94"><a href="#cb13-94" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://download1.rstudio.org/electron/jammy/amd64/rstudio-2023.03.1-446-amd64.deb <span class="at">--output</span> rstudio-2023.03.1-446-amd64.deb</span>
+<span id="cb13-95"><a href="#cb13-95" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dpkg <span class="at">-i</span> rstudio-2023.03.1-446-amd64.deb</span>
+<span id="cb13-96"><a href="#cb13-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-97"><a href="#cb13-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-98"><a href="#cb13-98" aria-hidden="true" tabindex="-1"></a><span class="fu">### Utilisation de la version de Python livrée avec le système et création d'un environnement virtuel</span></span>
+<span id="cb13-99"><a href="#cb13-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-100"><a href="#cb13-100" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ouvrir un terminal</span>
+<span id="cb13-101"><a href="#cb13-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-102"><a href="#cb13-102" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Saisir les commandes suivantes :</span>
+<span id="cb13-103"><a href="#cb13-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-104"><a href="#cb13-104" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb13-105"><a href="#cb13-105" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install python3-venv</span>
+<span id="cb13-106"><a href="#cb13-106" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv env-quarto</span>
+<span id="cb13-107"><a href="#cb13-107" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> env-quarto/bin/activate</span>
+<span id="cb13-108"><a href="#cb13-108" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install numpy geopandas rasterio</span>
+<span id="cb13-109"><a href="#cb13-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-110"><a href="#cb13-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-111"><a href="#cb13-111" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fermer le terminal</span>
+<span id="cb13-112"><a href="#cb13-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-113"><a href="#cb13-113" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation des dépendances R requises </span></span>
+<span id="cb13-114"><a href="#cb13-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-115"><a href="#cb13-115" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ouvrir R Studio et saisir la commande suivante dans l'intépréteur R :</span>
+<span id="cb13-116"><a href="#cb13-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-117"><a href="#cb13-117" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb13-118"><a href="#cb13-118" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">'markdown'</span>, <span class="st">'rmarkdown'</span>, <span class="st">'reticulate'</span>, <span class="st">'sf'</span>, <span class="st">'readxl'</span>, <span class="st">'mapsf'</span>))</span>
+<span id="cb13-119"><a href="#cb13-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-120"><a href="#cb13-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-121"><a href="#cb13-121" aria-hidden="true" tabindex="-1"></a><span class="fu">### Vous disposez de tout le nécessaire pour l'atelier !</span></span>
+<span id="cb13-122"><a href="#cb13-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-123"><a href="#cb13-123" aria-hidden="true" tabindex="-1"></a>Les instructions pour utiliser l'environnement virtuel Python créé depuis R Studio et depuis votre document quarto vous seront fournis lors de l'atelier.</span>
+<span id="cb13-124"><a href="#cb13-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-125"><a href="#cb13-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-126"><a href="#cb13-126" aria-hidden="true" tabindex="-1"></a><span class="fu"># Mac OS X</span></span>
+<span id="cb13-127"><a href="#cb13-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-128"><a href="#cb13-128" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation de R</span></span>
+<span id="cb13-129"><a href="#cb13-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-130"><a href="#cb13-130" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Se rendre à l'URL <span class="co">[</span><span class="ot">https://cran.r-project.org/bin/macosx/</span><span class="co">](https://cran.r-project.org/bin/macosx/)</span></span>
+<span id="cb13-131"><a href="#cb13-131" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Selon votre machine, télécharger l'installeur approprié en cliquant sur :</span>
+<span id="cb13-132"><a href="#cb13-132" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>R-4.3.0-arm64.pkg</span>
+<span id="cb13-133"><a href="#cb13-133" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>R-4.3.0-x86_64.pkg</span>
+<span id="cb13-134"><a href="#cb13-134" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Exécutez l'installeur - aller jusqu'au bout de l'installeur en laissant les options par défaut</span>
+<span id="cb13-135"><a href="#cb13-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-136"><a href="#cb13-136" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation de R Studio</span></span>
+<span id="cb13-137"><a href="#cb13-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-138"><a href="#cb13-138" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Télécharger l'installeur à partir de ce lien : <span class="co">[</span><span class="ot">https://download1.rstudio.org/electron/macos/RStudio-2023.03.1-446.dmg</span><span class="co">](https://download1.rstudio.org/electron/macos/RStudio-2023.03.1-446.dmg)</span></span>
+<span id="cb13-139"><a href="#cb13-139" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>L'exécuter</span>
+<span id="cb13-140"><a href="#cb13-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-141"><a href="#cb13-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-142"><a href="#cb13-142" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation de Python</span></span>
+<span id="cb13-143"><a href="#cb13-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-144"><a href="#cb13-144" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Télécharger le fichier <span class="co">[</span><span class="ot">https://www.python.org/ftp/python/3.11.3/python-3.11.3-macos11.pkg</span><span class="co">](https://www.python.org/ftp/python/3.11.3/python-3.11.3-macos11.pkg)</span></span>
+<span id="cb13-145"><a href="#cb13-145" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>L'exécuter et cliquer sur *"Install Now"*</span>
+<span id="cb13-146"><a href="#cb13-146" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fermer l'installeur</span>
+<span id="cb13-147"><a href="#cb13-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-148"><a href="#cb13-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-149"><a href="#cb13-149" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation des dépendances Python requises</span></span>
+<span id="cb13-150"><a href="#cb13-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-151"><a href="#cb13-151" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ouvrir un terminal système (soit depuis *Finder*, ouvrir le dossier /Application/Utilitaires et cliquer deux fois sur *Terminal*, soit depuis l'icone *Launchpad* dans le Dock, saisir "Terminal" dans le champ de recherche, puis cliquer sur *Terminal*)</span>
+<span id="cb13-152"><a href="#cb13-152" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Créer un envrionnement virtuel :</span>
+<span id="cb13-153"><a href="#cb13-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-154"><a href="#cb13-154" aria-hidden="true" tabindex="-1"></a><span class="in">```sh</span></span>
+<span id="cb13-155"><a href="#cb13-155" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv env-quarto</span>
+<span id="cb13-156"><a href="#cb13-156" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-157"><a href="#cb13-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-158"><a href="#cb13-158" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Activer l'environnement virtuel tout juste créé :</span>
+<span id="cb13-159"><a href="#cb13-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-160"><a href="#cb13-160" aria-hidden="true" tabindex="-1"></a><span class="in">```sh</span></span>
+<span id="cb13-161"><a href="#cb13-161" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> env-quarto/bin/activate</span>
+<span id="cb13-162"><a href="#cb13-162" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-163"><a href="#cb13-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-164"><a href="#cb13-164" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Installer les dépendances Python requises :</span>
+<span id="cb13-165"><a href="#cb13-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-166"><a href="#cb13-166" aria-hidden="true" tabindex="-1"></a><span class="in">```sh</span></span>
+<span id="cb13-167"><a href="#cb13-167" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install numpy geopandas rasterio</span>
+<span id="cb13-168"><a href="#cb13-168" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-169"><a href="#cb13-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-170"><a href="#cb13-170" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fermer le terminal</span>
+<span id="cb13-171"><a href="#cb13-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-172"><a href="#cb13-172" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation des dépendances R requises</span></span>
+<span id="cb13-173"><a href="#cb13-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-174"><a href="#cb13-174" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ouvrir R Studio et saisir la commande suivante dans l'intépréteur R :</span>
+<span id="cb13-175"><a href="#cb13-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-176"><a href="#cb13-176" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb13-177"><a href="#cb13-177" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">'markdown'</span>, <span class="st">'rmarkdown'</span>, <span class="st">'reticulate'</span>, <span class="st">'sf'</span>, <span class="st">'readxl'</span>, <span class="st">'mapsf'</span>))</span>
+<span id="cb13-178"><a href="#cb13-178" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb13-179"><a href="#cb13-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-180"><a href="#cb13-180" aria-hidden="true" tabindex="-1"></a><span class="fu">### Vous disposez de tout le nécessaire pour l'atelier !</span></span>
+<span id="cb13-181"><a href="#cb13-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-182"><a href="#cb13-182" aria-hidden="true" tabindex="-1"></a>Les instructions pour utiliser l'environnement virtuel Python créé depuis R Studio et depuis votre document quarto vous seront fournis lors de l'atelier.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>
