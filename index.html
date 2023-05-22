@@ -407,47 +407,74 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapsf)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Communes</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"geom/munic_s.shp"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformation conique équivalente d'ALbers</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(mun, <span class="dv">6623</span>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(mun, <span class="at">by =</span> <span class="fu">list</span>(<span class="at">MUS_CO_GEO =</span> mun<span class="sc">$</span>MUS_CO_GEO),</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">FUN =</span> head, <span class="dv">1</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>mrc <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(mun, <span class="at">by =</span> <span class="fu">list</span>(<span class="at">MUS_CO_MRC =</span> mun<span class="sc">$</span>MUS_CO_MRC),</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">FUN =</span> head, <span class="dv">1</span>)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Import data </span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read_xlsx</span>(<span class="st">"data/stats_socio_eco/Pop-MUN-total.xlsx"</span>, </span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                           <span class="at">skip =</span> <span class="dv">3</span>, <span class="at">n_max =</span> <span class="dv">1292</span>,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                <span class="at">col_types =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"text"</span>, <span class="dv">7</span>), <span class="fu">rep</span>(<span class="st">"numeric"</span>, <span class="dv">22</span>)))) </span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">29</span>)]</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"NOM"</span>, <span class="st">"STATUT"</span>, <span class="st">"MUS_CO_GEO"</span>, <span class="st">"POP_2001"</span>, <span class="st">"POP_2022"</span>)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>MUS_CO_GEO <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">nchar</span>(df<span class="sc">$</span>MUS_CO_GEO) <span class="sc">&lt;</span> <span class="dv">5</span>, <span class="fu">paste0</span>(<span class="st">"0"</span>, df<span class="sc">$</span>MUS_CO_GEO), </span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                        df<span class="sc">$</span>MUS_CO_GEO)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rmapshaper)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: le package 'rmapshaper' a été compilé avec la version R 4.2.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Communes</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"geom/munic_s.shp"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Simplification des contours</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">ms_simplify</span>(mun, <span class="at">keep =</span> <span class="fl">0.05</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformation long/lat</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(mun, <span class="dv">4326</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(mun, <span class="at">by =</span> <span class="fu">list</span>(<span class="at">MUS_CO_GEO =</span> mun<span class="sc">$</span>MUS_CO_GEO),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">FUN =</span> head, <span class="dv">1</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>mrc <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(mun, <span class="at">by =</span> <span class="fu">list</span>(<span class="at">MUS_CO_MRC =</span> mun<span class="sc">$</span>MUS_CO_MRC),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">FUN =</span> head, <span class="dv">1</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Import données population et nettoyage</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read_xlsx</span>(<span class="st">"data/stats_socio_eco/Pop-MUN-total.xlsx"</span>, </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                           <span class="at">skip =</span> <span class="dv">3</span>, <span class="at">n_max =</span> <span class="dv">1292</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                <span class="at">col_types =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"text"</span>, <span class="dv">7</span>), <span class="fu">rep</span>(<span class="st">"numeric"</span>, <span class="dv">22</span>)))) </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">8</span><span class="sc">:</span><span class="dv">29</span>)]</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>col_pop <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"POP_"</span>, <span class="fu">seq</span>(<span class="dv">2001</span>, <span class="dv">2022</span>, <span class="dv">1</span>))</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"NOM"</span>, <span class="st">"STATUT"</span>, <span class="st">"MUS_CO_GEO"</span>, col_pop)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>MUS_CO_GEO <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">nchar</span>(df<span class="sc">$</span>MUS_CO_GEO) <span class="sc">&lt;</span> <span class="dv">5</span>, <span class="fu">paste0</span>(<span class="st">"0"</span>, df<span class="sc">$</span>MUS_CO_GEO), </span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>                        df<span class="sc">$</span>MUS_CO_GEO)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>NOM <span class="ot">&lt;-</span> <span class="fu">paste0</span>(df<span class="sc">$</span>NOM, <span class="st">" ("</span>, df<span class="sc">$</span>STATUT, <span class="st">")"</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Import données socio-éco et nettoyage</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read_xlsx</span>(<span class="st">"data/stats_socio_eco/Tableau.xlsx"</span>, </span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>                           <span class="at">skip =</span> <span class="dv">4</span>, <span class="at">n_max =</span> <span class="dv">1163</span>))</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df2[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>),]</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df2[,<span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>)]</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df2) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"NOM"</span>, <span class="st">"REG"</span>, <span class="st">"VIT_ECO"</span>, <span class="st">"REV_MED"</span>, <span class="st">"TX_2564"</span>, <span class="st">"TAAM"</span>)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">merge</span>(df, df2, <span class="at">by =</span> <span class="st">"NOM"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df[,<span class="fu">c</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">25</span>, <span class="dv">27</span><span class="sc">:</span><span class="dv">30</span>)]</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Jointure acvec le fond de carte de référence</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">merge</span>(mun, df, <span class="at">by =</span> <span class="st">"MUS_CO_GEO"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">st_cast</span>(mun, <span class="st">"MULTIPOLYGON"</span>)</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>mun_100k <span class="ot">&lt;-</span> mun[mun<span class="sc">$</span>POP_2022 <span class="sc">&gt;</span> <span class="dv">100000</span>,]</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>mun_100k <span class="ot">&lt;-</span> mun_100k[<span class="sc">!</span><span class="fu">is.na</span>(mun_100k<span class="sc">$</span>POP_2022),]</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Export</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="co"># st_write(mun, "geom/munic.geojson")</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="co"># st_write(mrc, "geom/mrc.geojson")</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Cartographie</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformation conique équivalente d'ALbers</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(mun, <span class="dv">6623</span>)</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>mun_100k <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(mun_100k, <span class="dv">6623</span>)</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>mrc <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(mrc, <span class="dv">6623</span>)</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_init</span>(mun_100k)</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(mun, <span class="at">border =</span> <span class="st">"white"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(mun_100k, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">border =</span> <span class="st">"white"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(mrc, <span class="at">col =</span> <span class="cn">NA</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_label</span>(mun_100k, <span class="at">var =</span> <span class="st">"MUS_NM_MRC"</span>, <span class="at">halo =</span> <span class="cn">TRUE</span>, <span class="at">overlap =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_scale</span>(<span class="at">size =</span> <span class="dv">50</span>)</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_title</span>(<span class="st">"Municipalités québecoises avec plus de 100 000 habitants en 2022"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" style="width:100.0%"></p>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">merge</span>(mun, df, <span class="at">by =</span> <span class="st">"MUS_CO_GEO"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">st_cast</span>(mun, <span class="st">"MULTIPOLYGON"</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>mun_100k <span class="ot">&lt;-</span> mun[mun<span class="sc">$</span>POP_2022 <span class="sc">&gt;</span> <span class="dv">100000</span>,]</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>mun_100k <span class="ot">&lt;-</span> mun_100k[<span class="sc">!</span><span class="fu">is.na</span>(mun_100k<span class="sc">$</span>POP_2022),]</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Cartographie</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_init</span>(mun_100k)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(mun, <span class="at">border =</span> <span class="st">"white"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(mun_100k, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">border =</span> <span class="st">"white"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(mrc, <span class="at">col =</span> <span class="cn">NA</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_label</span>(mun_100k, <span class="at">var =</span> <span class="st">"NOM"</span>, <span class="at">halo =</span> <span class="cn">TRUE</span>, <span class="at">overlap =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_scale</span>(<span class="at">size =</span> <span class="dv">50</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_title</span>(<span class="st">"Municipalités québecoises avec plus de 100 000 habitants en 2022"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 </div>
 </section>
@@ -455,25 +482,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="initialisation-de-lanalyse">Initialisation de l’analyse</h2>
 <p>Extraction du nom des communes de plus de 100 000 habitants.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mun_100k<span class="sc">$</span>NOM</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mun_100k<span class="sc">$</span>NOM</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "Québec"                   "Lévis"                   
- [3] "Trois-Rivières"           "Sherbrooke"              
- [5] "Saint-Jean-sur-Richelieu" "Longueuil"               
- [7] "Terrebonne"               "Laval"                   
- [9] "Montréal"                 "Gatineau"                
-[11] "Saguenay"                </code></pre>
+<pre><code>NULL</code></pre>
 </div>
 </div>
 <p>Choix de l’espace d’analyse parmi ces communes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sel <span class="ot">&lt;-</span> <span class="st">"Québec"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sel <span class="ot">&lt;-</span> <span class="st">"Québec"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Définition de l’emprise spatiale d’analyse, définie par une bounding box définie par <em>Xmin, Ymin, Xmax, Ymax</em>. On propose ici un périmètre d’étude de 2km autour de l’emprise géographique de la commune sélectionnée.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>down <span class="ot">&lt;-</span> <span class="fu">st_as_sfc</span>(<span class="fu">st_bbox</span>(<span class="fu">st_buffer</span>(mun_100k[mun_100k<span class="sc">$</span>NOM <span class="sc">==</span> sel,], <span class="dv">2000</span>)))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>down <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(down, <span class="dv">4326</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>bbox <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(down)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>down <span class="ot">&lt;-</span> <span class="fu">st_as_sfc</span>(<span class="fu">st_bbox</span>(<span class="fu">st_buffer</span>(mun_100k[mun_100k<span class="sc">$</span>MUS_NM_MRC <span class="sc">==</span> sel,], <span class="dv">2000</span>)))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>down <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(down, <span class="dv">4326</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>bbox <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(down)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="r" class="level2">
@@ -704,348 +726,378 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Articulation de différents langages (R, JavaScript et Python) pour la géovisualisation avec Quarto"</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Atelier Sageo, Québec, Juin 2023"</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Timothée Giraud, Nicolas Lambert, Matthieu Viry, Ronan Ysebaert (UAR RIATE, CNRS, Université Paris Cité)"</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: sandstone</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">    fontsize: 0.9em</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 2</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">    linkcolor: "#8631ad"</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">  cache: false</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Présentation</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>Dans un contexte d’essor de carnets interactifs (Notebooks), l’objet de cet atelier consiste à montrer les possibilités offertes par Quarto, un système de publication scientifique et technique open-source basé sur Pandoc, qui permet d’articuler différents langages pour réaliser des géovisualisations reproductibles dans un seul et même document. Cet atelier proposera aux participants une prise en main des principales fonctionnalités offertes par Quarto, puis une mise en œuvre de chaînes de traitements de l’information géographique reproductibles avec R, Python et Observable JavaScript dans cet environnement.</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="fu">### Déroulé de la demi-journée</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Installation des logiciels nécessaires à la mise en - place de l'environnement de développement (Quarto, R, Python, RStudio, Jupyter...). / **A envoyer aux participants en début de semaine ?**</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Présentation et prise en main des principales fonctionnalités des notebooks Quarto. Présentation des écosystèmes spatiaux de R et Python, et, d'un jeu de données commun sur - lequel s'appuiera l'ensemble de l'atelier.</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Traitement des données vectorielles : Mise en pratique d'une chaîne de traitements reproductible avec R, notamment grâce aux packages sf et mapsf.</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Traitement des données raster : Mise en pratique d'une chaîne de traitements reproductible avec Python (bibliothèques geopandas, rasterio, matplotlib, nbdev, etc.).</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Création de visualisations cartographiques interactives avec ojs (bibliothèques bertin, Plot, Gridviz, Deck.gl).</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Export/publication du document quarto produit pendant l'atelier (templates de différentes revues scientifiques, slides, https://quartopub.com/, etc.).</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Combiner plusieurs langages de programmation dans un notebook</span></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **A sortir du document principal et en faire une présentation à part ?**</span></span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="fu">### Evolution des pratiques</span></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Avant : des "black-boxes" méthodologiques</span></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>Logiciels payants, ruptures logicielles dans les chaines de traitements, stockage et partage des données et méthodes non optimisé, univers "clic-bouton".</span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;center&gt;&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"fig/chain_1.png"</span> <span class="er">width</span><span class="ot">=</span><span class="st">"800"</span><span class="kw">/&gt;&lt;/center&gt;</span></span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Maintenant :</span></span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>Solutions open source, gratuites, qui couvrent l'ensemble de la chaîne de traitement de l'information, univers de programmation.</span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;center&gt;&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"fig/chain_2.png"</span> <span class="er">width</span><span class="ot">=</span><span class="st">"800"</span><span class="kw">/&gt;&lt;/center&gt;</span></span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Maintenant (et depuis peu)</span></span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>Mise à jour de ce graphique en intégrant les dimensions Python, Js <span class="sc">\&gt;</span> plus forcément chaînes de traitement.</span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pb : comment documenter et partager ses traitements ? </span></span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Création de bcp de scripts. </span>
-<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compréhensible par soi (et encore, avec le temps)...</span>
-<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Transmettre, mettre à jour... </span>
-<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a><span class="fu">### Recherche reproductible</span></span>
-<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>Ouverture des protocoles de recherche dans l'objectif de confirmer et rendre répétable des résultats de recherche (<span class="co">[</span><span class="ot">Claerbout, 1992</span><span class="co">](http://sep.stanford.edu/oldsep/matt/join/redoc/web/seg92.html)</span>).</span>
-<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Disponibilité des données et du code, exécutable.</span>
-<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Documentation de l'environnement logiciel nécessaire à son exécution.</span>
-<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Transparence dans la collecte de données, ses traitements, analyses et sorties graphiques.</span>
-<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Réutilisable par d'autres : documentation du code, de ce qu'il produit et dans quel but.</span>
-<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Ouvert aux retours, commentaires, suggestions, critiques, révisions.</span>
-<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a><span class="fu">### Programmation lettrée &amp; notebooks</span></span>
-<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>**Paradigme de programmation** (<span class="co">[</span><span class="ot">Knuth, 1984</span><span class="co">](https://academic.oup.com/comjnl/article/27/2/97/343244)</span>) qui consiste à associer code source (pour les ordinateurs) et documentation (pour les humains).</span>
-<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Donner les informations suffisantes pour répliquer l'expérimentation, à la manière d'un essai.</span>
-<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Vérifier que les conclusions sont valides.</span>
-<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Améliorer les programmes / rendre les mauvaises décisions de conception plus évidentes.</span>
-<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Utile pour reprendre les programmes ultérieurement.</span>
-<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Transmettre et partager les connaissances sous des formes appropriées (tutoriels, manuels).</span>
-<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Un gain général en **reproductibilité** de la démarche et en **ouverture** des méthodes scientifiques.</span></span>
-<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="fu">### Notebooks : Principes fondamentaux</span></span>
-<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a>Le **Notebook** est solution opérationnelle et adaptée pour arriver à ces fins.</span>
-<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;center&gt;</span><span class="al">![Source: Pecout, 2022](fig/notebook_1.png)</span><span class="kw">&lt;/center&gt;</span></span>
-<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a><span class="fu">### Les notebooks du moment</span></span>
-<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a><span class="al">![Source : Pecout, 2022](fig/nouveau_notebook.png)</span></span>
-<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a><span class="fu">### Squelette d'un notebook (RMarkdown / Quarto)</span></span>
-<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a><span class="al">![Source : Pecout, 2022](fig/notebook_2.png)</span></span>
-<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Le YAML en quelques mots</span></span>
-<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>Le YAML est paramétrable en fonction du format de sortie désiré (HTML, PDF, présentations, etc.).</span>
-<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>Pour le document de base (Quarto Document au format HTML), il est par exemple possible de jouer sur:</span>
-<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**des paramétrages généraux** (choisir un thème, définir une feuille de style css)</span>
-<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>la **table des matières** (toc)</span>
-<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>la numérotation des parties du document</span>
-<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>les typographies utilisées</span>
-<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>le choix des couleurs</span>
-<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>l'affichage des blocs de code</span>
-<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>l'exécution du code (afficher le code ou non, des messages d'erreur, etc.)</span>
-<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>le dimensionnement des figures et tables</span>
-<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>la gestion des urls</span>
-<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>le paramétrage de la bibliographie</span>
-<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>l'affichage des notes de bas de page</span>
-<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>les métadonnées associées au document...</span>
-<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>Tout est présenté <span class="co">[</span><span class="ot">ici</span><span class="co">](https://quarto.org/docs/reference/formats/html.html)</span></span>
-<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a><span class="in">``` yaml</span></span>
-<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Articulation de différents environnements de développement de géo-visualisations. Atelier autour de Quarto : R, Pytho, et Observable JavaScript"</span></span>
-<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">"Atelier Sageo, Québec, Juin 2023"</span></span>
-<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Timothée Giraud, Nicolas Lambert, Matthieu Viry, Ronan Ysebaert (UAR RIATE, CNRS, Université Paris Cité)"</span></span>
-<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
-<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
-<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> sandstone</span></span>
-<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">fontsize</span><span class="kw">:</span><span class="at"> 0.9em</span></span>
-<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code-tools</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code-fold</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc-depth</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
-<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">linkcolor</span><span class="kw">:</span><span class="at"> </span><span class="st">"#8631ad"</span></span>
-<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a><span class="fu">editor</span><span class="kw">:</span><span class="at"> visual</span></span>
-<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Le markdown en quelques mots</span></span>
-<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a>h1, h2, h3 bold, italic import figure</span>
-<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Paramétrer ses chunks en qqes mots</span></span>
-<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a><span class="fu">### Des sorties multiples</span></span>
-<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Plusieurs formats de sorties : .HTML, .pdf, .doc</span>
-<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Largement documentés : Manuels d'utilisations, forums, etc.</span>
-<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Hautement **paramétrable** via le YAML et l'ajout éventuel de styles css.</span>
-<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
-<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Sites Web</span></span>
-<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;center&gt;</span></span>
-<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>::: small</span>
-<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://rcarto.gitpages.huma-num.fr/centralite/"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Sortie (site Web)<span class="kw">&lt;/a&gt;</span> // <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://gitlab.huma-num.fr/rCarto/centralite"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Dépôt GitLab<span class="kw">&lt;/a&gt;</span></span>
-<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a><span class="al">![](fig/web_site.png)</span></span>
-<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/center&gt;</span></span>
-<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Présentations</span></span>
-<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;center&gt;</span></span>
-<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a>::: small</span>
-<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://github.com/rysebaert/qgis_data_shs/blob/master/index.Rmd"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Sortie (Présentation)<span class="kw">&lt;/a&gt;</span> // <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://github.com/rysebaert/qgis_data_shs"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Dépôt GitHub<span class="kw">&lt;/a&gt;</span> // <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://github.com/rysebaert/qgis_data_shs/blob/master/index.Rmd"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Code (RMardown)<span class="kw">&lt;/a&gt;</span></span>
-<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a><span class="al">![](fig/qgis_output1.png)</span> <span class="al">![](fig/qgis_output2.png)</span></span>
-<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/center&gt;</span></span>
-<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Rapports Interactifs</span></span>
-<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;center&gt;</span></span>
-<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a>::: small</span>
-<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://rysebaert.github.io/climbing_paris/"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Sortie (Rapport interactif)<span class="kw">&lt;/a&gt;</span> // <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://github.com/rysebaert/climbing_paris"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Dépôt GitHub<span class="kw">&lt;/a&gt;</span> // <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://github.com/rysebaert/climbing_paris/blob/main/index.qmd"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Code (Quarto)<span class="kw">&lt;/a&gt;</span></span>
-<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a><span class="al">![](fig/report.png)</span></span>
-<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/center&gt;</span></span>
-<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Manuels</span></span>
-<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;center&gt;</span></span>
-<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a>::: small</span>
-<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://rcarto.github.io/geomatique_avec_r/"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Sortie (Bookdown)<span class="kw">&lt;/a&gt;</span> // <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://github.com/rCarto/geomatique_avec_r"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Dépôt GitHub<span class="kw">&lt;/a&gt;</span></span>
-<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a><span class="al">![](fig/bookdown.png)</span></span>
-<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/center&gt;</span></span>
-<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a><span class="fu">### Montrer le .qmd de la présentation</span></span>
-<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a>Idéalement, pas grand chose dans le YAML et montrer que ça rend bien. </span>
-<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step by step (captures d'écran) initier un .qmd et le construire avec RStudio</span></span>
-<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a>::: {.callout-caution collapse="true"}</span>
-<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a><span class="fu">### \[To do\] : Initier un document Quarto</span></span>
-<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Créer un modèle Quarto avec RStudio</span>
-<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Jouer avec les métadonnées pour paramétrer le document (nom de l'auteur, ajout table des matières, etc.)</span>
-<span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a><span class="fu">## Données atelier</span></span>
-<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a>Plusieurs possibilités si espace d'étude canadien : </span>
-<span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a>**Vecteur**</span>
-<span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">OpenStreetMap</span><span class="co">](https://www.openstreetmap.org/)</span> (POI) : restos, bars. </span>
-<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Le découpage géographique des municipalités québécoises (Source : <span class="co">[</span><span class="ot">Ministère des Ressources naturelles et des Forêts</span><span class="co">](https://mrnf.gouv.qc.ca/repertoire-geographique/carte-generale-base-donnees-geographiques-administratives/)</span>).</span>
-<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>La série de population 2001-2022 et l'indice de vitalité économique des localités québecoises, délivré par l'<span class="co">[</span><span class="ot">Institut de la Statistique du Québec</span><span class="co">](https://statistique.quebec.ca/fr/recherche?territoire=municipalites&amp;type_produit=tableau-detaille)</span>.</span>
-<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a>**Raster** </span>
-<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Estimations de population désagrégées : <span class="co">[</span><span class="ot">World Pop Canada 100 m res - 42 Mo</span><span class="co">](https://hub.worldpop.org/geodata/summary?id=49922)</span> + <span class="co">[</span><span class="ot">USA - 417 MB</span><span class="co">](https://hub.worldpop.org/geodata/summary?id=49916)</span> ou <span class="co">[</span><span class="ot">1km - CAN</span><span class="co">](https://hub.worldpop.org/geodata/summary?id=34942)</span> / <span class="co">[</span><span class="ot">USA - 49.42 MB</span><span class="co">](https://hub.worldpop.org/geodata/summary?id=34816)</span></span>
-<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Couverutre du sol : ESA World Cover ? source <span class="co">[</span><span class="ot">European Space Agency</span><span class="co">](https://worldcover2020.esa.int/download)</span> ou <span class="co">[</span><span class="ot">NASA</span><span class="co">](https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/science-domain/land-cover-and-phenology/)</span> + <span class="co">[</span><span class="ot">Guide</span><span class="co">](https://lpdaac.usgs.gov/documents/101/MCD12_User_Guide_V6.pdf)</span>. Sur le Québec cf <span class="co">[</span><span class="ot">Comptes des terres du Québec Méridional</span><span class="co">](https://statistique.quebec.ca/cartovista/comptes_terres/index.html)</span> et <span class="co">[</span><span class="ot">GeoTIFF associé</span><span class="co">](https://www.donneesquebec.ca/recherche/fr/dataset/comptes-des-terres-du-quebec-meridional-changement-de-la-couverture-terrestre)</span> </span>
-<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a><span class="ss">-  </span>Intensité pollution lumineuse : <span class="co">[</span><span class="ot">Earth Observation Group</span><span class="co">](https://eogdata.mines.edu/products/vnl/)</span></span>
-<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a>::: {.callout-caution collapse="true"}</span>
-<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a><span class="fu">### \[To do\] : Télécharger les données de l'exercice</span></span>
-<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a>Télécharger les données utiles à reproduire l'exercice (dépôt github à part) - Les données - Les scripts R, Python et Ojs.</span>
-<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a>Ouvrir le fichier projet.</span>
-<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a><span class="fu">## Préparation des espaces d'étude avec R</span></span>
-<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a>On cherche à proposer une analyse systématique pour l'espace d'étude environnant les communes peuplées de plus de 100000 habitants de la province du Québec en 2022.</span>
-<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a>Cette préparation des données est réalisée avec R.</span>
-<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, out.width = "100%"}</span></span>
-<span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapsf)</span>
-<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a><span class="co"># Communes</span></span>
-<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"geom/munic_s.shp"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformation conique équivalente d'ALbers</span></span>
-<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(mun, <span class="dv">6623</span>)</span>
-<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(mun, <span class="at">by =</span> <span class="fu">list</span>(<span class="at">MUS_CO_GEO =</span> mun<span class="sc">$</span>MUS_CO_GEO),</span>
-<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a>                 <span class="at">FUN =</span> head, <span class="dv">1</span>)</span>
-<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a>mrc <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(mun, <span class="at">by =</span> <span class="fu">list</span>(<span class="at">MUS_CO_MRC =</span> mun<span class="sc">$</span>MUS_CO_MRC),</span>
-<span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a>                 <span class="at">FUN =</span> head, <span class="dv">1</span>)</span>
-<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-265"><a href="#cb8-265" aria-hidden="true" tabindex="-1"></a><span class="co"># Import data </span></span>
-<span id="cb8-266"><a href="#cb8-266" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read_xlsx</span>(<span class="st">"data/stats_socio_eco/Pop-MUN-total.xlsx"</span>, </span>
-<span id="cb8-267"><a href="#cb8-267" aria-hidden="true" tabindex="-1"></a>                           <span class="at">skip =</span> <span class="dv">3</span>, <span class="at">n_max =</span> <span class="dv">1292</span>,</span>
-<span id="cb8-268"><a href="#cb8-268" aria-hidden="true" tabindex="-1"></a>                <span class="at">col_types =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"text"</span>, <span class="dv">7</span>), <span class="fu">rep</span>(<span class="st">"numeric"</span>, <span class="dv">22</span>)))) </span>
-<span id="cb8-269"><a href="#cb8-269" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">29</span>)]</span>
-<span id="cb8-270"><a href="#cb8-270" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"NOM"</span>, <span class="st">"STATUT"</span>, <span class="st">"MUS_CO_GEO"</span>, <span class="st">"POP_2001"</span>, <span class="st">"POP_2022"</span>)</span>
-<span id="cb8-271"><a href="#cb8-271" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>MUS_CO_GEO <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">nchar</span>(df<span class="sc">$</span>MUS_CO_GEO) <span class="sc">&lt;</span> <span class="dv">5</span>, <span class="fu">paste0</span>(<span class="st">"0"</span>, df<span class="sc">$</span>MUS_CO_GEO), </span>
-<span id="cb8-272"><a href="#cb8-272" aria-hidden="true" tabindex="-1"></a>                        df<span class="sc">$</span>MUS_CO_GEO)</span>
-<span id="cb8-273"><a href="#cb8-273" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
-<span id="cb8-274"><a href="#cb8-274" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge</span></span>
-<span id="cb8-275"><a href="#cb8-275" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">merge</span>(mun, df, <span class="at">by =</span> <span class="st">"MUS_CO_GEO"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-276"><a href="#cb8-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-277"><a href="#cb8-277" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean</span></span>
-<span id="cb8-278"><a href="#cb8-278" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">st_cast</span>(mun, <span class="st">"MULTIPOLYGON"</span>)</span>
-<span id="cb8-279"><a href="#cb8-279" aria-hidden="true" tabindex="-1"></a>mun_100k <span class="ot">&lt;-</span> mun[mun<span class="sc">$</span>POP_2022 <span class="sc">&gt;</span> <span class="dv">100000</span>,]</span>
-<span id="cb8-280"><a href="#cb8-280" aria-hidden="true" tabindex="-1"></a>mun_100k <span class="ot">&lt;-</span> mun_100k[<span class="sc">!</span><span class="fu">is.na</span>(mun_100k<span class="sc">$</span>POP_2022),]</span>
-<span id="cb8-281"><a href="#cb8-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-282"><a href="#cb8-282" aria-hidden="true" tabindex="-1"></a><span class="co"># Cartographie</span></span>
-<span id="cb8-283"><a href="#cb8-283" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_init</span>(mun_100k)</span>
-<span id="cb8-284"><a href="#cb8-284" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(mun, <span class="at">border =</span> <span class="st">"white"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-285"><a href="#cb8-285" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(mun_100k, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">border =</span> <span class="st">"white"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-286"><a href="#cb8-286" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(mrc, <span class="at">col =</span> <span class="cn">NA</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-287"><a href="#cb8-287" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_label</span>(mun_100k, <span class="at">var =</span> <span class="st">"NOM"</span>, <span class="at">halo =</span> <span class="cn">TRUE</span>, <span class="at">overlap =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb8-288"><a href="#cb8-288" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_scale</span>(<span class="at">size =</span> <span class="dv">50</span>)</span>
-<span id="cb8-289"><a href="#cb8-289" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_title</span>(<span class="st">"Municipalités québecoises avec plus de 100 000 habitants en 2022"</span>)</span>
-<span id="cb8-290"><a href="#cb8-290" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-291"><a href="#cb8-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-292"><a href="#cb8-292" aria-hidden="true" tabindex="-1"></a><span class="fu">## Initialisation de l'analyse</span></span>
-<span id="cb8-293"><a href="#cb8-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-294"><a href="#cb8-294" aria-hidden="true" tabindex="-1"></a>Extraction du nom des communes de plus de 100 000 habitants. </span>
-<span id="cb8-295"><a href="#cb8-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-298"><a href="#cb8-298" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-299"><a href="#cb8-299" aria-hidden="true" tabindex="-1"></a>mun_100k<span class="sc">$</span>NOM</span>
-<span id="cb8-300"><a href="#cb8-300" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-301"><a href="#cb8-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-302"><a href="#cb8-302" aria-hidden="true" tabindex="-1"></a>Choix de l'espace d'analyse parmi ces communes. </span>
-<span id="cb8-303"><a href="#cb8-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-306"><a href="#cb8-306" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-307"><a href="#cb8-307" aria-hidden="true" tabindex="-1"></a>sel <span class="ot">&lt;-</span> <span class="st">"Québec"</span></span>
-<span id="cb8-308"><a href="#cb8-308" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-309"><a href="#cb8-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-310"><a href="#cb8-310" aria-hidden="true" tabindex="-1"></a>Définition de l'emprise spatiale d'analyse, définie par une bounding box définie par *Xmin, Ymin, Xmax, Ymax*. On propose ici un périmètre d'étude de 2km autour de l'emprise géographique de la commune sélectionnée.</span>
-<span id="cb8-311"><a href="#cb8-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-314"><a href="#cb8-314" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-315"><a href="#cb8-315" aria-hidden="true" tabindex="-1"></a>down <span class="ot">&lt;-</span> <span class="fu">st_as_sfc</span>(<span class="fu">st_bbox</span>(<span class="fu">st_buffer</span>(mun_100k[mun_100k<span class="sc">$</span>NOM <span class="sc">==</span> sel,], <span class="dv">2000</span>)))</span>
-<span id="cb8-316"><a href="#cb8-316" aria-hidden="true" tabindex="-1"></a>down <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(down, <span class="dv">4326</span>)</span>
-<span id="cb8-317"><a href="#cb8-317" aria-hidden="true" tabindex="-1"></a>bbox <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(down)</span>
-<span id="cb8-318"><a href="#cb8-318" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-319"><a href="#cb8-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-320"><a href="#cb8-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-321"><a href="#cb8-321" aria-hidden="true" tabindex="-1"></a><span class="fu">## R</span></span>
-<span id="cb8-322"><a href="#cb8-322" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-323"><a href="#cb8-323" aria-hidden="true" tabindex="-1"></a><span class="fu">### Ecosystème spatial de R</span></span>
-<span id="cb8-324"><a href="#cb8-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-325"><a href="#cb8-325" aria-hidden="true" tabindex="-1"></a><span class="fu">### Analyse</span></span>
-<span id="cb8-326"><a href="#cb8-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-327"><a href="#cb8-327" aria-hidden="true" tabindex="-1"></a>Repartir de l'analyse de Tim sur les <span class="co">[</span><span class="ot">restos OSM</span><span class="co">](https://rgeomatic.hypotheses.org/1244)</span> en l'appliquant au Québec ?</span>
-<span id="cb8-328"><a href="#cb8-328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-329"><a href="#cb8-329" aria-hidden="true" tabindex="-1"></a><span class="fu">## Python</span></span>
-<span id="cb8-330"><a href="#cb8-330" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-331"><a href="#cb8-331" aria-hidden="true" tabindex="-1"></a><span class="fu">### Ecosystème spatial avec Python</span></span>
-<span id="cb8-332"><a href="#cb8-332" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-333"><a href="#cb8-333" aria-hidden="true" tabindex="-1"></a><span class="fu">### Analyse</span></span>
-<span id="cb8-334"><a href="#cb8-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-335"><a href="#cb8-335" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Analyse de la couverture du sol avec graphique de synthèse ? </span>
-<span id="cb8-336"><a href="#cb8-336" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Importer un raster, afficher ses valeurs et en faire la synthèse graphique à la façon de ce qui avait été fait <span class="co">[</span><span class="ot">durant SIGR</span><span class="co">](https://sigr2021.github.io/mardown_data/#sympa-pour-voir-les-%C3%A9toiles)</span></span>
-<span id="cb8-337"><a href="#cb8-337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-338"><a href="#cb8-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-339"><a href="#cb8-339" aria-hidden="true" tabindex="-1"></a><span class="fu">## Observable JavaScript</span></span>
-<span id="cb8-340"><a href="#cb8-340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-341"><a href="#cb8-341" aria-hidden="true" tabindex="-1"></a><span class="fu">### Ecosystème spatial avec Ojs</span></span>
-<span id="cb8-342"><a href="#cb8-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-343"><a href="#cb8-343" aria-hidden="true" tabindex="-1"></a><span class="fu">### Cartographie interactive avec Observable JavaScript</span></span>
-<span id="cb8-344"><a href="#cb8-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-345"><a href="#cb8-345" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>carto interactive des niveaux de vie des municipalités avec minimap centrée sur l'espace d'étude ? </span>
-<span id="cb8-346"><a href="#cb8-346" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>vizu avec DeckGL (Hexagon layer)<span class="co">[</span><span class="ot">https://observablehq.com/@johnhaldeman/tutorial-on-deckgl</span><span class="co">]</span></span>
-<span id="cb8-347"><a href="#cb8-347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-348"><a href="#cb8-348" aria-hidden="true" tabindex="-1"></a><span class="fu">## Le petit plus : dépôt et déploiement continu avec GitHub.</span></span>
+<div class="sourceCode" id="cb9" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Articulation de différents langages (R, JavaScript et Python) pour la géovisualisation avec Quarto"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Atelier Sageo, Québec, Juin 2023"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Timothée Giraud, Nicolas Lambert, Matthieu Viry, Ronan Ysebaert (UAR RIATE, CNRS, Université Paris Cité)"</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: sandstone</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">    fontsize: 0.9em</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 2</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">    linkcolor: "#8631ad"</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">  cache: false</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="an">editor_options:</span><span class="co"> </span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co">  chunk_output_type: console</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## Présentation</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>Dans un contexte d’essor de carnets interactifs (Notebooks), l’objet de cet atelier consiste à montrer les possibilités offertes par Quarto, un système de publication scientifique et technique open-source basé sur Pandoc, qui permet d’articuler différents langages pour réaliser des géovisualisations reproductibles dans un seul et même document. Cet atelier proposera aux participants une prise en main des principales fonctionnalités offertes par Quarto, puis une mise en œuvre de chaînes de traitements de l’information géographique reproductibles avec R, Python et Observable JavaScript dans cet environnement.</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="fu">### Déroulé de la demi-journée</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Installation des logiciels nécessaires à la mise en - place de l'environnement de développement (Quarto, R, Python, RStudio, Jupyter...). / **A envoyer aux participants en début de semaine ?**</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Présentation et prise en main des principales fonctionnalités des notebooks Quarto. Présentation des écosystèmes spatiaux de R et Python, et, d'un jeu de données commun sur - lequel s'appuiera l'ensemble de l'atelier.</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Traitement des données vectorielles : Mise en pratique d'une chaîne de traitements reproductible avec R, notamment grâce aux packages sf et mapsf.</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Traitement des données raster : Mise en pratique d'une chaîne de traitements reproductible avec Python (bibliothèques geopandas, rasterio, matplotlib, nbdev, etc.).</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Création de visualisations cartographiques interactives avec ojs (bibliothèques bertin, Plot, Gridviz, Deck.gl).</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Export/publication du document quarto produit pendant l'atelier (templates de différentes revues scientifiques, slides, https://quartopub.com/, etc.).</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## Combiner plusieurs langages de programmation dans un notebook</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **A sortir du document principal et en faire une présentation à part ?**</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="fu">### Evolution des pratiques</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Avant : des "black-boxes" méthodologiques</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>Logiciels payants, ruptures logicielles dans les chaines de traitements, stockage et partage des données et méthodes non optimisé, univers "clic-bouton".</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;center&gt;&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"fig/chain_1.png"</span> <span class="er">width</span><span class="ot">=</span><span class="st">"800"</span><span class="kw">/&gt;&lt;/center&gt;</span></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Maintenant :</span></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>Solutions open source, gratuites, qui couvrent l'ensemble de la chaîne de traitement de l'information, univers de programmation.</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;center&gt;&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"fig/chain_2.png"</span> <span class="er">width</span><span class="ot">=</span><span class="st">"800"</span><span class="kw">/&gt;&lt;/center&gt;</span></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Maintenant (et depuis peu)</span></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>Mise à jour de ce graphique en intégrant les dimensions Python, Js <span class="sc">\&gt;</span> plus forcément chaînes de traitement.</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pb : comment documenter et partager ses traitements ? </span></span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Création de bcp de scripts. </span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compréhensible par soi (et encore, avec le temps)...</span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Transmettre, mettre à jour... </span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a><span class="fu">### Recherche reproductible</span></span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>Ouverture des protocoles de recherche dans l'objectif de confirmer et rendre répétable des résultats de recherche (<span class="co">[</span><span class="ot">Claerbout, 1992</span><span class="co">](http://sep.stanford.edu/oldsep/matt/join/redoc/web/seg92.html)</span>).</span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Disponibilité des données et du code, exécutable.</span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Documentation de l'environnement logiciel nécessaire à son exécution.</span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Transparence dans la collecte de données, ses traitements, analyses et sorties graphiques.</span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Réutilisable par d'autres : documentation du code, de ce qu'il produit et dans quel but.</span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Ouvert aux retours, commentaires, suggestions, critiques, révisions.</span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a><span class="fu">### Programmation lettrée &amp; notebooks</span></span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>**Paradigme de programmation** (<span class="co">[</span><span class="ot">Knuth, 1984</span><span class="co">](https://academic.oup.com/comjnl/article/27/2/97/343244)</span>) qui consiste à associer code source (pour les ordinateurs) et documentation (pour les humains).</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Donner les informations suffisantes pour répliquer l'expérimentation, à la manière d'un essai.</span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Vérifier que les conclusions sont valides.</span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Améliorer les programmes / rendre les mauvaises décisions de conception plus évidentes.</span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Utile pour reprendre les programmes ultérieurement.</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Transmettre et partager les connaissances sous des formes appropriées (tutoriels, manuels).</span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Un gain général en **reproductibilité** de la démarche et en **ouverture** des méthodes scientifiques.</span></span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a><span class="fu">### Notebooks : Principes fondamentaux</span></span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>Le **Notebook** est solution opérationnelle et adaptée pour arriver à ces fins.</span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;center&gt;</span><span class="al">![Source: Pecout, 2022](fig/notebook_1.png)</span><span class="kw">&lt;/center&gt;</span></span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a><span class="fu">### Les notebooks du moment</span></span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a><span class="al">![Source : Pecout, 2022](fig/nouveau_notebook.png)</span></span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a><span class="fu">### Squelette d'un notebook (RMarkdown / Quarto)</span></span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a><span class="al">![Source : Pecout, 2022](fig/notebook_2.png)</span></span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Le YAML en quelques mots</span></span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a>Le YAML est paramétrable en fonction du format de sortie désiré (HTML, PDF, présentations, etc.).</span>
+<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a>Pour le document de base (Quarto Document au format HTML), il est par exemple possible de jouer sur:</span>
+<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**des paramétrages généraux** (choisir un thème, définir une feuille de style css)</span>
+<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>la **table des matières** (toc)</span>
+<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>la numérotation des parties du document</span>
+<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>les typographies utilisées</span>
+<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>le choix des couleurs</span>
+<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>l'affichage des blocs de code</span>
+<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>l'exécution du code (afficher le code ou non, des messages d'erreur, etc.)</span>
+<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>le dimensionnement des figures et tables</span>
+<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>la gestion des urls</span>
+<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>le paramétrage de la bibliographie</span>
+<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>l'affichage des notes de bas de page</span>
+<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>les métadonnées associées au document...</span>
+<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a>Tout est présenté <span class="co">[</span><span class="ot">ici</span><span class="co">](https://quarto.org/docs/reference/formats/html.html)</span></span>
+<span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a><span class="in">``` yaml</span></span>
+<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Articulation de différents environnements de développement de géo-visualisations. Atelier autour de Quarto : R, Pytho, et Observable JavaScript"</span></span>
+<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a><span class="fu">subtitle</span><span class="kw">:</span><span class="at"> </span><span class="st">"Atelier Sageo, Québec, Juin 2023"</span></span>
+<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Timothée Giraud, Nicolas Lambert, Matthieu Viry, Ronan Ysebaert (UAR RIATE, CNRS, Université Paris Cité)"</span></span>
+<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> sandstone</span></span>
+<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">fontsize</span><span class="kw">:</span><span class="at"> 0.9em</span></span>
+<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code-tools</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code-fold</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc-depth</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
+<span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">linkcolor</span><span class="kw">:</span><span class="at"> </span><span class="st">"#8631ad"</span></span>
+<span id="cb9-136"><a href="#cb9-136" aria-hidden="true" tabindex="-1"></a><span class="fu">editor</span><span class="kw">:</span><span class="at"> visual</span></span>
+<span id="cb9-137"><a href="#cb9-137" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb9-138"><a href="#cb9-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-139"><a href="#cb9-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Le markdown en quelques mots</span></span>
+<span id="cb9-141"><a href="#cb9-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-142"><a href="#cb9-142" aria-hidden="true" tabindex="-1"></a>h1, h2, h3 bold, italic import figure</span>
+<span id="cb9-143"><a href="#cb9-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Paramétrer ses chunks en qqes mots</span></span>
+<span id="cb9-145"><a href="#cb9-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a><span class="fu">### Des sorties multiples</span></span>
+<span id="cb9-147"><a href="#cb9-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Plusieurs formats de sorties : .HTML, .pdf, .doc</span>
+<span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Largement documentés : Manuels d'utilisations, forums, etc.</span>
+<span id="cb9-150"><a href="#cb9-150" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Hautement **paramétrable** via le YAML et l'ajout éventuel de styles css.</span>
+<span id="cb9-151"><a href="#cb9-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-152"><a href="#cb9-152" aria-hidden="true" tabindex="-1"></a>::: panel-tabset</span>
+<span id="cb9-153"><a href="#cb9-153" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Sites Web</span></span>
+<span id="cb9-154"><a href="#cb9-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-155"><a href="#cb9-155" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;center&gt;</span></span>
+<span id="cb9-156"><a href="#cb9-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-157"><a href="#cb9-157" aria-hidden="true" tabindex="-1"></a>::: small</span>
+<span id="cb9-158"><a href="#cb9-158" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://rcarto.gitpages.huma-num.fr/centralite/"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Sortie (site Web)<span class="kw">&lt;/a&gt;</span> // <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://gitlab.huma-num.fr/rCarto/centralite"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Dépôt GitLab<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb9-159"><a href="#cb9-159" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-160"><a href="#cb9-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-161"><a href="#cb9-161" aria-hidden="true" tabindex="-1"></a><span class="al">![](fig/web_site.png)</span></span>
+<span id="cb9-162"><a href="#cb9-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-163"><a href="#cb9-163" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/center&gt;</span></span>
+<span id="cb9-164"><a href="#cb9-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-165"><a href="#cb9-165" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Présentations</span></span>
+<span id="cb9-166"><a href="#cb9-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-167"><a href="#cb9-167" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;center&gt;</span></span>
+<span id="cb9-168"><a href="#cb9-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-169"><a href="#cb9-169" aria-hidden="true" tabindex="-1"></a>::: small</span>
+<span id="cb9-170"><a href="#cb9-170" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://github.com/rysebaert/qgis_data_shs/blob/master/index.Rmd"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Sortie (Présentation)<span class="kw">&lt;/a&gt;</span> // <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://github.com/rysebaert/qgis_data_shs"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Dépôt GitHub<span class="kw">&lt;/a&gt;</span> // <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://github.com/rysebaert/qgis_data_shs/blob/master/index.Rmd"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Code (RMardown)<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb9-171"><a href="#cb9-171" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-172"><a href="#cb9-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-173"><a href="#cb9-173" aria-hidden="true" tabindex="-1"></a><span class="al">![](fig/qgis_output1.png)</span> <span class="al">![](fig/qgis_output2.png)</span></span>
+<span id="cb9-174"><a href="#cb9-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-175"><a href="#cb9-175" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/center&gt;</span></span>
+<span id="cb9-176"><a href="#cb9-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-177"><a href="#cb9-177" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Rapports Interactifs</span></span>
+<span id="cb9-178"><a href="#cb9-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-179"><a href="#cb9-179" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;center&gt;</span></span>
+<span id="cb9-180"><a href="#cb9-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-181"><a href="#cb9-181" aria-hidden="true" tabindex="-1"></a>::: small</span>
+<span id="cb9-182"><a href="#cb9-182" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://rysebaert.github.io/climbing_paris/"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Sortie (Rapport interactif)<span class="kw">&lt;/a&gt;</span> // <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://github.com/rysebaert/climbing_paris"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Dépôt GitHub<span class="kw">&lt;/a&gt;</span> // <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://github.com/rysebaert/climbing_paris/blob/main/index.qmd"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Code (Quarto)<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb9-183"><a href="#cb9-183" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-184"><a href="#cb9-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-185"><a href="#cb9-185" aria-hidden="true" tabindex="-1"></a><span class="al">![](fig/report.png)</span></span>
+<span id="cb9-186"><a href="#cb9-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-187"><a href="#cb9-187" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/center&gt;</span></span>
+<span id="cb9-188"><a href="#cb9-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-189"><a href="#cb9-189" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Manuels</span></span>
+<span id="cb9-190"><a href="#cb9-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-191"><a href="#cb9-191" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;center&gt;</span></span>
+<span id="cb9-192"><a href="#cb9-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-193"><a href="#cb9-193" aria-hidden="true" tabindex="-1"></a>::: small</span>
+<span id="cb9-194"><a href="#cb9-194" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://rcarto.github.io/geomatique_avec_r/"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Sortie (Bookdown)<span class="kw">&lt;/a&gt;</span> // <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"https://github.com/rCarto/geomatique_avec_r"</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span> <span class="er">role</span><span class="ot">=</span><span class="st">"button"</span><span class="kw">&gt;</span>Dépôt GitHub<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb9-195"><a href="#cb9-195" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-196"><a href="#cb9-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-197"><a href="#cb9-197" aria-hidden="true" tabindex="-1"></a><span class="al">![](fig/bookdown.png)</span></span>
+<span id="cb9-198"><a href="#cb9-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-199"><a href="#cb9-199" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/center&gt;</span></span>
+<span id="cb9-200"><a href="#cb9-200" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-201"><a href="#cb9-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-202"><a href="#cb9-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-203"><a href="#cb9-203" aria-hidden="true" tabindex="-1"></a><span class="fu">### Montrer le .qmd de la présentation</span></span>
+<span id="cb9-204"><a href="#cb9-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-205"><a href="#cb9-205" aria-hidden="true" tabindex="-1"></a>Idéalement, pas grand chose dans le YAML et montrer que ça rend bien. </span>
+<span id="cb9-206"><a href="#cb9-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-207"><a href="#cb9-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-208"><a href="#cb9-208" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step by step (captures d'écran) initier un .qmd et le construire avec RStudio</span></span>
+<span id="cb9-209"><a href="#cb9-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-210"><a href="#cb9-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-211"><a href="#cb9-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-212"><a href="#cb9-212" aria-hidden="true" tabindex="-1"></a>::: {.callout-caution collapse="true"}</span>
+<span id="cb9-213"><a href="#cb9-213" aria-hidden="true" tabindex="-1"></a><span class="fu">### \[To do\] : Initier un document Quarto</span></span>
+<span id="cb9-214"><a href="#cb9-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-215"><a href="#cb9-215" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Créer un modèle Quarto avec RStudio</span>
+<span id="cb9-216"><a href="#cb9-216" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Jouer avec les métadonnées pour paramétrer le document (nom de l'auteur, ajout table des matières, etc.)</span>
+<span id="cb9-217"><a href="#cb9-217" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-218"><a href="#cb9-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-219"><a href="#cb9-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-220"><a href="#cb9-220" aria-hidden="true" tabindex="-1"></a><span class="fu">## Données atelier</span></span>
+<span id="cb9-221"><a href="#cb9-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-222"><a href="#cb9-222" aria-hidden="true" tabindex="-1"></a>Plusieurs possibilités si espace d'étude canadien : </span>
+<span id="cb9-223"><a href="#cb9-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-224"><a href="#cb9-224" aria-hidden="true" tabindex="-1"></a>**Vecteur**</span>
+<span id="cb9-225"><a href="#cb9-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-226"><a href="#cb9-226" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="co">[</span><span class="ot">OpenStreetMap</span><span class="co">](https://www.openstreetmap.org/)</span> (POI) : restos, bars. </span>
+<span id="cb9-227"><a href="#cb9-227" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Le découpage géographique des municipalités québécoises (Source : <span class="co">[</span><span class="ot">Ministère des Ressources naturelles et des Forêts</span><span class="co">](https://mrnf.gouv.qc.ca/repertoire-geographique/carte-generale-base-donnees-geographiques-administratives/)</span>).</span>
+<span id="cb9-228"><a href="#cb9-228" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>La série de population 2001-2022 et l'indice de vitalité économique des localités québecoises, délivré par l'<span class="co">[</span><span class="ot">Institut de la Statistique du Québec</span><span class="co">](https://statistique.quebec.ca/fr/recherche?territoire=municipalites&amp;type_produit=tableau-detaille)</span>.</span>
+<span id="cb9-229"><a href="#cb9-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-230"><a href="#cb9-230" aria-hidden="true" tabindex="-1"></a>**Raster** </span>
+<span id="cb9-231"><a href="#cb9-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-232"><a href="#cb9-232" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Estimations de population désagrégées : <span class="co">[</span><span class="ot">World Pop Canada 100 m res - 42 Mo</span><span class="co">](https://hub.worldpop.org/geodata/summary?id=49922)</span> + <span class="co">[</span><span class="ot">USA - 417 MB</span><span class="co">](https://hub.worldpop.org/geodata/summary?id=49916)</span> ou <span class="co">[</span><span class="ot">1km - CAN</span><span class="co">](https://hub.worldpop.org/geodata/summary?id=34942)</span> / <span class="co">[</span><span class="ot">USA - 49.42 MB</span><span class="co">](https://hub.worldpop.org/geodata/summary?id=34816)</span></span>
+<span id="cb9-233"><a href="#cb9-233" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Couverutre du sol : ESA World Cover ? source <span class="co">[</span><span class="ot">European Space Agency</span><span class="co">](https://worldcover2020.esa.int/download)</span> ou <span class="co">[</span><span class="ot">NASA</span><span class="co">](https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/science-domain/land-cover-and-phenology/)</span> + <span class="co">[</span><span class="ot">Guide</span><span class="co">](https://lpdaac.usgs.gov/documents/101/MCD12_User_Guide_V6.pdf)</span>. Sur le Québec cf <span class="co">[</span><span class="ot">Comptes des terres du Québec Méridional</span><span class="co">](https://statistique.quebec.ca/cartovista/comptes_terres/index.html)</span> et <span class="co">[</span><span class="ot">GeoTIFF associé</span><span class="co">](https://www.donneesquebec.ca/recherche/fr/dataset/comptes-des-terres-du-quebec-meridional-changement-de-la-couverture-terrestre)</span> </span>
+<span id="cb9-234"><a href="#cb9-234" aria-hidden="true" tabindex="-1"></a><span class="ss">-  </span>Intensité pollution lumineuse : <span class="co">[</span><span class="ot">Earth Observation Group</span><span class="co">](https://eogdata.mines.edu/products/vnl/)</span></span>
+<span id="cb9-235"><a href="#cb9-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-236"><a href="#cb9-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-237"><a href="#cb9-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-238"><a href="#cb9-238" aria-hidden="true" tabindex="-1"></a>::: {.callout-caution collapse="true"}</span>
+<span id="cb9-239"><a href="#cb9-239" aria-hidden="true" tabindex="-1"></a><span class="fu">### \[To do\] : Télécharger les données de l'exercice</span></span>
+<span id="cb9-240"><a href="#cb9-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-241"><a href="#cb9-241" aria-hidden="true" tabindex="-1"></a>Télécharger les données utiles à reproduire l'exercice (dépôt github à part) - Les données - Les scripts R, Python et Ojs.</span>
+<span id="cb9-242"><a href="#cb9-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-243"><a href="#cb9-243" aria-hidden="true" tabindex="-1"></a>Ouvrir le fichier projet.</span>
+<span id="cb9-244"><a href="#cb9-244" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-245"><a href="#cb9-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-246"><a href="#cb9-246" aria-hidden="true" tabindex="-1"></a><span class="fu">## Préparation des espaces d'étude avec R</span></span>
+<span id="cb9-247"><a href="#cb9-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-248"><a href="#cb9-248" aria-hidden="true" tabindex="-1"></a>On cherche à proposer une analyse systématique pour l'espace d'étude environnant les communes peuplées de plus de 100000 habitants de la province du Québec en 2022.</span>
+<span id="cb9-249"><a href="#cb9-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-250"><a href="#cb9-250" aria-hidden="true" tabindex="-1"></a>Cette préparation des données est réalisée avec R.</span>
+<span id="cb9-251"><a href="#cb9-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-252"><a href="#cb9-252" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE, out.width = "100%"}</span></span>
+<span id="cb9-253"><a href="#cb9-253" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb9-254"><a href="#cb9-254" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapsf)</span>
+<span id="cb9-255"><a href="#cb9-255" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb9-256"><a href="#cb9-256" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rmapshaper)</span>
+<span id="cb9-257"><a href="#cb9-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-258"><a href="#cb9-258" aria-hidden="true" tabindex="-1"></a><span class="co"># Communes</span></span>
+<span id="cb9-259"><a href="#cb9-259" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"geom/munic_s.shp"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-260"><a href="#cb9-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-261"><a href="#cb9-261" aria-hidden="true" tabindex="-1"></a><span class="co"># Simplification des contours</span></span>
+<span id="cb9-262"><a href="#cb9-262" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">ms_simplify</span>(mun, <span class="at">keep =</span> <span class="fl">0.05</span>)</span>
+<span id="cb9-263"><a href="#cb9-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-264"><a href="#cb9-264" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformation long/lat</span></span>
+<span id="cb9-265"><a href="#cb9-265" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(mun, <span class="dv">4326</span>)</span>
+<span id="cb9-266"><a href="#cb9-266" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(mun, <span class="at">by =</span> <span class="fu">list</span>(<span class="at">MUS_CO_GEO =</span> mun<span class="sc">$</span>MUS_CO_GEO),</span>
+<span id="cb9-267"><a href="#cb9-267" aria-hidden="true" tabindex="-1"></a>                 <span class="at">FUN =</span> head, <span class="dv">1</span>)</span>
+<span id="cb9-268"><a href="#cb9-268" aria-hidden="true" tabindex="-1"></a>mrc <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(mun, <span class="at">by =</span> <span class="fu">list</span>(<span class="at">MUS_CO_MRC =</span> mun<span class="sc">$</span>MUS_CO_MRC),</span>
+<span id="cb9-269"><a href="#cb9-269" aria-hidden="true" tabindex="-1"></a>                 <span class="at">FUN =</span> head, <span class="dv">1</span>)</span>
+<span id="cb9-270"><a href="#cb9-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-271"><a href="#cb9-271" aria-hidden="true" tabindex="-1"></a><span class="co"># Import données population et nettoyage</span></span>
+<span id="cb9-272"><a href="#cb9-272" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read_xlsx</span>(<span class="st">"data/stats_socio_eco/Pop-MUN-total.xlsx"</span>, </span>
+<span id="cb9-273"><a href="#cb9-273" aria-hidden="true" tabindex="-1"></a>                           <span class="at">skip =</span> <span class="dv">3</span>, <span class="at">n_max =</span> <span class="dv">1292</span>,</span>
+<span id="cb9-274"><a href="#cb9-274" aria-hidden="true" tabindex="-1"></a>                <span class="at">col_types =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"text"</span>, <span class="dv">7</span>), <span class="fu">rep</span>(<span class="st">"numeric"</span>, <span class="dv">22</span>)))) </span>
+<span id="cb9-275"><a href="#cb9-275" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">8</span><span class="sc">:</span><span class="dv">29</span>)]</span>
+<span id="cb9-276"><a href="#cb9-276" aria-hidden="true" tabindex="-1"></a>col_pop <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"POP_"</span>, <span class="fu">seq</span>(<span class="dv">2001</span>, <span class="dv">2022</span>, <span class="dv">1</span>))</span>
+<span id="cb9-277"><a href="#cb9-277" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"NOM"</span>, <span class="st">"STATUT"</span>, <span class="st">"MUS_CO_GEO"</span>, col_pop)</span>
+<span id="cb9-278"><a href="#cb9-278" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>MUS_CO_GEO <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">nchar</span>(df<span class="sc">$</span>MUS_CO_GEO) <span class="sc">&lt;</span> <span class="dv">5</span>, <span class="fu">paste0</span>(<span class="st">"0"</span>, df<span class="sc">$</span>MUS_CO_GEO), </span>
+<span id="cb9-279"><a href="#cb9-279" aria-hidden="true" tabindex="-1"></a>                        df<span class="sc">$</span>MUS_CO_GEO)</span>
+<span id="cb9-280"><a href="#cb9-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-281"><a href="#cb9-281" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>NOM <span class="ot">&lt;-</span> <span class="fu">paste0</span>(df<span class="sc">$</span>NOM, <span class="st">" ("</span>, df<span class="sc">$</span>STATUT, <span class="st">")"</span>)</span>
+<span id="cb9-282"><a href="#cb9-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-283"><a href="#cb9-283" aria-hidden="true" tabindex="-1"></a><span class="co"># Import données socio-éco et nettoyage</span></span>
+<span id="cb9-284"><a href="#cb9-284" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read_xlsx</span>(<span class="st">"data/stats_socio_eco/Tableau.xlsx"</span>, </span>
+<span id="cb9-285"><a href="#cb9-285" aria-hidden="true" tabindex="-1"></a>                           <span class="at">skip =</span> <span class="dv">4</span>, <span class="at">n_max =</span> <span class="dv">1163</span>))</span>
+<span id="cb9-286"><a href="#cb9-286" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df2[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>),]</span>
+<span id="cb9-287"><a href="#cb9-287" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df2[,<span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>)]</span>
+<span id="cb9-288"><a href="#cb9-288" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df2) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"NOM"</span>, <span class="st">"REG"</span>, <span class="st">"VIT_ECO"</span>, <span class="st">"REV_MED"</span>, <span class="st">"TX_2564"</span>, <span class="st">"TAAM"</span>)</span>
+<span id="cb9-289"><a href="#cb9-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-290"><a href="#cb9-290" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">merge</span>(df, df2, <span class="at">by =</span> <span class="st">"NOM"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-291"><a href="#cb9-291" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df[,<span class="fu">c</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">25</span>, <span class="dv">27</span><span class="sc">:</span><span class="dv">30</span>)]</span>
+<span id="cb9-292"><a href="#cb9-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-293"><a href="#cb9-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-294"><a href="#cb9-294" aria-hidden="true" tabindex="-1"></a><span class="co"># Jointure acvec le fond de carte de référence</span></span>
+<span id="cb9-295"><a href="#cb9-295" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">merge</span>(mun, df, <span class="at">by =</span> <span class="st">"MUS_CO_GEO"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-296"><a href="#cb9-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-297"><a href="#cb9-297" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean</span></span>
+<span id="cb9-298"><a href="#cb9-298" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">st_cast</span>(mun, <span class="st">"MULTIPOLYGON"</span>)</span>
+<span id="cb9-299"><a href="#cb9-299" aria-hidden="true" tabindex="-1"></a>mun_100k <span class="ot">&lt;-</span> mun[mun<span class="sc">$</span>POP_2022 <span class="sc">&gt;</span> <span class="dv">100000</span>,]</span>
+<span id="cb9-300"><a href="#cb9-300" aria-hidden="true" tabindex="-1"></a>mun_100k <span class="ot">&lt;-</span> mun_100k[<span class="sc">!</span><span class="fu">is.na</span>(mun_100k<span class="sc">$</span>POP_2022),]</span>
+<span id="cb9-301"><a href="#cb9-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-302"><a href="#cb9-302" aria-hidden="true" tabindex="-1"></a><span class="co"># Export</span></span>
+<span id="cb9-303"><a href="#cb9-303" aria-hidden="true" tabindex="-1"></a><span class="co"># st_write(mun, "geom/munic.geojson")</span></span>
+<span id="cb9-304"><a href="#cb9-304" aria-hidden="true" tabindex="-1"></a><span class="co"># st_write(mrc, "geom/mrc.geojson")</span></span>
+<span id="cb9-305"><a href="#cb9-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-306"><a href="#cb9-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-307"><a href="#cb9-307" aria-hidden="true" tabindex="-1"></a><span class="co"># Cartographie</span></span>
+<span id="cb9-308"><a href="#cb9-308" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformation conique équivalente d'ALbers</span></span>
+<span id="cb9-309"><a href="#cb9-309" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(mun, <span class="dv">6623</span>)</span>
+<span id="cb9-310"><a href="#cb9-310" aria-hidden="true" tabindex="-1"></a>mun_100k <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(mun_100k, <span class="dv">6623</span>)</span>
+<span id="cb9-311"><a href="#cb9-311" aria-hidden="true" tabindex="-1"></a>mrc <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(mrc, <span class="dv">6623</span>)</span>
+<span id="cb9-312"><a href="#cb9-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-313"><a href="#cb9-313" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_init</span>(mun_100k)</span>
+<span id="cb9-314"><a href="#cb9-314" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(mun, <span class="at">border =</span> <span class="st">"white"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-315"><a href="#cb9-315" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(mun_100k, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">border =</span> <span class="st">"white"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-316"><a href="#cb9-316" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(mrc, <span class="at">col =</span> <span class="cn">NA</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-317"><a href="#cb9-317" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_label</span>(mun_100k, <span class="at">var =</span> <span class="st">"MUS_NM_MRC"</span>, <span class="at">halo =</span> <span class="cn">TRUE</span>, <span class="at">overlap =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-318"><a href="#cb9-318" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_scale</span>(<span class="at">size =</span> <span class="dv">50</span>)</span>
+<span id="cb9-319"><a href="#cb9-319" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_title</span>(<span class="st">"Municipalités québecoises avec plus de 100 000 habitants en 2022"</span>)</span>
+<span id="cb9-320"><a href="#cb9-320" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-321"><a href="#cb9-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-322"><a href="#cb9-322" aria-hidden="true" tabindex="-1"></a><span class="fu">## Initialisation de l'analyse</span></span>
+<span id="cb9-323"><a href="#cb9-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-324"><a href="#cb9-324" aria-hidden="true" tabindex="-1"></a>Extraction du nom des communes de plus de 100 000 habitants. </span>
+<span id="cb9-325"><a href="#cb9-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-328"><a href="#cb9-328" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-329"><a href="#cb9-329" aria-hidden="true" tabindex="-1"></a>mun_100k<span class="sc">$</span>NOM</span>
+<span id="cb9-330"><a href="#cb9-330" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-331"><a href="#cb9-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-332"><a href="#cb9-332" aria-hidden="true" tabindex="-1"></a>Choix de l'espace d'analyse parmi ces communes. </span>
+<span id="cb9-333"><a href="#cb9-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-336"><a href="#cb9-336" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-337"><a href="#cb9-337" aria-hidden="true" tabindex="-1"></a>sel <span class="ot">&lt;-</span> <span class="st">"Québec"</span></span>
+<span id="cb9-338"><a href="#cb9-338" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-339"><a href="#cb9-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-340"><a href="#cb9-340" aria-hidden="true" tabindex="-1"></a>Définition de l'emprise spatiale d'analyse, définie par une bounding box définie par *Xmin, Ymin, Xmax, Ymax*. On propose ici un périmètre d'étude de 2km autour de l'emprise géographique de la commune sélectionnée.</span>
+<span id="cb9-341"><a href="#cb9-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-344"><a href="#cb9-344" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-345"><a href="#cb9-345" aria-hidden="true" tabindex="-1"></a>down <span class="ot">&lt;-</span> <span class="fu">st_as_sfc</span>(<span class="fu">st_bbox</span>(<span class="fu">st_buffer</span>(mun_100k[mun_100k<span class="sc">$</span>MUS_NM_MRC <span class="sc">==</span> sel,], <span class="dv">2000</span>)))</span>
+<span id="cb9-346"><a href="#cb9-346" aria-hidden="true" tabindex="-1"></a>down <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(down, <span class="dv">4326</span>)</span>
+<span id="cb9-347"><a href="#cb9-347" aria-hidden="true" tabindex="-1"></a>bbox <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(down)</span>
+<span id="cb9-348"><a href="#cb9-348" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-349"><a href="#cb9-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-350"><a href="#cb9-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-351"><a href="#cb9-351" aria-hidden="true" tabindex="-1"></a><span class="fu">## R</span></span>
+<span id="cb9-352"><a href="#cb9-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-353"><a href="#cb9-353" aria-hidden="true" tabindex="-1"></a><span class="fu">### Ecosystème spatial de R</span></span>
+<span id="cb9-354"><a href="#cb9-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-355"><a href="#cb9-355" aria-hidden="true" tabindex="-1"></a><span class="fu">### Analyse</span></span>
+<span id="cb9-356"><a href="#cb9-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-357"><a href="#cb9-357" aria-hidden="true" tabindex="-1"></a>Repartir de l'analyse de Tim sur les <span class="co">[</span><span class="ot">restos OSM</span><span class="co">](https://rgeomatic.hypotheses.org/1244)</span> en l'appliquant au Québec ?</span>
+<span id="cb9-358"><a href="#cb9-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-359"><a href="#cb9-359" aria-hidden="true" tabindex="-1"></a><span class="fu">## Python</span></span>
+<span id="cb9-360"><a href="#cb9-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-361"><a href="#cb9-361" aria-hidden="true" tabindex="-1"></a><span class="fu">### Ecosystème spatial avec Python</span></span>
+<span id="cb9-362"><a href="#cb9-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-363"><a href="#cb9-363" aria-hidden="true" tabindex="-1"></a><span class="fu">### Analyse</span></span>
+<span id="cb9-364"><a href="#cb9-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-365"><a href="#cb9-365" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Analyse de la couverture du sol avec graphique de synthèse ? </span>
+<span id="cb9-366"><a href="#cb9-366" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Importer un raster, afficher ses valeurs et en faire la synthèse graphique à la façon de ce qui avait été fait <span class="co">[</span><span class="ot">durant SIGR</span><span class="co">](https://sigr2021.github.io/mardown_data/#sympa-pour-voir-les-%C3%A9toiles)</span></span>
+<span id="cb9-367"><a href="#cb9-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-368"><a href="#cb9-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-369"><a href="#cb9-369" aria-hidden="true" tabindex="-1"></a><span class="fu">## Observable JavaScript</span></span>
+<span id="cb9-370"><a href="#cb9-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-371"><a href="#cb9-371" aria-hidden="true" tabindex="-1"></a><span class="fu">### Ecosystème spatial avec Ojs</span></span>
+<span id="cb9-372"><a href="#cb9-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-373"><a href="#cb9-373" aria-hidden="true" tabindex="-1"></a><span class="fu">### Cartographie interactive avec Observable JavaScript</span></span>
+<span id="cb9-374"><a href="#cb9-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-375"><a href="#cb9-375" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>carto interactive des niveaux de vie des municipalités avec minimap centrée sur l'espace d'étude ? </span>
+<span id="cb9-376"><a href="#cb9-376" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>vizu avec DeckGL (Hexagon layer)<span class="co">[</span><span class="ot">https://observablehq.com/@johnhaldeman/tutorial-on-deckgl</span><span class="co">]</span></span>
+<span id="cb9-377"><a href="#cb9-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-378"><a href="#cb9-378" aria-hidden="true" tabindex="-1"></a><span class="fu">## Le petit plus : dépôt et déploiement continu avec GitHub.</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
