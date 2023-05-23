@@ -113,8 +113,8 @@ mun_100k <- mun[mun$POP_2022 > 100000,]
 mun_100k <- mun_100k[!is.na(mun_100k$POP_2022),]
 
 # Export
-# st_write(mun, "geom/munic.geojson")
-# st_write(mrc, "geom/mrc.geojson")
+#st_write(mun, "geom/munic.geojson")
+#st_write(mrc, "geom/mrc.geojson")
 
 
 # Cartographie
