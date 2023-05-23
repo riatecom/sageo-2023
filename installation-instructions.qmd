@@ -85,7 +85,7 @@ Les instructions pour utiliser l'environnement virtuel Python créé depuis R St
 ### Installation de R et des dépendances pour R Studio
 
 ```bash
-sudo apt install r-base curl libssl-dev libpq5 libclang-dev
+sudo apt install r-base curl libssl-dev libpq5 libclang-dev libudunits2-dev
 ```
 
 ### Installation de R Studio
@@ -149,6 +149,7 @@ Les instructions pour utiliser l'environnement virtuel Python créé depuis R St
 ### Installation des dépendances Python requises
 
 - Ouvrir un terminal système (soit depuis *Finder*, ouvrir le dossier /Application/Utilitaires et cliquer deux fois sur *Terminal*, soit depuis l'icone *Launchpad* dans le Dock, saisir "Terminal" dans le champ de recherche, puis cliquer sur *Terminal*)
+
 - Créer un envrionnement virtuel :
 
 ```sh
@@ -170,6 +171,12 @@ python -m pip install numpy geopandas rasterio
 - Fermer le terminal
 
 ### Installation des dépendances R requises
+
+- Ouvrir un terminal système (soit depuis *Finder*, ouvrir le dossier /Application/Utilitaires et cliquer deux fois sur *Terminal*, soit depuis l'icone *Launchpad* dans le Dock, saisir "Terminal" dans le champ de recherche, puis cliquer sur *Terminal*) et installer la bibliothèque *udunits*.
+
+```bash
+brew install udunits
+```
 
 - Ouvrir R Studio et saisir la commande suivante dans l'intépréteur R :
 
