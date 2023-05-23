@@ -14,7 +14,7 @@ format:
     margin: 0
     embed-resources: true
     smaller: true
-    scrollable: false
+    scrollable: true
     theme: [simple, custom.scss]
     code-line-numbers: false
 editor: visual
@@ -25,13 +25,16 @@ execute:
 
 ## Evolution des pratiques
 
-## Avant : des "black-boxes" méthodologiques
+### Avant ( > ~ 2011) : des "black-boxes" méthodologiques
 
 Logiciels payants, ruptures logicielles dans les chaines de traitements, stockage et partage des données et méthodes non optimisé, univers "clic-bouton".
 
 <center><img src="fig/chain_1.png" width="800"/></center>
 
-## Maintenant :
+
+## Evolution des pratiques
+
+### Ensuite ( 2011 > récemment)
 
 Solutions open source, gratuites, qui couvrent l'ensemble de la chaîne de traitement de l'information, univers de programmation.
 
@@ -39,18 +42,26 @@ Solutions open source, gratuites, qui couvrent l'ensemble de la chaîne de trait
 
 <center><img src="fig/chain_2.png" width="800"/></center>
 
-#### Maintenant (et depuis peu)
+
+## Evolution des pratiques
+
+#### Depuis peu
 
 Mise à jour de ce graphique en intégrant les dimensions Python, Js \> plus forcément chaînes de traitement.
 
 
-### Pb : comment documenter et partager ses traitements ? 
+## Evolution des pratiques
+
+### Pb (1) : Comment passer d'un langage à l'autre 
+
+### Pb (2) : Comment documenter et partager ses traitements ? 
 
 - Création de bcp de scripts. 
 - Compréhensible par soi (et encore, avec le temps)...
 - Transmettre, mettre à jour... 
 
-### Recherche reproductible
+
+## Recherche reproductible
 
 Ouverture des protocoles de recherche dans l'objectif de confirmer et rendre répétable des résultats de recherche ([Claerbout, 1992](http://sep.stanford.edu/oldsep/matt/join/redoc/web/seg92.html)).
 
@@ -60,7 +71,7 @@ Ouverture des protocoles de recherche dans l'objectif de confirmer et rendre ré
 -   Réutilisable par d'autres : documentation du code, de ce qu'il produit et dans quel but.
 -   Ouvert aux retours, commentaires, suggestions, critiques, révisions.
 
-### Programmation lettrée & notebooks
+## Programmation lettrée & notebooks
 
 **Paradigme de programmation** ([Knuth, 1984](https://academic.oup.com/comjnl/article/27/2/97/343244)) qui consiste à associer code source (pour les ordinateurs) et documentation (pour les humains).
 
@@ -72,22 +83,22 @@ Ouverture des protocoles de recherche dans l'objectif de confirmer et rendre ré
 
 > Un gain général en **reproductibilité** de la démarche et en **ouverture** des méthodes scientifiques.
 
-### Notebooks : Principes fondamentaux
+## Notebooks : Principes fondamentaux
 
 Le **Notebook** est solution opérationnelle et adaptée pour arriver à ces fins.
 
 <center>![Source: Pecout, 2022](fig/notebook_1.png)</center>
 
-### Les notebooks du moment
+## Les notebooks du moment
 
 ![Source : Pecout, 2022](fig/nouveau_notebook.png)
 
 
-### Squelette d'un notebook (RMarkdown / Quarto)
+## Squelette d'un notebook (RMarkdown / Quarto)
 
 ![Source : Pecout, 2022](fig/notebook_2.png)
 
-#### Le YAML en quelques mots
+## Le YAML en quelques mots
 
 Le YAML est paramétrable en fonction du format de sortie désiré (HTML, PDF, présentations, etc.).
 
@@ -126,20 +137,20 @@ editor: visual
 ---
 ```
 
-#### Le markdown en quelques mots
+## Le markdown en quelques mots
 
 h1, h2, h3 bold, italic import figure
 
-#### Paramétrer ses chunks en qqes mots
+## Paramétrer ses chunks en qqes mots
 
-### Des sorties multiples
+## Des sorties multiples
 
 -   Plusieurs formats de sorties : .HTML, .pdf, .doc
 -   Largement documentés : Manuels d'utilisations, forums, etc.
 -   Hautement **paramétrable** via le YAML et l'ajout éventuel de styles css.
 
 ::: panel-tabset
-#### Sites Web
+### Sites Web
 
 <center>
 
@@ -151,7 +162,7 @@ h1, h2, h3 bold, italic import figure
 
 </center>
 
-#### Présentations
+### Présentations
 
 <center>
 
@@ -163,7 +174,7 @@ h1, h2, h3 bold, italic import figure
 
 </center>
 
-#### Rapports Interactifs
+### Rapports Interactifs
 
 <center>
 
@@ -175,7 +186,7 @@ h1, h2, h3 bold, italic import figure
 
 </center>
 
-#### Manuels
+### Manuels
 
 <center>
 
@@ -194,9 +205,11 @@ h1, h2, h3 bold, italic import figure
 Idéalement, pas grand chose dans le YAML et montrer que ça rend bien. 
 
 
-### Step by step (captures d'écran) initier un .qmd et le construire avec RStudio
+## Initier un .qmd et le construire avec RStudio
 
 
+
+## A vous de jouer ! 
 
 ::: {.callout-caution collapse="true"}
 ### \[To do\] : Initier un document Quarto
