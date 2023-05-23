@@ -1,5 +1,295 @@
 ---
-title: "Notebooks Quarto: principes, principales fonctionnalités"
+title: "Créer un notebook avec Quarto: principes, fonctionnalités"
+subtitle: "SAGEO, 2023 - Québec, Canada"
+author: "Nicolas Lambert, Timothée Giraud,  Matthieu Viry, Ronan Ysebaert"
+date: 06/7/2023
+date-format: "DD MMM YYYY"
+title-slide-attributes:
+  data-background-color: black
+  data-background-image: fig/SAGEO.png
+  data-background-size: cover
+  data-background-opacity: "0.5"
+format:
+  revealjs:
+    margin: 0
+    embed-resources: true
+    smaller: true
+    scrollable: false
+    theme: [simple, custom.scss]
+    code-line-numbers: false
+editor: visual
+execute:
+  echo: true
+---
+
+
+## Evolution des pratiques
+
+**Avant ( > ~ 2011) : des "black-boxes" méthodologiques**
+
+Logiciels payants, ruptures logicielles dans les chaines de traitements, stockage et partage des données et méthodes non optimisé, univers "clic-bouton".
+
+<center><img src="fig/chain_1.png" width="800"/></center>
+
+
+## Evolution des pratiques
+
+**Ensuite ( 2011 > récemment)**
+
+Solutions open source, gratuites, qui couvrent l'ensemble de la chaîne de traitement de l'information, univers de programmation.
+
+<br>
+
+<center><img src="fig/chain_2.png" width="800"/></center>
+
+
+## Evolution des pratiques
+
+#### Depuis peu
+
+Mise à jour de ce graphique en intégrant les dimensions Python, Js \> plus forcément chaînes de traitement.
+
+
+## Evolution des pratiques
+
+**Pb (1) : Comment passer d'un langage à l'autre ?**
+
+- Préparation et manipulation des données dans des langages performants (R, Python...)
+- Visualisation et interactivité dans le navigateur (JS)
+
+
+**Pb (2) : Comment documenter et partager ses traitements ?** 
+
+- Création de bcp de scripts. 
+- Compréhensible par soi (et encore, avec le temps)...
+- Transmettre, mettre à jour... 
+
+
+##  Recherche reproductible
+
+::: columns
+
+::: {.column width="75%"}
+
+Ouverture des protocoles de recherche dans l'objectif de **confirmer** et rendre **répétable** des résultats de recherche.
+
+-   Disponibilité des données et du code, exécutable.
+-   Documentation de l'environnement logiciel nécessaire à son exécution.
+-   Transparence dans la collecte de données, ses traitements, analyses et sorties graphiques.
+-   Réutilisable par d'autres : documentation du code, de ce qu'il produit et dans quel but.
+-   Ouvert aux retours, commentaires, suggestions, critiques, révisions.
+
+
+:::
+
+::: {.column width="25%"}
+![](fig/claerbout.jpg)
+<small>
+Jon Claerbout (sismologue, Univ. Stanford). Il utilise avec son groupe pour la première fois le terme de "recherche reproductible" lors du congrès de la *[Society of Exploration Geophysics](http://sep.stanford.edu/oldsep/matt/join/redoc/web/seg92.html)* en 1992.  
+
+</small>
+
+::: 
+
+:::
+
+## Programmation lettrée & notebooks
+
+::: columns
+
+::: {.column width="75%"}
+
+**Paradigme de programmation** ([Knuth, 1984](https://academic.oup.com/comjnl/article/27/2/97/343244)) qui consiste à associer code source (pour les ordinateurs) et documentation (pour les humains).
+
+-   Donner les informations suffisantes pour répliquer l'expérimentation, à la manière d'un essai.
+-   Vérifier que les conclusions sont valides.
+-   Améliorer les programmes / rendre les mauvaises décisions de conception plus évidentes.
+-   Utile pour reprendre les programmes ultérieurement.
+-   Transmettre et partager les connaissances sous des formes appropriées (tutoriels, manuels).
+
+:::
+
+::: {.column width="25%"}
+![](fig/Knuth_b.jpg)
+<small>
+Donald Knuth (mathématicien, Univ. Stanford). Pose les bases de la programmation lettrée dans un premier environnement de literate programming : le WEB qui combine du Pascal et du TeX, appliqué aux [nombres premiers (1984)](http://literateprogramming.com/knuthweb.pdf).  
+
+</small>
+
+::: 
+
+:::
+
+> Un gain général en **reproductibilité** de la démarche et en **ouverture** des méthodes scientifiques.
+
+
+## Notebooks : Principes fondamentaux
+
+Le **Notebook** est une solution opérationnelle et adaptée pour arriver à ces fins.
+
+<center>![Source: Pecout, 2022](fig/notebook_1.png)</center>
+
+## Les notebooks du moment
+
+![Source : Pecout, 2022](fig/nouveau_notebook.png)
+
+
+## Quarto ? 
+
+- Moins dépendant de R (pas d'installation de packages R, comme c'était le cas avec RMarkdown) > peut fonctionner ailleurs que dans l'IDE RStudio (pas d'utilisation de knitr).
+- Possibilité de mises en page customisées (templates ++)
+- OJS > doc interactifs
+
+
+## Des sorties multiples
+
+::: panel-tabset
+#### Sites Web
+
+<center>
+
+<small>
+<a href="https://rcarto.gitpages.huma-num.fr/centralite/" target="_blank" role="button">Sortie (site Web)</a> // <a href="https://gitlab.huma-num.fr/rCarto/centralite" target="_blank" role="button">Dépôt GitLab</a>
+</small>
+
+![](fig/web_site.png)
+
+</center>
+
+#### Présentations
+
+<center>
+
+<small>
+<a href="https://github.com/rysebaert/qgis_data_shs/blob/master/index.Rmd" target="_blank" role="button">Sortie (Présentation)</a> // <a href="https://github.com/rysebaert/qgis_data_shs" target="_blank" role="button">Dépôt GitHub</a> // <a href="https://github.com/rysebaert/qgis_data_shs/blob/master/index.Rmd" target="_blank" role="button">Code (RMardown)</a>
+</small>
+
+![](fig/qgis_output1.png) ![](fig/qgis_output2.png)
+
+</center>
+
+#### Rapports Interactifs
+
+<center>
+
+<small>
+<a href="https://rysebaert.github.io/climbing_paris/" target="_blank" role="button">Sortie (Rapport interactif)</a> // <a href="https://github.com/rysebaert/climbing_paris" target="_blank" role="button">Dépôt GitHub</a> // <a href="https://github.com/rysebaert/climbing_paris/blob/main/index.qmd" target="_blank" role="button">Code (Quarto)</a>
+</small>
+
+![](fig/report.png)
+
+</center>
+
+#### Manuels
+
+<center>
+
+<small>
+<a href="https://rcarto.github.io/geomatique_avec_r/" target="_blank" role="button">Sortie (Bookdown)</a> // <a href="https://github.com/rCarto/geomatique_avec_r" target="_blank" role="button">Dépôt GitHub</a>
+</small>
+
+![](fig/bookdown.png)
+
+</center>
+:::
+
+## Squelette d'un notebook (RMarkdown / Quarto)
+
+![Source : Pecout, 2022](fig/notebook_2.png)
+
+
+## Initier un document Quarto dans RStudio
+
+RStudio propose plusieurs modèles pour initier aisément un notebook. 
+
+::: columns
+
+::: {.column width="50%"}
+
+![](fig/init_quarto1.PNG)
+
+:::
+
+
+::: {.column width="50%"}
+
+![](fig/init_quarto1.PNG)
+::: 
+
+:::
+
+
+## Initier un document Quarto dans RStudio
+
+RStudio propose plusieurs modèles pour initier aisément un notebook. 
+
+::: columns
+
+::: {.column width="50%"}
+
+![](fig/init_quarto3.PNG)
+
+:::
+
+
+::: {.column width="50%"}
+
+![](fig/init_quarto4.PNG)
+::: 
+
+:::
+
+
+
+
+## Paramétrer son document grâce au YAML
+
+::: columns
+
+::: {.column width="50%"}
+
+Le YAML permet de définir :
+
+- Le format de sortie désiré (HTML, PDF, .doc, etc.)
+
+- Le type de document souhaité (Document, présentation, site Web, etc.)
+
+:::
+
+::: {.column width="50%"}
+
+Il est hautement paramétrable :
+<small>
+
+-   **des paramétrages généraux** (choisir un thème, définir une feuille de style css)
+-   la **table des matières** (toc)
+-   la numérotation des parties du document
+-   les typographies utilisées
+-   le choix des couleurs
+-   l'affichage des blocs de code
+-   l'exécution du code (afficher le code ou non, des messages d'erreur, etc.)
+-   le dimensionnement des figures et tables
+-   la gestion des urls
+-   le paramétrage de la bibliographie
+-   l'affichage des notes de bas de page
+-   les métadonnées associées au document...
+
+</small>
+
+:::
+
+:::
+
+Les possibilités offertes sont présentées dans la documentation [Quarto](https://quarto.org/docs/reference/formats/html.html)
+
+
+## Paramétrer son document grâce au YAML
+
+Le YAML utilisé pour cette présentation
+
+``` markdown
+---
+title: "Créer un notebook avec Quarto: principes, fonctionnalités"
 subtitle: "SAGEO, 2023 - Québec, Canada"
 author: "Nicolas Lambert, Timothée Giraud,  Matthieu Viry, Ronan Ysebaert"
 date: 06/7/2023
@@ -21,191 +311,27 @@ editor: visual
 execute:
   echo: true
 ---
-
-
-## Evolution des pratiques
-
-### Avant ( > ~ 2011) : des "black-boxes" méthodologiques
-
-Logiciels payants, ruptures logicielles dans les chaines de traitements, stockage et partage des données et méthodes non optimisé, univers "clic-bouton".
-
-<center><img src="fig/chain_1.png" width="800"/></center>
-
-
-## Evolution des pratiques
-
-### Ensuite ( 2011 > récemment)
-
-Solutions open source, gratuites, qui couvrent l'ensemble de la chaîne de traitement de l'information, univers de programmation.
-
-<br>
-
-<center><img src="fig/chain_2.png" width="800"/></center>
-
-
-## Evolution des pratiques
-
-#### Depuis peu
-
-Mise à jour de ce graphique en intégrant les dimensions Python, Js \> plus forcément chaînes de traitement.
-
-
-## Evolution des pratiques
-
-### Pb (1) : Comment passer d'un langage à l'autre 
-
-### Pb (2) : Comment documenter et partager ses traitements ? 
-
-- Création de bcp de scripts. 
-- Compréhensible par soi (et encore, avec le temps)...
-- Transmettre, mettre à jour... 
-
-
-## Recherche reproductible
-
-Ouverture des protocoles de recherche dans l'objectif de confirmer et rendre répétable des résultats de recherche ([Claerbout, 1992](http://sep.stanford.edu/oldsep/matt/join/redoc/web/seg92.html)).
-
--   Disponibilité des données et du code, exécutable.
--   Documentation de l'environnement logiciel nécessaire à son exécution.
--   Transparence dans la collecte de données, ses traitements, analyses et sorties graphiques.
--   Réutilisable par d'autres : documentation du code, de ce qu'il produit et dans quel but.
--   Ouvert aux retours, commentaires, suggestions, critiques, révisions.
-
-## Programmation lettrée & notebooks
-
-**Paradigme de programmation** ([Knuth, 1984](https://academic.oup.com/comjnl/article/27/2/97/343244)) qui consiste à associer code source (pour les ordinateurs) et documentation (pour les humains).
-
--   Donner les informations suffisantes pour répliquer l'expérimentation, à la manière d'un essai.
--   Vérifier que les conclusions sont valides.
--   Améliorer les programmes / rendre les mauvaises décisions de conception plus évidentes.
--   Utile pour reprendre les programmes ultérieurement.
--   Transmettre et partager les connaissances sous des formes appropriées (tutoriels, manuels).
-
-> Un gain général en **reproductibilité** de la démarche et en **ouverture** des méthodes scientifiques.
-
-## Notebooks : Principes fondamentaux
-
-Le **Notebook** est solution opérationnelle et adaptée pour arriver à ces fins.
-
-<center>![Source: Pecout, 2022](fig/notebook_1.png)</center>
-
-## Les notebooks du moment
-
-![Source : Pecout, 2022](fig/nouveau_notebook.png)
-
-
-## Squelette d'un notebook (RMarkdown / Quarto)
-
-![Source : Pecout, 2022](fig/notebook_2.png)
-
-## Le YAML en quelques mots
-
-Le YAML est paramétrable en fonction du format de sortie désiré (HTML, PDF, présentations, etc.).
-
-Pour le document de base (Quarto Document au format HTML), il est par exemple possible de jouer sur:
-
--   **des paramétrages généraux** (choisir un thème, définir une feuille de style css)
--   la **table des matières** (toc)
--   la numérotation des parties du document
--   les typographies utilisées
--   le choix des couleurs
--   l'affichage des blocs de code
--   l'exécution du code (afficher le code ou non, des messages d'erreur, etc.)
--   le dimensionnement des figures et tables
--   la gestion des urls
--   le paramétrage de la bibliographie
--   l'affichage des notes de bas de page
--   les métadonnées associées au document...
-
-Tout est présenté [ici](https://quarto.org/docs/reference/formats/html.html)
-
-``` yaml
----
-title: "Articulation de différents environnements de développement de géo-visualisations. Atelier autour de Quarto : R, Pytho, et Observable JavaScript"
-subtitle: "Atelier Sageo, Québec, Juin 2023"
-author: "Timothée Giraud, Nicolas Lambert, Matthieu Viry, Ronan Ysebaert (UAR RIATE, CNRS, Université Paris Cité)"
-format:
-  html:
-    theme: sandstone
-    fontsize: 0.9em
-    code-tools: true
-    code-fold: true
-    toc: true
-    toc-depth: 2
-    linkcolor: "#8631ad"
-editor: visual
----
 ```
 
-## Le markdown en quelques mots
+## Décrire simplement son cheminement grâce à au markdown
 
-h1, h2, h3 bold, italic import figure
+- Langage de balisage léger
 
-## Paramétrer ses chunks en qqes mots
+- h1, h2, h3 bold, italic import figure
 
-## Des sorties multiples
-
--   Plusieurs formats de sorties : .HTML, .pdf, .doc
--   Largement documentés : Manuels d'utilisations, forums, etc.
--   Hautement **paramétrable** via le YAML et l'ajout éventuel de styles css.
-
-::: panel-tabset
-### Sites Web
-
-<center>
-
-::: small
-<a href="https://rcarto.gitpages.huma-num.fr/centralite/" target="_blank" role="button">Sortie (site Web)</a> // <a href="https://gitlab.huma-num.fr/rCarto/centralite" target="_blank" role="button">Dépôt GitLab</a>
-:::
-
-![](fig/web_site.png)
-
-</center>
-
-### Présentations
-
-<center>
-
-::: small
-<a href="https://github.com/rysebaert/qgis_data_shs/blob/master/index.Rmd" target="_blank" role="button">Sortie (Présentation)</a> // <a href="https://github.com/rysebaert/qgis_data_shs" target="_blank" role="button">Dépôt GitHub</a> // <a href="https://github.com/rysebaert/qgis_data_shs/blob/master/index.Rmd" target="_blank" role="button">Code (RMardown)</a>
-:::
-
-![](fig/qgis_output1.png) ![](fig/qgis_output2.png)
-
-</center>
-
-### Rapports Interactifs
-
-<center>
-
-::: small
-<a href="https://rysebaert.github.io/climbing_paris/" target="_blank" role="button">Sortie (Rapport interactif)</a> // <a href="https://github.com/rysebaert/climbing_paris" target="_blank" role="button">Dépôt GitHub</a> // <a href="https://github.com/rysebaert/climbing_paris/blob/main/index.qmd" target="_blank" role="button">Code (Quarto)</a>
-:::
-
-![](fig/report.png)
-
-</center>
-
-### Manuels
-
-<center>
-
-::: small
-<a href="https://rcarto.github.io/geomatique_avec_r/" target="_blank" role="button">Sortie (Bookdown)</a> // <a href="https://github.com/rCarto/geomatique_avec_r" target="_blank" role="button">Dépôt GitHub</a>
-:::
-
-![](fig/bookdown.png)
-
-</center>
-:::
+- Callout blocks
 
 
-### Montrer le .qmd de la présentation
 
-Idéalement, pas grand chose dans le YAML et montrer que ça rend bien. 
+## Paramétrer ses blocs de code grâce aux chunks
 
+- possibilité d'intégrer du code Python, R, Julia, Observable JS au sein du même document. 
 
-## Initier un .qmd et le construire avec RStudio
+- echo, eval, warning, message, cache, fig.height
+
+- possibilité de le spécifier dans le YAML (execute:)...
+
+- ou directement dans les chunks
 
 
 
