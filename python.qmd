@@ -1,0 +1,94 @@
+---
+title: "Articulation de différents langages (R, JavaScript et Python) pour la géovisualisation avec Quarto"
+subtitle: "SAGEO, 2023 - Québec, Canada"
+author: "Nicolas Lambert, Timothée Giraud,  Matthieu Viry, Ronan Ysebaert"
+date: 06/7/2023
+date-format: "DD MMM YYYY"
+title-slide-attributes:
+  data-background-color: black
+  data-background-image: fig/SAGEO.png
+  data-background-size: cover
+  data-background-opacity: "0.5"
+format:
+  revealjs:
+    margin: 0
+    embed-resources: true
+    smaller: true
+    scrollable: false
+    theme: [simple, custom.scss]
+    code-line-numbers: false
+editor: visual
+execute:
+  echo: true
+---
+
+## Python
+
+:::: {.columns}
+
+::: {.column width="66%"}
+**Python**
+:::
+
+::: {.column width="33%"}
+![](./fig/logo-python.png)
+:::
+
+::::
+
+## Écosystème pour le géospatial
+
+
+## Écosystème pour le géospatial - vecteur
+
+:::: {.columns}
+
+::: {.column width="66%"}
+- [Geopandas](https://geopandas.org/) - Étend les `DataFrame`s de [pandas](https://pandas.pydata.org/) pour 
+
+:::
+
+::: {.column width="33%"}
+![](./fig/logo-pandas.svg)
+
+![](./fig/logo_geopandas.svg)
+:::
+
+::::
+
+## Écosystème pour le géospatial - raster
+
+- Rasterio
+
+- Rasterstats
+
+## Écosystème pour le géospatial
+
+:::: {.columns}
+
+::: {.column width="55%"}
+- Binding Python pour [GRASS](https://grass.osgeo.org/grass82/manuals/libpython/index.html) + Intégration dans les notebooks Jupyter
+:::
+
+::: {.column width="45%"}
+![](./fig/grass_jupyter_combo_vis.png)
+
+::: {.small}
+Source: [https://grass.osgeo.org/news/2022_06_05_results_student_grant_caitlin/](https://grass.osgeo.org/news/2022_06_05_results_student_grant_caitlin/)
+:::
+
+:::
+
+::::
+
+## Écosystème pour le géospatial - Analyse spatiale
+
+- [PySAL](https://pysal.org/)
+
+![](./fig/logo-pysal.png)
+
+## Interaction R / Python dans Quarto
+
+## Python et géospatial dans Quarto
+
+
