@@ -399,13 +399,7 @@ Ajoutez un Input de type `radio` pour définir la symbologie : [**`bubble`**](ht
 viewof symbol = Inputs.radio([`a`, `b`, `c`], { label: `label`,  value: `valeur par défaut`})
 ```
 
-Créez une liste déroulante pour changer la variable à cartographier. Pare exemple, la population et la surface.
-
-```js
-viewof val = Inputs.select(["A", "B"], {label: "Select one"})
-```
-
-Créez un slider pouyr faire varier la taille des cercles
+Créez un slider pouyr faire varier la taille des symboles
 
 ```js
 viewof rayon = Inputs.range([`min`, `max`], { label: "label", step: 1, value: 30 })
@@ -428,16 +422,7 @@ Les Inputs
 //| echo: true
 //| eval: false
 viewof symbol = Inputs.radio([`bubble`, `square`], { label: `Symbol`,  value: `bubble`})
-viewof val = Inputs.select(["POP_2022", "AREA"], {label: "Variable"})
 viewof rayon = Inputs.range([1, 100], { label: "Rayon", step: 2, value: 30 })
-```
-
-Pour adater le titre de la carte en fonction de la variable, on peut faire
-
-```{ojs}
-//| echo: true
-//| eval: false
-title = val == "AREA" ? "Superficie" : "Population en 2022"
 ```
 
 Et la carte
@@ -453,7 +438,7 @@ bertin.draw({
     {
       type: symbol, // ICI 
       geojson: munic2, 
-      values: val, // ICI
+      values: "POP_2022", 
       k: rayon, // ICI
       leg_x: 500,
       leg_y: 130,
@@ -471,7 +456,6 @@ bertin.draw({
 //| echo: false
 //| eval: true
 viewof symbol = Inputs.radio([`bubble`, `square`], { label: `Symbol`,  value: `bubble`})
-viewof val = Inputs.select(["POP_2022", "AREA"], {label: "Variable"})
 viewof rayon = Inputs.range([1, 100], { label: "Rayon", step: 2, value: 30 })
 title = val == "AREA" ? "Superficie" : "Population en 2022"
 bertin.draw({
@@ -482,7 +466,7 @@ bertin.draw({
     {
       type: symbol, 
       geojson: munic2, 
-      values: val, 
+      values: "POP_2022", 
       k: rayon,
       leg_x: 500,
       leg_y: 130,
@@ -502,7 +486,14 @@ A présent, on souhaite colorier les cercles en fonction de l'indice de vitalit�
 ::: {.callout-caution}
 ## A vous de jouer
 
-Pour faire des varriations de couleurs (i.e. valeur), on utilise le type `**choro**` à l'intérieur de l'attribut **`fill`** de la couche à colorier. Ici, les cercles proportionnels.
+
+Proposer la variable à cartographier via une liste déroulante.
+
+```js
+viewof val = Inputs.select(["A", "B"], {label: "Select one"})
+```
+
+Pour faire des variations de couleurs (i.e. valeur), on utilise le type **`choro`** à l'intérieur de l'attribut **`fill`** de la couche à colorier. Ici, les cercles proportionnels.
 
 ```js
 fill : {type "choro", values: `votre variable`, colors: "RdYlBu"}
@@ -513,8 +504,10 @@ Pour paramétrer, voir : [bertin#choropleth](https://github.com/neocarto/bertin#
 
 ::: {.callout-tip collapse="true"}
 ## Solution
-```{ojs}
 
+
+```{ojs}
+viewof val = Inputs.select(["VIT_ECO", "REV_MED",	"TX_2564", "TAAM"], { label: "Variable" })
 
 bertin.draw({
   params: { margin: [-550, 0, 50, 0]},
@@ -524,23 +517,21 @@ bertin.draw({
     {
       type: symbol, 
       geojson: munic2, 
-      values: val, 
+      values: "POP_2020", 
       k: rayon,
       leg_x: 500,
       leg_y: 130,
       leg_round: 0,
       fill: { // ICI
         type: "choro",
-        values: "VIT_ECO",
+        values: val, // ICI
         colors: "RdYlBu",
         leg_x:680,
         leg_y:100,
-        leg_title:
-        "Vitalité économique",
         leg_round: 0
         },
       fillOpacity:0.8,
-      tooltip: ["$MUS_NM_MUN", d => d.properties["VIT_ECO"]] 
+      tooltip: ["$MUS_NM_MUN", d => d.properties[val]] // ICI
     },
     {geojson: munic2, fill:"#CCC"},
   ]
@@ -592,8 +583,6 @@ data
 ```
 
 Puis on réalise le graphique avec `plot` en proposant de sélectionner une commune.
-
-
 
 ```{ojs}
 viewof commune = Inputs.select(communes, { label: "Commune" })
