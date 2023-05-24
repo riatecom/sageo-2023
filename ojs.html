@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.475">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Timothée Giraud, Nicolas Lambert, Matthieu Viry, Ronan Ysebaert (UAR RIATE, CNRS, Université Paris Cité)">
+
+<title>Articulation de différents langages (R, JavaScript et Python) pour la géovisualisation avec Quarto</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="ojs_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ojs_files/libs/quarto-html/quarto.js"></script>
+<script src="ojs_files/libs/quarto-html/popper.min.js"></script>
+<script src="ojs_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ojs_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ojs_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ojs_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ojs_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ojs_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ojs_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script type="module" src="ojs_files/libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="ojs_files/libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#observable-javascript" id="toc-observable-javascript" class="nav-link active" data-scroll-target="#observable-javascript">Observable JavaScript</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Articulation de différents langages (R, JavaScript et Python) pour la géovisualisation avec Quarto</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<p class="subtitle lead">Atelier Sageo, Québec, Juin 2023</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Timothée Giraud, Nicolas Lambert, Matthieu Viry, Ronan Ysebaert (UAR RIATE, CNRS, Université Paris Cité) </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="observable-javascript" class="level2">
+<h2 class="anchored" data-anchor-id="observable-javascript">Observable JavaScript</h2>
+<section id="observable-kezako" class="level3">
+<h3 class="anchored" data-anchor-id="observable-kezako">Observable Kezako ?</h3>
+<p>L’<b>Observable javascript {ojs}</b> est un ensemble d’améliorations apportées à vanilla JavaScript créé par Mike Bostock (également auteur de D3). Observable JS se distingue par son exécution réactive, qui convient particulièrement bien à l’exploration et à l’analyse interactives des données.</p>
+<p><img src="fig/d3.png" class="img-fluid" style="width:20.0%"> <img src="fig/arrow.png" class="img-fluid" style="width:20.0%"> <img src="fig/observable.png" class="img-fluid" style="width:20.0%"> <br> <strong>Observable</strong> est aussi une startup fondée par Mike Bostock et Melody Meckfessel, qui propose une plateforme 100% en ligne (<a href="https://observablehq.com">https://observablehq.com</a>) pour concevoir, partager et diffuser des visualisations de données.</p>
+<p><img src="fig/frise.png" class="img-fluid"></p>
+<p><strong>Observable</strong> c’est donc aussi C’est aussi une plateforme web qui héberge des notebooks computationnels sur la visualisation de données.</p>
+<p>👉 <strong>Objectif</strong> : faire collaborer une communauté autour de la visualisation de données.</p>
+</section>
+<section id="observable-dans-quarto" class="level3">
+<h3 class="anchored" data-anchor-id="observable-dans-quarto">Observable dans Quarto</h3>
+<p>Le runtime d’Observable est Open Source et est utilisé dans Quarto.</p>
+<p>Dans Quarto, toutes les instructions s’écrivent dans des chunks {ojs}</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>On peut paramétrer l’affiche et/ou l’execution du code avec <strong>//| echo</strong> et <strong>//| eval</strong>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">//| echo: false</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">//| eval: true</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>NB : Contrairement aux chunks R et Python, le code s’execute <em>just in time</em> dans le navigateur web une fois le notebook généré. Seul l’export html est donc pris en compte.</em></p>
+</section>
+<section id="principes" class="level3">
+<h3 class="anchored" data-anchor-id="principes">Principes</h3>
+<p>Le langage JavaScript n’a pas du été conçu pour l’analyse de données. Mais, gros point fort, on a tous un navigateur web et JavaScript tourne sur toutes les machines. Le but : bâtir une évolution du langage JavaScript pour en faire un langage adapté à l’analyse et la visualisation de données sur le web.</p>
+<section id="des-bibliothèques-préchargées" class="level4">
+<h4 class="anchored" data-anchor-id="des-bibliothèques-préchargées">👉 Des bibliothèques préchargées 📊</h4>
+<p>OJS c’est du JavaScript + plein de bibliothèques pré chargées : <br></p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Name</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>_</td>
+<td>Lodash</td>
+<td>4.17.21</td>
+</tr>
+<tr class="even">
+<td>aq</td>
+<td>Arquero</td>
+<td><span><span id="ojs-element-id-1"></span></span></td>
+</tr>
+<tr class="odd">
+<td>Arrow</td>
+<td>Apache Arrow</td>
+<td>4.0.1</td>
+</tr>
+<tr class="even">
+<td>d3</td>
+<td>D3.js</td>
+<td><span><span id="ojs-element-id-2"></span></span></td>
+</tr>
+<tr class="odd">
+<td>dot</td>
+<td>Graphviz</td>
+<td>0.2.1</td>
+</tr>
+<tr class="even">
+<td>htl</td>
+<td>Hypertext Literal</td>
+<td><span><span id="ojs-element-id-3"></span></span></td>
+</tr>
+<tr class="odd">
+<td>Inputs</td>
+<td>Observable Inputs</td>
+<td><span><span id="ojs-element-id-4"></span></span></td>
+</tr>
+<tr class="even">
+<td>L</td>
+<td>Leaflet</td>
+<td><span><span id="ojs-element-id-5"></span></span></td>
+</tr>
+<tr class="odd">
+<td>mermaid</td>
+<td>Mermaid</td>
+<td>9.1.6</td>
+</tr>
+<tr class="even">
+<td>Plot</td>
+<td>Observable Plot</td>
+<td><span><span id="ojs-element-id-6"></span></span></td>
+</tr>
+<tr class="odd">
+<td>SQLite</td>
+<td>SQL.js</td>
+<td>1.7.0</td>
+</tr>
+<tr class="even">
+<td>topojson</td>
+<td>TopoJSON Client</td>
+<td>3.1.0</td>
+</tr>
+<tr class="odd">
+<td>vl</td>
+<td>Vega, Vega-Lite</td>
+<td>5.22.1, 5.2.0</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="chaque-début-de-ligne-identifie-une-cellule-ojs" class="level4">
+<h4 class="anchored" data-anchor-id="chaque-début-de-ligne-identifie-une-cellule-ojs">👉 Chaque début de ligne identifie une cellule ojs 🙋</h4>
+<p>Chaque ligne définit une variable et une cellule qui doit être unique sur l’ensemble du document.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">10</span> <span class="co">// une cellule</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="dv">20</span> <span class="co">// une cellule</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> a <span class="op">+</span> b <span class="co">// une cellule</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> { </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> a <span class="op">=</span> <span class="dv">10</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> b <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> a <span class="op">+</span> b </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>} <span class="co">// Une cellule</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="lordre-des-cellules-na-pas-dimportance" class="level4">
+<h4 class="anchored" data-anchor-id="lordre-des-cellules-na-pas-dimportance">👉 L’ordre des cellules n’a pas d’importance 🤯</h4>
+<p>On peut donc écrire ça</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> val1 <span class="op">*</span> val2</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>avant ça</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>val1 <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>val2 <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Le lien entre les cellules se fait de façon topologique et non de haut en bas.</p>
+<p><img src="fig/topology.png" class="img-fluid"></p>
+</section>
+<section id="tout-est-réactif" class="level4">
+<h4 class="anchored" data-anchor-id="tout-est-réactif">👉 Tout est réactif 🔥</h4>
+<p>Dès lors qu’une cellule est modifiée, les cellules qui en dépendent sont modifiées également.</p>
+<p>Pour modifier la valeutr d’une céllule, on utilise des <strong><code>Inputs</code></strong> (des composants proposés par OJS pour explorer les données) avec le mot clé <strong><code>viewof</code></strong>. Voir : https://observablehq.com/<span class="citation" data-cites="observablehq/inputs">@observablehq/inputs</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" data-startfrom="123" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 122;"><span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a>viewof x <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">255</span>]<span class="op">,</span> {<span class="dt">step</span><span class="op">:</span> <span class="dv">1</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" data-startfrom="127" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 126;"><span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a>viewof y <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">text</span>({<span class="dt">value</span><span class="op">:</span> <span class="dv">30</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" data-startfrom="131" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 130;"><span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a>viewof z <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="dv">10</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="dv">1000</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">10</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11" data-startfrom="135" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 134;"><span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a>x <span class="op">*</span> y <span class="op">*</span> z</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p>Ce système est pratique pour modifier des visualisations de données.</p>
+<p>Ici, un exemple avec un simple cercle dessiné en svg.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12" data-startfrom="144" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 143;"><span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a>viewof color <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">color</span>({ <span class="dt">label</span><span class="op">:</span> <span class="st">"Couleur"</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="st">"#4ab58c"</span> })</span>
+<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a>viewof radius <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">50</span>]<span class="op">,</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"Rayon"</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">100</span> })</span>
+<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a>viewof position <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">50</span><span class="op">,</span> <span class="dv">950</span>]<span class="op">,</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"Position"</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">50</span> })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-5-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-5-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-5-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13" data-startfrom="149" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 148;"><span id="cb13-149"><a href="#cb13-149" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;svg viewBox="0 0 1000 100" xmlns="http://www.w3.org/2000/svg"&gt;</span></span>
+<span id="cb13-150"><a href="#cb13-150" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;circle cx=</span><span class="sc">${</span>position<span class="sc">}</span><span class="vs"> cy="50" r=</span><span class="sc">${</span>radius<span class="sc">}</span><span class="vs"> fill="</span><span class="sc">${</span>color<span class="sc">}</span><span class="vs">"/&gt;</span></span>
+<span id="cb13-151"><a href="#cb13-151" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/svg&gt;`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="lécosystème-spatial-avec-ojs" class="level3">
+<h3 class="anchored" data-anchor-id="lécosystème-spatial-avec-ojs">l’écosystème spatial avec Ojs</h3>
+<p>L’écosystème spatial de JavaScript est moins étoffé que ce qu’on peut trouver en Python ou en R. Mais on trouve quand même des choses intéressantes qui permettent de faire de la géomatique directement dans le navigateur web. Voici quelques exemples.</p>
+<p><strong>Les fonctionnalités spatiales de <code>d3.js</code></strong></p>
+<div class="columns">
+<div class="column" style="width:8%;">
+<p><img src="fig/d3.png" class="img-fluid"></p>
+</div><div class="column" style="width:2%;">
+
+</div><div class="column" style="width:90%;">
+<p><a href="https://github.com/d3/d3-geo"><strong><code>d3-geo</code></strong></a> est le module spatial de d3. Il permet de gérer les projections cartographiques, les formes sphériques et la trigonométrie sphérique. Voir aussi <a href="https://github.com/d3/d3-geo-projection"><strong><code>d3-geo-projection</code></strong></a>. <a href="https://github.com/d3/d3-delaunay"><strong><code>d3-delaunay</code></strong></a> est une bibliothèque rapide pour calculer le diagramme de Voronoï d’un ensemble de points bidimensionnels. Elle est basée sur Delaunator, une bibliothèque rapide pour calculer la triangulation de Delaunay en utilisant des algorithmes de balayage. Le diagramme de Voronoï est construit en reliant les circonférences des triangles adjacents dans la triangulation de Delaunay. <a href="https://github.com/Fil/d3-geo-voronoi"><strong><code>d3-geo-voronoi</code></strong></a> est une adaptation de d3-delaunay sur la sphère.</p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:8%;">
+<p><img src="fig/topojson.svg" class="img-fluid"></p>
+</div><div class="column" style="width:2%;">
+
+</div><div class="column" style="width:90%;">
+<p><a href="https://github.com/topojson/topojson"><strong><code>TopoJSON</code></strong></a> est une extension de GeoJSON. La librairie permet de réaliser des opérations SIG basées sur la topologie (agrégation, voisins, simplification, etc.)</p>
+</div>
+</div>
+<p><strong>Les bibliothèques SIG</strong></p>
+<div class="columns">
+<div class="column" style="width:8%;">
+<p><img src="fig/turf.png" class="img-fluid"></p>
+</div><div class="column" style="width:2%;">
+
+</div><div class="column" style="width:90%;">
+<p><a href="https://turfjs.org/"><strong><code>turf</code></strong></a> est une bibliothèque JavaScript pour l’analyse spatiale (de type SIG). Elle comprend les opérations spatiales traditionnelles, des fonctions d’aide pour la création de données GeoJSON, ainsi que des outils de classification des données et de statistiques. L’avantage de turf est d’être modulaire. On ne charge que ce dont on a besoin.</p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:8%;">
+<p><img src="fig/spljs.jpg" class="img-fluid"></p>
+</div><div class="column" style="width:2%;">
+
+</div><div class="column" style="width:90%;">
+<p><a href="https://turfjs.org/"><strong><code>spl.js</code></strong></a> est une implémentation de SpatiaLite (et de ses amis : sqlite, geos, proj, rttopo) pour le navigateur.</p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:8%;">
+<p><img src="fig/geotoolbox.svg" class="img-fluid"></p>
+</div><div class="column" style="width:2%;">
+
+</div><div class="column" style="width:90%;">
+<p><a href="https://github.com/neocarto/geotoolbox"><strong><code>geotoolbox</code></strong></a> est un outil javascript pour les géographes basé sur d3geo, topojson et jsts. Il permet de traiter simplement les propriétés geojson et fournit plusieurs opérations SIG utiles pour la cartographie thématique.</p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:8%;">
+<p><img src="fig/gdal.png" class="img-fluid"></p>
+</div><div class="column" style="width:2%;">
+
+</div><div class="column" style="width:90%;">
+<p><a href="https://github.com/bugra9/gdal3.js"><strong><code>Gdals3.js</code></strong></a> est un portage des applications Gdal (gdal_translate, ogr2ogr, gdal_rasterize, gdalwarp, gdaltransform) vers Webassembly. Il permet de convertir des données géospatiales matricielles et vectorielles dans divers formats et systèmes de coordonnées.</p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:8%;">
+<p><img src="fig/proj4.png" class="img-fluid"></p>
+</div><div class="column" style="width:2%;">
+
+</div><div class="column" style="width:90%;">
+<p><a href="http://proj4js.org/"><strong><code>proj4js</code></strong></a> est une bibliothèque JavaScript permettant de transformer les coordonnées d’un système de coordonnées à un autre, y compris les transformations de datum</p>
+</div>
+</div>
+<p><strong>Dataviz / cartographie</strong></p>
+<div class="columns">
+<div class="column" style="width:8%;">
+<p><img src="fig/plot.png" class="img-fluid"></p>
+</div><div class="column" style="width:2%;">
+
+</div><div class="column" style="width:90%;">
+<p><a href="https://observablehq.com/plot/"><strong><code>plot</code></strong></a> est la bibliothèque de visualisation de donnée développée par Observable (Mike Bostock et Philippe Rivière). Au départ pensée pour la visualisation de données statistiques, elle permet aujourd’hui de réaliser des cartes. Plot est disponible par défaut dans les cellules {ojs}.</p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:8%;">
+<p><img src="fig/vega.png" class="img-fluid"></p>
+</div><div class="column" style="width:2%;">
+
+</div><div class="column" style="width:90%;">
+<p><a href="https://github.com/vega/vega-lite"><strong><code>vega-lite</code></strong></a> est un outil de visualisation mettant en œuvre une grammaire graphique, similaire à ggplot2. Cette bibliothèque est disponible par défaut dans les cellules {ojs}.</p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:8%;">
+<p><img src="fig/bertin.png" class="img-fluid"></p>
+</div><div class="column" style="width:2%;">
+
+</div><div class="column" style="width:90%;">
+<p><a href="https://github.com/neocarto/bertin"><strong><code>bertin</code></strong></a> est une bibliothèque écrite en JavaScript qui permet de réaliser des cartes thématiques pour le web. Sa conception vise à permettre aux utilisateurs de créer rapidement des cartes thématiques interactives sans forcement connaître le langage JavaScript.</p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:8%;">
+<p><img src="fig/gridviz.png" class="img-fluid"></p>
+</div><div class="column" style="width:2%;">
+
+</div><div class="column" style="width:90%;">
+<p><a href="https://github.com/eurostat/gridviz"><strong><code>Gridviz</code></strong></a> est une bibliothèque JavaScript basée sur WebGL développée par Julien Gaffuri et Joe Davies. Elle permet de visualiser des données carroyées (ou tout ensemble de données tabulaires avec une position x/y) dans le navigateur dans une grande variété de styles cartographiques.</p>
+</div>
+</div>
+<div class="columns">
+<div class="column" style="width:8%;">
+<p><img src="fig/logo-go-cart-wasm.png" class="img-fluid"></p>
+</div><div class="column" style="width:2%;">
+
+</div><div class="column" style="width:90%;">
+<p><a href="https://github.com/riatelab/go-cart-wasm"><strong><code>go-cart-wasm</code></strong></a> est une bibliothèque JS/WASM permettant de réaliser des cartogrammes basés sur le flux (comme décrit dans “Gastner, Seguy, and More (2018).</p>
+</div>
+</div>
+</section>
+<section id="cartographie-interactive-avec-observable-javascript" class="level3">
+<h3 class="anchored" data-anchor-id="cartographie-interactive-avec-observable-javascript">Cartographie interactive avec Observable JavaScript</h3>
+<p>On souhaite à présent réaliser une carte interactive à l’échelle des municipalités.</p>
+<p>Tout d’abord, on récpère les données depuis R (<strong>TODO</strong>)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14" data-startfrom="305" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 304;"><span id="cb14-305"><a href="#cb14-305" aria-hidden="true" tabindex="-1"></a>munic <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"geom/munic.geojson"</span>)<span class="op">.</span><span class="fu">json</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<p>Regardons la table attributaire</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15" data-startfrom="311" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 310;"><span id="cb15-311"><a href="#cb15-311" aria-hidden="true" tabindex="-1"></a>Inputs<span class="op">.</span><span class="fu">table</span>(munic<span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p>Comme leaflet est disponible dans les cellules {ojs}, on peut directement afficher les géométries.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16" data-startfrom="317" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 316;"><span id="cb16-317"><a href="#cb16-317" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb16-318"><a href="#cb16-318" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> container <span class="op">=</span> <span class="kw">yield</span> htl<span class="op">.</span><span class="fu">html</span><span class="vs">`&lt;div style="height: 500px;"&gt;`</span><span class="op">;</span></span>
+<span id="cb16-319"><a href="#cb16-319" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> map <span class="op">=</span> L<span class="op">.</span><span class="fu">map</span>(container)<span class="op">;</span></span>
+<span id="cb16-320"><a href="#cb16-320" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> layer <span class="op">=</span> L<span class="op">.</span><span class="fu">geoJSON</span>(munic)<span class="op">.</span><span class="fu">addTo</span>(map)<span class="op">;</span></span>
+<span id="cb16-321"><a href="#cb16-321" aria-hidden="true" tabindex="-1"></a>  map<span class="op">.</span><span class="fu">fitBounds</span>(layer<span class="op">.</span><span class="fu">getBounds</span>()<span class="op">,</span> { <span class="dt">maxZoom</span><span class="op">:</span> <span class="dv">9</span> })<span class="op">;</span></span>
+<span id="cb16-322"><a href="#cb16-322" aria-hidden="true" tabindex="-1"></a>  L<span class="op">.</span><span class="fu">tileLayer</span>(<span class="st">"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"</span><span class="op">,</span> {</span>
+<span id="cb16-323"><a href="#cb16-323" aria-hidden="true" tabindex="-1"></a>    <span class="dt">attribution</span><span class="op">:</span></span>
+<span id="cb16-324"><a href="#cb16-324" aria-hidden="true" tabindex="-1"></a>      <span class="st">"© &lt;a href=https://www.openstreetmap.org/copyright&gt;OpenStreetMap&lt;/a&gt; contributors"</span></span>
+<span id="cb16-325"><a href="#cb16-325" aria-hidden="true" tabindex="-1"></a>  })<span class="op">.</span><span class="fu">addTo</span>(map)<span class="op">;</span></span>
+<span id="cb16-326"><a href="#cb16-326" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p>Le fond de carte n’est pas assez simplifié. Donc on le simplifie et on le nettoie avec la bibiothèque <strong><code>geotoolbox</code></strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17" data-startfrom="332" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 331;"><span id="cb17-332"><a href="#cb17-332" aria-hidden="true" tabindex="-1"></a>geo <span class="op">=</span> <span class="pp">require</span>(<span class="st">"geotoolbox"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18" data-startfrom="336" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 335;"><span id="cb18-336"><a href="#cb18-336" aria-hidden="true" tabindex="-1"></a>munic2 <span class="op">=</span> geo<span class="op">.</span><span class="fu">rewind</span>(geo<span class="op">.</span><span class="fu">simplify</span>(munic<span class="op">,</span> { <span class="dt">k</span><span class="op">:</span> <span class="fl">0.02</span> }))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-11" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<p><strong>Création de cartes thématiques</strong></p>
+<p>Pour créer des cartes thématiques, on peut utiliser la bibliothèque <a href="https://github.com/neocarto/bertin"><strong><code>bertin</code></strong></a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19" data-startfrom="344" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 343;"><span id="cb19-344"><a href="#cb19-344" aria-hidden="true" tabindex="-1"></a>bertin <span class="op">=</span> <span class="pp">require</span>(<span class="st">"bertin"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-12" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<p>La fonction <strong><code>draw</code></strong> permet de réaliser n’importe quel type de carte.</p>
+<p><img src="fig/bertin_code.png" class="img-fluid"></p>
+<p>Par défaut, la couche s’affiche simplement.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20" data-startfrom="354" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 353;"><span id="cb20-354"><a href="#cb20-354" aria-hidden="true" tabindex="-1"></a>bertin<span class="op">.</span><span class="fu">draw</span>({<span class="dt">layers</span><span class="op">:</span>[{<span class="dt">geojson</span><span class="op">:</span> munic2<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#d18de0"</span>}]})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-13" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p><strong>Cartographie thématique</strong></p>
+<p>A présent, réalisons une carte de la population en 2022. Pour cela, on utilise le type <strong><code>bubble</code></strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21" data-startfrom="362" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 361;"><span id="cb21-362"><a href="#cb21-362" aria-hidden="true" tabindex="-1"></a>bertin<span class="op">.</span><span class="fu">draw</span>({</span>
+<span id="cb21-363"><a href="#cb21-363" aria-hidden="true" tabindex="-1"></a>  <span class="dt">params</span><span class="op">:</span> { <span class="dt">margin</span><span class="op">:</span> [<span class="op">-</span><span class="dv">550</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">50</span><span class="op">,</span> <span class="dv">0</span>]}<span class="op">,</span> <span class="co">// marges [Haut, droite, bas, gauche]</span></span>
+<span id="cb21-364"><a href="#cb21-364" aria-hidden="true" tabindex="-1"></a>  <span class="dt">layers</span><span class="op">:</span> [</span>
+<span id="cb21-365"><a href="#cb21-365" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"header"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="st">"Population en 2022"</span><span class="op">,</span> <span class="dt">anchor</span><span class="op">:</span> <span class="st">"start"</span> }<span class="op">,</span> <span class="co">// Titre</span></span>
+<span id="cb21-366"><a href="#cb21-366" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"minimap"</span><span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">185</span><span class="op">,</span> <span class="dt">width</span><span class="op">:</span> <span class="dv">90</span><span class="op">,</span> <span class="dt">projection</span><span class="op">:</span><span class="st">"Polar"</span> }<span class="op">,</span> <span class="co">// Carte de localisation</span></span>
+<span id="cb21-367"><a href="#cb21-367" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb21-368"><a href="#cb21-368" aria-hidden="true" tabindex="-1"></a>      <span class="dt">id</span> <span class="op">:</span> <span class="st">"bub"</span><span class="op">,</span> <span class="co">//  identifiant de la couche</span></span>
+<span id="cb21-369"><a href="#cb21-369" aria-hidden="true" tabindex="-1"></a>      <span class="dt">type</span><span class="op">:</span> <span class="st">"bubble"</span><span class="op">,</span> <span class="co">// couche de symboles proportionnels</span></span>
+<span id="cb21-370"><a href="#cb21-370" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geojson</span><span class="op">:</span> munic2<span class="op">,</span> </span>
+<span id="cb21-371"><a href="#cb21-371" aria-hidden="true" tabindex="-1"></a>      <span class="dt">values</span><span class="op">:</span> <span class="st">"POP_2022"</span><span class="op">,</span> <span class="co">// variable à cartographier </span></span>
+<span id="cb21-372"><a href="#cb21-372" aria-hidden="true" tabindex="-1"></a>      <span class="dt">k</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span> <span class="co">// Rayon du plus gros cercle</span></span>
+<span id="cb21-373"><a href="#cb21-373" aria-hidden="true" tabindex="-1"></a>      <span class="dt">leg_x</span><span class="op">:</span> <span class="dv">500</span><span class="op">,</span></span>
+<span id="cb21-374"><a href="#cb21-374" aria-hidden="true" tabindex="-1"></a>      <span class="dt">leg_y</span><span class="op">:</span> <span class="dv">130</span><span class="op">,</span></span>
+<span id="cb21-375"><a href="#cb21-375" aria-hidden="true" tabindex="-1"></a>      <span class="dt">leg_round</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb21-376"><a href="#cb21-376" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"red"</span><span class="op">,</span></span>
+<span id="cb21-377"><a href="#cb21-377" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span><span class="fl">0.5</span><span class="op">,</span></span>
+<span id="cb21-378"><a href="#cb21-378" aria-hidden="true" tabindex="-1"></a>      <span class="dt">tooltip</span><span class="op">:</span> [<span class="st">"$MUS_NM_MUN"</span><span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span>[<span class="st">"POP_2022"</span>]] <span class="co">// infobulle</span></span>
+<span id="cb21-379"><a href="#cb21-379" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb21-380"><a href="#cb21-380" aria-hidden="true" tabindex="-1"></a>    {<span class="dt">geojson</span><span class="op">:</span> munic2<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span><span class="st">"#CCC"</span>}<span class="op">,</span> <span class="co">// Couche des communes</span></span>
+<span id="cb21-381"><a href="#cb21-381" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb21-382"><a href="#cb21-382" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-14" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+A vous de jouer - Rendez la carte interactive avec {ojs}
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pour rendre la carte interactive, vous avez pouvez proposer des <code>Inputs</code> pour interagir avec l’utilisateur.</p>
+<p>Ajoutez un Input de type <code>radio</code> pour définir la symbologie : <a href="https://github.com/neocarto/bertin#bubble"><strong><code>bubble</code></strong></a>, <a href="https://github.com/neocarto/bertin#square"><strong><code>square</code></strong></a> et <a href="https://github.com/neocarto/bertin#spikes"><strong><code>spikes</code></strong></a></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>viewof symbol <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="vs">`a`</span><span class="op">,</span> <span class="vs">`b`</span><span class="op">,</span> <span class="vs">`c`</span>]<span class="op">,</span> { <span class="dt">label</span><span class="op">:</span> <span class="vs">`label`</span><span class="op">,</span>  <span class="dt">value</span><span class="op">:</span> <span class="vs">`valeur par défaut`</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Créez une liste déroulante pour changer la variable à cartographier. Pare exemple, la population et la surface.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>viewof val <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>([<span class="st">"A"</span><span class="op">,</span> <span class="st">"B"</span>]<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Select one"</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Créez un slider pouyr faire varier la taille des cercles</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>viewof rayon <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="vs">`min`</span><span class="op">,</span> <span class="vs">`max`</span>]<span class="op">,</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"label"</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">30</span> })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Modifiez la carte précédente pour prendre en compte ces valeurs.</p>
+<p>Utilisez <code>//| echo: false</code> pour masquer le code.</p>
+<p>Pour en savoir plus sur les <code>inputs</code>, voir : <a href="https://observablehq.com/@observablehq/inputs"><span class="citation" data-cites="observablehq/inputs">@observablehq/inputs</span></a></p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Les Inputs</p>
+<div class="cell" data-eval="false">
+<div class="sourceCode cell-code" id="cb25" data-startfrom="430" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 429;"><span id="cb25-430"><a href="#cb25-430" aria-hidden="true" tabindex="-1"></a>viewof symbol <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="vs">`bubble`</span><span class="op">,</span> <span class="vs">`square`</span>]<span class="op">,</span> { <span class="dt">label</span><span class="op">:</span> <span class="vs">`Symbol`</span><span class="op">,</span>  <span class="dt">value</span><span class="op">:</span> <span class="vs">`bubble`</span>})</span>
+<span id="cb25-431"><a href="#cb25-431" aria-hidden="true" tabindex="-1"></a>viewof val <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>([<span class="st">"POP_2022"</span><span class="op">,</span> <span class="st">"AREA"</span>]<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Variable"</span>})</span>
+<span id="cb25-432"><a href="#cb25-432" aria-hidden="true" tabindex="-1"></a>viewof rayon <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">100</span>]<span class="op">,</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"Rayon"</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">30</span> })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-15-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-15-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-15-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<p>Pour adater le titre de la carte en fonction de la variable, on peut faire</p>
+<div class="cell" data-eval="false">
+<div class="sourceCode cell-code" id="cb26" data-startfrom="439" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 438;"><span id="cb26-439"><a href="#cb26-439" aria-hidden="true" tabindex="-1"></a>title <span class="op">=</span> val <span class="op">==</span> <span class="st">"AREA"</span> <span class="op">?</span> <span class="st">"Superficie"</span> <span class="op">:</span> <span class="st">"Population en 2022"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-16" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<p>Et la carte</p>
+<div class="cell" data-eval="false">
+<div class="sourceCode cell-code" id="cb27" data-startfrom="447" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 446;"><span id="cb27-447"><a href="#cb27-447" aria-hidden="true" tabindex="-1"></a>bertin<span class="op">.</span><span class="fu">draw</span>({</span>
+<span id="cb27-448"><a href="#cb27-448" aria-hidden="true" tabindex="-1"></a>  <span class="dt">params</span><span class="op">:</span> { <span class="dt">margin</span><span class="op">:</span> [<span class="op">-</span><span class="dv">550</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">50</span><span class="op">,</span> <span class="dv">0</span>]}<span class="op">,</span></span>
+<span id="cb27-449"><a href="#cb27-449" aria-hidden="true" tabindex="-1"></a>  <span class="dt">layers</span><span class="op">:</span> [</span>
+<span id="cb27-450"><a href="#cb27-450" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"header"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> title<span class="op">,</span> <span class="dt">anchor</span><span class="op">:</span> <span class="st">"start"</span> }<span class="op">,</span> <span class="co">// ICI</span></span>
+<span id="cb27-451"><a href="#cb27-451" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"minimap"</span><span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">185</span><span class="op">,</span> <span class="dt">width</span><span class="op">:</span> <span class="dv">90</span><span class="op">,</span> <span class="dt">projection</span><span class="op">:</span><span class="st">"Polar"</span> }<span class="op">,</span> </span>
+<span id="cb27-452"><a href="#cb27-452" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb27-453"><a href="#cb27-453" aria-hidden="true" tabindex="-1"></a>      <span class="dt">type</span><span class="op">:</span> symbol<span class="op">,</span> <span class="co">// ICI </span></span>
+<span id="cb27-454"><a href="#cb27-454" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geojson</span><span class="op">:</span> munic2<span class="op">,</span> </span>
+<span id="cb27-455"><a href="#cb27-455" aria-hidden="true" tabindex="-1"></a>      <span class="dt">values</span><span class="op">:</span> val<span class="op">,</span> <span class="co">// ICI</span></span>
+<span id="cb27-456"><a href="#cb27-456" aria-hidden="true" tabindex="-1"></a>      <span class="dt">k</span><span class="op">:</span> rayon<span class="op">,</span> <span class="co">// ICI</span></span>
+<span id="cb27-457"><a href="#cb27-457" aria-hidden="true" tabindex="-1"></a>      <span class="dt">leg_x</span><span class="op">:</span> <span class="dv">500</span><span class="op">,</span></span>
+<span id="cb27-458"><a href="#cb27-458" aria-hidden="true" tabindex="-1"></a>      <span class="dt">leg_y</span><span class="op">:</span> <span class="dv">130</span><span class="op">,</span></span>
+<span id="cb27-459"><a href="#cb27-459" aria-hidden="true" tabindex="-1"></a>      <span class="dt">leg_round</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb27-460"><a href="#cb27-460" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"red"</span><span class="op">,</span></span>
+<span id="cb27-461"><a href="#cb27-461" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span><span class="fl">0.5</span><span class="op">,</span></span>
+<span id="cb27-462"><a href="#cb27-462" aria-hidden="true" tabindex="-1"></a>      <span class="dt">tooltip</span><span class="op">:</span> [<span class="st">"$MUS_NM_MUN"</span><span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span>[<span class="st">"POP_2022"</span>]] </span>
+<span id="cb27-463"><a href="#cb27-463" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb27-464"><a href="#cb27-464" aria-hidden="true" tabindex="-1"></a>    {<span class="dt">geojson</span><span class="op">:</span> munic2<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span><span class="st">"#CCC"</span>}<span class="op">,</span></span>
+<span id="cb27-465"><a href="#cb27-465" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb27-466"><a href="#cb27-466" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-17" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="cell" data-eval="true">
+<div class="sourceCode cell-code hidden" id="cb28" data-startfrom="473" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 472;"><span id="cb28-473"><a href="#cb28-473" aria-hidden="true" tabindex="-1"></a>viewof symbol <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="vs">`bubble`</span><span class="op">,</span> <span class="vs">`square`</span>]<span class="op">,</span> { <span class="dt">label</span><span class="op">:</span> <span class="vs">`Symbol`</span><span class="op">,</span>  <span class="dt">value</span><span class="op">:</span> <span class="vs">`bubble`</span>})</span>
+<span id="cb28-474"><a href="#cb28-474" aria-hidden="true" tabindex="-1"></a>viewof val <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>([<span class="st">"POP_2022"</span><span class="op">,</span> <span class="st">"AREA"</span>]<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Variable"</span>})</span>
+<span id="cb28-475"><a href="#cb28-475" aria-hidden="true" tabindex="-1"></a>viewof rayon <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">100</span>]<span class="op">,</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"Rayon"</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">30</span> })</span>
+<span id="cb28-476"><a href="#cb28-476" aria-hidden="true" tabindex="-1"></a>title <span class="op">=</span> val <span class="op">==</span> <span class="st">"AREA"</span> <span class="op">?</span> <span class="st">"Superficie"</span> <span class="op">:</span> <span class="st">"Population en 2022"</span></span>
+<span id="cb28-477"><a href="#cb28-477" aria-hidden="true" tabindex="-1"></a>bertin<span class="op">.</span><span class="fu">draw</span>({</span>
+<span id="cb28-478"><a href="#cb28-478" aria-hidden="true" tabindex="-1"></a>  <span class="dt">params</span><span class="op">:</span> { <span class="dt">margin</span><span class="op">:</span> [<span class="op">-</span><span class="dv">550</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">50</span><span class="op">,</span> <span class="dv">0</span>]}<span class="op">,</span></span>
+<span id="cb28-479"><a href="#cb28-479" aria-hidden="true" tabindex="-1"></a>  <span class="dt">layers</span><span class="op">:</span> [</span>
+<span id="cb28-480"><a href="#cb28-480" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"header"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> title<span class="op">,</span> <span class="dt">anchor</span><span class="op">:</span> <span class="st">"start"</span> }<span class="op">,</span></span>
+<span id="cb28-481"><a href="#cb28-481" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"minimap"</span><span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">185</span><span class="op">,</span> <span class="dt">width</span><span class="op">:</span> <span class="dv">90</span><span class="op">,</span> <span class="dt">projection</span><span class="op">:</span><span class="st">"Polar"</span> }<span class="op">,</span> </span>
+<span id="cb28-482"><a href="#cb28-482" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb28-483"><a href="#cb28-483" aria-hidden="true" tabindex="-1"></a>      <span class="dt">type</span><span class="op">:</span> symbol<span class="op">,</span> </span>
+<span id="cb28-484"><a href="#cb28-484" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geojson</span><span class="op">:</span> munic2<span class="op">,</span> </span>
+<span id="cb28-485"><a href="#cb28-485" aria-hidden="true" tabindex="-1"></a>      <span class="dt">values</span><span class="op">:</span> val<span class="op">,</span> </span>
+<span id="cb28-486"><a href="#cb28-486" aria-hidden="true" tabindex="-1"></a>      <span class="dt">k</span><span class="op">:</span> rayon<span class="op">,</span></span>
+<span id="cb28-487"><a href="#cb28-487" aria-hidden="true" tabindex="-1"></a>      <span class="dt">leg_x</span><span class="op">:</span> <span class="dv">500</span><span class="op">,</span></span>
+<span id="cb28-488"><a href="#cb28-488" aria-hidden="true" tabindex="-1"></a>      <span class="dt">leg_y</span><span class="op">:</span> <span class="dv">130</span><span class="op">,</span></span>
+<span id="cb28-489"><a href="#cb28-489" aria-hidden="true" tabindex="-1"></a>      <span class="dt">leg_round</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb28-490"><a href="#cb28-490" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"red"</span><span class="op">,</span></span>
+<span id="cb28-491"><a href="#cb28-491" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span><span class="fl">0.5</span><span class="op">,</span></span>
+<span id="cb28-492"><a href="#cb28-492" aria-hidden="true" tabindex="-1"></a>      <span class="dt">tooltip</span><span class="op">:</span> [<span class="st">"$MUS_NM_MUN"</span><span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span>[<span class="st">"POP_2022"</span>]] </span>
+<span id="cb28-493"><a href="#cb28-493" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb28-494"><a href="#cb28-494" aria-hidden="true" tabindex="-1"></a>    {<span class="dt">geojson</span><span class="op">:</span> munic2<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span><span class="st">"#CCC"</span>}<span class="op">,</span></span>
+<span id="cb28-495"><a href="#cb28-495" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb28-496"><a href="#cb28-496" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-18-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-18-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-18-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-18-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-18-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>A présent, on souhaite colorier les cercles en fonction de l’indice de vitalité économique.</p>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+A vous de jouer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pour faire des varriations de couleurs (i.e.&nbsp;valeur), on utilise le type <code>**choro**</code> à l’intérieur de l’attribut <strong><code>fill</code></strong> de la couche à colorier. Ici, les cercles proportionnels.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>fill <span class="op">:</span> {type <span class="st">"choro"</span><span class="op">,</span> <span class="dt">values</span><span class="op">:</span> <span class="vs">`votre variable`</span><span class="op">,</span> <span class="dt">colors</span><span class="op">:</span> <span class="st">"RdYlBu"</span>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Pour paramétrer, voir : <a href="https://github.com/neocarto/bertin#choropleth">bertin#choropleth</a> &amp; <a href="https://observablehq.com/@neocartocnrs/bertin-js-chropoleth?collection=@neocartocnrs/bertin">bertin-js-chropoleth</a></p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30" data-startfrom="516" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 515;"><span id="cb30-516"><a href="#cb30-516" aria-hidden="true" tabindex="-1"></a>bertin<span class="op">.</span><span class="fu">draw</span>({</span>
+<span id="cb30-517"><a href="#cb30-517" aria-hidden="true" tabindex="-1"></a>  <span class="dt">params</span><span class="op">:</span> { <span class="dt">margin</span><span class="op">:</span> [<span class="op">-</span><span class="dv">550</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">50</span><span class="op">,</span> <span class="dv">0</span>]}<span class="op">,</span></span>
+<span id="cb30-518"><a href="#cb30-518" aria-hidden="true" tabindex="-1"></a>  <span class="dt">layers</span><span class="op">:</span> [</span>
+<span id="cb30-519"><a href="#cb30-519" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"header"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> title<span class="op">,</span> <span class="dt">anchor</span><span class="op">:</span> <span class="st">"start"</span> }<span class="op">,</span></span>
+<span id="cb30-520"><a href="#cb30-520" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"minimap"</span><span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">185</span><span class="op">,</span> <span class="dt">width</span><span class="op">:</span> <span class="dv">90</span><span class="op">,</span> <span class="dt">projection</span><span class="op">:</span><span class="st">"Polar"</span> }<span class="op">,</span> </span>
+<span id="cb30-521"><a href="#cb30-521" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb30-522"><a href="#cb30-522" aria-hidden="true" tabindex="-1"></a>      <span class="dt">type</span><span class="op">:</span> symbol<span class="op">,</span> </span>
+<span id="cb30-523"><a href="#cb30-523" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geojson</span><span class="op">:</span> munic2<span class="op">,</span> </span>
+<span id="cb30-524"><a href="#cb30-524" aria-hidden="true" tabindex="-1"></a>      <span class="dt">values</span><span class="op">:</span> val<span class="op">,</span> </span>
+<span id="cb30-525"><a href="#cb30-525" aria-hidden="true" tabindex="-1"></a>      <span class="dt">k</span><span class="op">:</span> rayon<span class="op">,</span></span>
+<span id="cb30-526"><a href="#cb30-526" aria-hidden="true" tabindex="-1"></a>      <span class="dt">leg_x</span><span class="op">:</span> <span class="dv">500</span><span class="op">,</span></span>
+<span id="cb30-527"><a href="#cb30-527" aria-hidden="true" tabindex="-1"></a>      <span class="dt">leg_y</span><span class="op">:</span> <span class="dv">130</span><span class="op">,</span></span>
+<span id="cb30-528"><a href="#cb30-528" aria-hidden="true" tabindex="-1"></a>      <span class="dt">leg_round</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb30-529"><a href="#cb30-529" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> { <span class="co">// ICI</span></span>
+<span id="cb30-530"><a href="#cb30-530" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> <span class="st">"choro"</span><span class="op">,</span></span>
+<span id="cb30-531"><a href="#cb30-531" aria-hidden="true" tabindex="-1"></a>        <span class="dt">values</span><span class="op">:</span> <span class="st">"VIT_ECO"</span><span class="op">,</span></span>
+<span id="cb30-532"><a href="#cb30-532" aria-hidden="true" tabindex="-1"></a>        <span class="dt">colors</span><span class="op">:</span> <span class="st">"RdYlBu"</span><span class="op">,</span></span>
+<span id="cb30-533"><a href="#cb30-533" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_x</span><span class="op">:</span><span class="dv">680</span><span class="op">,</span></span>
+<span id="cb30-534"><a href="#cb30-534" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_y</span><span class="op">:</span><span class="dv">100</span><span class="op">,</span></span>
+<span id="cb30-535"><a href="#cb30-535" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_title</span><span class="op">:</span></span>
+<span id="cb30-536"><a href="#cb30-536" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Vitalité économique"</span><span class="op">,</span></span>
+<span id="cb30-537"><a href="#cb30-537" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_round</span><span class="op">:</span> <span class="dv">0</span></span>
+<span id="cb30-538"><a href="#cb30-538" aria-hidden="true" tabindex="-1"></a>        }<span class="op">,</span></span>
+<span id="cb30-539"><a href="#cb30-539" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span><span class="fl">0.8</span><span class="op">,</span></span>
+<span id="cb30-540"><a href="#cb30-540" aria-hidden="true" tabindex="-1"></a>      <span class="dt">tooltip</span><span class="op">:</span> [<span class="st">"$MUS_NM_MUN"</span><span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span>[<span class="st">"VIT_ECO"</span>]] </span>
+<span id="cb30-541"><a href="#cb30-541" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb30-542"><a href="#cb30-542" aria-hidden="true" tabindex="-1"></a>    {<span class="dt">geojson</span><span class="op">:</span> munic2<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span><span class="st">"#CCC"</span>}<span class="op">,</span></span>
+<span id="cb30-543"><a href="#cb30-543" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb30-544"><a href="#cb30-544" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-19" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Création de graphiques</strong></p>
+<p>Avec <strong><code>{ojs}</code></strong>, on va aussi pouvoir faire des graphiques avec la bibliothèque <strong><code>plot</code></strong>.</p>
+<p>Tout d’abord, on récupère les noms des 20 communes les plus peuplées, classées par ordre décroissant de population.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31" data-startfrom="557" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 556;"><span id="cb31-557"><a href="#cb31-557" aria-hidden="true" tabindex="-1"></a>communes <span class="op">=</span> munic2<span class="op">.</span><span class="at">features</span></span>
+<span id="cb31-558"><a href="#cb31-558" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span>)</span>
+<span id="cb31-559"><a href="#cb31-559" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> d3<span class="op">.</span><span class="fu">descending</span>(a<span class="op">.</span><span class="at">POP_2022</span><span class="op">,</span> b<span class="op">.</span><span class="at">POP_2022</span>))</span>
+<span id="cb31-560"><a href="#cb31-560" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">MUS_NM_MUN</span>)</span>
+<span id="cb31-561"><a href="#cb31-561" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-20" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell" data-eval="true">
+<div class="sourceCode cell-code hidden" id="cb32" data-startfrom="567" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 566;"><span id="cb32-567"><a href="#cb32-567" aria-hidden="true" tabindex="-1"></a>communes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-21" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p>On met en forme les données.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33" data-startfrom="573" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 572;"><span id="cb33-573"><a href="#cb33-573" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {</span>
+<span id="cb33-574"><a href="#cb33-574" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> arr <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb33-575"><a href="#cb33-575" aria-hidden="true" tabindex="-1"></a>  communes<span class="op">.</span><span class="fu">forEach</span>((d) <span class="kw">=&gt;</span> {</span>
+<span id="cb33-576"><a href="#cb33-576" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> tmp <span class="op">=</span> munic2<span class="op">.</span><span class="at">features</span></span>
+<span id="cb33-577"><a href="#cb33-577" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span>)</span>
+<span id="cb33-578"><a href="#cb33-578" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">find</span>((x) <span class="kw">=&gt;</span> x<span class="op">.</span><span class="at">MUS_NM_MUN</span> <span class="op">==</span> d)<span class="op">;</span></span>
+<span id="cb33-579"><a href="#cb33-579" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">2001</span><span class="op">;</span> i <span class="op">&lt;=</span> <span class="dv">2022</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb33-580"><a href="#cb33-580" aria-hidden="true" tabindex="-1"></a>      arr<span class="op">.</span><span class="fu">push</span>({ <span class="dt">year</span><span class="op">:</span> i<span class="op">,</span> <span class="dt">pop</span><span class="op">:</span> tmp[<span class="st">"POP_"</span> <span class="op">+</span> i]<span class="op">,</span> <span class="dt">com</span><span class="op">:</span> d })<span class="op">;</span></span>
+<span id="cb33-581"><a href="#cb33-581" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb33-582"><a href="#cb33-582" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb33-583"><a href="#cb33-583" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> arr<span class="op">;</span></span>
+<span id="cb33-584"><a href="#cb33-584" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-22" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell" data-eval="true">
+<div class="sourceCode cell-code hidden" id="cb34" data-startfrom="590" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 589;"><span id="cb34-590"><a href="#cb34-590" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-23" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p>Puis on réalise le graphique avec <code>plot</code> en proposant de sélectionner une commune.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35" data-startfrom="599" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 598;"><span id="cb35-599"><a href="#cb35-599" aria-hidden="true" tabindex="-1"></a>viewof commune <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(communes<span class="op">,</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"Commune"</span> })</span>
+<span id="cb35-600"><a href="#cb35-600" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb35-601"><a href="#cb35-601" aria-hidden="true" tabindex="-1"></a>  <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb35-602"><a href="#cb35-602" aria-hidden="true" tabindex="-1"></a>  <span class="dt">x</span><span class="op">:</span> {</span>
+<span id="cb35-603"><a href="#cb35-603" aria-hidden="true" tabindex="-1"></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"Années →"</span><span class="op">,</span></span>
+<span id="cb35-604"><a href="#cb35-604" aria-hidden="true" tabindex="-1"></a>    <span class="dt">tickFormat</span><span class="op">:</span> <span class="st">""</span></span>
+<span id="cb35-605"><a href="#cb35-605" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb35-606"><a href="#cb35-606" aria-hidden="true" tabindex="-1"></a>  <span class="dt">y</span><span class="op">:</span> {</span>
+<span id="cb35-607"><a href="#cb35-607" aria-hidden="true" tabindex="-1"></a>    <span class="dt">label</span><span class="op">:</span> <span class="vs">`↑ Population (</span><span class="sc">${</span>commune<span class="sc">}</span><span class="vs">)`</span></span>
+<span id="cb35-608"><a href="#cb35-608" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb35-609"><a href="#cb35-609" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> { <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span> }<span class="op">,</span></span>
+<span id="cb35-610"><a href="#cb35-610" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span></span>
+<span id="cb35-611"><a href="#cb35-611" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb35-612"><a href="#cb35-612" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">lineY</span>(data<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">com</span> <span class="op">==</span> commune)<span class="op">,</span> {</span>
+<span id="cb35-613"><a href="#cb35-613" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x</span><span class="op">:</span> <span class="st">"year"</span><span class="op">,</span></span>
+<span id="cb35-614"><a href="#cb35-614" aria-hidden="true" tabindex="-1"></a>      <span class="dt">y</span><span class="op">:</span> <span class="st">"pop"</span><span class="op">,</span></span>
+<span id="cb35-615"><a href="#cb35-615" aria-hidden="true" tabindex="-1"></a>      <span class="dt">stroke</span><span class="op">:</span> <span class="st">"red"</span><span class="op">,</span></span>
+<span id="cb35-616"><a href="#cb35-616" aria-hidden="true" tabindex="-1"></a>      <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">2</span></span>
+<span id="cb35-617"><a href="#cb35-617" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb35-618"><a href="#cb35-618" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb35-619"><a href="#cb35-619" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-24-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-24-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+<p><strong>Cartographie de données raster</strong></p>
+<!-- -->
+
+<script type="ojs-module-contents">
+{"contents":[
+  {"methodName":"interpret","inline":"true","source":"htl.html`<span>${aq.version}</span>`", "cellName":"ojs-element-id-1"}
+,
+  {"methodName":"interpret","inline":"true","source":"htl.html`<span>${d3.version}</span>`", "cellName":"ojs-element-id-2"}
+,
+  {"methodName":"interpret","inline":"true","source":"htl.html`<span>${htl.version}</span>`", "cellName":"ojs-element-id-3"}
+,
+  {"methodName":"interpret","inline":"true","source":"htl.html`<span>${Inputs.version}</span>`", "cellName":"ojs-element-id-4"}
+,
+  {"methodName":"interpret","inline":"true","source":"htl.html`<span>${L.version}</span>`", "cellName":"ojs-element-id-5"}
+,
+  {"methodName":"interpret","inline":"true","source":"htl.html`<span>${Plot.version}</span>`", "cellName":"ojs-element-id-6"}
+]}
+</script>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+
+<script type="ojs-module-contents">
+{"contents":[{"methodName":"interpret","cellName":"ojs-cell-1","inline":false,"source":"viewof x = Inputs.range([0, 255], {step: 1})\n"},{"methodName":"interpret","cellName":"ojs-cell-2","inline":false,"source":"viewof y = Inputs.text({value: 30})\n"},{"methodName":"interpret","cellName":"ojs-cell-3","inline":false,"source":"viewof z = Inputs.radio([10, 100, 1000], {value: 10})\n"},{"methodName":"interpret","cellName":"ojs-cell-4","inline":false,"source":"x * y * z\n"},{"methodName":"interpret","cellName":"ojs-cell-5","inline":false,"source":"viewof color = Inputs.color({ label: \"Couleur\", value: \"#4ab58c\" })\nviewof radius = Inputs.range([1, 50], { label: \"Rayon\", step: 1, value: 100 })\nviewof position = Inputs.range([50, 950], { label: \"Position\", step: 1, value: 50 })\n"},{"methodName":"interpret","cellName":"ojs-cell-6","inline":false,"source":"html`<svg viewBox=\"0 0 1000 100\" xmlns=\"http://www.w3.org/2000/svg\">\n  <circle cx=${position} cy=\"50\" r=${radius} fill=\"${color}\"/>\n</svg>`\n"},{"methodName":"interpret","cellName":"ojs-cell-7","inline":false,"source":"munic = FileAttachment(\"geom/munic.geojson\").json()\n"},{"methodName":"interpret","cellName":"ojs-cell-8","inline":false,"source":"Inputs.table(munic.features.map(d => d.properties))\n"},{"methodName":"interpret","cellName":"ojs-cell-9","inline":false,"source":"{\n  const container = yield htl.html`<div style=\"height: 500px;\">`;\n  const map = L.map(container);\n  const layer = L.geoJSON(munic).addTo(map);\n  map.fitBounds(layer.getBounds(), { maxZoom: 9 });\n  L.tileLayer(\"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png\", {\n    attribution:\n      \"© <a href=https://www.openstreetmap.org/copyright>OpenStreetMap</a> contributors\"\n  }).addTo(map);\n}\n"},{"methodName":"interpret","cellName":"ojs-cell-10","inline":false,"source":"geo = require(\"geotoolbox\")\n"},{"methodName":"interpret","cellName":"ojs-cell-11","inline":false,"source":"munic2 = geo.rewind(geo.simplify(munic, { k: 0.02 }))\n"},{"methodName":"interpret","cellName":"ojs-cell-12","inline":false,"source":"bertin = require(\"bertin\")\n"},{"methodName":"interpret","cellName":"ojs-cell-13","inline":false,"source":"bertin.draw({layers:[{geojson: munic2, fill: \"#d18de0\"}]})\n"},{"methodName":"interpret","cellName":"ojs-cell-14","inline":false,"source":"bertin.draw({\n  params: { margin: [-550, 0, 50, 0]}, // marges [Haut, droite, bas, gauche]\n  layers: [\n    { type: \"header\", text: \"Population en 2022\", anchor: \"start\" }, // Titre\n    { type: \"minimap\", x: 30, y: 185, width: 90, projection:\"Polar\" }, // Carte de localisation\n    {\n      id : \"bub\", //  identifiant de la couche\n      type: \"bubble\", // couche de symboles proportionnels\n      geojson: munic2, \n      values: \"POP_2022\", // variable à cartographier \n      k: 30, // Rayon du plus gros cercle\n      leg_x: 500,\n      leg_y: 130,\n      leg_round: 0,\n      fill: \"red\",\n      fillOpacity:0.5,\n      tooltip: [\"$MUS_NM_MUN\", d => d.properties[\"POP_2022\"]] // infobulle\n    },\n    {geojson: munic2, fill:\"#CCC\"}, // Couche des communes\n  ]\n})\n"},{"methodName":"interpret","cellName":"ojs-cell-18","inline":false,"source":"viewof symbol = Inputs.radio([`bubble`, `square`], { label: `Symbol`,  value: `bubble`})\nviewof val = Inputs.select([\"POP_2022\", \"AREA\"], {label: \"Variable\"})\nviewof rayon = Inputs.range([1, 100], { label: \"Rayon\", step: 2, value: 30 })\ntitle = val == \"AREA\" ? \"Superficie\" : \"Population en 2022\"\nbertin.draw({\n  params: { margin: [-550, 0, 50, 0]},\n  layers: [\n    { type: \"header\", text: title, anchor: \"start\" },\n    { type: \"minimap\", x: 30, y: 185, width: 90, projection:\"Polar\" }, \n    {\n      type: symbol, \n      geojson: munic2, \n      values: val, \n      k: rayon,\n      leg_x: 500,\n      leg_y: 130,\n      leg_round: 0,\n      fill: \"red\",\n      fillOpacity:0.5,\n      tooltip: [\"$MUS_NM_MUN\", d => d.properties[\"POP_2022\"]] \n    },\n    {geojson: munic2, fill:\"#CCC\"},\n  ]\n})\n"},{"methodName":"interpret","cellName":"ojs-cell-19","inline":false,"source":"\n\nbertin.draw({\n  params: { margin: [-550, 0, 50, 0]},\n  layers: [\n    { type: \"header\", text: title, anchor: \"start\" },\n    { type: \"minimap\", x: 30, y: 185, width: 90, projection:\"Polar\" }, \n    {\n      type: symbol, \n      geojson: munic2, \n      values: val, \n      k: rayon,\n      leg_x: 500,\n      leg_y: 130,\n      leg_round: 0,\n      fill: { // ICI\n        type: \"choro\",\n        values: \"VIT_ECO\",\n        colors: \"RdYlBu\",\n        leg_x:680,\n        leg_y:100,\n        leg_title:\n        \"Vitalité économique\",\n        leg_round: 0\n        },\n      fillOpacity:0.8,\n      tooltip: [\"$MUS_NM_MUN\", d => d.properties[\"VIT_ECO\"]] \n    },\n    {geojson: munic2, fill:\"#CCC\"},\n  ]\n})\n"},{"methodName":"interpret","cellName":"ojs-cell-20","inline":false,"source":"communes = munic2.features\n  .map((d) => d.properties)\n  .sort((a, b) => d3.descending(a.POP_2022, b.POP_2022))\n  .map((d) => d.MUS_NM_MUN)\n  .slice(0, 20)\n"},{"methodName":"interpret","cellName":"ojs-cell-21","inline":false,"source":"communes\n"},{"methodName":"interpret","cellName":"ojs-cell-22","inline":false,"source":"data = {\n  let arr = [];\n  communes.forEach((d) => {\n    let tmp = munic2.features\n      .map((d) => d.properties)\n      .find((x) => x.MUS_NM_MUN == d);\n    for (let i = 2001; i <= 2022; i++) {\n      arr.push({ year: i, pop: tmp[\"POP_\" + i], com: d });\n    }\n  });\n  return arr;\n}\n"},{"methodName":"interpret","cellName":"ojs-cell-23","inline":false,"source":"data\n"},{"methodName":"interpret","cellName":"ojs-cell-24","inline":false,"source":"viewof commune = Inputs.select(communes, { label: \"Commune\" })\nPlot.plot({\n  grid: true,\n  x: {\n    label: \"Années →\",\n    tickFormat: \"\"\n  },\n  y: {\n    label: `↑ Population (${commune})`\n  },\n  color: { legend: true },\n  marginLeft: 60,\n  marks: [\n    Plot.lineY(data.filter(d => d.com == commune), {\n      x: \"year\",\n      y: \"pop\",\n      stroke: \"red\",\n      strokeWidth: 2\n    })\n  ]\n})\n"},{"methodName":"interpretQuiet","source":"shinyInput('x')"},{"methodName":"interpretQuiet","source":"shinyInput('y')"},{"methodName":"interpretQuiet","source":"shinyInput('z')"},{"methodName":"interpretQuiet","source":"shinyInput('color')"},{"methodName":"interpretQuiet","source":"shinyInput('radius')"},{"methodName":"interpretQuiet","source":"shinyInput('position')"},{"methodName":"interpretQuiet","source":"shinyInput('symbol')"},{"methodName":"interpretQuiet","source":"shinyInput('val')"},{"methodName":"interpretQuiet","source":"shinyInput('rayon')"},{"methodName":"interpretQuiet","source":"shinyInput('commune')"}]}
+</script>
+<script type="module">
+window._ojs.paths.runtimeToDoc = "../../..";
+window._ojs.paths.runtimeToRoot = "../../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb36" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Articulation de différents langages (R, JavaScript et Python) pour la géovisualisation avec Quarto"</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Atelier Sageo, Québec, Juin 2023"</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Timothée Giraud, Nicolas Lambert, Matthieu Viry, Ronan Ysebaert (UAR RIATE, CNRS, Université Paris Cité)"</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: sandstone</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="co">    fontsize: 0.9em</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 2</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="co">    linkcolor: "#8631ad"</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="an">execute:</span><span class="co"> </span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="co">  cache: false</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Observable JavaScript</span></span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a><span class="fu">### Observable Kezako ?</span></span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>L'<span class="kw">&lt;b&gt;</span>Observable javascript {ojs}<span class="kw">&lt;/b&gt;</span> est un ensemble d'améliorations apportées à vanilla JavaScript créé par Mike Bostock (également auteur de D3). Observable JS se distingue par son exécution réactive, qui convient particulièrement bien à l'exploration et à l'analyse interactives des données.</span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a><span class="al">![](fig/d3.png)</span>{width=20%} <span class="al">![](fig/arrow.png)</span>{width=20%} <span class="al">![](fig/observable.png)</span>{width=20%} <span class="kw">&lt;br/&gt;</span></span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>**Observable** est aussi une startup fondée par Mike Bostock et Melody Meckfessel, qui propose une plateforme 100% en ligne (<span class="co">[</span><span class="ot">https://observablehq.com</span><span class="co">](https://observablehq.com)</span>) pour concevoir, partager et diffuser des visualisations de données. </span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a><span class="al">![](fig/frise.png)</span></span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a>**Observable** c'est donc aussi C’est aussi une plateforme web qui héberge des notebooks computationnels sur la visualisation de données.</span>
+<span id="cb36-30"><a href="#cb36-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a>👉 **Objectif** : faire collaborer une communauté autour de la visualisation de données.</span>
+<span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-33"><a href="#cb36-33" aria-hidden="true" tabindex="-1"></a><span class="fu">### Observable dans Quarto</span></span>
+<span id="cb36-34"><a href="#cb36-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-35"><a href="#cb36-35" aria-hidden="true" tabindex="-1"></a>Le runtime d'Observable est Open Source et est utilisé dans Quarto. </span>
+<span id="cb36-36"><a href="#cb36-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-37"><a href="#cb36-37" aria-hidden="true" tabindex="-1"></a>Dans Quarto, toutes les instructions s'écrivent dans des chunks {ojs}</span>
+<span id="cb36-38"><a href="#cb36-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-39"><a href="#cb36-39" aria-hidden="true" tabindex="-1"></a><span class="in">``` {{ojs}}</span></span>
+<span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-41"><a href="#cb36-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-42"><a href="#cb36-42" aria-hidden="true" tabindex="-1"></a>On peut paramétrer l'affiche et/ou l'execution du code avec **//| echo** et **//| eval**.</span>
+<span id="cb36-43"><a href="#cb36-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-44"><a href="#cb36-44" aria-hidden="true" tabindex="-1"></a><span class="in">``` {{ojs}}</span></span>
+<span id="cb36-45"><a href="#cb36-45" aria-hidden="true" tabindex="-1"></a><span class="in">//| echo: false</span></span>
+<span id="cb36-46"><a href="#cb36-46" aria-hidden="true" tabindex="-1"></a><span class="in">//| eval: true</span></span>
+<span id="cb36-47"><a href="#cb36-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-48"><a href="#cb36-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-49"><a href="#cb36-49" aria-hidden="true" tabindex="-1"></a>_NB : Contrairement aux chunks R et Python, le code s'execute *just in time* dans le navigateur web une fois le notebook généré. Seul l'export html est donc pris en compte._</span>
+<span id="cb36-50"><a href="#cb36-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-51"><a href="#cb36-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-52"><a href="#cb36-52" aria-hidden="true" tabindex="-1"></a><span class="fu">### Principes</span></span>
+<span id="cb36-53"><a href="#cb36-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-54"><a href="#cb36-54" aria-hidden="true" tabindex="-1"></a>Le langage JavaScript n'a pas du été conçu pour l’analyse de données. Mais, gros point fort, on a tous un navigateur web et JavaScript tourne sur toutes les machines. Le but : bâtir une évolution du langage JavaScript pour en faire un langage adapté à l’analyse et la visualisation de données sur le web. </span>
+<span id="cb36-55"><a href="#cb36-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-56"><a href="#cb36-56" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 👉 Des bibliothèques préchargées 📊</span></span>
+<span id="cb36-57"><a href="#cb36-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-58"><a href="#cb36-58" aria-hidden="true" tabindex="-1"></a>OJS c'est du JavaScript + plein de bibliothèques pré chargées : <span class="kw">&lt;br/&gt;</span></span>
+<span id="cb36-59"><a href="#cb36-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-60"><a href="#cb36-60" aria-hidden="true" tabindex="-1"></a>| Symbol   | Name              | Version            |</span>
+<span id="cb36-61"><a href="#cb36-61" aria-hidden="true" tabindex="-1"></a>|----------|-------------------|--------------------|</span>
+<span id="cb36-62"><a href="#cb36-62" aria-hidden="true" tabindex="-1"></a>| <span class="sc">\_</span>       | Lodash            | 4.17.21            |</span>
+<span id="cb36-63"><a href="#cb36-63" aria-hidden="true" tabindex="-1"></a>| aq       | Arquero           | \${aq.version}     |</span>
+<span id="cb36-64"><a href="#cb36-64" aria-hidden="true" tabindex="-1"></a>| Arrow    | Apache Arrow      | 4.0.1              |</span>
+<span id="cb36-65"><a href="#cb36-65" aria-hidden="true" tabindex="-1"></a>| d3       | D3.js             | \${d3.version}     |</span>
+<span id="cb36-66"><a href="#cb36-66" aria-hidden="true" tabindex="-1"></a>| dot      | Graphviz          | 0.2.1              |</span>
+<span id="cb36-67"><a href="#cb36-67" aria-hidden="true" tabindex="-1"></a>| htl      | Hypertext Literal | \${htl.version}    |</span>
+<span id="cb36-68"><a href="#cb36-68" aria-hidden="true" tabindex="-1"></a>| Inputs   | Observable Inputs | \${Inputs.version} |</span>
+<span id="cb36-69"><a href="#cb36-69" aria-hidden="true" tabindex="-1"></a>| L        | Leaflet           | \${L.version}      |</span>
+<span id="cb36-70"><a href="#cb36-70" aria-hidden="true" tabindex="-1"></a>| mermaid  | Mermaid           | 9.1.6              |</span>
+<span id="cb36-71"><a href="#cb36-71" aria-hidden="true" tabindex="-1"></a>| Plot     | Observable Plot   | \${Plot.version}   |</span>
+<span id="cb36-72"><a href="#cb36-72" aria-hidden="true" tabindex="-1"></a>| SQLite   | SQL.js            | 1.7.0              |</span>
+<span id="cb36-73"><a href="#cb36-73" aria-hidden="true" tabindex="-1"></a>| topojson | TopoJSON Client   | 3.1.0              |</span>
+<span id="cb36-74"><a href="#cb36-74" aria-hidden="true" tabindex="-1"></a>| vl       | Vega, Vega-Lite   | 5.22.1, 5.2.0      |</span>
+<span id="cb36-75"><a href="#cb36-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-76"><a href="#cb36-76" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 👉 Chaque début de ligne identifie une cellule ojs 🙋</span></span>
+<span id="cb36-77"><a href="#cb36-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-78"><a href="#cb36-78" aria-hidden="true" tabindex="-1"></a>Chaque ligne définit une variable et une cellule qui doit être unique sur l'ensemble du document.</span>
+<span id="cb36-79"><a href="#cb36-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-80"><a href="#cb36-80" aria-hidden="true" tabindex="-1"></a><span class="in">``` {{ojs}}</span></span>
+<span id="cb36-81"><a href="#cb36-81" aria-hidden="true" tabindex="-1"></a><span class="in">a = 10 // une cellule</span></span>
+<span id="cb36-82"><a href="#cb36-82" aria-hidden="true" tabindex="-1"></a><span class="in">b = 20 // une cellule</span></span>
+<span id="cb36-83"><a href="#cb36-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-84"><a href="#cb36-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-85"><a href="#cb36-85" aria-hidden="true" tabindex="-1"></a><span class="in">``` {{ojs}}</span></span>
+<span id="cb36-86"><a href="#cb36-86" aria-hidden="true" tabindex="-1"></a><span class="in">c = a + b // une cellule</span></span>
+<span id="cb36-87"><a href="#cb36-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-88"><a href="#cb36-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-89"><a href="#cb36-89" aria-hidden="true" tabindex="-1"></a><span class="in">``` {{ojs}}</span></span>
+<span id="cb36-90"><a href="#cb36-90" aria-hidden="true" tabindex="-1"></a><span class="in">d = { </span></span>
+<span id="cb36-91"><a href="#cb36-91" aria-hidden="true" tabindex="-1"></a><span class="in">  let a = 10 </span></span>
+<span id="cb36-92"><a href="#cb36-92" aria-hidden="true" tabindex="-1"></a><span class="in">  let b = 30</span></span>
+<span id="cb36-93"><a href="#cb36-93" aria-hidden="true" tabindex="-1"></a><span class="in">  return a + b </span></span>
+<span id="cb36-94"><a href="#cb36-94" aria-hidden="true" tabindex="-1"></a><span class="in">} // Une cellule</span></span>
+<span id="cb36-95"><a href="#cb36-95" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-96"><a href="#cb36-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-97"><a href="#cb36-97" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 👉 L’ordre des cellules n’a pas d’importance 🤯</span></span>
+<span id="cb36-98"><a href="#cb36-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-99"><a href="#cb36-99" aria-hidden="true" tabindex="-1"></a>On peut donc écrire ça</span>
+<span id="cb36-100"><a href="#cb36-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-101"><a href="#cb36-101" aria-hidden="true" tabindex="-1"></a><span class="in">``` {{ojs}}</span></span>
+<span id="cb36-102"><a href="#cb36-102" aria-hidden="true" tabindex="-1"></a><span class="in">result = val1 * val2</span></span>
+<span id="cb36-103"><a href="#cb36-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-104"><a href="#cb36-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-105"><a href="#cb36-105" aria-hidden="true" tabindex="-1"></a>avant ça</span>
+<span id="cb36-106"><a href="#cb36-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-107"><a href="#cb36-107" aria-hidden="true" tabindex="-1"></a><span class="in">``` {{ojs}}</span></span>
+<span id="cb36-108"><a href="#cb36-108" aria-hidden="true" tabindex="-1"></a><span class="in">val1 = 10</span></span>
+<span id="cb36-109"><a href="#cb36-109" aria-hidden="true" tabindex="-1"></a><span class="in">val2 = 20</span></span>
+<span id="cb36-110"><a href="#cb36-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb36-111"><a href="#cb36-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-112"><a href="#cb36-112" aria-hidden="true" tabindex="-1"></a>Le lien entre les cellules se fait de façon topologique et non de haut en bas. </span>
+<span id="cb36-113"><a href="#cb36-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-114"><a href="#cb36-114" aria-hidden="true" tabindex="-1"></a><span class="al">![](fig/topology.png)</span></span>
+<span id="cb36-115"><a href="#cb36-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-116"><a href="#cb36-116" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 👉 Tout est réactif 🔥</span></span>
+<span id="cb36-117"><a href="#cb36-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-118"><a href="#cb36-118" aria-hidden="true" tabindex="-1"></a>Dès lors qu'une cellule est modifiée, les cellules qui en dépendent sont modifiées également.</span>
+<span id="cb36-119"><a href="#cb36-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-120"><a href="#cb36-120" aria-hidden="true" tabindex="-1"></a>Pour modifier la valeutr d'une céllule, on utilise des **`Inputs`** (des composants proposés par OJS pour explorer les données) avec le mot clé **`viewof`**. Voir : https://observablehq.com/@observablehq/inputs</span>
+<span id="cb36-121"><a href="#cb36-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-122"><a href="#cb36-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-125"><a href="#cb36-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-126"><a href="#cb36-126" aria-hidden="true" tabindex="-1"></a>viewof x <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">255</span>]<span class="op">,</span> {<span class="dt">step</span><span class="op">:</span> <span class="dv">1</span>})</span>
+<span id="cb36-127"><a href="#cb36-127" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-128"><a href="#cb36-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-131"><a href="#cb36-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-132"><a href="#cb36-132" aria-hidden="true" tabindex="-1"></a>viewof y <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">text</span>({<span class="dt">value</span><span class="op">:</span> <span class="dv">30</span>})</span>
+<span id="cb36-133"><a href="#cb36-133" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-134"><a href="#cb36-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-137"><a href="#cb36-137" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-138"><a href="#cb36-138" aria-hidden="true" tabindex="-1"></a>viewof z <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="dv">10</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="dv">1000</span>]<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="dv">10</span>})</span>
+<span id="cb36-139"><a href="#cb36-139" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-140"><a href="#cb36-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-143"><a href="#cb36-143" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-144"><a href="#cb36-144" aria-hidden="true" tabindex="-1"></a>x <span class="op">*</span> y <span class="op">*</span> z</span>
+<span id="cb36-145"><a href="#cb36-145" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-146"><a href="#cb36-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-147"><a href="#cb36-147" aria-hidden="true" tabindex="-1"></a><span class="vs">Ce système est pratique pour modifier des visualisations de données.</span></span>
+<span id="cb36-148"><a href="#cb36-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-149"><a href="#cb36-149" aria-hidden="true" tabindex="-1"></a><span class="vs">Ici, un exemple avec un simple cercle dessiné en svg.</span></span>
+<span id="cb36-150"><a href="#cb36-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-153"><a href="#cb36-153" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-154"><a href="#cb36-154" aria-hidden="true" tabindex="-1"></a>viewof color <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">color</span>({ <span class="dt">label</span><span class="op">:</span> <span class="st">"Couleur"</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="st">"#4ab58c"</span> })</span>
+<span id="cb36-155"><a href="#cb36-155" aria-hidden="true" tabindex="-1"></a>viewof radius <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">50</span>]<span class="op">,</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"Rayon"</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">100</span> })</span>
+<span id="cb36-156"><a href="#cb36-156" aria-hidden="true" tabindex="-1"></a>viewof position <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">50</span><span class="op">,</span> <span class="dv">950</span>]<span class="op">,</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"Position"</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">50</span> })</span>
+<span id="cb36-157"><a href="#cb36-157" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-158"><a href="#cb36-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-161"><a href="#cb36-161" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-162"><a href="#cb36-162" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;svg viewBox="0 0 1000 100" xmlns="http://www.w3.org/2000/svg"&gt;</span></span>
+<span id="cb36-163"><a href="#cb36-163" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;circle cx=</span><span class="sc">${</span>position<span class="sc">}</span><span class="vs"> cy="50" r=</span><span class="sc">${</span>radius<span class="sc">}</span><span class="vs"> fill="</span><span class="sc">${</span>color<span class="sc">}</span><span class="vs">"/&gt;</span></span>
+<span id="cb36-164"><a href="#cb36-164" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/svg&gt;`</span></span>
+<span id="cb36-165"><a href="#cb36-165" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-166"><a href="#cb36-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-167"><a href="#cb36-167" aria-hidden="true" tabindex="-1"></a><span class="vs">### l'écosystème spatial avec Ojs</span></span>
+<span id="cb36-168"><a href="#cb36-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-169"><a href="#cb36-169" aria-hidden="true" tabindex="-1"></a><span class="vs">L'écosystème spatial de JavaScript est moins étoffé que ce qu'on peut trouver en Python ou en R. Mais on trouve quand même des choses intéressantes qui permettent de faire de la géomatique directement dans le navigateur web. Voici quelques exemples.</span></span>
+<span id="cb36-170"><a href="#cb36-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-171"><a href="#cb36-171" aria-hidden="true" tabindex="-1"></a><span class="vs">**Les fonctionnalités spatiales de `</span>d3<span class="op">.</span><span class="fu">js</span><span class="vs">`**</span></span>
+<span id="cb36-172"><a href="#cb36-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-173"><a href="#cb36-173" aria-hidden="true" tabindex="-1"></a><span class="vs">::: columns</span></span>
+<span id="cb36-174"><a href="#cb36-174" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="8%"}</span></span>
+<span id="cb36-175"><a href="#cb36-175" aria-hidden="true" tabindex="-1"></a><span class="vs">![](fig/d3.png)</span></span>
+<span id="cb36-176"><a href="#cb36-176" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-177"><a href="#cb36-177" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="2%"}</span></span>
+<span id="cb36-178"><a href="#cb36-178" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-179"><a href="#cb36-179" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="90%"}</span></span>
+<span id="cb36-180"><a href="#cb36-180" aria-hidden="true" tabindex="-1"></a><span class="vs">[**`</span>d3<span class="op">-</span><span class="fu">geo</span><span class="vs">`**](https://github.com/d3/d3-geo) est le module spatial de d3. Il permet de gérer les projections cartographiques, les formes sphériques et la trigonométrie sphérique. Voir aussi [**`</span>d3<span class="op">-</span>geo<span class="op">-</span><span class="fu">projection</span><span class="vs">`**](https://github.com/d3/d3-geo-projection). [**`</span>d3<span class="op">-</span><span class="fu">delaunay</span><span class="vs">`**](https://github.com/d3/d3-delaunay) est une bibliothèque rapide pour calculer le diagramme de Voronoï d'un ensemble de points bidimensionnels. Elle est basée sur Delaunator, une bibliothèque rapide pour calculer la triangulation de Delaunay en utilisant des algorithmes de balayage. Le diagramme de Voronoï est construit en reliant les circonférences des triangles adjacents dans la triangulation de Delaunay. [**`</span>d3<span class="op">-</span>geo<span class="op">-</span><span class="fu">voronoi</span><span class="vs">`**](https://github.com/Fil/d3-geo-voronoi) est une adaptation de d3-delaunay sur la sphère.</span></span>
+<span id="cb36-181"><a href="#cb36-181" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-182"><a href="#cb36-182" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-183"><a href="#cb36-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-184"><a href="#cb36-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-185"><a href="#cb36-185" aria-hidden="true" tabindex="-1"></a><span class="vs">::: columns</span></span>
+<span id="cb36-186"><a href="#cb36-186" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="8%"}</span></span>
+<span id="cb36-187"><a href="#cb36-187" aria-hidden="true" tabindex="-1"></a><span class="vs">![](fig/topojson.svg)</span></span>
+<span id="cb36-188"><a href="#cb36-188" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-189"><a href="#cb36-189" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="2%"}</span></span>
+<span id="cb36-190"><a href="#cb36-190" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-191"><a href="#cb36-191" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="90%"}</span></span>
+<span id="cb36-192"><a href="#cb36-192" aria-hidden="true" tabindex="-1"></a><span class="vs">[**`</span><span class="fu">TopoJSON</span><span class="vs">`**](https://github.com/topojson/topojson)  est une extension de GeoJSON. La librairie permet de réaliser des opérations SIG basées sur la topologie (agrégation, voisins, simplification, etc.)</span></span>
+<span id="cb36-193"><a href="#cb36-193" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-194"><a href="#cb36-194" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-195"><a href="#cb36-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-196"><a href="#cb36-196" aria-hidden="true" tabindex="-1"></a><span class="vs">**Les bibliothèques SIG**</span></span>
+<span id="cb36-197"><a href="#cb36-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-198"><a href="#cb36-198" aria-hidden="true" tabindex="-1"></a><span class="vs">::: columns</span></span>
+<span id="cb36-199"><a href="#cb36-199" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="8%"}</span></span>
+<span id="cb36-200"><a href="#cb36-200" aria-hidden="true" tabindex="-1"></a><span class="vs">![](fig/turf.png)</span></span>
+<span id="cb36-201"><a href="#cb36-201" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-202"><a href="#cb36-202" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="2%"}</span></span>
+<span id="cb36-203"><a href="#cb36-203" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-204"><a href="#cb36-204" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="90%"}</span></span>
+<span id="cb36-205"><a href="#cb36-205" aria-hidden="true" tabindex="-1"></a><span class="vs">[**`</span><span class="fu">turf</span><span class="vs">`**](https://turfjs.org/) est une bibliothèque JavaScript pour l'analyse spatiale (de type SIG). Elle comprend les opérations spatiales traditionnelles, des fonctions d'aide pour la création de données GeoJSON, ainsi que des outils de classification des données et de statistiques. L'avantage de turf est d'être modulaire. On ne charge que ce dont on a besoin.</span></span>
+<span id="cb36-206"><a href="#cb36-206" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-207"><a href="#cb36-207" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-208"><a href="#cb36-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-209"><a href="#cb36-209" aria-hidden="true" tabindex="-1"></a><span class="vs">::: columns</span></span>
+<span id="cb36-210"><a href="#cb36-210" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="8%"}</span></span>
+<span id="cb36-211"><a href="#cb36-211" aria-hidden="true" tabindex="-1"></a><span class="vs">![](fig/spljs.jpg)</span></span>
+<span id="cb36-212"><a href="#cb36-212" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-213"><a href="#cb36-213" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="2%"}</span></span>
+<span id="cb36-214"><a href="#cb36-214" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-215"><a href="#cb36-215" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="90%"}</span></span>
+<span id="cb36-216"><a href="#cb36-216" aria-hidden="true" tabindex="-1"></a><span class="vs">[**`</span>spl<span class="op">.</span><span class="fu">js</span><span class="vs">`**](https://turfjs.org/) est une implémentation de SpatiaLite (et de ses amis : sqlite, geos, proj, rttopo) pour le navigateur.</span></span>
+<span id="cb36-217"><a href="#cb36-217" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-218"><a href="#cb36-218" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-219"><a href="#cb36-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-220"><a href="#cb36-220" aria-hidden="true" tabindex="-1"></a><span class="vs">::: columns</span></span>
+<span id="cb36-221"><a href="#cb36-221" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="8%"}</span></span>
+<span id="cb36-222"><a href="#cb36-222" aria-hidden="true" tabindex="-1"></a><span class="vs">![](fig/geotoolbox.svg)</span></span>
+<span id="cb36-223"><a href="#cb36-223" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-224"><a href="#cb36-224" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="2%"}</span></span>
+<span id="cb36-225"><a href="#cb36-225" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-226"><a href="#cb36-226" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="90%"}</span></span>
+<span id="cb36-227"><a href="#cb36-227" aria-hidden="true" tabindex="-1"></a><span class="vs">[**`</span><span class="fu">geotoolbox</span><span class="vs">`**](https://github.com/neocarto/geotoolbox) est un outil javascript pour les géographes basé sur d3geo, topojson et jsts. Il permet de traiter simplement les propriétés geojson et fournit plusieurs opérations SIG utiles pour la cartographie thématique.</span></span>
+<span id="cb36-228"><a href="#cb36-228" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-229"><a href="#cb36-229" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-230"><a href="#cb36-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-231"><a href="#cb36-231" aria-hidden="true" tabindex="-1"></a><span class="vs">::: columns</span></span>
+<span id="cb36-232"><a href="#cb36-232" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="8%"}</span></span>
+<span id="cb36-233"><a href="#cb36-233" aria-hidden="true" tabindex="-1"></a><span class="vs">![](fig/gdal.png)</span></span>
+<span id="cb36-234"><a href="#cb36-234" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-235"><a href="#cb36-235" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="2%"}</span></span>
+<span id="cb36-236"><a href="#cb36-236" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-237"><a href="#cb36-237" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="90%"}</span></span>
+<span id="cb36-238"><a href="#cb36-238" aria-hidden="true" tabindex="-1"></a><span class="vs">[**`</span>Gdals3<span class="op">.</span><span class="fu">js</span><span class="vs">`**](https://github.com/bugra9/gdal3.js) est un portage des applications Gdal (gdal_translate, ogr2ogr, gdal_rasterize, gdalwarp, gdaltransform) vers Webassembly. Il permet de convertir des données géospatiales matricielles et vectorielles dans divers formats et systèmes de coordonnées.</span></span>
+<span id="cb36-239"><a href="#cb36-239" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-240"><a href="#cb36-240" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-241"><a href="#cb36-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-242"><a href="#cb36-242" aria-hidden="true" tabindex="-1"></a><span class="vs">::: columns</span></span>
+<span id="cb36-243"><a href="#cb36-243" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="8%"}</span></span>
+<span id="cb36-244"><a href="#cb36-244" aria-hidden="true" tabindex="-1"></a><span class="vs">![](fig/proj4.png)</span></span>
+<span id="cb36-245"><a href="#cb36-245" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-246"><a href="#cb36-246" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="2%"}</span></span>
+<span id="cb36-247"><a href="#cb36-247" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-248"><a href="#cb36-248" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="90%"}</span></span>
+<span id="cb36-249"><a href="#cb36-249" aria-hidden="true" tabindex="-1"></a><span class="vs">[**`</span><span class="fu">proj4js</span><span class="vs">`**](http://proj4js.org/) est une bibliothèque JavaScript permettant de transformer les coordonnées d'un système de coordonnées à un autre, y compris les transformations de datum</span></span>
+<span id="cb36-250"><a href="#cb36-250" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-251"><a href="#cb36-251" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-252"><a href="#cb36-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-253"><a href="#cb36-253" aria-hidden="true" tabindex="-1"></a><span class="vs">**Dataviz / cartographie**</span></span>
+<span id="cb36-254"><a href="#cb36-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-255"><a href="#cb36-255" aria-hidden="true" tabindex="-1"></a><span class="vs">::: columns</span></span>
+<span id="cb36-256"><a href="#cb36-256" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="8%"}</span></span>
+<span id="cb36-257"><a href="#cb36-257" aria-hidden="true" tabindex="-1"></a><span class="vs">![](fig/plot.png)</span></span>
+<span id="cb36-258"><a href="#cb36-258" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-259"><a href="#cb36-259" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="2%"}</span></span>
+<span id="cb36-260"><a href="#cb36-260" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-261"><a href="#cb36-261" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="90%"}</span></span>
+<span id="cb36-262"><a href="#cb36-262" aria-hidden="true" tabindex="-1"></a><span class="vs">[**`</span><span class="fu">plot</span><span class="vs">`**](https://observablehq.com/plot/) est la bibliothèque de visualisation de donnée développée par Observable (Mike Bostock et Philippe Rivière). Au départ pensée pour la visualisation de données statistiques, elle permet aujourd'hui de réaliser des cartes. Plot est disponible par défaut dans les cellules {ojs}.</span></span>
+<span id="cb36-263"><a href="#cb36-263" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-264"><a href="#cb36-264" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-265"><a href="#cb36-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-266"><a href="#cb36-266" aria-hidden="true" tabindex="-1"></a><span class="vs">::: columns</span></span>
+<span id="cb36-267"><a href="#cb36-267" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="8%"}</span></span>
+<span id="cb36-268"><a href="#cb36-268" aria-hidden="true" tabindex="-1"></a><span class="vs">![](fig/vega.png)</span></span>
+<span id="cb36-269"><a href="#cb36-269" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-270"><a href="#cb36-270" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="2%"}</span></span>
+<span id="cb36-271"><a href="#cb36-271" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-272"><a href="#cb36-272" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="90%"}</span></span>
+<span id="cb36-273"><a href="#cb36-273" aria-hidden="true" tabindex="-1"></a><span class="vs">[**`</span>vega<span class="op">-</span><span class="fu">lite</span><span class="vs">`**](https://github.com/vega/vega-lite) est un outil de visualisation mettant en œuvre une grammaire graphique, similaire à ggplot2. Cette bibliothèque est disponible par défaut dans les cellules {ojs}.</span></span>
+<span id="cb36-274"><a href="#cb36-274" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-275"><a href="#cb36-275" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-276"><a href="#cb36-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-277"><a href="#cb36-277" aria-hidden="true" tabindex="-1"></a><span class="vs">::: columns</span></span>
+<span id="cb36-278"><a href="#cb36-278" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="8%"}</span></span>
+<span id="cb36-279"><a href="#cb36-279" aria-hidden="true" tabindex="-1"></a><span class="vs">![](fig/bertin.png)</span></span>
+<span id="cb36-280"><a href="#cb36-280" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-281"><a href="#cb36-281" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="2%"}</span></span>
+<span id="cb36-282"><a href="#cb36-282" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-283"><a href="#cb36-283" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="90%"}</span></span>
+<span id="cb36-284"><a href="#cb36-284" aria-hidden="true" tabindex="-1"></a><span class="vs">[**`</span><span class="fu">bertin</span><span class="vs">`**](https://github.com/neocarto/bertin) est une bibliothèque écrite en JavaScript qui permet de réaliser des cartes thématiques pour le web. Sa conception vise à permettre aux utilisateurs de créer rapidement des cartes thématiques interactives sans forcement connaître le langage JavaScript.</span></span>
+<span id="cb36-285"><a href="#cb36-285" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-286"><a href="#cb36-286" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-287"><a href="#cb36-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-288"><a href="#cb36-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-289"><a href="#cb36-289" aria-hidden="true" tabindex="-1"></a><span class="vs">::: columns</span></span>
+<span id="cb36-290"><a href="#cb36-290" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="8%"}</span></span>
+<span id="cb36-291"><a href="#cb36-291" aria-hidden="true" tabindex="-1"></a><span class="vs">![](fig/gridviz.png)</span></span>
+<span id="cb36-292"><a href="#cb36-292" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-293"><a href="#cb36-293" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="2%"}</span></span>
+<span id="cb36-294"><a href="#cb36-294" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-295"><a href="#cb36-295" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="90%"}</span></span>
+<span id="cb36-296"><a href="#cb36-296" aria-hidden="true" tabindex="-1"></a><span class="vs">[**`</span><span class="fu">Gridviz</span><span class="vs">`**](https://github.com/eurostat/gridviz) est une bibliothèque JavaScript basée sur WebGL développée par Julien Gaffuri et Joe Davies. Elle permet de visualiser des données carroyées (ou tout ensemble de données tabulaires avec une position x/y) dans le navigateur dans une grande variété de styles cartographiques. </span></span>
+<span id="cb36-297"><a href="#cb36-297" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-298"><a href="#cb36-298" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-299"><a href="#cb36-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-300"><a href="#cb36-300" aria-hidden="true" tabindex="-1"></a><span class="vs">::: columns</span></span>
+<span id="cb36-301"><a href="#cb36-301" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="8%"}</span></span>
+<span id="cb36-302"><a href="#cb36-302" aria-hidden="true" tabindex="-1"></a><span class="vs">![](fig/logo-go-cart-wasm.png)</span></span>
+<span id="cb36-303"><a href="#cb36-303" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-304"><a href="#cb36-304" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="2%"}</span></span>
+<span id="cb36-305"><a href="#cb36-305" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-306"><a href="#cb36-306" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.column width="90%"}</span></span>
+<span id="cb36-307"><a href="#cb36-307" aria-hidden="true" tabindex="-1"></a><span class="vs">[**`</span>go<span class="op">-</span>cart<span class="op">-</span><span class="fu">wasm</span><span class="vs">`**](https://github.com/riatelab/go-cart-wasm) est une bibliothèque JS/WASM permettant de réaliser des cartogrammes basés sur le flux (comme décrit dans "Gastner, Seguy, and More (2018). </span></span>
+<span id="cb36-308"><a href="#cb36-308" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb36-309"><a href="#cb36-309" aria-hidden="true" tabindex="-1"></a><span class="vs">::::</span></span>
+<span id="cb36-310"><a href="#cb36-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-311"><a href="#cb36-311" aria-hidden="true" tabindex="-1"></a><span class="vs">### Cartographie interactive avec Observable JavaScript</span></span>
+<span id="cb36-312"><a href="#cb36-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-313"><a href="#cb36-313" aria-hidden="true" tabindex="-1"></a><span class="vs">On souhaite à présent réaliser une carte interactive à l'échelle des municipalités. </span></span>
+<span id="cb36-314"><a href="#cb36-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-315"><a href="#cb36-315" aria-hidden="true" tabindex="-1"></a><span class="vs">Tout d'abord, on récpère les données depuis R (**TODO**)</span></span>
+<span id="cb36-316"><a href="#cb36-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-319"><a href="#cb36-319" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-320"><a href="#cb36-320" aria-hidden="true" tabindex="-1"></a>munic <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"geom/munic.geojson"</span>)<span class="op">.</span><span class="fu">json</span>()</span>
+<span id="cb36-321"><a href="#cb36-321" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-322"><a href="#cb36-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-323"><a href="#cb36-323" aria-hidden="true" tabindex="-1"></a><span class="vs">Regardons la table attributaire</span></span>
+<span id="cb36-324"><a href="#cb36-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-327"><a href="#cb36-327" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-328"><a href="#cb36-328" aria-hidden="true" tabindex="-1"></a>Inputs<span class="op">.</span><span class="fu">table</span>(munic<span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span>))</span>
+<span id="cb36-329"><a href="#cb36-329" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-330"><a href="#cb36-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-331"><a href="#cb36-331" aria-hidden="true" tabindex="-1"></a><span class="vs">Comme leaflet est disponible dans les cellules {ojs}, on peut directement afficher les géométries.</span></span>
+<span id="cb36-332"><a href="#cb36-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-335"><a href="#cb36-335" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-336"><a href="#cb36-336" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb36-337"><a href="#cb36-337" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> container <span class="op">=</span> <span class="kw">yield</span> htl<span class="op">.</span><span class="fu">html</span><span class="vs">`&lt;div style="height: 500px;"&gt;`</span><span class="op">;</span></span>
+<span id="cb36-338"><a href="#cb36-338" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> map <span class="op">=</span> L<span class="op">.</span><span class="fu">map</span>(container)<span class="op">;</span></span>
+<span id="cb36-339"><a href="#cb36-339" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> layer <span class="op">=</span> L<span class="op">.</span><span class="fu">geoJSON</span>(munic)<span class="op">.</span><span class="fu">addTo</span>(map)<span class="op">;</span></span>
+<span id="cb36-340"><a href="#cb36-340" aria-hidden="true" tabindex="-1"></a>  map<span class="op">.</span><span class="fu">fitBounds</span>(layer<span class="op">.</span><span class="fu">getBounds</span>()<span class="op">,</span> { <span class="dt">maxZoom</span><span class="op">:</span> <span class="dv">9</span> })<span class="op">;</span></span>
+<span id="cb36-341"><a href="#cb36-341" aria-hidden="true" tabindex="-1"></a>  L<span class="op">.</span><span class="fu">tileLayer</span>(<span class="st">"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"</span><span class="op">,</span> {</span>
+<span id="cb36-342"><a href="#cb36-342" aria-hidden="true" tabindex="-1"></a>    <span class="dt">attribution</span><span class="op">:</span></span>
+<span id="cb36-343"><a href="#cb36-343" aria-hidden="true" tabindex="-1"></a>      <span class="st">"© &lt;a href=https://www.openstreetmap.org/copyright&gt;OpenStreetMap&lt;/a&gt; contributors"</span></span>
+<span id="cb36-344"><a href="#cb36-344" aria-hidden="true" tabindex="-1"></a>  })<span class="op">.</span><span class="fu">addTo</span>(map)<span class="op">;</span></span>
+<span id="cb36-345"><a href="#cb36-345" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-346"><a href="#cb36-346" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-347"><a href="#cb36-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-348"><a href="#cb36-348" aria-hidden="true" tabindex="-1"></a><span class="vs">Le fond de carte n'est pas assez simplifié. Donc on le simplifie et on le nettoie avec la bibiothèque **`</span><span class="fu">geotoolbox</span><span class="vs">`**.</span></span>
+<span id="cb36-349"><a href="#cb36-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-352"><a href="#cb36-352" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-353"><a href="#cb36-353" aria-hidden="true" tabindex="-1"></a>geo <span class="op">=</span> <span class="pp">require</span>(<span class="st">"geotoolbox"</span>)</span>
+<span id="cb36-354"><a href="#cb36-354" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-355"><a href="#cb36-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-358"><a href="#cb36-358" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-359"><a href="#cb36-359" aria-hidden="true" tabindex="-1"></a>munic2 <span class="op">=</span> geo<span class="op">.</span><span class="fu">rewind</span>(geo<span class="op">.</span><span class="fu">simplify</span>(munic<span class="op">,</span> { <span class="dt">k</span><span class="op">:</span> <span class="fl">0.02</span> }))</span>
+<span id="cb36-360"><a href="#cb36-360" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-361"><a href="#cb36-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-362"><a href="#cb36-362" aria-hidden="true" tabindex="-1"></a><span class="vs">**Création de cartes thématiques**</span></span>
+<span id="cb36-363"><a href="#cb36-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-364"><a href="#cb36-364" aria-hidden="true" tabindex="-1"></a><span class="vs">Pour créer des cartes thématiques, on peut utiliser la bibliothèque [**`</span><span class="fu">bertin</span><span class="vs">`**](https://github.com/neocarto/bertin)</span></span>
+<span id="cb36-365"><a href="#cb36-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-368"><a href="#cb36-368" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-369"><a href="#cb36-369" aria-hidden="true" tabindex="-1"></a>bertin <span class="op">=</span> <span class="pp">require</span>(<span class="st">"bertin"</span>)</span>
+<span id="cb36-370"><a href="#cb36-370" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-371"><a href="#cb36-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-372"><a href="#cb36-372" aria-hidden="true" tabindex="-1"></a><span class="vs">La fonction **`</span><span class="fu">draw</span><span class="vs">`** permet de réaliser n'importe quel type de carte. </span></span>
+<span id="cb36-373"><a href="#cb36-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-374"><a href="#cb36-374" aria-hidden="true" tabindex="-1"></a><span class="vs">![](fig/bertin_code.png)</span></span>
+<span id="cb36-375"><a href="#cb36-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-376"><a href="#cb36-376" aria-hidden="true" tabindex="-1"></a><span class="vs">Par défaut, la couche s'affiche simplement.</span></span>
+<span id="cb36-377"><a href="#cb36-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-380"><a href="#cb36-380" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-381"><a href="#cb36-381" aria-hidden="true" tabindex="-1"></a>bertin<span class="op">.</span><span class="fu">draw</span>({<span class="dt">layers</span><span class="op">:</span>[{<span class="dt">geojson</span><span class="op">:</span> munic2<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"#d18de0"</span>}]})</span>
+<span id="cb36-382"><a href="#cb36-382" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-383"><a href="#cb36-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-384"><a href="#cb36-384" aria-hidden="true" tabindex="-1"></a><span class="vs">**Cartographie thématique**</span></span>
+<span id="cb36-385"><a href="#cb36-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-386"><a href="#cb36-386" aria-hidden="true" tabindex="-1"></a><span class="vs">A présent, réalisons une carte de la population en 2022. Pour cela, on utilise le type **`</span><span class="fu">bubble</span><span class="vs">`**.</span></span>
+<span id="cb36-387"><a href="#cb36-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-390"><a href="#cb36-390" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-391"><a href="#cb36-391" aria-hidden="true" tabindex="-1"></a>bertin<span class="op">.</span><span class="fu">draw</span>({</span>
+<span id="cb36-392"><a href="#cb36-392" aria-hidden="true" tabindex="-1"></a>  <span class="dt">params</span><span class="op">:</span> { <span class="dt">margin</span><span class="op">:</span> [<span class="op">-</span><span class="dv">550</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">50</span><span class="op">,</span> <span class="dv">0</span>]}<span class="op">,</span> <span class="co">// marges [Haut, droite, bas, gauche]</span></span>
+<span id="cb36-393"><a href="#cb36-393" aria-hidden="true" tabindex="-1"></a>  <span class="dt">layers</span><span class="op">:</span> [</span>
+<span id="cb36-394"><a href="#cb36-394" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"header"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="st">"Population en 2022"</span><span class="op">,</span> <span class="dt">anchor</span><span class="op">:</span> <span class="st">"start"</span> }<span class="op">,</span> <span class="co">// Titre</span></span>
+<span id="cb36-395"><a href="#cb36-395" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"minimap"</span><span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">185</span><span class="op">,</span> <span class="dt">width</span><span class="op">:</span> <span class="dv">90</span><span class="op">,</span> <span class="dt">projection</span><span class="op">:</span><span class="st">"Polar"</span> }<span class="op">,</span> <span class="co">// Carte de localisation</span></span>
+<span id="cb36-396"><a href="#cb36-396" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb36-397"><a href="#cb36-397" aria-hidden="true" tabindex="-1"></a>      <span class="dt">id</span> <span class="op">:</span> <span class="st">"bub"</span><span class="op">,</span> <span class="co">//  identifiant de la couche</span></span>
+<span id="cb36-398"><a href="#cb36-398" aria-hidden="true" tabindex="-1"></a>      <span class="dt">type</span><span class="op">:</span> <span class="st">"bubble"</span><span class="op">,</span> <span class="co">// couche de symboles proportionnels</span></span>
+<span id="cb36-399"><a href="#cb36-399" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geojson</span><span class="op">:</span> munic2<span class="op">,</span> </span>
+<span id="cb36-400"><a href="#cb36-400" aria-hidden="true" tabindex="-1"></a>      <span class="dt">values</span><span class="op">:</span> <span class="st">"POP_2022"</span><span class="op">,</span> <span class="co">// variable à cartographier </span></span>
+<span id="cb36-401"><a href="#cb36-401" aria-hidden="true" tabindex="-1"></a>      <span class="dt">k</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span> <span class="co">// Rayon du plus gros cercle</span></span>
+<span id="cb36-402"><a href="#cb36-402" aria-hidden="true" tabindex="-1"></a>      <span class="dt">leg_x</span><span class="op">:</span> <span class="dv">500</span><span class="op">,</span></span>
+<span id="cb36-403"><a href="#cb36-403" aria-hidden="true" tabindex="-1"></a>      <span class="dt">leg_y</span><span class="op">:</span> <span class="dv">130</span><span class="op">,</span></span>
+<span id="cb36-404"><a href="#cb36-404" aria-hidden="true" tabindex="-1"></a>      <span class="dt">leg_round</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb36-405"><a href="#cb36-405" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> <span class="st">"red"</span><span class="op">,</span></span>
+<span id="cb36-406"><a href="#cb36-406" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fillOpacity</span><span class="op">:</span><span class="fl">0.5</span><span class="op">,</span></span>
+<span id="cb36-407"><a href="#cb36-407" aria-hidden="true" tabindex="-1"></a>      <span class="dt">tooltip</span><span class="op">:</span> [<span class="st">"$MUS_NM_MUN"</span><span class="op">,</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span>[<span class="st">"POP_2022"</span>]] <span class="co">// infobulle</span></span>
+<span id="cb36-408"><a href="#cb36-408" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb36-409"><a href="#cb36-409" aria-hidden="true" tabindex="-1"></a>    {<span class="dt">geojson</span><span class="op">:</span> munic2<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span><span class="st">"#CCC"</span>}<span class="op">,</span> <span class="co">// Couche des communes</span></span>
+<span id="cb36-410"><a href="#cb36-410" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb36-411"><a href="#cb36-411" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb36-412"><a href="#cb36-412" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-413"><a href="#cb36-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-414"><a href="#cb36-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-415"><a href="#cb36-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-416"><a href="#cb36-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-417"><a href="#cb36-417" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-caution}</span></span>
+<span id="cb36-418"><a href="#cb36-418" aria-hidden="true" tabindex="-1"></a><span class="vs">## A vous de jouer - Rendez la carte interactive avec {ojs}</span></span>
+<span id="cb36-419"><a href="#cb36-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-420"><a href="#cb36-420" aria-hidden="true" tabindex="-1"></a><span class="vs">Pour rendre la carte interactive, vous avez pouvez proposer des `</span><span class="fu">Inputs</span><span class="vs">` pour interagir avec l'utilisateur.</span></span>
+<span id="cb36-421"><a href="#cb36-421" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-422"><a href="#cb36-422" aria-hidden="true" tabindex="-1"></a><span class="vs">Ajoutez un Input de type `</span><span class="fu">radio</span><span class="vs">` pour définir la symbologie : [**`</span><span class="fu">bubble</span><span class="vs">`**](https://github.com/neocarto/bertin#bubble), [**`</span><span class="fu">square</span><span class="vs">`**](https://github.com/neocarto/bertin#square) et [**`</span><span class="fu">spikes</span><span class="vs">`**](https://github.com/neocarto/bertin#spikes)</span></span>
+<span id="cb36-423"><a href="#cb36-423" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-424"><a href="#cb36-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-425"><a href="#cb36-425" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-426"><a href="#cb36-426" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span>js</span>
+<span id="cb36-427"><a href="#cb36-427" aria-hidden="true" tabindex="-1"></a>viewof symbol <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">radio</span>([<span class="vs">`a`</span><span class="op">,</span> <span class="vs">`b`</span><span class="op">,</span> <span class="vs">`c`</span>]<span class="op">,</span> { <span class="dt">label</span><span class="op">:</span> <span class="vs">`label`</span><span class="op">,</span>  <span class="dt">value</span><span class="op">:</span> <span class="vs">`valeur par défaut`</span>})</span>
+<span id="cb36-428"><a href="#cb36-428" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-429"><a href="#cb36-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-430"><a href="#cb36-430" aria-hidden="true" tabindex="-1"></a><span class="vs">Créez une liste déroulante pour changer la variable à cartographier. Pare exemple, la population et la surface.</span></span>
+<span id="cb36-431"><a href="#cb36-431" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-432"><a href="#cb36-432" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span>js</span>
+<span id="cb36-433"><a href="#cb36-433" aria-hidden="true" tabindex="-1"></a>viewof val <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>([<span class="st">"A"</span><span class="op">,</span> <span class="st">"B"</span>]<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Select one"</span>})</span>
+<span id="cb36-434"><a href="#cb36-434" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-435"><a href="#cb36-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-436"><a href="#cb36-436" aria-hidden="true" tabindex="-1"></a><span class="vs">Créez un slider pouyr faire varier la taille des cercles</span></span>
+<span id="cb36-437"><a href="#cb36-437" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-438"><a href="#cb36-438" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span>js</span>
+<span id="cb36-439"><a href="#cb36-439" aria-hidden="true" tabindex="-1"></a>viewof rayon <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="vs">`min`</span><span class="op">,</span> <span class="vs">`max`</span>]<span class="op">,</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"label"</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">30</span> })</span>
+<span id="cb36-440"><a href="#cb36-440" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-441"><a href="#cb36-441" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-442"><a href="#cb36-442" aria-hidden="true" tabindex="-1"></a><span class="vs">Modifiez la carte précédente pour prendre en compte ces valeurs.</span></span>
+<span id="cb36-443"><a href="#cb36-443" aria-hidden="true" tabindex="-1"></a><span class="vs"> </span></span>
+<span id="cb36-444"><a href="#cb36-444" aria-hidden="true" tabindex="-1"></a><span class="vs">Utilisez `</span><span class="co">//| echo: false` pour masquer le code.</span></span>
+<span id="cb36-445"><a href="#cb36-445" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-446"><a href="#cb36-446" aria-hidden="true" tabindex="-1"></a>Pour en savoir plus sur <span class="fu">les</span> <span class="vs">`inputs`</span><span class="op">,</span> voir <span class="op">:</span> [@observablehq<span class="op">/</span>inputs](https<span class="op">:</span><span class="co">//observablehq.com/@observablehq/inputs)</span></span>
+<span id="cb36-447"><a href="#cb36-447" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-448"><a href="#cb36-448" aria-hidden="true" tabindex="-1"></a><span class="op">:::</span></span>
+<span id="cb36-449"><a href="#cb36-449" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-450"><a href="#cb36-450" aria-hidden="true" tabindex="-1"></a><span class="op">:::</span> {<span class="op">.</span><span class="at">callout</span><span class="op">-</span>tip collapse<span class="op">=</span><span class="st">"true"</span>}</span>
+<span id="cb36-451"><a href="#cb36-451" aria-hidden="true" tabindex="-1"></a>## Solution</span>
+<span id="cb36-452"><a href="#cb36-452" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-453"><a href="#cb36-453" aria-hidden="true" tabindex="-1"></a>Les Inputs</span>
+<span id="cb36-454"><a href="#cb36-454" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-457"><a href="#cb36-457" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-458"><a href="#cb36-458" aria-hidden="true" tabindex="-1"></a><span class="vs">//| echo: true</span></span>
+<span id="cb36-459"><a href="#cb36-459" aria-hidden="true" tabindex="-1"></a><span class="vs">//| eval: false</span></span>
+<span id="cb36-460"><a href="#cb36-460" aria-hidden="true" tabindex="-1"></a><span class="vs">viewof symbol = Inputs.radio([`</span><span class="fu">bubble</span><span class="vs">`, `</span><span class="fu">square</span><span class="vs">`], { label: `</span><span class="fu">Symbol</span><span class="vs">`,  value: `</span><span class="fu">bubble</span><span class="vs">`})</span></span>
+<span id="cb36-461"><a href="#cb36-461" aria-hidden="true" tabindex="-1"></a><span class="vs">viewof val = Inputs.select(["POP_2022", "AREA"], {label: "Variable"})</span></span>
+<span id="cb36-462"><a href="#cb36-462" aria-hidden="true" tabindex="-1"></a><span class="vs">viewof rayon = Inputs.range([1, 100], { label: "Rayon", step: 2, value: 30 })</span></span>
+<span id="cb36-463"><a href="#cb36-463" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-464"><a href="#cb36-464" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-465"><a href="#cb36-465" aria-hidden="true" tabindex="-1"></a>Pour adater le titre de la carte en fonction de la variable<span class="op">,</span> on peut faire</span>
+<span id="cb36-466"><a href="#cb36-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-469"><a href="#cb36-469" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-470"><a href="#cb36-470" aria-hidden="true" tabindex="-1"></a><span class="vs">//| echo: true</span></span>
+<span id="cb36-471"><a href="#cb36-471" aria-hidden="true" tabindex="-1"></a><span class="vs">//| eval: false</span></span>
+<span id="cb36-472"><a href="#cb36-472" aria-hidden="true" tabindex="-1"></a><span class="vs">title = val == "AREA" ? "Superficie" : "Population en 2022"</span></span>
+<span id="cb36-473"><a href="#cb36-473" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-474"><a href="#cb36-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-475"><a href="#cb36-475" aria-hidden="true" tabindex="-1"></a>Et la carte</span>
+<span id="cb36-476"><a href="#cb36-476" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-479"><a href="#cb36-479" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-480"><a href="#cb36-480" aria-hidden="true" tabindex="-1"></a><span class="vs">//| echo: true</span></span>
+<span id="cb36-481"><a href="#cb36-481" aria-hidden="true" tabindex="-1"></a><span class="vs">//| eval: false</span></span>
+<span id="cb36-482"><a href="#cb36-482" aria-hidden="true" tabindex="-1"></a><span class="vs">bertin.draw({</span></span>
+<span id="cb36-483"><a href="#cb36-483" aria-hidden="true" tabindex="-1"></a><span class="vs">  params: { margin: [-550, 0, 50, 0]},</span></span>
+<span id="cb36-484"><a href="#cb36-484" aria-hidden="true" tabindex="-1"></a><span class="vs">  layers: [</span></span>
+<span id="cb36-485"><a href="#cb36-485" aria-hidden="true" tabindex="-1"></a><span class="vs">    { type: "header", text: title, anchor: "start" }, // ICI</span></span>
+<span id="cb36-486"><a href="#cb36-486" aria-hidden="true" tabindex="-1"></a><span class="vs">    { type: "minimap", x: 30, y: 185, width: 90, projection:"Polar" }, </span></span>
+<span id="cb36-487"><a href="#cb36-487" aria-hidden="true" tabindex="-1"></a><span class="vs">    {</span></span>
+<span id="cb36-488"><a href="#cb36-488" aria-hidden="true" tabindex="-1"></a><span class="vs">      type: symbol, // ICI </span></span>
+<span id="cb36-489"><a href="#cb36-489" aria-hidden="true" tabindex="-1"></a><span class="vs">      geojson: munic2, </span></span>
+<span id="cb36-490"><a href="#cb36-490" aria-hidden="true" tabindex="-1"></a><span class="vs">      values: val, // ICI</span></span>
+<span id="cb36-491"><a href="#cb36-491" aria-hidden="true" tabindex="-1"></a><span class="vs">      k: rayon, // ICI</span></span>
+<span id="cb36-492"><a href="#cb36-492" aria-hidden="true" tabindex="-1"></a><span class="vs">      leg_x: 500,</span></span>
+<span id="cb36-493"><a href="#cb36-493" aria-hidden="true" tabindex="-1"></a><span class="vs">      leg_y: 130,</span></span>
+<span id="cb36-494"><a href="#cb36-494" aria-hidden="true" tabindex="-1"></a><span class="vs">      leg_round: 0,</span></span>
+<span id="cb36-495"><a href="#cb36-495" aria-hidden="true" tabindex="-1"></a><span class="vs">      fill: "red",</span></span>
+<span id="cb36-496"><a href="#cb36-496" aria-hidden="true" tabindex="-1"></a><span class="vs">      fillOpacity:0.5,</span></span>
+<span id="cb36-497"><a href="#cb36-497" aria-hidden="true" tabindex="-1"></a><span class="vs">      tooltip: ["$MUS_NM_MUN", d =&gt; d.properties["POP_2022"]] </span></span>
+<span id="cb36-498"><a href="#cb36-498" aria-hidden="true" tabindex="-1"></a><span class="vs">    },</span></span>
+<span id="cb36-499"><a href="#cb36-499" aria-hidden="true" tabindex="-1"></a><span class="vs">    {geojson: munic2, fill:"#CCC"},</span></span>
+<span id="cb36-500"><a href="#cb36-500" aria-hidden="true" tabindex="-1"></a><span class="vs">  ]</span></span>
+<span id="cb36-501"><a href="#cb36-501" aria-hidden="true" tabindex="-1"></a><span class="vs">})</span></span>
+<span id="cb36-502"><a href="#cb36-502" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-503"><a href="#cb36-503" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-506"><a href="#cb36-506" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-507"><a href="#cb36-507" aria-hidden="true" tabindex="-1"></a><span class="vs">//| echo: false</span></span>
+<span id="cb36-508"><a href="#cb36-508" aria-hidden="true" tabindex="-1"></a><span class="vs">//| eval: true</span></span>
+<span id="cb36-509"><a href="#cb36-509" aria-hidden="true" tabindex="-1"></a><span class="vs">viewof symbol = Inputs.radio([`</span><span class="fu">bubble</span><span class="vs">`, `</span><span class="fu">square</span><span class="vs">`], { label: `</span><span class="fu">Symbol</span><span class="vs">`,  value: `</span><span class="fu">bubble</span><span class="vs">`})</span></span>
+<span id="cb36-510"><a href="#cb36-510" aria-hidden="true" tabindex="-1"></a><span class="vs">viewof val = Inputs.select(["POP_2022", "AREA"], {label: "Variable"})</span></span>
+<span id="cb36-511"><a href="#cb36-511" aria-hidden="true" tabindex="-1"></a><span class="vs">viewof rayon = Inputs.range([1, 100], { label: "Rayon", step: 2, value: 30 })</span></span>
+<span id="cb36-512"><a href="#cb36-512" aria-hidden="true" tabindex="-1"></a><span class="vs">title = val == "AREA" ? "Superficie" : "Population en 2022"</span></span>
+<span id="cb36-513"><a href="#cb36-513" aria-hidden="true" tabindex="-1"></a><span class="vs">bertin.draw({</span></span>
+<span id="cb36-514"><a href="#cb36-514" aria-hidden="true" tabindex="-1"></a><span class="vs">  params: { margin: [-550, 0, 50, 0]},</span></span>
+<span id="cb36-515"><a href="#cb36-515" aria-hidden="true" tabindex="-1"></a><span class="vs">  layers: [</span></span>
+<span id="cb36-516"><a href="#cb36-516" aria-hidden="true" tabindex="-1"></a><span class="vs">    { type: "header", text: title, anchor: "start" },</span></span>
+<span id="cb36-517"><a href="#cb36-517" aria-hidden="true" tabindex="-1"></a><span class="vs">    { type: "minimap", x: 30, y: 185, width: 90, projection:"Polar" }, </span></span>
+<span id="cb36-518"><a href="#cb36-518" aria-hidden="true" tabindex="-1"></a><span class="vs">    {</span></span>
+<span id="cb36-519"><a href="#cb36-519" aria-hidden="true" tabindex="-1"></a><span class="vs">      type: symbol, </span></span>
+<span id="cb36-520"><a href="#cb36-520" aria-hidden="true" tabindex="-1"></a><span class="vs">      geojson: munic2, </span></span>
+<span id="cb36-521"><a href="#cb36-521" aria-hidden="true" tabindex="-1"></a><span class="vs">      values: val, </span></span>
+<span id="cb36-522"><a href="#cb36-522" aria-hidden="true" tabindex="-1"></a><span class="vs">      k: rayon,</span></span>
+<span id="cb36-523"><a href="#cb36-523" aria-hidden="true" tabindex="-1"></a><span class="vs">      leg_x: 500,</span></span>
+<span id="cb36-524"><a href="#cb36-524" aria-hidden="true" tabindex="-1"></a><span class="vs">      leg_y: 130,</span></span>
+<span id="cb36-525"><a href="#cb36-525" aria-hidden="true" tabindex="-1"></a><span class="vs">      leg_round: 0,</span></span>
+<span id="cb36-526"><a href="#cb36-526" aria-hidden="true" tabindex="-1"></a><span class="vs">      fill: "red",</span></span>
+<span id="cb36-527"><a href="#cb36-527" aria-hidden="true" tabindex="-1"></a><span class="vs">      fillOpacity:0.5,</span></span>
+<span id="cb36-528"><a href="#cb36-528" aria-hidden="true" tabindex="-1"></a><span class="vs">      tooltip: ["$MUS_NM_MUN", d =&gt; d.properties["POP_2022"]] </span></span>
+<span id="cb36-529"><a href="#cb36-529" aria-hidden="true" tabindex="-1"></a><span class="vs">    },</span></span>
+<span id="cb36-530"><a href="#cb36-530" aria-hidden="true" tabindex="-1"></a><span class="vs">    {geojson: munic2, fill:"#CCC"},</span></span>
+<span id="cb36-531"><a href="#cb36-531" aria-hidden="true" tabindex="-1"></a><span class="vs">  ]</span></span>
+<span id="cb36-532"><a href="#cb36-532" aria-hidden="true" tabindex="-1"></a><span class="vs">})</span></span>
+<span id="cb36-533"><a href="#cb36-533" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-534"><a href="#cb36-534" aria-hidden="true" tabindex="-1"></a><span class="op">:::</span></span>
+<span id="cb36-535"><a href="#cb36-535" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-536"><a href="#cb36-536" aria-hidden="true" tabindex="-1"></a>A présent<span class="op">,</span> on souhaite colorier les cercles en fonction de l<span class="st">'indice de vitalité économique. </span></span>
+<span id="cb36-537"><a href="#cb36-537" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-538"><a href="#cb36-538" aria-hidden="true" tabindex="-1"></a><span class="op">:::</span> {<span class="op">.</span><span class="at">callout</span><span class="op">-</span>caution}</span>
+<span id="cb36-539"><a href="#cb36-539" aria-hidden="true" tabindex="-1"></a>## A vous de jouer</span>
+<span id="cb36-540"><a href="#cb36-540" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-541"><a href="#cb36-541" aria-hidden="true" tabindex="-1"></a>Pour faire des varriations de <span class="fu">couleurs</span> (i<span class="op">.</span><span class="at">e</span><span class="op">.</span> <span class="at">valeur</span>)<span class="op">,</span> on utilise le <span class="fu">type</span> <span class="vs">`**choro**`</span> à l<span class="st">'intérieur de l'</span>attribut <span class="op">**</span><span class="vs">`fill`</span><span class="op">**</span> de la couche à colorier<span class="op">.</span> <span class="at">Ici</span><span class="op">,</span> les cercles proportionnels<span class="op">.</span></span>
+<span id="cb36-542"><a href="#cb36-542" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-543"><a href="#cb36-543" aria-hidden="true" tabindex="-1"></a><span class="vs">```js</span></span>
+<span id="cb36-544"><a href="#cb36-544" aria-hidden="true" tabindex="-1"></a><span class="vs">fill : {type "choro", values: `</span>votre <span class="fu">variable</span><span class="vs">`, colors: "RdYlBu"}</span></span>
+<span id="cb36-545"><a href="#cb36-545" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-546"><a href="#cb36-546" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-547"><a href="#cb36-547" aria-hidden="true" tabindex="-1"></a>Pour paramétrer<span class="op">,</span> voir <span class="op">:</span> [bertin#choropleth](https<span class="op">:</span><span class="co">//github.com/neocarto/bertin#choropleth) &amp; [bertin-js-chropoleth](https://observablehq.com/@neocartocnrs/bertin-js-chropoleth?collection=@neocartocnrs/bertin)</span></span>
+<span id="cb36-548"><a href="#cb36-548" aria-hidden="true" tabindex="-1"></a><span class="op">:::</span></span>
+<span id="cb36-549"><a href="#cb36-549" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-550"><a href="#cb36-550" aria-hidden="true" tabindex="-1"></a><span class="op">:::</span> {<span class="op">.</span><span class="at">callout</span><span class="op">-</span>tip collapse<span class="op">=</span><span class="st">"true"</span>}</span>
+<span id="cb36-551"><a href="#cb36-551" aria-hidden="true" tabindex="-1"></a>## Solution</span>
+<span id="cb36-554"><a href="#cb36-554" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-555"><a href="#cb36-555" aria-hidden="true" tabindex="-1"></a><span class="vs">bertin.draw({</span></span>
+<span id="cb36-556"><a href="#cb36-556" aria-hidden="true" tabindex="-1"></a><span class="vs">  params: { margin: [-550, 0, 50, 0]},</span></span>
+<span id="cb36-557"><a href="#cb36-557" aria-hidden="true" tabindex="-1"></a><span class="vs">  layers: [</span></span>
+<span id="cb36-558"><a href="#cb36-558" aria-hidden="true" tabindex="-1"></a><span class="vs">    { type: "header", text: title, anchor: "start" },</span></span>
+<span id="cb36-559"><a href="#cb36-559" aria-hidden="true" tabindex="-1"></a><span class="vs">    { type: "minimap", x: 30, y: 185, width: 90, projection:"Polar" }, </span></span>
+<span id="cb36-560"><a href="#cb36-560" aria-hidden="true" tabindex="-1"></a><span class="vs">    {</span></span>
+<span id="cb36-561"><a href="#cb36-561" aria-hidden="true" tabindex="-1"></a><span class="vs">      type: symbol, </span></span>
+<span id="cb36-562"><a href="#cb36-562" aria-hidden="true" tabindex="-1"></a><span class="vs">      geojson: munic2, </span></span>
+<span id="cb36-563"><a href="#cb36-563" aria-hidden="true" tabindex="-1"></a><span class="vs">      values: val, </span></span>
+<span id="cb36-564"><a href="#cb36-564" aria-hidden="true" tabindex="-1"></a><span class="vs">      k: rayon,</span></span>
+<span id="cb36-565"><a href="#cb36-565" aria-hidden="true" tabindex="-1"></a><span class="vs">      leg_x: 500,</span></span>
+<span id="cb36-566"><a href="#cb36-566" aria-hidden="true" tabindex="-1"></a><span class="vs">      leg_y: 130,</span></span>
+<span id="cb36-567"><a href="#cb36-567" aria-hidden="true" tabindex="-1"></a><span class="vs">      leg_round: 0,</span></span>
+<span id="cb36-568"><a href="#cb36-568" aria-hidden="true" tabindex="-1"></a><span class="vs">      fill: { // ICI</span></span>
+<span id="cb36-569"><a href="#cb36-569" aria-hidden="true" tabindex="-1"></a><span class="vs">        type: "choro",</span></span>
+<span id="cb36-570"><a href="#cb36-570" aria-hidden="true" tabindex="-1"></a><span class="vs">        values: "VIT_ECO",</span></span>
+<span id="cb36-571"><a href="#cb36-571" aria-hidden="true" tabindex="-1"></a><span class="vs">        colors: "RdYlBu",</span></span>
+<span id="cb36-572"><a href="#cb36-572" aria-hidden="true" tabindex="-1"></a><span class="vs">        leg_x:680,</span></span>
+<span id="cb36-573"><a href="#cb36-573" aria-hidden="true" tabindex="-1"></a><span class="vs">        leg_y:100,</span></span>
+<span id="cb36-574"><a href="#cb36-574" aria-hidden="true" tabindex="-1"></a><span class="vs">        leg_title:</span></span>
+<span id="cb36-575"><a href="#cb36-575" aria-hidden="true" tabindex="-1"></a><span class="vs">        "Vitalité économique",</span></span>
+<span id="cb36-576"><a href="#cb36-576" aria-hidden="true" tabindex="-1"></a><span class="vs">        leg_round: 0</span></span>
+<span id="cb36-577"><a href="#cb36-577" aria-hidden="true" tabindex="-1"></a><span class="vs">        },</span></span>
+<span id="cb36-578"><a href="#cb36-578" aria-hidden="true" tabindex="-1"></a><span class="vs">      fillOpacity:0.8,</span></span>
+<span id="cb36-579"><a href="#cb36-579" aria-hidden="true" tabindex="-1"></a><span class="vs">      tooltip: ["$MUS_NM_MUN", d =&gt; d.properties["VIT_ECO"]] </span></span>
+<span id="cb36-580"><a href="#cb36-580" aria-hidden="true" tabindex="-1"></a><span class="vs">    },</span></span>
+<span id="cb36-581"><a href="#cb36-581" aria-hidden="true" tabindex="-1"></a><span class="vs">    {geojson: munic2, fill:"#CCC"},</span></span>
+<span id="cb36-582"><a href="#cb36-582" aria-hidden="true" tabindex="-1"></a><span class="vs">  ]</span></span>
+<span id="cb36-583"><a href="#cb36-583" aria-hidden="true" tabindex="-1"></a><span class="vs">})</span></span>
+<span id="cb36-584"><a href="#cb36-584" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-585"><a href="#cb36-585" aria-hidden="true" tabindex="-1"></a><span class="op">:::</span></span>
+<span id="cb36-586"><a href="#cb36-586" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-587"><a href="#cb36-587" aria-hidden="true" tabindex="-1"></a><span class="op">**</span>Création de graphiques<span class="op">**</span></span>
+<span id="cb36-588"><a href="#cb36-588" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-589"><a href="#cb36-589" aria-hidden="true" tabindex="-1"></a>Avec <span class="op">**</span><span class="vs">`{ojs}`</span><span class="op">**,</span> on va aussi pouvoir faire des graphiques avec la bibliothèque <span class="op">**</span><span class="vs">`plot`</span><span class="op">**.</span></span>
+<span id="cb36-590"><a href="#cb36-590" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-591"><a href="#cb36-591" aria-hidden="true" tabindex="-1"></a>Tout d<span class="st">'abord, on récupère les noms des 20 communes les plus peuplées, classées par ordre décroissant de population.</span></span>
+<span id="cb36-592"><a href="#cb36-592" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-595"><a href="#cb36-595" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-596"><a href="#cb36-596" aria-hidden="true" tabindex="-1"></a><span class="vs">communes = munic2.features</span></span>
+<span id="cb36-597"><a href="#cb36-597" aria-hidden="true" tabindex="-1"></a><span class="vs">  .map((d) =&gt; d.properties)</span></span>
+<span id="cb36-598"><a href="#cb36-598" aria-hidden="true" tabindex="-1"></a><span class="vs">  .sort((a, b) =&gt; d3.descending(a.POP_2022, b.POP_2022))</span></span>
+<span id="cb36-599"><a href="#cb36-599" aria-hidden="true" tabindex="-1"></a><span class="vs">  .map((d) =&gt; d.MUS_NM_MUN)</span></span>
+<span id="cb36-600"><a href="#cb36-600" aria-hidden="true" tabindex="-1"></a><span class="vs">  .slice(0, 20)</span></span>
+<span id="cb36-601"><a href="#cb36-601" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-602"><a href="#cb36-602" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-605"><a href="#cb36-605" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-606"><a href="#cb36-606" aria-hidden="true" tabindex="-1"></a><span class="vs">//| echo: false</span></span>
+<span id="cb36-607"><a href="#cb36-607" aria-hidden="true" tabindex="-1"></a><span class="vs">//| eval: true</span></span>
+<span id="cb36-608"><a href="#cb36-608" aria-hidden="true" tabindex="-1"></a><span class="vs">communes</span></span>
+<span id="cb36-609"><a href="#cb36-609" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-610"><a href="#cb36-610" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-611"><a href="#cb36-611" aria-hidden="true" tabindex="-1"></a>On met en forme les données<span class="op">.</span> </span>
+<span id="cb36-612"><a href="#cb36-612" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-615"><a href="#cb36-615" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-616"><a href="#cb36-616" aria-hidden="true" tabindex="-1"></a><span class="vs">data = {</span></span>
+<span id="cb36-617"><a href="#cb36-617" aria-hidden="true" tabindex="-1"></a><span class="vs">  let arr = [];</span></span>
+<span id="cb36-618"><a href="#cb36-618" aria-hidden="true" tabindex="-1"></a><span class="vs">  communes.forEach((d) =&gt; {</span></span>
+<span id="cb36-619"><a href="#cb36-619" aria-hidden="true" tabindex="-1"></a><span class="vs">    let tmp = munic2.features</span></span>
+<span id="cb36-620"><a href="#cb36-620" aria-hidden="true" tabindex="-1"></a><span class="vs">      .map((d) =&gt; d.properties)</span></span>
+<span id="cb36-621"><a href="#cb36-621" aria-hidden="true" tabindex="-1"></a><span class="vs">      .find((x) =&gt; x.MUS_NM_MUN == d);</span></span>
+<span id="cb36-622"><a href="#cb36-622" aria-hidden="true" tabindex="-1"></a><span class="vs">    for (let i = 2001; i &lt;= 2022; i++) {</span></span>
+<span id="cb36-623"><a href="#cb36-623" aria-hidden="true" tabindex="-1"></a><span class="vs">      arr.push({ year: i, pop: tmp["POP_" + i], com: d });</span></span>
+<span id="cb36-624"><a href="#cb36-624" aria-hidden="true" tabindex="-1"></a><span class="vs">    }</span></span>
+<span id="cb36-625"><a href="#cb36-625" aria-hidden="true" tabindex="-1"></a><span class="vs">  });</span></span>
+<span id="cb36-626"><a href="#cb36-626" aria-hidden="true" tabindex="-1"></a><span class="vs">  return arr;</span></span>
+<span id="cb36-627"><a href="#cb36-627" aria-hidden="true" tabindex="-1"></a><span class="vs">}</span></span>
+<span id="cb36-628"><a href="#cb36-628" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-629"><a href="#cb36-629" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-632"><a href="#cb36-632" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-633"><a href="#cb36-633" aria-hidden="true" tabindex="-1"></a><span class="vs">//| echo: false</span></span>
+<span id="cb36-634"><a href="#cb36-634" aria-hidden="true" tabindex="-1"></a><span class="vs">//| eval: true</span></span>
+<span id="cb36-635"><a href="#cb36-635" aria-hidden="true" tabindex="-1"></a><span class="vs">data</span></span>
+<span id="cb36-636"><a href="#cb36-636" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-637"><a href="#cb36-637" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-638"><a href="#cb36-638" aria-hidden="true" tabindex="-1"></a>Puis on réalise le graphique <span class="fu">avec</span> <span class="vs">`plot`</span> en proposant de sélectionner une commune<span class="op">.</span></span>
+<span id="cb36-639"><a href="#cb36-639" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-640"><a href="#cb36-640" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-641"><a href="#cb36-641" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-644"><a href="#cb36-644" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb36-645"><a href="#cb36-645" aria-hidden="true" tabindex="-1"></a><span class="vs">viewof commune = Inputs.select(communes, { label: "Commune" })</span></span>
+<span id="cb36-646"><a href="#cb36-646" aria-hidden="true" tabindex="-1"></a><span class="vs">Plot.plot({</span></span>
+<span id="cb36-647"><a href="#cb36-647" aria-hidden="true" tabindex="-1"></a><span class="vs">  grid: true,</span></span>
+<span id="cb36-648"><a href="#cb36-648" aria-hidden="true" tabindex="-1"></a><span class="vs">  x: {</span></span>
+<span id="cb36-649"><a href="#cb36-649" aria-hidden="true" tabindex="-1"></a><span class="vs">    label: "Années →",</span></span>
+<span id="cb36-650"><a href="#cb36-650" aria-hidden="true" tabindex="-1"></a><span class="vs">    tickFormat: ""</span></span>
+<span id="cb36-651"><a href="#cb36-651" aria-hidden="true" tabindex="-1"></a><span class="vs">  },</span></span>
+<span id="cb36-652"><a href="#cb36-652" aria-hidden="true" tabindex="-1"></a><span class="vs">  y: {</span></span>
+<span id="cb36-653"><a href="#cb36-653" aria-hidden="true" tabindex="-1"></a><span class="vs">    label: `</span>↑ <span class="fu">Population</span> (${commune})<span class="vs">`</span></span>
+<span id="cb36-654"><a href="#cb36-654" aria-hidden="true" tabindex="-1"></a><span class="vs">  },</span></span>
+<span id="cb36-655"><a href="#cb36-655" aria-hidden="true" tabindex="-1"></a><span class="vs">  color: { legend: true },</span></span>
+<span id="cb36-656"><a href="#cb36-656" aria-hidden="true" tabindex="-1"></a><span class="vs">  marginLeft: 60,</span></span>
+<span id="cb36-657"><a href="#cb36-657" aria-hidden="true" tabindex="-1"></a><span class="vs">  marks: [</span></span>
+<span id="cb36-658"><a href="#cb36-658" aria-hidden="true" tabindex="-1"></a><span class="vs">    Plot.lineY(data.filter(d =&gt; d.com == commune), {</span></span>
+<span id="cb36-659"><a href="#cb36-659" aria-hidden="true" tabindex="-1"></a><span class="vs">      x: "year",</span></span>
+<span id="cb36-660"><a href="#cb36-660" aria-hidden="true" tabindex="-1"></a><span class="vs">      y: "pop",</span></span>
+<span id="cb36-661"><a href="#cb36-661" aria-hidden="true" tabindex="-1"></a><span class="vs">      stroke: "red",</span></span>
+<span id="cb36-662"><a href="#cb36-662" aria-hidden="true" tabindex="-1"></a><span class="vs">      strokeWidth: 2</span></span>
+<span id="cb36-663"><a href="#cb36-663" aria-hidden="true" tabindex="-1"></a><span class="vs">    })</span></span>
+<span id="cb36-664"><a href="#cb36-664" aria-hidden="true" tabindex="-1"></a><span class="vs">  ]</span></span>
+<span id="cb36-665"><a href="#cb36-665" aria-hidden="true" tabindex="-1"></a><span class="vs">})</span></span>
+<span id="cb36-666"><a href="#cb36-666" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb36-667"><a href="#cb36-667" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-668"><a href="#cb36-668" aria-hidden="true" tabindex="-1"></a><span class="op">**</span>Cartographie de données raster<span class="op">**</span></span>
+<span id="cb36-669"><a href="#cb36-669" aria-hidden="true" tabindex="-1"></a></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>
