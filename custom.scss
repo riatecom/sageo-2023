@@ -1,13 +1,12 @@
 /*-- scss:defaults --*/
 $presentation-h1-font-size: 3em;
 $modal-footer-bg: red;
-$presentation-font-size-root: 40px;
+$presentation-font-size-root: 35px;
 $presentation-h2-font-size: 1.3em;
-$presentation-h3-font-size: 1.15em;
+$presentation-h3-font-size: 1.05em;
 $link-color: red !default;
 $footer-bg: #75AADB;
-$modal-footer-bg: red;
-
+$modal-footer-bg: #E63F33;
 
 .title {
   font-size: 100px !important;
@@ -16,6 +15,15 @@ $modal-footer-bg: red;
 
 .author {
   font-size: 100px;
+}
+
+.medium {
+  font-size: 0.9em;
+}
+
+.panel-tabset-tabby a {
+  color: red;
+  font-size: 0.9em;
 }
 
 .date {
@@ -27,9 +35,6 @@ $modal-footer-bg: red;
 .observablehq {
   font-size:20px;
 }
-
-
-
 
 .sourceCode {
   font-size:20px;
@@ -50,7 +55,7 @@ opacity: 1;
 }
 
 section.slide h2 {
-  font-size: 35px !important;
+  font-size: 42px !important;
   color: white !important;
   background-color: #E63F33 !important;
   width: 200vw;
@@ -58,12 +63,6 @@ section.slide h2 {
   left: -20vw;
   padding-left: 20vw;
   padding-top: 0px;
-  padding-bottom: 5px;
+  padding-bottom: 10px;
 }
-
-.small {
-  font-size: 0.65em;
-}
-
-
 
