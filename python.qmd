@@ -50,6 +50,10 @@ use_virtualenv("~/env-quarto")
 
 ::: columns
 ::: {.column width="66%"}
+-   Bindings Python de GDAL/OGR
+-   Fiona
+-   Shapely (bindings Python de GEOS)
+-   Pyproj (bindings Python de PROJ)
 -   [Geopandas](https://geopandas.org/) - Étend les `DataFrame`s de [pandas](https://pandas.pydata.org/) pour
 :::
 
@@ -60,13 +64,23 @@ use_virtualenv("~/env-quarto")
 :::
 :::
 
+## Écosystème pour le géospatial - *GeoPandas*
+
+*"GeoPandas is an open source project to make working with geospatial data in python easier. GeoPandas extends the datatypes used by pandas to allow spatial operations on geometric types. Geometric operations are performed by shapely. Geopandas further depends on fiona for file access and matplotlib for plotting."*
+
+![Format des GeoDataFrame](./fig/geopandas-table.png)
+
 ## Écosystème pour le géospatial - raster
 
 -   Rasterio
 
 -   Rasterstats
 
-## Écosystème pour le géospatial
+## Écosystème pour le géospatial - *Rasterio*
+
+
+
+## Écosystème pour le géospatial - autre
 
 ::: columns
 ::: {.column width="55%"}
@@ -84,9 +98,21 @@ use_virtualenv("~/env-quarto")
 
 ![](./fig/logo-pysal.png)
 
+## Ressources Python Géospatial
+
+- Yes
+
+- No
+
+- Maybe
+
 ## Interaction R / Python dans Quarto
 
+
 ## Python, Quarto et interactivité
+
+- Utilisation des widgets Jupyter possible (seulement is utilisation de l'engin de rendu `jupyter`, pas avec `knitr` - i.e. l'inverse des *htmlwidgets* en R qui ne fonctionne que si `knitr` est utilisé)
+
 
 ## Python et géospatial dans Quarto
 

@@ -156,7 +156,7 @@ Les instructions pour utiliser l'environnement virtuel Python créé depuis R St
 - Créer un envrionnement virtuel :
 
 ```sh
-python -m venv env-quarto
+python3 -m venv env-quarto
 ```
 
 - Activer l'environnement virtuel tout juste créé :
