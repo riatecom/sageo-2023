@@ -1,0 +1,257 @@
+---
+title: "Articulation de différents langages (R, JavaScript et Python) pour la géovisualisation avec Quarto"
+subtitle: "SAGEO, 2023 - Québec, Canada"
+author: "Nicolas Lambert, Timothée Giraud,  Matthieu Viry, Ronan Ysebaert"
+date: 06/7/2023
+date-format: "DD MMM YYYY"
+title-slide-attributes:
+  data-background-color: black
+  data-background-image: fig/SAGEO.png
+  data-background-size: cover
+  data-background-opacity: "0.5"
+format:
+  revealjs:
+    margin: 0
+    embed-resources: true
+    smaller: true
+    scrollable: false
+    theme: [simple, custom.scss]
+    code-line-numbers: false
+editor: visual
+execute:
+  echo: true
+---
+
+```{r}
+#| echo: false
+library(reticulate)
+use_virtualenv("~/env-quarto")
+```
+
+
+## Python
+
+:::: {.columns}
+
+::: {.column width="66%"}
+**Python**
+:::
+
+::: {.column width="33%"}
+![](./fig/logo-python.png)
+:::
+
+::::
+
+## Écosystème pour le géospatial
+
+
+## Écosystème pour le géospatial - vecteur
+
+:::: {.columns}
+
+::: {.column width="66%"}
+- [Geopandas](https://geopandas.org/) - Étend les `DataFrame`s de [pandas](https://pandas.pydata.org/) pour 
+
+:::
+
+::: {.column width="33%"}
+![](./fig/logo-pandas.svg)
+
+![](./fig/logo_geopandas.svg)
+:::
+
+::::
+
+## Écosystème pour le géospatial - raster
+
+- Rasterio
+
+- Rasterstats
+
+## Écosystème pour le géospatial
+
+:::: {.columns}
+
+::: {.column width="55%"}
+- Binding Python pour [GRASS](https://grass.osgeo.org/grass82/manuals/libpython/index.html) + Intégration dans les notebooks Jupyter
+:::
+
+::: {.column width="45%"}
+![Source: [https://grass.osgeo.org/news/2022_06_05_results_student_grant_caitlin/](https://grass.osgeo.org/news/2022_06_05_results_student_grant_caitlin/)](./fig/grass_jupyter_combo_vis.png)
+
+
+:::
+
+::::
+
+## Écosystème pour le géospatial - Analyse spatiale
+
+- [PySAL](https://pysal.org/)
+
+![](./fig/logo-pysal.png)
+
+## Interaction R / Python dans Quarto
+
+## Python, Quarto et interactivité
+
+
+## Python et géospatial dans Quarto
+
+- Les imports nécessaires :
+
+```{python}
+import numpy as np
+import rasterio as rio
+import pandas as pd
+import geopandas as gpd
+
+from rasterio.warp import calculate_default_transform, reproject, Resampling
+from matplotlib import pyplot as plt
+from rasterio.plot import show
+from rasterstats import zonal_stats
+```
+
+- On ouvre les jeux de données :
+
+```{python}
+reg_fp = './geom/regio_l.shp'
+mun_fp = './geom/munic_s.shp'
+lc_fp = '../../Téléchargements/T01_PROVINCE.tif'
+lc_categories_fp = '../../Téléchargements/correspondance_raster_CL_COUV.dbf'
+dst_epsg_code = 6623
+
+regio_s = gpd.read_file(reg_fp).to_crs(epsg=dst_epsg_code)
+munic_s = gpd.read_file(mun_fp).to_crs(epsg=dst_epsg_code)
+```
+
+## Python et géospatial dans Quarto
+
+- Séléction de la zone qu'on souhaite étudier, en utilisant une variable de l'environnement R :
+
+```{python}
+# sel = r.sel
+sel = 'Québec'
+```
+
+- On extrait les entités correspondantes et on les affiche, relativement au reste de la province :
+
+```{python}
+extract = munic_s[munic_s.MUS_NM_MUN == sel]
+
+ax = munic_s.plot(color="lightblue", edgecolor="grey", alpha=0.5)
+ax = regio_s.plot(ax=ax, color="orange", alpha=0.8)
+ax = extract.plot(ax=ax, color="red")
+ax
+```
+
+## Python et géospatial dans Quarto
+
+- Ouverture et reprojection d'un jeu de données raster
+
+```{python}
+dst_crs = f'EPSG:{dst_epsg_code}'
+
+with rio.open(lc_fp) as src:
+    transform, width, height = calculate_default_transform(
+        src.crs, dst_crs, src.width, src.height, *src.bounds)
+    kwargs = src.meta.copy()
+    kwargs.update({
+        'crs': dst_crs,
+        'transform': transform,
+        'width': width,
+        'height': height
+    })
+    
+    # Read first band
+    band = src.read(1)
+
+    # Create the destination array
+    img = np.zeros_like(band)
+
+    # Reproject and store the result in the
+    # destination array
+    reproject(
+        band,
+        img,
+        src_transform=src.transform,
+        src_crs=src.crs,
+        dst_transform=transform,
+        dst_crs=dst_crs,
+        resampling=Resampling.nearest,
+    )
+
+    # Store the extent of our raster data (we will need it later for plotting)
+    left = transform[2]
+    top = transform[5]
+    right = left + transform[0] * width
+    bottom = top + transform[4] * height
+    extent = [left, right, bottom, top]
+```
+
+## Python et géospatial dans Quarto
+
+```{python}
+# Replace '255' values by '0'
+img[img == 255] = 0
+
+# Create an empty figure
+fig, ax = plt.subplots(figsize=(16, 12))
+# Plot the raster using the previously computed extent
+show(img, ax=ax, extent=extent, cmap="Set3")
+# Plot Québec municipality on top
+extract.plot(ax=ax, color='red', edgecolor='red', linewidth=2)
+
+```
+
+## Python et géospatial dans Quarto
+
+```{python}
+# Open the DBF file that contains the correspondences between the codes and the names of land use categories:
+categories = pd.DataFrame(gpd.read_file(lc_categories_fp, encoding='utf-8')[['ID', 'CL_COUV', 'Descriptio']])
+categories.head(11)
+```
+
+## Python et géospatial dans Quarto
+
+- Compute the zonal statistics (how many cell of each type in the selection):
+
+```{python}
+stats = zonal_stats(extract, img, affine=transform, categorical=True, nodata=0)
+stats
+```
+
+- Lets group the values into a single dict:
+
+```{python}
+# We convert the dict objects into Counter objects, which allows us to add them up by simply using the "+" operator.
+from collections import Counter
+stats = Counter(stats[0]) + Counter(stats[1])
+stats = dict(stats) # Convert back to dict
+stats
+```
+
+## Python
+
+- Lets plot an histogram of this result, using the appropriate names of land use categories:
+
+```{python}
+#| output-location: slide 
+# Use the category names from the `categories` DataFrame
+x = [
+  categories[categories.ID == int(v)]['Descriptio'].iloc[0]
+  for v in stats.keys()
+]
+# and the values we just computed with the `zonal_stats` function
+height = stats.values()
+
+fig, ax = plt.subplots(figsize=(8, 5))
+bar_container = ax.bar(x, height)
+ax.set_xticklabels(
+    ax.get_xticklabels(),
+    rotation=45,
+    horizontalalignment='right'
+)
+ax
+```
+

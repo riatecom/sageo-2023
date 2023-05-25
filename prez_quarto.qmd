@@ -16,61 +16,70 @@ format:
     smaller: true
     scrollable: false
     theme: [simple, custom.scss]
-    code-line-numbers: false
-editor: visual
 execute:
   echo: true
 ---
 
+## Evolution des pratiques en SHS (FR)
 
-## Evolution des pratiques
-
-**Avant ( > ~ 2011) : des "black-boxes" méthodologiques**
+<br><center>
+### Avant 2011 : des "black-boxes" méthodologiques
 
 Logiciels payants, ruptures logicielles dans les chaines de traitements, stockage et partage des données et méthodes non optimisé, univers "clic-bouton".
 
-<center><img src="fig/chain_1.png" width="800"/></center>
+<img src="fig/chain_1.png" width="800"/></center>
 
+## Evolution des pratiques en SHS (FR)
 
-## Evolution des pratiques
-
-**Ensuite ( 2011 > récemment)**
+<br><center>
+### 2011 - récemment : vers des chaines de traitement intégrées
 
 Solutions open source, gratuites, qui couvrent l'ensemble de la chaîne de traitement de l'information, univers de programmation.
 
-<br>
+<img src="fig/chain_2.png" width="800"/>
 
-<center><img src="fig/chain_2.png" width="800"/></center>
+Une pratique qui tend aujourd'hui à s'universaliser au sein de la communauté (formation, enseignement, recherche).
+</center>
 
+## Evolution des pratiques en SHS (FR)
 
-## Evolution des pratiques
+<br><center>
+### Depuis peu... : vers l'ouverture à de nouveaux langages ?
 
-#### Depuis peu
+Usage de langages de développement variés en fonction des usages désirés (performence de certaines libs, interactivité, ...) et des échanges interdisciplinaires (dataviz).
 
-Mise à jour de ce graphique en intégrant les dimensions Python, Js \> plus forcément chaînes de traitement.
+<center><img src="fig/chain_3.png" width="800"/></center>
 
+Comment passer d'un langage à l'autre dans des mêmes chaînes de traitement ?
 
-## Evolution des pratiques
-
-**Pb (1) : Comment passer d'un langage à l'autre ?**
-
-- Préparation et manipulation des données dans des langages performants (R, Python...)
-- Visualisation et interactivité dans le navigateur (JS)
-
-
-**Pb (2) : Comment documenter et partager ses traitements ?** 
-
-- Création de bcp de scripts. 
-- Compréhensible par soi (et encore, avec le temps)...
-- Transmettre, mettre à jour... 
-
-
-##  Recherche reproductible
+## Evolution des pratiques en SHS (FR)
 
 ::: columns
+::: {.column width="60%"}
 
+### La réplication en question
+
+-   Où sont stockées les données ?
+-   Sur quoi reposent ces protocoles méthodologiques ?
+-   Comment les documenter ?
+-   Comment les restituer / mettre à jour / adapter ?
+
+<center>
+![](fig/too_much.png) <small> Qui pour reprendre ces programmes ? </small>
+</center>
+:::
+
+::: {.column width="40%"}
+<center><br><br>
+![](fig/dirty_code.png) <small> Qui pour comprendre ce code et ses intentions ? </small>
+</center>
+:::
+:::
+
+## Recherche reproductible
+
+::: columns
 ::: {.column width="75%"}
-
 Ouverture des protocoles de recherche dans l'objectif de **confirmer** et rendre **répétable** des résultats de recherche.
 
 -   Disponibilité des données et du code, exécutable.
@@ -78,27 +87,19 @@ Ouverture des protocoles de recherche dans l'objectif de **confirmer** et rendre
 -   Transparence dans la collecte de données, ses traitements, analyses et sorties graphiques.
 -   Réutilisable par d'autres : documentation du code, de ce qu'il produit et dans quel but.
 -   Ouvert aux retours, commentaires, suggestions, critiques, révisions.
-
-
 :::
 
 ::: {.column width="25%"}
-![](fig/claerbout.jpg)
-<small>
-Jon Claerbout (sismologue, Univ. Stanford). Il utilise avec son groupe pour la première fois le terme de "recherche reproductible" lors du congrès de la *[Society of Exploration Geophysics](http://sep.stanford.edu/oldsep/matt/join/redoc/web/seg92.html)* en 1992.  
+![](fig/claerbout.jpg) <small> Jon Claerbout (sismologue, Univ. Stanford). Il utilise avec son groupe pour la première fois le terme de "recherche reproductible" lors du congrès de la [*Society of Exploration Geophysics*](http://sep.stanford.edu/oldsep/matt/join/redoc/web/seg92.html) en 1992.
 
 </small>
-
-::: 
-
+:::
 :::
 
 ## Programmation lettrée & notebooks
 
 ::: columns
-
 ::: {.column width="75%"}
-
 **Paradigme de programmation** ([Knuth, 1984](https://academic.oup.com/comjnl/article/27/2/97/343244)) qui consiste à associer code source (pour les ordinateurs) et documentation (pour les humains).
 
 -   Donner les informations suffisantes pour répliquer l'expérimentation, à la manière d'un essai.
@@ -107,159 +108,218 @@ Jon Claerbout (sismologue, Univ. Stanford). Il utilise avec son groupe pour la p
 -   Utile pour reprendre les programmes ultérieurement.
 -   Transmettre et partager les connaissances sous des formes appropriées (tutoriels, manuels).
 
+> Un gain général en **reproductibilité** de la démarche et en **ouverture** des méthodes scientifiques.
 :::
 
 ::: {.column width="25%"}
-![](fig/Knuth_b.jpg)
-<small>
-Donald Knuth (mathématicien, Univ. Stanford). Pose les bases de la programmation lettrée dans un premier environnement de literate programming : le WEB qui combine du Pascal et du TeX, appliqué aux [nombres premiers (1984)](http://literateprogramming.com/knuthweb.pdf).  
+![](fig/Knuth_b.jpg) <small> Donald Knuth (mathématicien, Univ. Stanford). Pose les bases de la programmation lettrée dans un premier environnement de literate programming : le WEB qui combine du Pascal et du TeX, appliqué aux [nombres premiers (1984)](http://literateprogramming.com/knuthweb.pdf).
 
 </small>
-
-::: 
-
+:::
 :::
 
-> Un gain général en **reproductibilité** de la démarche et en **ouverture** des méthodes scientifiques.
 
 
 ## Notebooks : Principes fondamentaux
 
-Le **Notebook** est une solution opérationnelle et adaptée pour arriver à ces fins.
+<center>
+Le **Notebook** est une solution opérationnelle et adaptée pour arriver à ces fins
 
-<center>![Source: Pecout, 2022](fig/notebook_1.png)</center>
+![](fig/notebook_1.png)
+<small>Source : Pecout, 2022</small></center>
 
-## Les notebooks du moment
+## Les Notebooks du moment
 
-![Source : Pecout, 2022](fig/nouveau_notebook.png)
+<center><img src="fig/nouveau_notebook.png" width="800"/>
 
+<small>Source : Pecout, 2022</small></center>
 
-## Quarto ? 
+## Quarto ?
 
-- Moins dépendant de R (pas d'installation de packages R, comme c'était le cas avec RMarkdown) > peut fonctionner ailleurs que dans l'IDE RStudio (pas d'utilisation de knitr).
-- Possibilité de mises en page customisées (templates ++)
-- OJS > doc interactifs
+<center>
+### Un des derniers nés des notebooks (2022)
 
+</center>
+
+::: columns
+::: {.column width="40%"}
+::: medium
+-   Open-source, basé sur Pandoc.
+-   Moins dépendant de R : pas d'installation de packages R, comme c'était le cas avec R Markdown.
+-   Peut fonctionner ailleurs que dans l'IDE RStudio : pas d'utilisation exclusive de Knitr (Jupyter, Observable également).
+-   Permet d'exécuter différents langages de programmation : R, Python, Julia ou JavaScript (interactivité ++).
+-   Possibilité de mises en page customisées avancées (templates ++)
+:::
+:::
+
+::: {.column width="60%"}
+![](fig/quarto.png)
+:::
+:::
 
 ## Des sorties multiples
 
 ::: panel-tabset
 #### Sites Web
 
+::: columns
+::: {.column width="20%"}
+::: medium
+<br><br><br>
+
 <center>
 
-<small>
-<a href="https://rcarto.gitpages.huma-num.fr/centralite/" target="_blank" role="button">Sortie (site Web)</a> // <a href="https://gitlab.huma-num.fr/rCarto/centralite" target="_blank" role="button">Dépôt GitLab</a>
-</small>
+Restituer des analyses reproductibles menées lors d'un projet.
 
-![](fig/web_site.png)
+<small> <a href="https://rcarto.gitpages.huma-num.fr/centralite/" target="_blank" role="button">Sortie (site Web)</a> // <a href="https://gitlab.huma-num.fr/rCarto/centralite" target="_blank" role="button">Dépôt GitLab</a> </small>
 
 </center>
+:::
+:::
+
+::: {.column width="80%"}
+![](fig/output_website.png)
+:::
+:::
 
 #### Présentations
 
+::: columns
+::: {.column width="20%"}
+::: medium
+<br><br><br>
+
 <center>
 
-<small>
-<a href="https://github.com/rysebaert/qgis_data_shs/blob/master/index.Rmd" target="_blank" role="button">Sortie (Présentation)</a> // <a href="https://github.com/rysebaert/qgis_data_shs" target="_blank" role="button">Dépôt GitHub</a> // <a href="https://github.com/rysebaert/qgis_data_shs/blob/master/index.Rmd" target="_blank" role="button">Code (RMardown)</a>
-</small>
+Générer des présentations interactives (iframe, animations, slides interactifs) avec le format **revealjs**.
 
-![](fig/qgis_output1.png) ![](fig/qgis_output2.png)
+<small>**Exemple** : <a href="https://ee-cist.github.io/CAR2_cartodyn/intro/docs/index.html" target="_blank" role="button">Sortie (Présentation)</a> // <a href="https://github.com/EE-CIST/CAR2_cartodyn" target="_blank" role="button">Dépôt GitHub</a> // <a href="https://github.com/EE-CIST/CAR2_cartodyn/blob/main/intro/index.qmd" target="_blank" role="button">Code</a> </small>
 
 </center>
+:::
+:::
+
+::: {.column width="70%"}
+<center><img src="fig/output_prez1.png" width="500"/></center>
+
+<center><img src="fig/output_prez2.png" width="500"/></center>
+:::
+:::
 
 #### Rapports Interactifs
 
+::: columns
+::: {.column width="20%"}
+::: medium
+<br><br><br>
+
 <center>
 
-<small>
-<a href="https://rysebaert.github.io/climbing_paris/" target="_blank" role="button">Sortie (Rapport interactif)</a> // <a href="https://github.com/rysebaert/climbing_paris" target="_blank" role="button">Dépôt GitHub</a> // <a href="https://github.com/rysebaert/climbing_paris/blob/main/index.qmd" target="_blank" role="button">Code (Quarto)</a>
-</small>
+Créer des raports interactifs combinant (éventuellement) plusieurs langages de programmation.
 
-![](fig/report.png)
+<small> <a href="https://rysebaert.github.io/climbing_paris/" target="_blank" role="button">Sortie (Rapport interactif)</a> // <a href="https://github.com/rysebaert/climbing_paris" target="_blank" role="button">Dépôt GitHub</a> // <a href="https://github.com/rysebaert/climbing_paris/blob/main/index.qmd" target="_blank" role="button">Code (Quarto)</a> </small>
 
 </center>
+:::
+:::
+
+::: {.column width="80%"}
+![](fig/output_report.png)
+:::
+:::
 
 #### Manuels
 
+::: columns
+::: {.column width="20%"}
+::: medium
 <center>
 
-<small>
-<a href="https://rcarto.github.io/geomatique_avec_r/" target="_blank" role="button">Sortie (Bookdown)</a> // <a href="https://github.com/rCarto/geomatique_avec_r" target="_blank" role="button">Dépôt GitHub</a>
-</small>
+<br><br><br>
 
-![](fig/bookdown.png)
+Créer des manuels ou des sections pédagogiques collaboratifs au format Book.
+
+<small> <a href="https://py.geocompx.org/" target="_blank" role="button">Sortie (Book)</a> // <a href="https://github.com/geocompx/geocompy" target="_blank" role="button">Dépôt GitHub</a></small>
 
 </center>
 :::
+:::
 
-## Squelette d'un notebook (RMarkdown / Quarto)
+::: {.column width="80%"}
+![](fig/output_book.png)
+:::
+:::
 
-![Source : Pecout, 2022](fig/notebook_2.png)
+#### Publications
 
+::: columns
+::: {.column width="40%"}
+::: medium
+<center>
+
+<br><br><br><br><br>
+
+Soumettre des publications suivant les prérequis (adaptation template LaTeX) de plusieurs revues de référence (Public Library of Science, Elsevier, JSS, etc.)
+
+<small> <a href="https://quarto.org/docs/journals/" target="_blank" role="button">Journal Articles (Quarto doc)</a> </small>
+
+</center>
+:::
+:::
+
+::: {.column width="60%"}
+<center><img src="fig/output_journal.png" width="500"/></center>
+:::
+:::
+:::
+
+## Squelette d'un notebook (Quarto)
+
+<br><br><br><br>
+
+<center>![Source : Pecout, 2022](fig/notebook_2.png)</center>
 
 ## Initier un document Quarto dans RStudio
 
-RStudio propose plusieurs modèles pour initier aisément un notebook. 
+RStudio propose plusieurs modèles pour initier aisément un notebook.
 
 ::: columns
-
 ::: {.column width="50%"}
-
-![](fig/init_quarto1.PNG)
-
+![](fig/init_quarto1.png)
 :::
 
-
 ::: {.column width="50%"}
-
-![](fig/init_quarto1.PNG)
-::: 
-
+![](fig/init_quarto2.png)
 :::
-
+:::
 
 ## Initier un document Quarto dans RStudio
 
-RStudio propose plusieurs modèles pour initier aisément un notebook. 
+RStudio propose plusieurs modèles pour initier aisément un notebook.
 
 ::: columns
-
 ::: {.column width="50%"}
-
-![](fig/init_quarto3.PNG)
-
+![](fig/init_quarto3.png)
 :::
 
-
 ::: {.column width="50%"}
-
-![](fig/init_quarto4.PNG)
-::: 
-
+![](fig/init_quarto4.png)
 :::
-
-
-
+:::
 
 ## Paramétrer son document grâce au YAML
 
 ::: columns
-
 ::: {.column width="50%"}
-
 Le YAML permet de définir :
 
-- Le format de sortie désiré (HTML, PDF, .doc, etc.)
+-   Le format de sortie désiré : HTML, PDF (installation d'une distribution TeX requise), .docx.
 
-- Le type de document souhaité (Document, présentation, site Web, etc.)
-
+-   Le type de document souhaité (Document, Présentation, Site Web, etc.)
 :::
 
 ::: {.column width="50%"}
-
-Il est hautement paramétrable :
-<small>
+Il est hautement paramétrable : <small>
 
 -   **des paramétrages généraux** (choisir un thème, définir une feuille de style css)
 -   la **table des matières** (toc)
@@ -275,13 +335,10 @@ Il est hautement paramétrable :
 -   les métadonnées associées au document...
 
 </small>
-
 :::
-
 :::
 
 Les possibilités offertes sont présentées dans la documentation [Quarto](https://quarto.org/docs/reference/formats/html.html)
-
 
 ## Paramétrer son document grâce au YAML
 
@@ -315,27 +372,36 @@ execute:
 
 ## Décrire simplement son cheminement grâce à au markdown
 
-- Langage de balisage léger
+-   Langage de balisage léger
 
-- h1, h2, h3 bold, italic import figure
+-   h1, h2, h3 bold, italic import figure
 
-- Callout blocks
-
-
+-   Callout blocks
 
 ## Paramétrer ses blocs de code grâce aux chunks
 
-- possibilité d'intégrer du code Python, R, Julia, Observable JS au sein du même document. 
+-   possibilité d'intégrer du code Python, R, Julia, Observable JS au sein du même document.
 
-- echo, eval, warning, message, cache, fig.height
+-   echo, eval, warning, message, cache, fig.height
 
-- possibilité de le spécifier dans le YAML (execute:)...
+-   possibilité de le spécifier dans le YAML (execute:)...
 
-- ou directement dans les chunks
+-   ou directement dans les chunks
 
+## Ressources pour aller plus loin
 
+**Supports utiles** 
 
-## A vous de jouer ! 
+- [Comprehensive guide to using Quarto](https://quarto.org/docs/guide/) 
+- Mock T., 2022, [Get Started with Quarto](https://rstudio-conf-2022.github.io/get-started-quarto/), RStudio Conference : Intro to Quarto, Authoring Quarto, Code and Editors, Static Documents, Presentations, Websites & Books, Plot & Tables, Advanced Quarto.
+
+**Enjeux de la reproductibilité** 
+
+- Brundson C., Comber A., 2020, [Opening practice: supporting reproducibility and critical spatial data science](https://link.springer.com/article/10.1007/s10109-020-00334-2), Journal of Geographical Systems 23. 
+- Desquilbet L., et al., 2019, [Vers une recherche reproductible. Faire évoluer ses pratiques](https://rr-france.github.io/bookrr/).
+- Nüst D., Pebesma E., 2021, [Practical Reproducibility in Geography and Geosciences](https://eartharxiv.org/repository/view/3216/), Annals of the Americal Association of Geographes, vol 111, 2021, Issue 5.
+
+## A vous de jouer !
 
 ::: {.callout-caution collapse="true"}
 ### \[To do\] : Initier un document Quarto
@@ -343,4 +409,3 @@ execute:
 -   Créer un modèle Quarto avec RStudio
 -   Jouer avec les métadonnées pour paramétrer le document (nom de l'auteur, ajout table des matières, etc.)
 :::
-

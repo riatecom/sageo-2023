@@ -26,7 +26,10 @@ L'<b>Observable javascript {ojs}</b> est un ensemble d'améliorations apportées
 
 ![](fig/frise.png)
 
-**Observable** c'est donc aussi C’est aussi une plateforme web qui héberge des notebooks computationnels sur la visualisation de données.
+**Observable** c'est donc aussi C’est aussi une [plateforme web](https://observablehq.com/) qui héberge des notebooks computationnels sur la visualisation de données.
+
+![](fig/notebookobs.png)
+
 
 👉 **Objectif** : faire collaborer une communauté autour de la visualisation de données.
 
@@ -296,257 +299,59 @@ L'écosystème spatial de JavaScript est moins étoffé que ce qu'on peut trouve
 :::
 ::::
 
-### Cartographie interactive avec Observable JavaScript
 
-On souhaite à présent réaliser une carte interactive à l'échelle des municipalités. 
+### Importer des données
 
-Tout d'abord, on récpère les données depuis R (**TODO**)
+Pour importer des données en **`{ojs}`**, on utilise l'instruction **`FileAttachment()`** 
 
-```{ojs}
+Pour un fichier JSON 
+
+```js
+mrc = FileAttachment("geom/mrc.geojson").json()
 munic = FileAttachment("geom/munic.geojson").json()
 ```
 
-Regardons la table attributaire
+Pour un fichier csv
+
+```js
+FileAttachment("data.csv").csv({typed: true})
+```
+
+On peut aussi récupérer des données depuis R ou Python avec l'instruction **`ojs_define`**
+
+```{ojs}
+//| eval: false
+//| echo: true
+mrc = FileAttachment("geom/mrc.geojson").json()
+munic = FileAttachment("geom/munic.geojson").json()
+```
+
+
+
+```{ojs}
+//| eval: true
+//| echo: false
+tmp = FileAttachment("geom/munic.geojson").json()
+munic =  geo.rewind(geo.simplify(tmp, {k:0.1}))
+tmp2 = FileAttachment("geom/mrc.geojson").json()
+mrc =  geo.rewind(geo.simplify(tmp2, {k:0.1}))
+
+```
+
+### Visualiser les données stats
+
+Pour regarder la table attributaire, on utilise **`Inputs.table()`**
 
 ```{ojs}
 Inputs.table(munic.features.map(d => d.properties))
 ```
 
-Comme leaflet est disponible dans les cellules {ojs}, on peut directement afficher les géométries.
-
-```{ojs}
-{
-  const container = yield htl.html`<div style="height: 500px;">`;
-  const map = L.map(container);
-  const layer = L.geoJSON(munic).addTo(map);
-  map.fitBounds(layer.getBounds(), { maxZoom: 9 });
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution:
-      "© <a href=https://www.openstreetmap.org/copyright>OpenStreetMap</a> contributors"
-  }).addTo(map);
-}
-```
-
-Le fond de carte n'est pas assez simplifié. Donc on le simplifie et on le nettoie avec la bibiothèque **`geotoolbox`**.
-
-```{ojs}
-geo = require("geotoolbox")
-```
-
-```{ojs}
-munic2 = geo.rewind(geo.simplify(munic, { k: 0.02 }))
-```
-
-**Création de cartes thématiques**
-
-Pour créer des cartes thématiques, on peut utiliser la bibliothèque [**`bertin`**](https://github.com/neocarto/bertin)
-
-```{ojs}
-bertin = require("bertin")
-```
-
-La fonction **`draw`** permet de réaliser n'importe quel type de carte. 
-
-![](fig/bertin_code.png)
-
-Par défaut, la couche s'affiche simplement.
-
-```{ojs}
-bertin.draw({layers:[{geojson: munic2, fill: "#d18de0"}]})
-```
-
-**Cartographie thématique**
-
-A présent, réalisons une carte de la population en 2022. Pour cela, on utilise le type **`bubble`**.
-
-```{ojs}
-bertin.draw({
-  params: { margin: [-550, 0, 50, 0]}, // marges [Haut, droite, bas, gauche]
-  layers: [
-    { type: "header", text: "Population en 2022", anchor: "start" }, // Titre
-    { type: "minimap", x: 30, y: 185, width: 90, projection:"Polar" }, // Carte de localisation
-    {
-      id : "bub", //  identifiant de la couche
-      type: "bubble", // couche de symboles proportionnels
-      geojson: munic2, 
-      values: "POP_2022", // variable à cartographier 
-      k: 30, // Rayon du plus gros cercle
-      leg_x: 500,
-      leg_y: 130,
-      leg_round: 0,
-      fill: "red",
-      fillOpacity:0.5,
-      tooltip: ["$MUS_NM_MUN", d => d.properties["POP_2022"]] // infobulle
-    },
-    {geojson: munic2, fill:"#CCC"}, // Couche des communes
-  ]
-})
-```
-
-
-
-
-::: {.callout-caution}
-## A vous de jouer - Rendez la carte interactive avec {ojs}
-
-Pour rendre la carte interactive, vous avez pouvez proposer des `Inputs` pour interagir avec l'utilisateur.
-
-Ajoutez un Input de type `radio` pour définir la symbologie : [**`bubble`**](https://github.com/neocarto/bertin#bubble), [**`square`**](https://github.com/neocarto/bertin#square) et [**`spikes`**](https://github.com/neocarto/bertin#spikes)
-
-
-
-```js
-viewof symbol = Inputs.radio([`a`, `b`, `c`], { label: `label`,  value: `valeur par défaut`})
-```
-
-Créez un slider pouyr faire varier la taille des symboles
-
-```js
-viewof rayon = Inputs.range([`min`, `max`], { label: "label", step: 1, value: 30 })
-```
-
-Modifiez la carte précédente pour prendre en compte ces valeurs.
- 
-Utilisez `//| echo: false` pour masquer le code.
-
-Pour en savoir plus sur les `inputs`, voir : [@observablehq/inputs](https://observablehq.com/@observablehq/inputs)
-
-:::
-
-::: {.callout-tip collapse="true"}
-## Solution
-
-Les Inputs
-
-```{ojs}
-//| echo: true
-//| eval: false
-viewof symbol = Inputs.radio([`bubble`, `square`], { label: `Symbol`,  value: `bubble`})
-viewof rayon = Inputs.range([1, 100], { label: "Rayon", step: 2, value: 30 })
-```
-
-Et la carte
-
-```{ojs}
-//| echo: true
-//| eval: false
-bertin.draw({
-  params: { margin: [-550, 0, 50, 0]},
-  layers: [
-    { type: "header", text: title, anchor: "start" }, // ICI
-    { type: "minimap", x: 30, y: 185, width: 90, projection:"Polar" }, 
-    {
-      type: symbol, // ICI 
-      geojson: munic2, 
-      values: "POP_2022", 
-      k: rayon, // ICI
-      leg_x: 500,
-      leg_y: 130,
-      leg_round: 0,
-      fill: "red",
-      fillOpacity:0.5,
-      tooltip: ["$MUS_NM_MUN", d => d.properties["POP_2022"]] 
-    },
-    {geojson: munic2, fill:"#CCC"},
-  ]
-})
-```
-
-```{ojs}
-//| echo: false
-//| eval: true
-viewof symbol = Inputs.radio([`bubble`, `square`], { label: `Symbol`,  value: `bubble`})
-viewof rayon = Inputs.range([1, 100], { label: "Rayon", step: 2, value: 30 })
-title = val == "AREA" ? "Superficie" : "Population en 2022"
-bertin.draw({
-  params: { margin: [-550, 0, 50, 0]},
-  layers: [
-    { type: "header", text: title, anchor: "start" },
-    { type: "minimap", x: 30, y: 185, width: 90, projection:"Polar" }, 
-    {
-      type: symbol, 
-      geojson: munic2, 
-      values: "POP_2022", 
-      k: rayon,
-      leg_x: 500,
-      leg_y: 130,
-      leg_round: 0,
-      fill: "red",
-      fillOpacity:0.5,
-      tooltip: ["$MUS_NM_MUN", d => d.properties["POP_2022"]] 
-    },
-    {geojson: munic2, fill:"#CCC"},
-  ]
-})
-```
-:::
-
-A présent, on souhaite colorier les cercles en fonction de l'indice de vitalité économique. 
-
-::: {.callout-caution}
-## A vous de jouer
-
-
-Proposer la variable à cartographier via une liste déroulante.
-
-```js
-viewof val = Inputs.select(["A", "B"], {label: "Select one"})
-```
-
-Pour faire des variations de couleurs (i.e. valeur), on utilise le type **`choro`** à l'intérieur de l'attribut **`fill`** de la couche à colorier. Ici, les cercles proportionnels.
-
-```js
-fill : {type "choro", values: `votre variable`, colors: "RdYlBu"}
-```
-
-Pour paramétrer, voir : [bertin#choropleth](https://github.com/neocarto/bertin#choropleth) & [bertin-js-chropoleth](https://observablehq.com/@neocartocnrs/bertin-js-chropoleth?collection=@neocartocnrs/bertin)
-:::
-
-::: {.callout-tip collapse="true"}
-## Solution
-
-
-```{ojs}
-viewof val = Inputs.select(["VIT_ECO", "REV_MED",	"TX_2564", "TAAM"], { label: "Variable" })
-
-bertin.draw({
-  params: { margin: [-550, 0, 50, 0]},
-  layers: [
-    { type: "header", text: title, anchor: "start" },
-    { type: "minimap", x: 30, y: 185, width: 90, projection:"Polar" }, 
-    {
-      type: symbol, 
-      geojson: munic2, 
-      values: "POP_2020", 
-      k: rayon,
-      leg_x: 500,
-      leg_y: 130,
-      leg_round: 0,
-      fill: { // ICI
-        type: "choro",
-        values: val, // ICI
-        colors: "RdYlBu",
-        leg_x:680,
-        leg_y:100,
-        leg_round: 0
-        },
-      fillOpacity:0.8,
-      tooltip: ["$MUS_NM_MUN", d => d.properties[val]] // ICI
-    },
-    {geojson: munic2, fill:"#CCC"},
-  ]
-})
-```
-:::
-
-**Création de graphiques**
-
-Avec **`{ojs}`**, on va aussi pouvoir faire des graphiques avec la bibliothèque **`plot`**.
+Avec **`{ojs}`**, on va aussi pouvoir faire des graphiques avec la bibliothèque **`plot`**. Pour cela, on fait quelques manipulations de données.
 
 Tout d'abord, on récupère les noms des 20 communes les plus peuplées, classées par ordre décroissant de population.
 
 ```{ojs}
-communes = munic2.features
+communes = munic.features
   .map((d) => d.properties)
   .sort((a, b) => d3.descending(a.POP_2022, b.POP_2022))
   .map((d) => d.MUS_NM_MUN)
@@ -565,7 +370,7 @@ On met en forme les données.
 data = {
   let arr = [];
   communes.forEach((d) => {
-    let tmp = munic2.features
+    let tmp = munic.features
       .map((d) => d.properties)
       .find((x) => x.MUS_NM_MUN == d);
     for (let i = 2001; i <= 2022; i++) {
@@ -579,7 +384,7 @@ data = {
 ```{ojs}
 //| echo: false
 //| eval: true
-data
+Inputs.table(data, {width:250, height:250})
 ```
 
 Puis on réalise le graphique avec `plot` en proposant de sélectionner une commune.
@@ -608,6 +413,290 @@ Plot.plot({
 })
 ```
 
+### Visualiser les gémétries
+
+Comme leaflet est disponible dans les cellules {ojs}, on peut directement afficher les géométries.
+
+```{ojs}
+{
+  const container = yield htl.html`<div style="height: 500px;">`;
+  const map = L.map(container);
+  const layer = L.geoJSON(mrc).addTo(map);
+  map.fitBounds(layer.getBounds(), { maxZoom: 9 });
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution:
+      "© <a href=https://www.openstreetmap.org/copyright>OpenStreetMap</a> contributors"
+  }).addTo(map);
+}
+```
+
+On peut également afficher la carte simplement avec la bibliothèque [**`bertin`**](https://github.com/neocarto/bertin).
+
+```{ojs}
+bertin = require("bertin")
+```
+
+```{ojs}
+bertin.quickdraw(mrc)
+```
+
+### Un peu de SIG
+
+La bibiothèque **`geotoolbox`** permet de faire facilement differentes operations SIG.
+
+```{ojs}
+geo = require("geotoolbox")
+```
+
+- **Simplification**
+
+
+```{ojs}
+viewof simpl = Inputs.range([0.0001, 0.2], { label: "Simplification",  value: 0.1 })
+mrc2 = geo.simplify(mrc, { k: simpl })
+```
+
+```{ojs}
+//| echo: false
+bertin.draw({params:{extent: munic},layers:[{geojson: mrc2, stroke:"black", strokeWidth:1.5, fill:"white", rewind: true}]})
+```
+
+- **Centroid**
+
+```{ojs}
+ctr = geo.centroid(mrc)
+```
+```{ojs}
+//| echo: false
+bertin.draw({params:{extent: mrc}, layers:[{geojson: ctr, fill:"red"},{geojson: mrc, fill:"#CCC"}, ]}) 
+```
+
+- **Buffer**
+
+```{ojs}
+quebec = geo.filter(mrc, (d) => d.MUS_CO_MRC == "23")
+buff = geo.buffer(quebec, { dist: distance})
+ctr2 = geo.clip(ctr, {clip: buff})
+```
+
+```{ojs}
+//| echo: false
+viewof distance = Inputs.range([0, 500], {
+  label: "Distance",
+  value: 300,
+  step: 10
+})
+bertin.draw({layers:[{geojson: quebec, fill:"red"}, {geojson: ctr2, fill:"red"}, {geojson: buff, stroke:"red", fill: "none", strokeWidth:2},{geojson: mrc, fill:"#CCC"}, ]}) 
+```
+
+**Création de cartes thématiques**
+
+Pour créer des cartes thématiques, on peut utiliser la bibliothèque [**`bertin`**](https://github.com/neocarto/bertin)
+
+
+La fonction **`draw`** permet de réaliser n'importe quel type de carte. 
+
+![](fig/bertin_code.png)
+
+Par défaut, la couche s'affiche simplement.
+
+```{ojs}
+bertin.draw({layers:[{geojson: munic, fill: "#d18de0"}]})
+```
+
+On peut ajouter l'attrubut **`tooltip`** pour afficher des infobulles.
+
+```{ojs}
+bertin.draw({
+  layers:[
+    { 
+      geojson: munic, fill: "#d18de0",
+      tooltip: "$MUS_NM_MUN"
+    }
+  ]
+})
+```
+
+**Cartographie thématique**
+
+A présent, réalisons une carte de la population en 2022. Pour cela, on utilise le type **`bubble`**.
+
+Par défaut, ça donne ceci :
+
+```{ojs}
+bertin.draw({
+    layers: [
+      {
+        type: "bubble",
+        geojson: munic, 
+        values: "POP_2022", 
+        fill:"red"
+      },
+      {
+        geojson: munic,
+        fill: "#CCC"
+      }, 
+  ]
+})
+```
+
+Et en paramétrant un peu, on obtient ceci.
+
+
+```{ojs}
+bertin.draw({
+  params: { extent: [[-79, 44.5], [-66, 51]]},
+  layers: [
+    { type: "header", text: "Population en 2022", anchor: "start" }, // Titre
+    { type: "minimap", x: 10, y: 10, width: 160 }, 
+    {
+      id : "bub", //  identifiant de la couche
+      type: "bubble", // couche de symboles proportionnels
+      geojson: munic, 
+      values: "POP_2022", // variable à cartographier 
+      k: 50, // Rayon du plus gros cercle
+      leg_x: 740,
+      leg_y: 350,
+      leg_round: 0,
+      leg_title: "Nombre d'habitants",
+      fill: "red",
+      fillOpacity:0.5,
+      tooltip: ["$MUS_NM_MUN", d => d.properties["POP_2022"] + " habitants"] // infobulle
+    },
+    {geojson: munic, fill:"#CCC"}, // Couche des communes
+    {type:"scalebar"}
+  ]
+})
+```
+
+On peut facilement combiner cette couche de cercles avec un une carte choroplèthe.
+
+
+```{ojs}
+bertin.draw({
+  params: { extent: [[-79, 44.5], [-66, 51]]},
+  layers: [
+    { type: "header", text: "Population en 2022", anchor: "start" }, // Titre
+    { type: "minimap", x: 10, y: 10, width: 160 }, 
+    {
+      id : "bub", 
+      type: "bubble", 
+      geojson: munic, 
+      values: "POP_2022", 
+      k: 50, 
+      leg_x: 690,
+      leg_y: 370,
+      leg_round: 0,
+      leg_title: "Nombre d'habitants",
+      fill: "white",
+      fillOpacity:0.2,
+      stroke:"black",
+      strokeWidth:1.4,
+      tooltip: ["$MUS_NM_MUN", d => d.properties["POP_2022"] + " habitants"] 
+    },
+    { 
+      geojson: munic,
+      fill: {
+            type: "choro",
+            values: "VIT_ECO", 
+            colors: "RdYlBu",
+            leg_x:870,
+            leg_y:315,
+            leg_title: "Indice de\nvitalité\néconomique",
+            leg_round: 2
+        }
+    }, // Couche des communes
+    {type:"scalebar"}
+  ]
+})
+```
+
+On peut aussi colorier les cercles
+
+```{ojs}
+bertin.draw({
+  params: { extent: [[-79, 44.5], [-66, 51]]},
+  layers: [
+    { type: "header", text: "Population en 2022", anchor: "start" }, // Titre
+    { type: "minimap", x: 10, y: 10, width: 160 }, 
+    {
+      id : "bub", 
+      type: "bubble", 
+      geojson: munic, 
+      values: "POP_2022", 
+      k: 50, 
+      leg_x: 690,
+      leg_y: 370,
+      leg_round: 0,
+      leg_title: "Nombre d'habitants",
+      fill: {
+            type: "choro",
+            values: "VIT_ECO", 
+            colors: "RdYlBu",
+            leg_x:870,
+            leg_y:315,
+            leg_title: "Indice de\nvitalité\néconomique",
+            leg_round: 2
+        },
+      tooltip: ["$MUS_NM_MUN", d => d.properties["POP_2022"] + " habitants"] 
+    },
+    { 
+      geojson: munic,
+      fill: "#CCC"
+    }, // Couche des communes
+    {type:"scalebar"}
+  ]
+})
+```
+
+
+
+On peut utiliser les **`Inputs`** pour tester des visualisations, explorer les données ou proposer des interactions à un utilisatuer.
+
+```{ojs}
+// Inputs
+viewof symbology = Inputs.radio(["bubble", "square", "spikes", "smooth", "dotdensity"], { label: "symbologie",   value: "bubble"})
+viewof r = Inputs.range([10, 100], { label: "taille", step: 1, value: 50, disabled : ["bubble", "square", "spikes"].includes(symbology) ? false: true})
+viewof toggle = Inputs.toggle({label: "dorling", value: false, disabled : ["bubble", "square", "dotdensity"].includes(symbology) ? false: true})
+viewof thresholds = Inputs.range([5, 50], { label: "thresholds", step: 1, value: 23, disabled : symbology == "smooth" ? false : true})
+viewof bandwidth = Inputs.range([5, 50], { label: "bandwidth", step: 1, value: 27, disabled : symbology == "smooth" ? false : true })
+viewof filterpop = Inputs.range([1000, 100000], { label: "POP >= ", step: 1, value: 1000})
+// Carte
+bertin.draw({
+    params: { extent: [[-79, 44.5], [-66, 51]]},
+    layers: [
+      {
+        type: symbology,
+        geojson: geo.filter(munic, (d) => d.POP_2022 >= filterpop), 
+        values: "POP_2022", 
+        fill: symbology == "smooth" ? "RdYlGn" : "red",
+        fillOpacity:0.7,
+        dorling: toggle,
+        k: r,
+        thresholds,
+        bandwidth,
+        symbol_size:25,
+        w:15,
+        symbol_shift : toggle ? 1 : 0,
+        stroke : symbology == "spikes" ? "red" : "white",
+        tooltip: ["$MUS_NM_MUN", d => d.properties["POP_2022"] + " habitants"] 
+      },
+      {
+        geojson: munic,
+        fill: "#CCC",
+        stroke : toggle ? "#CCC" : "white"
+      }, 
+  ]
+})
+```
+
 **Cartographie de données raster**
 
+Pour cartographier des données raster, on peut utiliser la bibliothèque **`gridviz`**.
+
+TODO.....
+
+```{ojs}
+gviz = require("gridviz@2.0.6")
+```
 
