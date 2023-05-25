@@ -21,6 +21,18 @@ editor_options:
 
 ## L'écosystème spatial de R
 
+
+1. Qu'est-ce que R. 
+
+2. R et le spatial
+
+3. Zoom sf
+
+4. Zoom carto thématique
+
+5. Ressources
+
+
 R permet depuis longtemps de traiter et représenter les données spatiales. 
 Historiquement, 4 packages permettent d’importer, de manipuler et de transformer les données spatiales : sp, rgeos, rgdal et raster.   
 
@@ -50,13 +62,12 @@ Les développements actuels s'appuient sur ce socle et forment un écosystème r
 - `GWmodel`, `spgwr` : Geographically Weighted Models
 - ...
 
-### Acquisition de données
-
-- [Géomatique avec R : Acquisition de données spatiales](https://rcarto.github.io/geomatique_avec_r/acquisition-de-donn%C3%A9es-spatiales.html)
 
 
 
-## Le package `sf` <img src="fig/logo_sf.gif" align="right" width="150"/> 
+## Le package`sf` 
+
+<img src="fig/logo_sf.gif" align="right" width="150"/> 
 
 Une interface entre R et plusieurs librairies géographiques largement utilisées en géomatique: 
 
@@ -67,114 +78,17 @@ Une interface entre R et plusieurs librairies géographiques largement utilisée
 * [GEOS](http://trac.osgeo.org/geos/) - Geometry Engine - Open Source     
 
 
-![[Pebesma, 2019](https://github.com/edzer/UseR2019)](fig/sf_deps.png){width="450px"}
+![[Pebesma, 2019](https://github.com/edzer/UseR2019)](fig/sf_deps.png)
 
-
-
-```{r}
-#| include: false
-knitr::knit_hooks$set(nm = function(before, options, envir){
-  if (before){
-    par(mar=c(0,0,0,0))
-  } 
-})
-knitr::opts_chunk$set(nm=TRUE)
-```
-
-#### Format des objets spatiaux `sf`
-
-<img src="fig/sf.png" alt="format sf" width=100% style="border:0px"/>
-
-#### Import de données
-```{r}
-library(sf)
-mun <- st_read("geom/munic.geojson")
-```
-
-#### Affichage de données
-```{r, fig.height=3, fig.width=3, nm=TRUE}
-plot(st_geometry(mun))
-```
-
-#### Extraire les centroïdes
-```{r,  fig.height=3, fig.width=3, nm=TRUE}
-mun_c <- st_centroid(mun)
-plot(st_geometry(mun))
-plot(st_geometry(mun_c), add=TRUE, cex=.5, col="red", pch=20)
-```
-
-
-```{r}
-knitr::knit_exit()
-```
+![Format des objets spatiaux `sf`](fig/sf.png)
 
 
 
 
 
-#### Construire une matrice de distances
-```{r,  fig.height=3, fig.width=3, nm=TRUE}
-mat <- st_distance(x=mtq_c,y=mtq_c)
-mat[1:5,1:5]
-```
+## Le package `terra` 
 
-#### Agréger des polygones
-```{r,  fig.height=3, fig.width=3, nm=TRUE}
-mtq_u <- st_union(mtq)
-plot(st_geometry(mtq), col="lightblue")
-plot(st_geometry(mtq_u), add=T, lwd=2, border = "red")
-```
-
-#### Construire une zone tampon
-```{r,  fig.height=3, fig.width=3, nm=TRUE}
-mtq_b <- st_buffer(x = mtq_u, dist = 5000)
-plot(st_geometry(mtq), col="lightblue")
-plot(st_geometry(mtq_u), add=T, lwd=2)
-plot(st_geometry(mtq_b), add=T, lwd=2, border = "red")
-
-```
-
-
-#### Réaliser une intersection
-
-```{r,  fig.height=3, fig.width=3, nm=TRUE}
-m <- rbind(c(700015,1624212), c(700015,1641586), 
-           c(719127,1641586), c(719127,1624212), 
-           c(700015,1624212))
-p <- st_sf(st_sfc(st_polygon(list(m))), crs = st_crs(mtq))
-plot(st_geometry(mtq))
-plot(p, border="red", lwd=2, add=T)
-```
-
-
-
-```{r,  fig.height=3, fig.width=3, nm=TRUE, warning=F}
-mtq_z <- st_intersection(x = mtq, y = p)
-plot(st_geometry(mtq))
-plot(st_geometry(mtq_z), col="red", border="green", add=T)
-```
-
-#### Construire des polygones de Voronoi
-
-```{r,  fig.height=3, fig.width=3, nm=TRUE}
-mtq_v <- st_voronoi(x = st_union(mtq_c))
-mtq_v <- st_intersection(st_cast(mtq_v), st_union(mtq))
-mtq_v <- st_join(x = st_sf(mtq_v), y = mtq_c, join=st_intersects)
-mtq_v <- st_cast(mtq_v, "MULTIPOLYGON")
-plot(st_geometry(mtq_v), col='lightblue')
-```
-
-```{r}
-#| include: false
-knitr::opts_chunk$set(nm=FALSE)
-```
-
-
-
-
-
-
-## Le package `terra` <img src="fig/logo_terra.png" align="right" width="150px"/> 
+<img src="fig/logo_terra.png" align="right" width="150px"/> 
 
 Le package `terra` permet de gérer des données vectorielles et surtout **raster**. 
 
@@ -184,56 +98,13 @@ Le package `terra` permet de gérer des données vectorielles et surtout **raste
 - Transformation et conversion (rasterisation, vectorisation)
 
 
-#### Import des données
+## Le package `mapsf` 
 
-```{r}
-#| include: false
-knitr::opts_chunk$set(fig.width=6, fig.height=6)
-```
-
-
-```{r}
-library(terra)
-Elevation_Lot <- rast("data/elevation.tif") 
-commune <- vect("data/com46.gpkg", layer="com")
-plot(Elevation_Lot)
-plot(commune)
-```
-
-#### Reprojection
-
-```{r}
-Elevation_Lot_L93 <- project(x= Elevation_Lot, 
-                             y = "EPSG:2154", 
-                             method = "bilinear")
-plot(Elevation_Lot_L93)
-plot(commune, add = T)
-```
-
-#### Crop
-
-```{r}
-cahors <- subset(commune, commune$INSEE_COM == "46042") 
-crop_cahors <- crop(Elevation_Lot_L93, cahors)
-plot(crop_cahors)
-plot(cahors, add=TRUE)
-```
-
-
-
-#### Mask
-
-```{r}
-mask_cahors <- mask(crop_cahors, cahors)
-plot(mask_cahors)
-```
-
-
-## Le package `mapsf` <img src="fig/logo_mapsf.png" align="right" width="150px"/> 
+<img src="fig/logo_mapsf.png" align="right" width="150px"/> 
 
 ### Utilisation simple 
 
-```{r}
+```{r mapsf_simple}
 #| fig-width: 5
 #| fig.height: 6
 library(mapsf)
@@ -286,7 +157,9 @@ dev.off()
 ![](fig/mtq.svg){width="500px"}
 
 
-## Le package `mapview` <img src="fig/logo_mapview.gif" align="right" width="150px"/> 
+## Le package `mapview` 
+
+<img src="fig/logo_mapview.gif" align="right" width="150px"/> 
 
 ### Utilisation simple
 
@@ -295,211 +168,11 @@ dev.off()
 #| fig-width: 6
 #| fig.height: 4
 #| cache: false
-library(sf)
 library(mapview)
-bars <- readRDS("data/bars.rds")
-parc <- readRDS("data/parc.rds")
-quartier <- readRDS("data/quartier.rds")
-mapview(quartier) + mapview(parc) + mapview(bars)
-```
-
-### Utilisation avancée
-```{r mapview2}
-#| eval: false
-m <- mapview(
-  x = quartier, 
-  color = "white", 
-  col.regions = "lightblue",
-  lwd = 2,
-  alpha.regions = .30,
-  popup = as.character(quartier$name), 
-  label = NA
-) + 
-  mapview(
-    x = parc, 
-    col.regions = "aquamarine", 
-    alpha.regions = 0.5, 
-    label = NA
-  ) + 
-  mapview(
-    x = bars, 
-    color = "white", 
-    col.regions = "red", 
-    cex = 3, 
-    popup = NA,
-    label = bars$name
-  )
-mapshot(m, "map.html",  selfcontained = TRUE)
+mapview(mtq) 
 ```
 
 
-Le fichier produit : **[map.html](map.html)**
-
-
-
-
-## Le package `spatstat` 
-
-### Lissage par la méthode d'estimation par noyau (KDE)
-
-#### Import des données
-```{r importKDE}
-library(spatstat)
-library(mapsf)
-library(sf)
-library(terra)
-bars <- readRDS("data/bars.rds")
-parc <- readRDS("data/parc.rds")
-paris <- readRDS("data/paris.rds")
-quartier <- readRDS("data/quartier.rds")
-seine <- readRDS("data/seine.rds")
-```
-
-
-#### Calcul du KDE
-```{r calculKDE}
-p <- as.ppp(st_coordinates(bars), W = as.owin(paris))
-ds <- density.ppp(p, sigma = 200, eps = c(20,20), positive = TRUE)
-rasdens <- rast(ds) * 1000 * 1000
-crs(rasdens) <- 'EPSG:2154'
-plot(rasdens)
-```
-
-
-
-#### Cartographie
-```{r cartoKDE1}
-#| results: false
-bks <- c(0, 10, 25, 50, 75, 100, 125, 150, 175, 203)
-cols <- hcl.colors(n = length(bks)-1, "Inferno", rev=F)
-mf_theme("default")
-mf_export(paris, filename = "fig/bars.svg", width = 10)
-mf_raster(rasdens, breaks= bks, col = cols, add = TRUE)
-mf_legend(type = "choro", pos = "topright",
-          val = bks,pal = cols, 
-          title = "Bar density\nKDE, sigma=200m\n(bars per km2)",
-          val_rnd = 0)
-mf_map(seine, col = "#abd3de", add=T, lwd = 4)
-mf_map(parc, col = "#bddab150", border = NA, add=T)
-mf_map(bars, add = TRUE, col = "green", pch = ".", cex = 0.1)
-mf_map(paris, col = NA, add=T)
-mf_arrow(pos = c(661171.8,6858500))
-mf_layout(
-  title = "Bar Density in Paris",
-  scale = 1, 
-  credits = paste0(
-    "Map data © OpenStreetMap contributors, under CC BY SA.\n",
-    "T. Giraud, 2022")
-)
-dev.off()
-```
-
-![](fig/bars.svg)
-
-
-
-#### Cartographie bis
-```{r cartoKDE2}
-#| results: false
-library(tanaka)
-rasdens[is.na(rasdens)] <- 0
-mf_export(paris, filename = "fig/bars2.svg", width = 10)
-tanaka(rasdens, breaks = bks, col = cols, 
-       legend.pos = "n", mask = paris, 
-       add = TRUE)
-mf_legend(type = "choro", pos = "topright",
-          val = bks, pal = cols, 
-          title = "Bar density\nKDE, sigma=200m\n(bars per km2)",
-          val_rnd = 0)
-mf_map(parc, col = "#2a3125", border = NA, add=T)
-mf_map(bars, add = TRUE, col = "green", pch = '.')
-mf_map(paris, col = NA, add = TRUE)
-mf_arrow(pos = c(661171.8,6858500))
-mf_layout(
-  title = "Bar Density in Paris",
-  scale = 1, 
-  credits = paste0(
-    "Map data © OpenStreetMap contributors, under CC BY SA.\n",
-    "T. Giraud, 2022")
-)
-dev.off()
-```
-
-![](fig/bars2.svg)
-
-
-
-## Le package `osmdata` <img src="fig/logo_osmdata.png" align="right" width="150px" height="173px"/> 
-
-Le package `osmdata` utilise l'API overpass-turbo pour extraire des données vectorielles de la base de données OpenStreetMap. 
-```{r}
-#| eval: false
-library(sf)
-library(osmdata)
-paris <- readRDS("data/paris.rds")
-# define a bounding box
-query <- opq(st_bbox(st_transform(paris, crs = "EPSG:4326")))
-# extract Bars & Pubs
-feat <- add_osm_feature(opq = query, 
-                        key = 'amenity', 
-                        value = c("bar", "pub"))
-# send the query & receive results
-res <- osmdata_sf(feat)
-# Reduction des resultats 
-# (les points composant les polygones sont supprimés)
-res <- unique_osmdata(res)
-# extract point, polygon, multipolygons
-res_point <- res$osm_points
-res_polygon <-res$osm_polygons
-res_multipolygon <-res$osm_multipolygons
-# transform *polygons to their centroids
-res_polygon_c <- st_centroid(res_polygon)
-res_multipolygon_c <- st_centroid(res_multipolygon)
-# get common fields
-chps <- intersect(names(res_point), names(res_polygon_c))
-chps <- intersect(chps, names(res_multipolygon_c))
-# bind objets
-bar <- rbind(res_point[, chps], 
-             res_multipolygon_c[, chps], 
-             res_polygon_c[, chps])
-# projection
-bar <- st_transform(bar, st_crs(paris))
-# Only bars in paris
-bar <- bar[paris, ]
-plot(paris)
-plot(st_geometry(bar), add = T)
-```
-
-```{r}
-#| echo: false
-library(sf)
-paris <- readRDS("data/paris.rds")
-bar <- readRDS("data/bars.rds")
-plot(paris)
-plot(st_geometry(bar), add = T)
-```
-
-## Le package `rayshader` <img src="fig/logo_rayshader.png" align="right" width="150px"/> 
-
-```{r rayshade}
-#| eval: false
-library(rayshader)
-elev_mtq <- terra::rast('data/elev_mtq.tif')
-elmat  <- raster_to_matrix(elev_mtq, verbose = F)
-elmat |>
-  sphere_shade(texture = "imhof1",sunangle = 125, progbar = FALSE) |>
-  add_water(detect_water(elmat, progbar = FALSE), color="desert") |>
-  add_shadow(ray_shade(elmat,lambert = TRUE, anglebreaks = 85, 
-                       sunangle = 125, progbar = FALSE),
-             max_darken = 0.5) |>
-  add_shadow(ambient_shade(elmat, anglebreaks =  85, progbar = FALSE),
-             max_darken = 0.5) |>
-  plot_3d(elmat,zscale=20,fov=0,theta=-5,phi=30, background="black",
-          zoom=.37, windowsize =c(1000, 600), baseshape = "circle")
-render_snapshot(clear=TRUE,filename = "fig/elevation_mtq.png" )
-```
-
-![](fig/elevation_mtq.png){width="500px"}
 
 
 ## Ressources
@@ -512,111 +185,90 @@ render_snapshot(clear=TRUE,filename = "fig/elevation_mtq.png" )
 - [Spatial Data Science with R](https://rspatial.org/) de Robert J. Hijmans
 
 
-## 
 
 
-
-## Aperçu socio-démographique
-
-
+## Exemple d'analyse sur les données du Québec
 ```{r}
+#| include: false
+mf_theme("default")
+```
+
+
+### Import et préparation des données
+
+Nous utilisons le package `sf` pour importer 2 fichiers geojson. 
+Il est ensuite possible de changer la projection des couches avec la fonction `st_transform()`.
+Nous pouvons aussi créer une couche des régions du Québec en agrégeant les MRC. 
+
+```{r import}
+#| message: false
 library(sf)
-mun_raw <- st_read("geom/munic.geojson")
-mrc_raw <- st_read("geom/mrc.geojson")
+mun_raw <- st_read("geom/munic.geojson", quiet= TRUE)
+mrc_raw <- st_read("geom/mrc.geojson", quiet = TRUE)
 # Projection NAD83 / Quebec Albers
 mun <- st_transform(mun_raw, "EPSG:6623")
 mrc <- st_transform(mrc_raw, "EPSG:6623")
-
-
-# Selection de la zone du Saint Laurent au Québec
-mun_sl <- st_as_sfc(
-  st_bbox(
-    st_buffer(mun[mun$MUS_NM_MUN %in% c("Québec", "Montréal"),], 20000)
-    )
-  )
-
-
+# Création d'une couche des régions
+reg <- aggregate(mrc[,'MUS_NM_REG'], 
+                 by = list(REG = mrc$MUS_NM_REG), 
+                 FUN = head, 1)
 ```
 
-Nous pouvons créer une première carte de situation. 
-```{r}
+
+
+
+### Première cartographie simple
+Sur cette première carte nous allons simplement afficher les couches importées et crées en les superposant. 
+Nous utilisons le package `mapsf` qui permet aussi de créer une couche d'étiquettes avec la fonction `mf_label()`. 
+
+```{r carto_quebec_reg}
 #| fig-width: 8
-#| fig-height: 6.54
+#| fig-height: 10.05
 library(mapsf)
-mf_map(mun_sl, col = NA, border = NA)
-mf_map(mun, border = "white", add = TRUE)
-mf_map(mrc, col = NA, border = "black", add = TRUE, cex = 0.8)
-mf_label(mrc, var = "MUS_NM_MRC", halo = TRUE, overlap = FALSE)
-mf_scale(size = 20)
-mf_title("Municipalités québecoises entre Québec et Montréal")
-mf_credits(paste0("Ministère des Ressources naturelles et des Forêts, 2023 & ", 
-                  "Institut de la Statistique du Québec, 2023"), bg = "#ffffffCC")
-```
+mf_map(mun, border = "white", add = FALSE)
+mf_map(mrc, col = NA, border = "grey70", add = TRUE, lwd = 1)
+mf_map(reg, col = NA, border = "black", add = TRUE, lwd = 1.2)
+mf_label(reg, var = "MUS_NM_REG", halo = TRUE, overlap = FALSE)
+mf_scale(size = 100)
+mf_title("Le Québec")
+mf_credits(txt = "Ministère des Ressources naturelles et des Forêts, 2023", 
+           bg = "#ffffffCC")
 
-Une carte simple de la population des municipalités.
 
-```{r}
-#| fig-width: 8
-#| fig-height: 6.54
-mf_map(mun_sl, col = NA, border = NA)
-mf_map(mun, border = "white", add = TRUE)
-mf_map(mrc, col = NA, border = "black", add = TRUE)
-mf_map(x = mun, var = "POP_2022", type = "prop", 
-       inches = 0.5, col = "#940010", border = "grey80",
-       leg_pos = "topleft", leg_frame = TRUE,
-       leg_title = "Population des municipalités\nen 2022")
-mf_scale(size = 20)
-mf_title("Répartition de la population")
-mf_credits(paste0("Ministère des Ressources naturelles et des Forêts, 2023 & ", 
-                  "Institut de la Statistique du Québec, 2023"), bg = "#ffffffCC")
-```
-
-Une carte simple du revenu médian.
-
-```{r}
-#| fig-width: 8
-#| fig-height: 6.54
-mf_map(mun_sl, col = NA, border = NA)
-mf_map(mun, "REV_MED", "choro", 
-       add = TRUE, pal = "Burg", breaks = "q6", 
-       leg_pos ="topleft", leg_frame = TRUE, 
-       leg_title = "Revenu médian", leg_val_rnd = -2, 
-       col_na = "ivory", lwd = .2)
-mf_credits(paste0("Ministère des Ressources naturelles et des Forêts, 2023 & ", 
-                  "Institut de la Statistique du Québec, 2023"), bg = "#ffffffCC")
-mf_title("Richesse")
 
 ```
 
+
+### Où sont les restaurants dans la ville de Québec? 
+
+Nous voulons savoir dans quelles zones de la ville se trouvent les restaurants. 
+Pour connaître la positions des restaurants dans la ville nous allons utiliser la base de donnés cartographique libre OpenstreetMap. 
+Pour cela nous utilisons le package `osmdata`. Le package osmdata utilise l’API overpass-turbo pour extraire des données vectorielles de la base de données OpenStreetMap.
+
+
+Nous devons tout d'abord définir une emprise spatiale à partir de laquelle nous pourrons extraire les informations sur les restaurants.
+Après avoir démarré les packages nécessaires, nous allons tout d'abord sélectionner la MRC de Québec dans la couche des MRC. 
 ```{r}
-#| fig-width: 8
-#| fig-height: 6.54
-mf_map(mun_sl, col = NA, border = NA)
-mf_map(mun, c("POP_2022", "REV_MED"), "prop_choro", 
-       add = TRUE, pal = "Burg", breaks = "q6", 
-       leg_pos =c("topleft", 'top'), leg_frame = c(TRUE, TRUE), inches = .5 ,
-       leg_title = c('POP',"Revenu médian"), leg_val_rnd = c(0,-2), 
-       col_na = "ivory", lwd = .2)
-mf_credits(paste0("Ministère des Ressources naturelles et des Forêts, 2023 & ", 
-                  "Institut de la Statistique du Québec, 2023"), bg = "#ffffffCC")
-mf_title("Richesse")
-```
-
-
-```{r}
-#| eval: false
-
-## Initialisation de l'analyse
-
-Extraction du nom des communes de plus de 100 000 habitants. 
-
-
 library(sf)
 library(osmdata)
-library(sf)
-target <- mrc[mrc$MUS_NM_MRC == "Laval", ]
-# Définition d'une bounding box
-q <- opq(bbox = st_bbox(st_transform(target, 4326)))
+library(mapsf)
+library(maptiles)
+target <- mrc[mrc$MUS_NM_MRC == "Québec", ]
+```
+
+Nous allons ensuite définir une bounding box correspondant à l'emprise de la MRC. Le package osmdata fonctionne avec des objets en WGS84 nous avons donc besoin de reprojeter les données.  
+```{r}
+# Reprojection en WGS84
+targetb <- st_transform(target, "EPSG:4326")
+# Initialisation de la requête à envoyer
+q <- opq(bbox = st_bbox(targetb))
+```
+
+
+Nous définissons ensuite ce que nous voulons extraire de la base de donnée OSM. Une connaissance de la structuration de la base de données OSM est nécessaire. 
+Nous pouvons ensuite envoyer la requête. 
+```{r}
+#| cache: true
 # Extraction des restaurants
 req <- add_osm_feature(opq = q, key = 'amenity', value = "restaurant")
 res <- osmdata_sf(req)
@@ -636,49 +288,63 @@ resto <- rbind(resto_point[, chps], resto_poly_point[, chps])
 
 target <- st_transform(target, 3857)
 resto <- st_transform(resto, 3857)
-tiles <- get_tiles(target, project = FALSE, crop = TRUE, zoom = 11)
+tiles <- get_tiles(target, provider = "CartoDB.PositronNoLabels",
+                   project = FALSE, crop = TRUE, zoom = 11)
 
 mf_theme(mar = c(0,0,0,0), inner = TRUE)
 mf_export(tiles, width = ncol(tiles), height = nrow(tiles), filename = "toto.png")
 mf_raster(tiles, add = T)
-mf_map(target, add = T, col = NA)
-mf_map(resto, add = T)
+mf_map(target, add = T, col = NA, lwd = 2)
+mf_map(resto, add = T, col = "red")
 mf_title("Les restaurants à Québec")
 dev.off()
+```
 
-grid <- st_make_grid(target, cellsize = 1000)
+![](toto.png)
+
+
+```{r}
+library(spatstat)
+library(terra)
+library(tanaka)
+
+p <- as.ppp(st_coordinates(resto), W = as.owin(st_bbox(target)))
+ds <- density.ppp(p, sigma = 500, eps = c(100, 100), positive = TRUE)
+rasdens <- rast(ds) * 1000 * 1000
+crs(rasdens) <- 'EPSG:3857'
+mf_export(tiles, width = ncol(tiles), height = nrow(tiles), filename = "tata.png")
+mf_raster(tiles, add = T)
+cols <- mf_get_pal(n = 5, palette = "Teal", rev = TRUE)
+x <- tanaka_contour(rasdens, breaks = c(1,2,5,10,20,25))
+tanaka(x[-1, ], 
+       legend.pos = "topright", shift = 65,
+       col = cols,
+       add = TRUE)
+mf_map(target, add = T, col = NA, lwd = 2)
+# mf_map(resto, add = T, col = "red", cex = .5)
+mf_title("Les restaurants à Québec")
+dev.off()
+```
+
+![](tata.png)
+
+
+```{r}
+grid <- st_make_grid(target, cellsize = 2000)
 grid <- st_sf(id = 1:length(grid), geom = grid)
 grid$n <- lengths(st_intersects(grid, resto, sparse = TRUE))
 
-# dev.off()
-mf_raster(tiles)
-mf_map(grid[grid$n >0 , ], "n", "choro", breaks = 'geom', nbreak = 6, add = T, alpha= .95, border = NA, pal = "Reds", leg_frame = T)
-
-plot_tiles(osm, adjust = T)
-mf_map(st_transform(resto, 3857), add = T, pch = 20)
-library(mapview)
-mapview(resto)
-
-```
-
-Choix de l'espace d'analyse parmi ces communes. 
-
-```{r}
-#| eval: false
-
-sel <- "Québec"
-```
-
-Définition de l'emprise spatiale d'analyse, définie par une bounding box définie par *Xmin, Ymin, Xmax, Ymax*. On propose ici un périmètre d'étude de 2km autour de l'emprise géographique de la commune sélectionnée.
-
-```{r}
-#| eval: false
-
-down <- st_as_sfc(st_bbox(st_buffer(mun_100k[mun_100k$MUS_NM_MRC == sel,], 2000)))
-down <- st_transform(down, 4326)
-bbox <- st_bbox(down)
+mf_export(tiles, width = ncol(tiles), height = nrow(tiles), filename = "tutu.png")
+mf_raster(tiles, add = T)
+mf_map(grid[grid$n >0 , ], "n", "choro", 
+       breaks = 'geom', nbreak = 6, add = T, 
+       alpha= .75, border = NA, pal = "Teal", leg_frame = T)
+mf_map(target, add = T, col = NA, lwd = 2)
+mf_map(resto, add = T, col = "red", cex = .5)
+mf_title("Les restaurants à Québec")
+dev.off()
 ```
 
 
-
+![](tutu.png)
 
