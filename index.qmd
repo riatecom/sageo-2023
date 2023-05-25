@@ -1,7 +1,12 @@
 ---
 title: "Articulation de différents langages (R, JavaScript et Python) pour la géovisualisation avec Quarto"
 subtitle: "Atelier Sageo, Québec, Juin 2023"
-author: "Timothée Giraud, Nicolas Lambert, Matthieu Viry, Ronan Ysebaert (UAR RIATE, CNRS, Université Paris Cité)"
+author: 
+  - name: "Timothée Giraud, Nicolas Lambert, Matthieu Viry, Ronan Ysebaert"
+    affiliations:
+      - id: 1
+        name: RIATE (CNRS, Université Paris Cité)
+        url: https://riate.cnrs.fr
 format:
   html:
     theme: sandstone
@@ -56,13 +61,14 @@ Télécharger les données utiles à reproduire l'exercice (dépôt github à pa
 Ouvrir le fichier projet.
 :::
 
-## Préparation des espaces d'étude avec R
+## Préparation des données
 
-On cherche à proposer une analyse systématique pour l'espace d'étude environnant les communes peuplées de plus de 100000 habitants de la province du Québec en 2022.
+Dans cet atelier nous allons utiliser des données portant sur les municipalités du Québec. Dans un premier temps nous avons préparé et nettoyé les données avec le logiciel R. 
+Les différentes étapes de préparation sont décrites dans le script suivant.  
 
-Cette préparation des données est réalisée avec R.
-
-```{r, message=FALSE, out.width = "100%"}
+```{r}
+#| eval: false
+#| code-fold: true
 library(sf)
 library(mapsf)
 library(readxl)
@@ -70,90 +76,68 @@ library(rmapshaper)
 
 # Communes
 mun <- st_read("geom/munic_s.shp", quiet = TRUE)
+# Transformation conique équivalente d'ALbers
+mun <- st_transform(mun, 6623)
+# Suppression des surfaces en eau
+mun <- mun[!is.na(mun$MUS_CO_GEO),]
+# Selection des variables pertinentes
+mun <- mun[, c("MUS_CO_GEO", "MUS_NM_MUN", "MUS_CO_MRC", "MUS_NM_MRC", "MUS_NM_REG")]
+# Simplifier les contours des polygones
+mun <- ms_simplify(mun, )
 
-# Simplification des contours
-mun <- ms_simplify(mun, keep = 0.05)
-
-# Transformation long/lat
-mun <- st_transform(mun, 4326)
-mun <- aggregate(mun, by = list(MUS_CO_GEO = mun$MUS_CO_GEO),
+# Agregation des multipolygones
+mun <- aggregate(x = mun[, -1], 
+                 by = list(MUS_CO_GEO = mun$MUS_CO_GEO),
                  FUN = head, 1)
-mrc <- aggregate(mun, by = list(MUS_CO_MRC = mun$MUS_CO_MRC),
-                 FUN = head, 1)
+mun <- st_cast(mun, "MULTIPOLYGON")
 
 # Import données population et nettoyage
-df <- data.frame(read_xlsx("data/stats_socio_eco/Pop-MUN-total.xlsx", 
-                           skip = 3, n_max = 1292,
-                col_types = c(rep("text", 7), rep("numeric", 22)))) 
+df <- read_xlsx("data/stats_socio_eco/Pop-MUN-total.xlsx", 
+                skip = 3, n_max = 1292,
+                col_types = c(rep("text", 2),"numeric",rep("text", 4), 
+                              rep("numeric", 22))) 
+df <- as.data.frame(df)
 df <- df[,c(1:3, 8:29)]
 col_pop <- paste0("POP_", seq(2001, 2022, 1))
 colnames(df) <- c("NOM", "STATUT", "MUS_CO_GEO", col_pop)
-df$MUS_CO_GEO <- ifelse(nchar(df$MUS_CO_GEO) < 5, paste0("0", df$MUS_CO_GEO), 
-                        df$MUS_CO_GEO)
+df$MUS_CO_GEO <- formatC(df$MUS_CO_GEO, width = 5, flag = "0", format = "d")
 
-df$NOM <- paste0(df$NOM, " (", df$STATUT, ")")
+mun <- merge(mun, df, by = "MUS_CO_GEO", all.x = T)
+
 
 # Import données socio-éco et nettoyage
 df2 <- data.frame(read_xlsx("data/stats_socio_eco/Tableau.xlsx", 
-                           skip = 4, n_max = 1163))
+                            skip = 4, n_max = 1163))
 df2 <- df2[-c(1:2),]
 df2 <- df2[,c(2:4,6,8,10)]
 colnames(df2) <- c("NOM", "REG", "VIT_ECO", "REV_MED", "TX_2564", "TAAM")
+df2$id <- paste0(df2$NOM, "_", df2$REG)
 
-df <- merge(df, df2, by = "NOM", all.x = TRUE)
-df <- df[,c(3:25, 27:30)]
-
-
-# Jointure acvec le fond de carte de référence
-mun <- merge(mun, df, by = "MUS_CO_GEO", all.x = TRUE)
-
-# Clean
-mun <- st_cast(mun, "MULTIPOLYGON")
-mun_100k <- mun[mun$POP_2022 > 100000,]
-mun_100k <- mun_100k[!is.na(mun_100k$POP_2022),]
-
-# Export
-#st_write(mun, "geom/munic.geojson")
-#st_write(mrc, "geom/mrc.geojson")
+df2$VIT_ECO <- as.numeric(df2$VIT_ECO)
+df2$REV_MED <- as.numeric(df2$REV_MED)
+df2$TX_2564 <- as.numeric(df2$TX_2564)
+df2$TAAM <- as.numeric(df2$TAAM)
+mun$id <- paste0(mun$NOM, " (", mun$STATUT, ")_", mun$MUS_NM_REG)
+mun <- merge(mun, df2, by = "id", all.x = TRUE)
+mun <- mun[, c(2:6, 8:30, 33:36)]
 
 
-# Cartographie
-# Transformation conique équivalente d'ALbers
-mun <- st_transform(mun, 6623)
-mun_100k <- st_transform(mun_100k, 6623)
-mrc <- st_transform(mrc, 6623)
 
-mf_init(mun_100k)
-mf_map(mun, border = "white", add = TRUE)
-mf_map(mun_100k, col = "red", border = "white", add = TRUE)
-mf_map(mrc, col = NA, border = "black", add = TRUE)
-mf_label(mun_100k, var = "MUS_NM_MRC", halo = TRUE, overlap = FALSE)
-mf_scale(size = 50)
-mf_title("Municipalités québecoises avec plus de 100 000 habitants en 2022")
+# agregation de municipalité en Municipalité régionale de comté (MRC)
+mun <- st_set_precision(mun, 1)
+mrc <- aggregate(mun[, c("MUS_NM_MRC","MUS_NM_REG")], 
+                 by = list(MUS_CO_MRC = mun$MUS_CO_MRC),
+                 FUN = head, 1)
+mrc <- st_cast(mrc, "MULTIPOLYGON")
+mun <- st_set_precision(mun, 0)
+
+st_write(st_transform(mrc, 4326), "geom/mrc.geojson")
+st_write(st_transform(mun, 4326), "geom/munic.geojson")
 ```
 
-## Initialisation de l'analyse
-
-Extraction du nom des communes de plus de 100 000 habitants. 
-
-```{r}
-mun_100k$NOM
-```
-
-Choix de l'espace d'analyse parmi ces communes. 
-
-```{r}
-sel <- "Québec"
-```
-
-Définition de l'emprise spatiale d'analyse, définie par une bounding box définie par *Xmin, Ymin, Xmax, Ymax*. On propose ici un périmètre d'étude de 2km autour de l'emprise géographique de la commune sélectionnée.
-
-```{r}
-down <- st_as_sfc(st_bbox(st_buffer(mun_100k[mun_100k$MUS_NM_MRC == sel,], 2000)))
-down <- st_transform(down, 4326)
-bbox <- st_bbox(down)
-```
-
+Ce script abouti à la création de deux fichiers. 
+mrc.geojson est un fond de carte des Municipalité R C. 
+munic.geojson et un fond de carte des municipalités contenant des données socio-démographiques. 
 
 ## R
 
