@@ -28,31 +28,29 @@ library(reticulate)
 use_virtualenv("~/env-quarto")
 ```
 
-
 ## Python
 
-:::: {.columns}
+::: columns
+::: {.column width="70%"}
+- **Python** : un langage *polyvalent*, *interprété* et *multi-paradigme*
 
-::: {.column width="66%"}
-**Python**
+- De plus en plus utilisé pour la *data science*
+
+- Un écosystème robuste pour 
 :::
 
-::: {.column width="33%"}
+::: {.column width="30%"}
 ![](./fig/logo-python.png)
 :::
-
-::::
+:::
 
 ## Écosystème pour le géospatial
 
-
 ## Écosystème pour le géospatial - vecteur
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="66%"}
-- [Geopandas](https://geopandas.org/) - Étend les `DataFrame`s de [pandas](https://pandas.pydata.org/) pour 
-
+-   [Geopandas](https://geopandas.org/) - Étend les `DataFrame`s de [pandas](https://pandas.pydata.org/) pour
 :::
 
 ::: {.column width="33%"}
@@ -60,34 +58,29 @@ use_virtualenv("~/env-quarto")
 
 ![](./fig/logo_geopandas.svg)
 :::
-
-::::
+:::
 
 ## Écosystème pour le géospatial - raster
 
-- Rasterio
+-   Rasterio
 
-- Rasterstats
+-   Rasterstats
 
 ## Écosystème pour le géospatial
 
-:::: {.columns}
-
+::: columns
 ::: {.column width="55%"}
-- Binding Python pour [GRASS](https://grass.osgeo.org/grass82/manuals/libpython/index.html) + Intégration dans les notebooks Jupyter
+-   Binding Python pour [GRASS](https://grass.osgeo.org/grass82/manuals/libpython/index.html) + Intégration dans les notebooks Jupyter
 :::
 
 ::: {.column width="45%"}
-![Source: [https://grass.osgeo.org/news/2022_06_05_results_student_grant_caitlin/](https://grass.osgeo.org/news/2022_06_05_results_student_grant_caitlin/)](./fig/grass_jupyter_combo_vis.png)
-
-
+![Source: <https://grass.osgeo.org/news/2022_06_05_results_student_grant_caitlin/>](./fig/grass_jupyter_combo_vis.png)
 :::
-
-::::
+:::
 
 ## Écosystème pour le géospatial - Analyse spatiale
 
-- [PySAL](https://pysal.org/)
+-   [PySAL](https://pysal.org/)
 
 ![](./fig/logo-pysal.png)
 
@@ -95,10 +88,9 @@ use_virtualenv("~/env-quarto")
 
 ## Python, Quarto et interactivité
 
-
 ## Python et géospatial dans Quarto
 
-- Les imports nécessaires :
+-   Les imports nécessaires :
 
 ```{python}
 import numpy as np
@@ -112,7 +104,7 @@ from rasterio.plot import show
 from rasterstats import zonal_stats
 ```
 
-- On ouvre les jeux de données :
+-   On ouvre les jeux de données :
 
 ```{python}
 reg_fp = './geom/regio_l.shp'
@@ -127,14 +119,14 @@ munic_s = gpd.read_file(mun_fp).to_crs(epsg=dst_epsg_code)
 
 ## Python et géospatial dans Quarto
 
-- Séléction de la zone qu'on souhaite étudier, en utilisant une variable de l'environnement R :
+-   Séléction de la zone qu'on souhaite étudier, en utilisant une variable de l'environnement R :
 
 ```{python}
 # sel = r.sel
 sel = 'Québec'
 ```
 
-- On extrait les entités correspondantes et on les affiche, relativement au reste de la province :
+-   On extrait les entités correspondantes et on les affiche, relativement au reste de la province :
 
 ```{python}
 extract = munic_s[munic_s.MUS_NM_MUN == sel]
@@ -147,7 +139,7 @@ ax
 
 ## Python et géospatial dans Quarto
 
-- Ouverture et reprojection d'un jeu de données raster
+-   Ouverture et reprojection d'un jeu de données raster
 
 ```{python}
 dst_crs = f'EPSG:{dst_epsg_code}'
@@ -214,14 +206,14 @@ categories.head(11)
 
 ## Python et géospatial dans Quarto
 
-- Compute the zonal statistics (how many cell of each type in the selection):
+-   Compute the zonal statistics (how many cell of each type in the selection):
 
 ```{python}
 stats = zonal_stats(extract, img, affine=transform, categorical=True, nodata=0)
 stats
 ```
 
-- Lets group the values into a single dict:
+-   Lets group the values into a single dict:
 
 ```{python}
 # We convert the dict objects into Counter objects, which allows us to add them up by simply using the "+" operator.
@@ -233,7 +225,7 @@ stats
 
 ## Python
 
-- Lets plot an histogram of this result, using the appropriate names of land use categories:
+-   Lets plot an histogram of this result, using the appropriate names of land use categories:
 
 ```{python}
 #| output-location: slide 
@@ -254,4 +246,3 @@ ax.set_xticklabels(
 )
 ax
 ```
-
