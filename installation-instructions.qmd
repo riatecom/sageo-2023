@@ -7,6 +7,7 @@ format:
     theme: sandstone
     fontsize: 0.9em
     code-tools: true
+    embed-resources: true
     toc: true
     toc-depth: 3
     linkcolor: "#8631ad"
