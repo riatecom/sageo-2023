@@ -26,7 +26,10 @@ L'<b>Observable javascript {ojs}</b> est un ensemble d'améliorations apportées
 
 ![](fig/frise.png)
 
-**Observable** c'est donc aussi C’est aussi une plateforme web qui héberge des notebooks computationnels sur la visualisation de données.
+**Observable** c'est donc aussi C’est aussi une [plateforme web](https://observablehq.com/) qui héberge des notebooks computationnels sur la visualisation de données.
+
+![](fig/notebookobs.png)
+
 
 👉 **Objectif** : faire collaborer une communauté autour de la visualisation de données.
 
