@@ -598,14 +598,13 @@ Rend cela
 
 Le code est à placer dans des ***chunks*** (tronçons), délimités par des triples ***backticks*** (Code > Insert Chunk dans R Studio).
 
-Un même document Quarto peut combiner plusieurs langages de programmation. 
+Un même document Quarto peut combiner plusieurs langages de programmation : 
 
-::: columns
+::: medium
 
-::: {.column width="50%"}
+*Voici un chunk en Julia pour créer un joli cercle.* 
 
 ````
-Voici du code Julia pour créer un joli cercle. 
 
 ```{{julia}}
 radius = 10
@@ -615,7 +614,11 @@ The radius of the circle is $radius.
 """)
 ```
 
-Puis un graphique créé avec la librairie python matplotlib 
+````
+
+*Puis un graphique créé avec la librairie python matplotlib.* 
+
+````
 
 ```{{python}}
 import matplotlib.pyplot as plt
@@ -623,8 +626,21 @@ plt.plot([1,2,3,4])
 plt.show()
 ```
 
-Un graphique avec la librarie ggplot de R peut être ?
+````
 
+::: 
+
+## Paramétrer ses blocs de code grâce aux chunks
+
+Le code est à placer dans des ***chunks*** (tronçons), délimités par des triples ***backticks*** (Code > Insert Chunk dans R Studio).
+
+Un même document Quarto peut combiner plusieurs langages de programmation : 
+
+::: medium
+
+*Un graphique avec la librarie ggplot de R peut être ?*
+
+````
 ```{{r}}
 library(ggplot2)
 ggplot(airquality, aes(Temp, Ozone)) + 
@@ -632,58 +648,223 @@ ggplot(airquality, aes(Temp, Ozone)) +
   geom_smooth(method = "loess", se = FALSE)
 ```
 
+````
+::: 
 
+## Paramétrer ses blocs de code grâce aux chunks
+
+Le code est à placer dans des ***chunks*** (tronçons), délimités par des triples ***backticks*** (Code > Insert Chunk dans R Studio).
+
+Un même document Quarto peut combiner plusieurs langages de programmation : 
+
+::: medium
+
+*Soyons fous ! Initions un joli graphique interactif en Observable JavaScript !*
 
 ````
-
-:::
-
-::: {.column width="50%"}
-
-````
-Mais pourquoi pas un joli graphique interactif avec
-Observable JavaScript ?
-
 ```{{ojs}}
-data = FileAttachment("palmer-penguins.csv").csv({ typed: true })
+pdata = FileAttachment("palmer-penguins.csv").csv({typed: true})
 
-viewof bill_length_min = Inputs.range(
-  [32, 50], 
-  {value: 35, step: 1, label: "Bill length (min):"}
-)
-viewof islands = Inputs.checkbox(
-  ["Torgersen", "Biscoe", "Dream"], 
-  { value: ["Torgersen", "Biscoe"], 
-    label: "Islands:"
-  }
-)
-
-data = FileAttachment("palmer-penguins.csv").csv({ typed: true })
-
-Plot.rectY(filtered, 
-  Plot.binX(
-    {y: "count"}, 
-    {x: "body_mass", fill: "species", thresholds: 20}
-  ))
-  .plot({
-    facet: {
-      data: filtered,
-      x: "sex",
-      y: "species",
-      marginRight: 80
-    },
-    marks: [
-      Plot.frame(),
-    ]
-  }
-)
+Plot.plot({
+  facet: {
+    data: pdata,
+    x: "sex",
+    y: "species",
+    marginRight: 80
+  },
+  marks: [
+    Plot.frame(),
+    Plot.rectY(pdata, 
+      Plot.binX(
+        {y: "count"}, 
+        {x: "body_mass_g", thresholds: 20, fill: "species"}
+      )
+    ),
+    Plot.tickX(pdata, 
+      Plot.groupZ(
+        {x: "median"}, 
+        {x: "body_mass_g",
+         z: d => d.sex + d.species,
+         stroke: "#333",
+         strokeWidth: 2
+        }
+      )
+    )
+  ]
+})
 ```
 
 ````
 
 :::
 
-:::
+
+## Paramétrer ses blocs de code grâce aux chunks
+
+En initiant le chunk par un *hash pipe* `#|` on peut paramétrer son exécution / affichage. Les arguments les plus usuels sont :
+
+- `label: toto` : nommer le chunk
+- `eval: true/false` : le bloc de code est joué ou non.
+- `echo: true/false` : le bloc de code s'affiche ou non dans le document de sortie. 
+- `cache: true/false` : les résultats sont mis en cache et ne sont pas rejoués tant que le bloc de code reste inchangé. 
+- `warning: true/false` : affiche les messages d'alerte ou non. 
+- `fig-height: 4` / `fig-width: 6` : hauteur / largeur du plot de sortie, en pouces. 
+- `dpi: 150`: densité de pixels par pouce. 
+
+
+## Paramétrer ses blocs de code grâce aux chunks
+
+A noter / quelques conseils :
+
+- Penser à générer (`render`) le document fréquemment pour veiller à la cohérence / bonne exécution de vos blocs de code.
+- Pour vous comme pour les autres, évitez les blocs de code trop volumineux ou longs. 
+- Les paramètres des chunks peuvent aussi être spécifiés dans le YAML (setup chunk).
+- L'usage de Knitr rend disponible encore [davantage d'options](https://quarto.org/docs/reference/cells/cells-knitr.html)
+
+## Paramétrer ses blocs de code grâce aux chunks / Exemples
+
+::: columns
+
+::: {.column width="50%"}
+
+Ceci dans le .qmd :
+
+````
+
+```{{r}}
+plot(1:10)
+```
+
+````
+
+::: 
+
+::: {.column width="50%"}
+
+Rendra cela dans le fichier de sortie :
+
+```{r}
+plot(1:10)
+```
+
+::: 
+
+::: 
+
+## Paramétrer ses blocs de code grâce aux chunks / Exemples
+
+::: columns
+
+::: {.column width="50%"}
+
+Ceci dans le .qmd :
+
+````
+
+```{{r}}
+#| eval: false
+#| echo: false
+plot(1:10)
+```
+
+````
+
+::: 
+
+::: {.column width="50%"}
+
+Rendra cela dans le fichier de sortie :
+
+```{r}
+#| eval: false
+#| echo: false
+plot(1:10)
+```
+
+Rien, et c'est bien normal :) 
+
+::: 
+
+::: 
+
+
+## Paramétrer ses blocs de code grâce aux chunks / Exemples
+
+::: columns
+
+::: {.column width="50%"}
+
+Ceci dans le .qmd :
+
+````
+
+```{{r}}
+#| echo: false
+plot(1:10)
+```
+
+````
+
+::: 
+
+::: {.column width="50%"}
+
+Rendra cela dans le fichier de sortie :
+
+```{r}
+#| echo: false
+plot(1:10)
+```
+
+
+::: 
+
+::: 
+
+
+## Paramétrer ses blocs de code grâce aux chunks / Exemples
+
+::: columns
+
+::: {.column width="50%"}
+
+Ceci dans le .qmd :
+
+````
+
+```{{r}}
+#| fig-height: 6
+#| fig-width: 4
+#| fig-align: center
+#| fig-cap: Un beau graphique ! 
+#| code-fold: true
+plot(1:10)
+```
+
+````
+
+::: 
+
+::: {.column width="50%"}
+
+Rendra cela dans le fichier de sortie :
+
+```{r}
+#| fig-height: 6
+#| fig-width: 4
+#| fig-align: center
+#| fig-cap: Un beau graphique ! 
+#| code-fold: true
+plot(1:10)
+```
+
+
+::: 
+
+::: 
+
+
+
 
 
 ## Ressources pour aller plus loin
