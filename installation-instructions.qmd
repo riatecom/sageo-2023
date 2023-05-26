@@ -18,12 +18,12 @@ execute:
 Afin de suivre l'atelier, il est nécessaire de disposer des logiciels suivants :
 
 - [R](https://www.r-project.org/)
-- [R Studio](https://posit.co/download/rstudio-desktop/)
+- [RStudio](https://posit.co/download/rstudio-desktop/)
 - [Python](https://www.python.org/)
 - [Quarto](https://quarto.org/)
 - Plusieurs packages R et Python
 
-Au cours de l'atelier, une fois les instructions d'installation effectuées, toutes les manipulations nécessaires à la production d'un document avec quarto seront réalisées directement depuis l'IDE R Studio.
+Au cours de l'atelier, une fois les instructions d'installation effectuées, toutes les manipulations nécessaires à la production d'un document avec Quarto seront réalisées directement depuis l'IDE RStudio.
 
 # Windows 10 / Windows 11
 
@@ -33,9 +33,9 @@ Au cours de l'atelier, une fois les instructions d'installation effectuées, tou
 - Cliquer sur *"Download R-4.3.0 for Windows"* pour télécharger l'installeur sur votre ordinateur
 - Exécutez l'installeur - aller jusqu'au bout de l'installeur en laissant les options par défaut
 
-### Installation R Studio
+### Installation RStudio
 
-- Télécharger l'installeur de R Studio à partir de ce lien : [https://download1.rstudio.org/electron/windows/RStudio-2023.03.1-446.exe](https://download1.rstudio.org/electron/windows/RStudio-2023.03.1-446.exe)
+- Télécharger l'installeur de RStudio à partir de ce lien : [https://download1.rstudio.org/electron/windows/RStudio-2023.03.1-446.exe](https://download1.rstudio.org/electron/windows/RStudio-2023.03.1-446.exe)
 - Exécutez l'installeur - aller jusqu'au bout de l'installeur en laissant les options par défaut
 
 
@@ -71,7 +71,7 @@ python -m pip install numpy geopandas rasterio rasterstats matplotlib
 
 ### Installation des dépendances R requises
 
-- Ouvrir R Studio et saisir la commande suivante dans l'intépréteur R :
+- Ouvrir RStudio et saisir la commande suivante dans l'interpréteur R :
 
 ```r
 install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf', 'osmdata', 'maptiles', 'tanaka', 'spatstats', 'terra'))
@@ -79,19 +79,17 @@ install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf
 
 ### Vous disposez de tout le nécessaire pour l'atelier !
 
-Les instructions pour utiliser l'environnement virtuel Python créé depuis R Studio et depuis votre document quarto vous seront fournis lors de l'atelier.
+Les instructions pour utiliser l'environnement virtuel Python créé depuis RStudio et depuis votre document Quarto vous seront fournies lors de l'atelier.
 
 # Linux (Ubuntu 22)
 
-- Nous contacter ([matthieu.viry@cnrs.fr](mailto:matthieu.viry@cnrs.fr)).
-
-### Installation de R et des dépendances pour R Studio
+### Installation de R et des dépendances pour RStudio
 
 ```bash
-sudo apt install r-base curl libssl-dev libpq5 libclang-dev libudunits2-dev libcurl4-openssl-dev libxml2-dev libpng-dev
+sudo apt install r-base curl libssl-dev libpq5 libclang-dev libudunits2-dev libcurl4-openssl-dev libxml2-dev libpng-dev libfontconfig1-dev
 ```
 
-### Installation de R Studio
+### Installation de RStudio
 
 ```bash
 curl https://download1.rstudio.org/electron/jammy/amd64/rstudio-2023.03.1-446-amd64.deb --output rstudio-2023.03.1-446-amd64.deb
@@ -115,7 +113,7 @@ python -m pip install numpy geopandas rasterio rasterstats matplotlib
 
 ### Installation des dépendances R requises 
 
-- Ouvrir R Studio et saisir la commande suivante dans l'intépréteur R :
+- Ouvrir RStudio et saisir la commande suivante dans l'interpréteur R :
 
 ```r
 install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf', 'osmdata', 'maptiles', 'tanaka', 'spatstats', 'terra'))
@@ -123,7 +121,7 @@ install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf
 
 ### Vous disposez de tout le nécessaire pour l'atelier !
 
-Les instructions pour utiliser l'environnement virtuel Python créé depuis R Studio et depuis votre document quarto vous seront fournis lors de l'atelier.
+Les instructions pour utiliser l'environnement virtuel Python créé depuis RStudio et depuis votre document Quarto vous seront fournies lors de l'atelier.
 
 
 # Mac OS X
@@ -136,18 +134,16 @@ Les instructions pour utiliser l'environnement virtuel Python créé depuis R St
   * R-4.3.0-x86_64.pkg
 - Exécutez l'installeur - aller jusqu'au bout de l'installeur en laissant les options par défaut
 
-### Installation de R Studio
+### Installation de RStudio
 
 - Télécharger l'installeur à partir de ce lien : [https://download1.rstudio.org/electron/macos/RStudio-2023.03.1-446.dmg](https://download1.rstudio.org/electron/macos/RStudio-2023.03.1-446.dmg)
-- L'exécuter et aller jusqu'au bout de l'installeur en laissant les options par défaut.
+- L'exécuter et aller jusqu'au bout de l'installeur en laissant les options par défaut
 
 
 ### Installation de Python
 
 - Télécharger le fichier [https://www.python.org/ftp/python/3.11.3/python-3.11.3-macos11.pkg](https://www.python.org/ftp/python/3.11.3/python-3.11.3-macos11.pkg)
-- L'exécuter et cliquer sur *"Install Now"*
-- Fermer l'installeur
-
+- L'exécuter et aller jusqu'au bout de l'installeur en laissant les options par défaut
 
 ### Installation des dépendances Python requises
 
@@ -175,7 +171,7 @@ python -m pip install numpy geopandas rasterio rasterstats matplotlib
 
 ### Installation des dépendances R requises
 
-- Ouvrir R Studio et saisir la commande suivante dans l'intépréteur R :
+- Ouvrir RStudio et saisir la commande suivante dans l'interpréteur R :
 
 ```r
 install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf', 'osmdata', 'maptiles', 'tanaka', 'spatstats', 'terra'))
@@ -183,4 +179,8 @@ install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf
 
 ### Vous disposez de tout le nécessaire pour l'atelier !
 
-Les instructions pour utiliser l'environnement virtuel Python créé depuis R Studio et depuis votre document quarto vous seront fournis lors de l'atelier.
+Les instructions pour utiliser l'environnement virtuel Python créé depuis RStudio et depuis votre document Quarto vous seront fournies lors de l'atelier.
+
+# En cas d'erreur lors de l'installation...
+
+*__... ou si besoin d'aide à l'installation des outils nécessaires à l'atelier sur un autre système d'exploitation que ceux cités dans ce document__ * : n'hésitez pas à nous contacter : ([matthieu.viry@cnrs.fr](mailto:matthieu.viry@cnrs.fr)).
