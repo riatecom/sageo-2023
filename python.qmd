@@ -17,7 +17,6 @@ format:
     scrollable: false
     theme: [simple, custom.scss]
     code-line-numbers: false
-editor: visual
 execute:
   echo: true
 ---
@@ -30,19 +29,25 @@ use_virtualenv("~/env-quarto")
 
 ## Python
 
-::: columns
+:::: columns
 ::: {.column width="70%"}
 - **Python** : un langage *polyvalent*, *interprété* et *multi-paradigme*
 
 - De plus en plus utilisé pour la *data science*
 
-- Un écosystème robuste pour 
+:::{.fragment}
+- Un écosystème robuste pour différents domaines d'application scientifiques
+
+![](./fig/python-stack.png)
+:::
+
 :::
 
 ::: {.column width="30%"}
 ![](./fig/logo-python.png)
+
 :::
-:::
+::::
 
 ## Écosystème pour le géospatial
 
@@ -50,11 +55,11 @@ use_virtualenv("~/env-quarto")
 
 ::: columns
 ::: {.column width="66%"}
--   Bindings Python de GDAL/OGR
--   Fiona
--   Shapely (bindings Python de GEOS)
--   Pyproj (bindings Python de PROJ)
--   [Geopandas](https://geopandas.org/) - Étend les `DataFrame`s de [pandas](https://pandas.pydata.org/) pour
+-   [**Bindings Python de GDAL/OGR**](https://gdal.org/api/python_bindings.html)
+-   [**Fiona**](https://fiona.readthedocs.io/en/stable/) - I/O (*wrapper* de haut niveau autour d'OGR)
+-   [**Shapely**](https://shapely.readthedocs.io/) (bindings Python de GEOS)
+-   [**Pyproj**](https://pyproj4.github.io/pyproj) (bindings Python de [PROJ](https://proj.org/))
+-   [**Geopandas**](https://geopandas.org/) - Étend les `DataFrame`s de [pandas](https://pandas.pydata.org/) pour ... (basé sur Fiona / Shapely / Pyproj)
 :::
 
 ::: {.column width="33%"}
@@ -72,17 +77,29 @@ use_virtualenv("~/env-quarto")
 
 ## Écosystème pour le géospatial - raster
 
--   Rasterio
+-   [**Rasterio**](https://rasterio.readthedocs.io/) :
+    * lecture / écriture de raster (*wrapper* de haut niveau autour de GDAL)
+    * données représentées sous forme d'`array` NumPy
+    * reprojection
+    * _resampling_
+    * _virtual files_
+    * etc.
 
--   Rasterstats
+-   [**Rasterstats**](https://pythonhosted.org/rasterstats/) :
+    * résumer des données raster sur la base de géométries vectorielles
+    * extraction de valeurs à un point précis
+
 
 ## Écosystème pour le géospatial - *Rasterio*
 
+Exemple d'utilisation 
 
+```{python}
+```
 
 ## Écosystème pour le géospatial - autre
 
-::: columns
+:::: columns
 ::: {.column width="55%"}
 -   Binding Python pour [GRASS](https://grass.osgeo.org/grass82/manuals/libpython/index.html) + Intégration dans les notebooks Jupyter
 :::
@@ -90,13 +107,24 @@ use_virtualenv("~/env-quarto")
 ::: {.column width="45%"}
 ![Source: <https://grass.osgeo.org/news/2022_06_05_results_student_grant_caitlin/>](./fig/grass_jupyter_combo_vis.png)
 :::
-:::
+::::
 
 ## Écosystème pour le géospatial - Analyse spatiale
 
+:::: {.columns}
+
+::: {.column width="66%"}
+
 -   [PySAL](https://pysal.org/)
 
+:::
+
+::: {.column width="33%"}
+
 ![](./fig/logo-pysal.png)
+:::
+
+::::
 
 ## Ressources Python Géospatial
 
@@ -106,13 +134,118 @@ use_virtualenv("~/env-quarto")
 
 - Maybe
 
-## Interaction R / Python dans Quarto
+## Interaction R ⇄ Python dans Quarto
+
+::: {.panel-tabset}
+
+### R → Python
+
+- Définition de variable dans un chunk R :
+
+```{r}
+a <- 42
+b <- list(1, 2, 3)
+c <- c(12, 13, 14)
+```
+
+- Récupération depuis un chunk Python :
+
+*en utilisant la variable `r`, un point, et le nom de la variable R à récupérer*
+
+```{python}
+print(r.a)
+print(r.b)
+print(r.c)
+```
+
+
+### Python → R
+
+- Définition de variable dans un chunk Python :
+
+```{python}
+a = 42
+b = [1, 2, 3]
+```
+
+- Récupération depuis un chunk R :
+
+*en utilisant la variable `py`, un dollar `$`, et le nom de la variable Python à récupérer*
+
+```{r}
+print(py$a)
+print(py$b)
+```
+
+
+:::
+
+## Interaction R ⇄ Python dans Quarto (suite)
+
+<br><br><br><br>
+
+- Il est possible d'échanger des types plus complexes (`data.frame` ⇄ `DataFrame` pandas, tableau numpy, etc.)
+
+## Interaction R ⇄ Python dans Quarto (suite)
+
+::: {.panel-tabset}
+
+### R → Python
+
+- Depuis un chunk R :
+
+```{r}
+df <- data.frame(
+   emp_id = c(1:5),
+   emp_name = c("Rick","Dan","Michelle","Ryan","Jane"),
+   salary = c(623.3,515.2,611.0,729.0,843.25),
+   start_date = as.Date(c("2012-01-01", "2013-09-23", "2014-11-15", "2014-05-11", "2015-03-27")),
+   stringsAsFactors = FALSE
+)
+```
+
+- Récupération depuis un chunk Python :
+
+```{python}
+df = r.df
+print(df.head())
+```
+
+
+### Python → R
+
+- Depuis un chunk Python :
+
+```{python}
+import pandas as pd
+import numpy as np
+
+df2 = pd.DataFrame({
+  "emp_id": list(range(5)),
+  "emp_name": ["Rick", "Dan", "Michelle", "Ryan", "Jane"],
+  "salary": [623.3, 515.2, 611.0, 729.0, 843.25],
+  "start_date": pd.to_datetime(["2012-01-01", "2013-09-23", "2014-11-15", "2014-05-11", "2015-03-27"]),
+})
+
+arr = np.array([[12, 47], [34, 90], [23, 19]])
+```
+
+- Utilisation depuis un chunk R :
+
+```{r}
+head(py$df2)
+print(py$arr)
+```
+
+:::
+
 
 
 ## Python, Quarto et interactivité
 
 - Utilisation des widgets Jupyter possible (seulement is utilisation de l'engin de rendu `jupyter`, pas avec `knitr` - i.e. l'inverse des *htmlwidgets* en R qui ne fonctionne que si `knitr` est utilisé)
 
+- Exemple :
 
 ## Python et géospatial dans Quarto
 
