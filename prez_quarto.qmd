@@ -135,12 +135,9 @@ Le **Notebook** est une solution opérationnelle et adaptée pour arriver à ces
 
 <small>Source : Pecout, 2022</small></center>
 
-## Quarto ?
+## Quarto : un des derniers nés des notebooks (2022)
 
-<center>
-### Un des derniers nés des notebooks (2022)
-
-</center>
+<br><br>
 
 ::: columns
 ::: {.column width="40%"}
@@ -150,6 +147,7 @@ Le **Notebook** est une solution opérationnelle et adaptée pour arriver à ces
 -   Peut fonctionner ailleurs que dans l'IDE RStudio : pas d'utilisation exclusive de Knitr (Jupyter, Observable également).
 -   Permet d'exécuter différents langages de programmation : R, Python, Julia ou JavaScript (interactivité ++).
 -   Possibilité de mises en page customisées avancées (templates ++)
+-   Fonctionnalités d'auto-complétion très utiles. 
 :::
 :::
 
@@ -164,7 +162,7 @@ Le **Notebook** est une solution opérationnelle et adaptée pour arriver à ces
 #### Sites Web
 
 ::: columns
-::: {.column width="20%"}
+::: {.column width="15%"}
 ::: medium
 <br><br><br>
 
@@ -178,15 +176,20 @@ Restituer des analyses reproductibles menées lors d'un projet.
 :::
 :::
 
-::: {.column width="80%"}
+::: {.column width="42.5%"}
 ![](fig/output_website.png)
 :::
+
+::: {.column width="42.5%"}
+![](fig/output_website2.png)
+:::
+
 :::
 
 #### Présentations
 
 ::: columns
-::: {.column width="20%"}
+::: {.column width="15%"}
 ::: medium
 <br><br><br>
 
@@ -200,10 +203,11 @@ Générer des présentations interactives (iframe, animations, slides interactif
 :::
 :::
 
-::: {.column width="70%"}
-<center><img src="fig/output_prez1.png" width="500"/></center>
-
-<center><img src="fig/output_prez2.png" width="500"/></center>
+::: {.column width="42.5%"}
+<center><img src="fig/output_prez1.png" width="400"/></center>
+:::
+::: {.column width="42.5%"}
+<center><img src="fig/output_prez2.png" width="400"/></center>
 :::
 :::
 
@@ -404,7 +408,7 @@ format: revealjs / beamer / pptx
 
 ## Paramétrer son document grâce au YAML
 
-<center>Ces modèles sont hautement paramétrables</center>
+<center>Ces modèles sont paramétrables en profondeur</center>
 
 ::: columns
 
@@ -443,7 +447,7 @@ format: revealjs / beamer / pptx
 
 ## Paramétrer son document grâce au YAML
 
-<center>Ces modèles sont hautement paramétrables</center>
+<center>Ces modèles sont paramétrables en profondeur (cf documentation [Quarto](https://quarto.org/docs/reference/formats/html.html))</center>
 
 ::: columns
 
@@ -470,6 +474,8 @@ format: revealjs / beamer / pptx
 :::
 
 ::: {.column width="50%"}
+
+::: medium
 ... Et son YAML associé :
 ``` markdown
 ---
@@ -500,27 +506,32 @@ format:
 ---
 ```
 :::
-
 :::
 
-Les possibilités offertes sont présentées dans la documentation [Quarto](https://quarto.org/docs/reference/formats/html.html)
+:::
 
 
 ## Décrire simplement son cheminement en markdown
 
+<center>Permet de gérer les **blocs de textes** entre les blocs de code dans les notebooks Quarto</center> 
+<br>
+
 ::: columns
 
-::: {.column width="50%"}
+::: medium
 
-- Permet de gérer les blocs de textes entre les blocs de code dans les notebooks Quarto. 
+::: {.column width="40%"}
 
 - Un langage de balisage léger basé sur une syntaxe simple largement utilisé dans les blogs, forums et outils collaboratifs. 
 
 - Permet de gérer le formatage du texte, des en-têtes, importer simplement des images ou des URL, gérer des énumérations, des tables, etc.
 
+Se reporter au [Markdown Guide](https://www.markdownguide.org/basic-syntax/) ou à la [synthèse](https://quarto.org/docs/authoring/markdown-basics.html) proposée par Quarto pour en savoir plus.
 :::
 
 ::: {.column width="50%"}
+
+
 
 +-----------------------------------+-------------------------------+
 | Markdown Syntax                   | Output                        |
@@ -543,14 +554,11 @@ Les possibilités offertes sont présentées dans la documentation [Quarto](http
 |                                   |                               |
 |                                   |         -   sub-sub-item 1    |
 +-----------------------------------+-------------------------------+
-|      [named hyperlinks](url)      | [named yperlinks](url)        |
+|      [named hyperlinks](url)      | [named hyperlinks](url)       |
 +-----------------------------------+-------------------------------+
-
+::: 
 :::
-
 :::
-
-Se reporter au [Markdown Guide](https://www.markdownguide.org/basic-syntax/) ou à la [synthèse](https://quarto.org/docs/authoring/markdown-basics.html) proposée par Quarto pour en savoir plus. 
 
 
 ## Optimiser sa mise en page avec des classes préformatées
