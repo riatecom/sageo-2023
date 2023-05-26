@@ -12,6 +12,7 @@ title-slide-attributes:
 format:
   revealjs:
     margin: 0
+    code-line-numbers: false
     embed-resources: true
     smaller: true
     scrollable: false
@@ -307,86 +308,383 @@ RStudio propose plusieurs modèles pour initier aisément un notebook.
 :::
 :::
 
+
 ## Paramétrer son document grâce au YAML
 
 ::: columns
 ::: {.column width="50%"}
 Le YAML permet de définir :
 
--   Le format de sortie désiré : HTML, PDF (installation d'une distribution TeX requise), .docx.
-
--   Le type de document souhaité (Document, Présentation, Site Web, etc.)
+-   Le format de sortie désiré : **HTML**
 :::
 
 ::: {.column width="50%"}
-Il est hautement paramétrable : <small>
 
--   **des paramétrages généraux** (choisir un thème, définir une feuille de style css)
--   la **table des matières** (toc)
--   la numérotation des parties du document
--   les typographies utilisées
--   le choix des couleurs
--   l'affichage des blocs de code
--   l'exécution du code (afficher le code ou non, des messages d'erreur, etc.)
--   le dimensionnement des figures et tables
--   la gestion des urls
--   le paramétrage de la bibliographie
--   l'affichage des notes de bas de page
--   les métadonnées associées au document...
+``` markdown
+---
+title: "My document"
+author: "Me"
+format: html
+---
+```
 
-</small>
 :::
+:::
+
+
+## Paramétrer son document grâce au YAML
+
+::: columns
+::: {.column width="50%"}
+Le YAML permet de définir :
+
+-   Le format de document désiré : HTML, **PDF** (installation d'une distribution TeX requise)
+:::
+
+::: {.column width="50%"}
+
+``` markdown
+---
+title: "My pdf document"
+author: "Me"
+format: pdf
+---
+```
+
+:::
+:::
+
+
+## Paramétrer son document grâce au YAML
+
+::: columns
+::: {.column width="50%"}
+Le YAML permet de définir :
+
+-   Le format de document désiré : HTML, PDF (installation d'une distribution TeX requise), **docx** (requiert une installation de Microsof tOffice ou Libre/Open Office). 
+:::
+
+::: {.column width="50%"}
+
+``` markdown
+---
+title: "My docx document"
+author: "Me"
+format: docx
+---
+```
+
+:::
+:::
+
+
+## Paramétrer son document grâce au YAML
+
+::: columns
+::: {.column width="50%"}
+Le YAML permet de définir :
+
+-   Le format de document désiré : HTML, PDF (installation d'une distribution TeX requise), .docx.
+
+-   Le type de sortie souhaité : Document, **Présentation** (revealjs / beamer, PowerPoint)
+:::
+
+::: {.column width="50%"}
+
+``` markdown
+---
+title: "My presentation"
+author: "Me"
+format: revealjs / beamer / pptx
+---
+```
+:::
+:::
+
+
+## Paramétrer son document grâce au YAML
+
+<center>Ces modèles sont hautement paramétrables</center>
+
+::: columns
+
+::: {.column width="50%"}
+
+::: medium
+
+-   choisir un thème
+-   table des matières
+-   numérotation des parties du document
+-   choix des couleurs
+-   style de la typo : police, couleurs, taille.  
+-   affichage des blocs de code
+-   dimensionnement des figures et tables
+-   gestion des urls
+-   ajout d'une bibliographie (BibTeX)
+-   affichage des notes de bas de page
+-   métadonnées associées au document
+-   ajouter une feuille de style css
+-   ...
+
+::: 
+
+:::
+
+::: {.column width="50%"}
+[Exemple](https://rysebaert.github.io/granular_qmd_template/) d'un modèle suivant les consignes éditorales d'un projet européen...
+![](fig/output_doc_templated.png)
+:::
+
+:::
+
+
+---
+
+
+## Paramétrer son document grâce au YAML
+
+<center>Ces modèles sont hautement paramétrables</center>
+
+::: columns
+
+::: {.column width="50%"}
+
+::: medium
+
+-   choisir un thème
+-   table des matières
+-   numérotation des parties du document
+-   choix des couleurs
+-   style de la typo : police, couleurs, taille.  
+-   affichage des blocs de code
+-   dimensionnement des figures et tables
+-   gestion des urls
+-   ajout d'une bibliographie (BibTeX)
+-   affichage des notes de bas de page
+-   métadonnées associées au document
+-   ajouter une feuille de style css
+-   ...
+
+::: 
+
+:::
+
+::: {.column width="50%"}
+... Et son YAML associé :
+``` markdown
+---
+title: "OpenStreetMap data and associated routing engine to produce novel data on rural areas in Europe"
+subtitle: "Review data and methods" 
+author:
+  - name: "Ronan Ysebaert, Marianne Guérois\n, Timothée Giraud, Nicolas Lambert, Matthieu Viry" 
+    affiliation: UAR RIATE (CNRS,  Université Paris Cité) 
+    affiliation-url: https://riate.cnrs.fr/
+date: "`r Sys.Date()`"
+description: "This review of the literature and data availability aims at providing an overview of possible solutions and limitations for creating accessibility indicators at European context. Whatever the solution retained, computing accessibility indicators requires relevant origins / destination pairs and routing engines for computing travel-time indicators. It is afterward possible to propose a large set of indicators derived from these measures. The first part of the document presents at European scale the policy context and the main initiatives developed so far for proposing harmonized indicators on accessibility. The second one reminds the main issues to be considered when calculating accessibility indicators (origin-destination pairs, routing engines, accessibility indicators computation). The third section makes an overview of existing databases and possibilities that could be considered in a European context for the selection of origins / destinations pairs. The fourth part highlights existing solutions for routing engines according to several transportation modes (road, cycle, transport-transit). Finally, the last section discusses on possibilities offered in term of indicator creation when the travel time matrix is calculated with a case-study on hospitals in France. This case-study could be extended in a cross-border context to test this framework within GRANULAR activities. At the end, this report aims at providing a general research framework on the activities that will be held on task 3.3.1 of the GRANULAR project: Crowd-sources data based on OpenStreetMap."
+title-block-banner: "#27445C"
+bibliography: bib.bib
+format:
+  html:
+    theme: sandstone
+    embed-resources: true
+    smooth-scroll: true
+    fontsize: 0.9em
+    code-tools: true
+    code-fold: true
+    toc: true
+    toc-title: Summary
+    toc-depth: 2
+    toc-location: left
+    css: "styles.css"
+    linkcolor: "#d52420"
+---
+```
+:::
+
 :::
 
 Les possibilités offertes sont présentées dans la documentation [Quarto](https://quarto.org/docs/reference/formats/html.html)
 
-## Paramétrer son document grâce au YAML
 
-Le YAML utilisé pour cette présentation
+## Décrire simplement son cheminement en markdown
+
+::: columns
+
+::: {.column width="50%"}
+
+- Permet de gérer les blocs de textes entre les blocs de code dans les notebooks Quarto. 
+
+- Un langage de balisage léger basé sur une syntaxe simple largement utilisé dans les blogs, forums et outils collaboratifs. 
+
+- Permet de gérer le formatage du texte, des en-têtes, importer simplement des images ou des URL, gérer des énumérations, des tables, etc.
+
+:::
+
+::: {.column width="50%"}
+
++-----------------------------------+-------------------------------+
+| Markdown Syntax                   | Output                        |
++===================================+===============================+
+|      ### Titre de niveau 3        | ### Titre de niveau 3         |
++-----------------------------------+-------------------------------+
+|     *italics* and **bold**        | *italics* and **bold**        |
++-----------------------------------+-------------------------------+
+|     superscript^2^ / subscript~2~ | superscript^2^ / subscript~2~ |
++-----------------------------------+-------------------------------+
+|     ~~strikethrough~~             | ~~strikethrough~~             |
++-----------------------------------+-------------------------------+
+|     `verbatim code`               | `verbatim code`               |
++-----------------------------------+-------------------------------+
+|     * unordered list              | -   unordered list            |
+|         + sub-item 1              |                               |
+|         + sub-item 2              |     -   sub-item 1            |
+|             - sub-sub-item 1      |                               |
+|                                   |     -   sub-item 2            |
+|                                   |                               |
+|                                   |         -   sub-sub-item 1    |
++-----------------------------------+-------------------------------+
+|      [named hyperlinks](url)      | [named yperlinks](url)        |
++-----------------------------------+-------------------------------+
+
+:::
+
+:::
+
+Se reporter au [Markdown Guide](https://www.markdownguide.org/basic-syntax/) ou à la [synthèse](https://quarto.org/docs/authoring/markdown-basics.html) proposée par Quarto pour en savoir plus. 
+
+
+## Optimiser sa mise en page avec des classes préformatées
+
+Ceci
 
 ``` markdown
----
-title: "Créer un notebook avec Quarto: principes, fonctionnalités"
-subtitle: "SAGEO, 2023 - Québec, Canada"
-author: "Nicolas Lambert, Timothée Giraud,  Matthieu Viry, Ronan Ysebaert"
-date: 06/7/2023
-date-format: "DD MMM YYYY"
-title-slide-attributes:
-  data-background-color: black
-  data-background-image: fig/SAGEO.png
-  data-background-size: cover
-  data-background-opacity: "0.5"
-format:
-  revealjs:
-    margin: 0
-    embed-resources: true
-    smaller: true
-    scrollable: true
-    theme: [simple, custom.scss]
-    code-line-numbers: false
-editor: visual
-execute:
-  echo: true
----
+::: columns
+
+::: {.column width="50%"}
+::: {.callout-tip}
+## 5 types de callouts dispnibles
+`note`, `warning`, `important`, `tip`, and `caution`.
+:::
+::: 
+
+::: {.column width="50%"}
+![](fig/callout.png)
+:::
+
+:::
 ```
 
-## Décrire simplement son cheminement grâce à au markdown
+. . .
 
--   Langage de balisage léger
+Rend cela
 
--   h1, h2, h3 bold, italic import figure
+::: columns
 
--   Callout blocks
+::: {.column width="50%"}
+::: {.callout-tip}
+## 5 types de callouts dispnibles
+`note`, `warning`, `important`, `tip`, and `caution`.
+:::
+::: 
+
+::: {.column width="50%"}
+![](fig/callout.png)
+:::
+
+:::
+
 
 ## Paramétrer ses blocs de code grâce aux chunks
 
--   possibilité d'intégrer du code Python, R, Julia, Observable JS au sein du même document.
+Le code est à placer dans des ***chunks*** (tronçons), délimités par des triples ***backticks*** (Code > Insert Chunk dans R Studio).
 
--   echo, eval, warning, message, cache, fig.height
+Un même document Quarto peut combiner plusieurs langages de programmation. 
 
--   possibilité de le spécifier dans le YAML (execute:)...
+::: columns
 
--   ou directement dans les chunks
+::: {.column width="50%"}
+
+````
+Voici du code Julia pour créer un joli cercle. 
+
+```{{julia}}
+radius = 10
+using Markdown
+Markdown.parse("""
+The radius of the circle is $radius.
+""")
+```
+
+Puis un graphique créé avec la librairie python matplotlib 
+
+```{{python}}
+import matplotlib.pyplot as plt
+plt.plot([1,2,3,4])
+plt.show()
+```
+
+Un graphique avec la librarie ggplot de R peut être ?
+
+```{{r}}
+library(ggplot2)
+ggplot(airquality, aes(Temp, Ozone)) + 
+  geom_point() + 
+  geom_smooth(method = "loess", se = FALSE)
+```
+
+
+
+````
+
+:::
+
+::: {.column width="50%"}
+
+````
+Mais pourquoi pas un joli graphique interactif avec
+Observable JavaScript ?
+
+```{{ojs}}
+data = FileAttachment("palmer-penguins.csv").csv({ typed: true })
+
+viewof bill_length_min = Inputs.range(
+  [32, 50], 
+  {value: 35, step: 1, label: "Bill length (min):"}
+)
+viewof islands = Inputs.checkbox(
+  ["Torgersen", "Biscoe", "Dream"], 
+  { value: ["Torgersen", "Biscoe"], 
+    label: "Islands:"
+  }
+)
+
+data = FileAttachment("palmer-penguins.csv").csv({ typed: true })
+
+Plot.rectY(filtered, 
+  Plot.binX(
+    {y: "count"}, 
+    {x: "body_mass", fill: "species", thresholds: 20}
+  ))
+  .plot({
+    facet: {
+      data: filtered,
+      x: "sex",
+      y: "species",
+      marginRight: 80
+    },
+    marks: [
+      Plot.frame(),
+    ]
+  }
+)
+```
+
+````
+
+:::
+
+:::
+
 
 ## Ressources pour aller plus loin
 
@@ -403,9 +701,18 @@ execute:
 
 ## A vous de jouer !
 
-::: {.callout-caution collapse="true"}
+::: {.callout-caution}
 ### \[To do\] : Initier un document Quarto
 
--   Créer un modèle Quarto avec RStudio
--   Jouer avec les métadonnées pour paramétrer le document (nom de l'auteur, ajout table des matières, etc.)
+-   Créez un document Quarto à partir des modèles proposés par RStudio. 
+-   Jouez avec les métadonnées pour paramétrer le document (nom de l'auteur, ajout table des matières, etc.)
+-   Exportez au format html le document que vous venez de produire (render). 
 :::
+
+
+::: {.callout-tip}
+
+### Ctrl + espace pour activer l'autocomplétion et envisager les possibilités
+![](fig/help_quarto_yaml.png)
+:::
+
