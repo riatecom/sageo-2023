@@ -1,0 +1,543 @@
+---
+title: "Articulation de différents langages (R, JavaScript et Python) pour la géovisualisation avec Quarto"
+subtitle: "Atelier Sageo, Québec, Juin 2023"
+author: "Timothée Giraud, Nicolas Lambert, Matthieu Viry, Ronan Ysebaert (UAR RIATE, CNRS, Université Paris Cité)"
+format:
+  html:
+    theme: sandstone
+    fontsize: 0.9em
+    code-tools: true
+    toc: true
+    toc-depth: 2
+    linkcolor: "#8631ad"
+execute: 
+  cache: false
+editor_options: 
+  chunk_output_type: console
+  
+bibliography: references.bib
+csl: "universite-de-montreal-apa.csl"
+lang: fr
+---
+
+
+# R
+
+## L'écosystème spatial de R
+
+Le logiciel R [@R-base] permet depuis longtemps de traiter et représenter les données spatiales.   
+Le principal package permettant de traiter les données vectorielles avec R est le package `sf` [@R-sf].    
+Les packages `stars` [@pebesma2023] et `terra` [@R-terra]  quand à eux sont les principaux packages dédiés au traitement des données raster.   
+
+Les développements actuels s'appuient sur ce socle et forment un écosystème robuste qui offre aux utilisateurs la plupart des fonctionnalités autrefois réservées aux Systèmes d'Information Géographique.  
+Le package `mapsf` [@R-mapsf] par exemple s'appuie sur le package `sf` pour créer des cartes thématiques. D'autres packages sont dédiés à la cartographie interactive, aux statistiques spatiales, l'interaction avec des API de cartographie, la création de cartogrammes etc.   
+
+
+
+
+
+
+## Le package `sf` 
+
+<img src="fig/logo_sf.gif" align="right" width="150"/> 
+
+Le package `sf` a été publié fin 2016 par Edzer Pebesma.
+Ce package permet l'import, l'export, la manipulation et l'affichage de données spatiales vectorielles. Pour cela `sf` s'appuie sur une série de bibliothèques spatiales : GDAL [@GDAL] et PROJ [@PROJ] pour les opérations d'import, d'export et de projection, et GEOS [@GEOS] pour les opérations de géotraitement (buffer, intersection...).   
+Ce package propose des objets simples (suivant le standard [*simple feature*](https://en.wikipedia.org/wiki/Simple_Features)) dont la manipulation est assez aisée. Une attention particulière a été portée à la compatibilité du package avec la syntaxe *pipe* (`|>` ou `%>%`) et les opérateurs du `tidyverse` [@R-tidyverse].
+
+
+![@pebesma2023](fig/sf_deps.png)
+
+
+
+:::{.callout-note}
+## Historique
+Le package `sf` est venu remplacer les packages `sp` [@R-sp], `rgeos` [@R-rgeos] et `rgdal` [@R-rgdal] en combinant leurs fonctionnalités dans un package unique plus ergonomique. 
+:::
+
+
+
+::: {.panel-tabset}
+
+
+```{r knit_init}
+#| include: false
+#| cache: false
+knitr::knit_hooks$set(nm = function(before, options, envir){
+  if (before){
+    par(mar=c(0,0,0,0))
+  } 
+})
+knitr::opts_chunk$set(nm=TRUE, echo=TRUE)
+```
+
+### Format
+
+![Format des objets spatiaux `sf`](fig/sf.png)
+
+Les objets `sf` sont des `data.frame` dont l'une des colonnes contient des géométries.     
+Ce format est très pratique dans la mesure ou les données et les géométries sont intrinsèquement liées dans un même objet. 
+
+:::{.callout-note}
+## Vignette décrivant le format simple feature
+[Simple Features for R](https://r-spatial.github.io/sf/articles/sf1.html)
+:::
+
+
+### Import
+
+```{r sf_import_fake}
+#| eval: false
+library(sf)
+mtq <- st_read(dsn = "data/mtq.gpkg",layer = "mtq")
+```
+
+```{r sf_import}
+#| include: false
+library(sf)
+library(mapsf)
+mtq <- mf_get_mtq()
+```
+
+
+### Affichage
+
+```{r sf_plot, fig.height=3, fig.width=3, nm=TRUE}
+plot(st_geometry(mtq))
+```
+
+```{r sf_plot_multi, fig.height=4, fig.width=7, nm=TRUE}
+plot(mtq)
+```
+
+
+
+
+### Centroides
+
+```{r sf_centro,  fig.height=3, fig.width=3, nm=TRUE}
+mtq_c <- st_centroid(mtq)
+plot(st_geometry(mtq))
+plot(st_geometry(mtq_c), cex = 1.2, col = "red", pch = 20, add = TRUE)
+```
+
+### Matrice de distance
+```{r sf_matrix,  fig.height=3, fig.width=3, nm=TRUE}
+mat <- st_distance(x = mtq_c, y = mtq_c)
+mat[1:5, 1:5]
+```
+
+### Agéregation
+```{r sf_agg,  fig.height=3, fig.width=3, nm=TRUE}
+mtq_u <- st_union(mtq)
+plot(st_geometry(mtq), col = "lightblue")
+plot(st_geometry(mtq_u), lwd = 2, border = "red", add = TRUE)
+```
+
+### Zone tampon
+```{r sf_buff,  fig.height=3, fig.width=3, nm=TRUE}
+mtq_b <- st_buffer(x = mtq_u, dist = 5000)
+plot(st_geometry(mtq_b), col = "grey", lwd = 2, border = "red")
+plot(st_geometry(mtq), col = "lightblue", add = TRUE)
+plot(st_geometry(mtq_u), lwd = 2, add = TRUE)
+```
+
+
+### Intersection
+
+```{r sf_interse,  fig.height=3, fig.width=3, nm=TRUE, echo=FALSE}
+m <- rbind(c(700015,1624212), c(700015,1641586), 
+           c(719127,1641586), c(719127,1624212), 
+           c(700015,1624212))
+p <- st_sf(st_sfc(st_polygon(list(m))), crs = st_crs(mtq))
+plot(st_geometry(mtq))
+plot(p, border="red", lwd=2, add=T)
+text(719127,1641586, "p", pos = 4, cex = 3)
+```
+
+```{r sf_intersect2,  fig.height=3, fig.width=3, nm=TRUE, warning=F}
+#| layout-ncol: 2
+mtq_z <- st_intersection(x = mtq, y = p)
+plot(st_geometry(mtq))
+plot(st_geometry(mtq_z), col = "red", border = "green", add = TRUE)
+plot(st_geometry(mtq_z), lwd = 2)
+```
+
+### Polygones de Voronoi
+
+```{r sf_voronoi,  fig.height=3, fig.width=3, nm=TRUE}
+mtq_c |> 
+  st_union() |> 
+  st_voronoi() |> 
+  st_collection_extract("POLYGON") |> 
+  st_intersection(mtq_u) |> 
+  st_sf() |> 
+  st_join(mtq_c, st_intersects) |>
+  st_cast("MULTIPOLYGON") |>
+  st_geometry() |>
+  plot(col = "ivory4")
+```
+
+
+:::
+
+
+
+
+
+## Le package `mapsf` 
+
+<img src="fig/logo_mapsf.png" align="right" width="150px"/> 
+
+`mapsf` permet de créer la plupart des types de carte utilisés habituellement en cartographie statistique.  
+Pour chaque type de carte, plusieurs paramètres permettent de personnaliser la représentation cartographique. Ces paramètres sont les mêmes que ceux que l'on retrouve dans les logiciels de SIG ou de cartographie usuels.    
+Associées aux fonctions de représentation des données d'autres fonctions sont dédiées à l'habillage cartographique, à la création de cartons ou à l'export des cartes.  
+`mapsf` est le successeur de [`cartography`](http://riatelab.github.io/cartography/docs/) [@R-cartography], il offre les mêmes fonctionnalités principales tout en étant plus léger et plus ergonomique.
+
+
+![Chaîne de traitement typique](fig/workflow.png)
+
+
+::: {.panel-tabset}
+
+### Types de carte
+
+::: {layout="[[1,1,1], [1,1,1]]"}
+![](fig/map01.png)  
+
+![](fig/map02.png)  
+
+![](fig/map03.png)    
+
+![](fig/map04.png) 
+
+![](fig/map05.png) 
+
+![](fig/map06.png)
+
+![](fig/map07.png) 
+
+![](fig/map08.png) 
+
+![](fig/map09.png)
+:::
+
+
+### Utilisation simple 
+
+```{r mapsf_simple}
+#| fig-width: 5
+#| fig.height: 6
+library(mapsf)
+# Import the sample dataset
+mtq <- mf_get_mtq()
+# Plot the base map
+mf_map(x = mtq)
+# Plot proportional symbols
+mf_map(x = mtq, var = "POP", type = "prop")
+# Plot a map layout
+mf_layout(title = "Population in Martinique", 
+          credits = "T. Giraud; Sources: INSEE & IGN, 2018")
+```
+
+
+### Utilisation avancée
+
+```{r mapsf_avance}
+#| results: hide
+# Export a map with a theme and extra margins 
+mf_export(x = mtq, filename = "fig/mtq.svg",  width = 5, 
+          theme = "green", expandBB = c(0,0,0,.3)) 
+# Plot a shadow
+mf_shadow(mtq, col = "grey10", add = TRUE)
+# Plot a choropleth map
+mf_map(x = mtq, var = "MED", type = "choro",
+       pal = "Dark Mint", 
+       breaks = "quantile", 
+       nbreaks = 6, 
+       leg_title = "Median Income\n(euros)", 
+       leg_val_rnd = -2, 
+       add = TRUE)
+# Start an inset map
+mf_inset_on(x = "worldmap", pos = "right")
+# Plot mtq position on a worldmap
+mf_worldmap(mtq, col = "#0E3F5C")
+# Close the inset
+mf_inset_off()
+# Plot a title
+mf_title("Wealth in Martinique, 2015")
+# Plot credits
+mf_credits("T. Giraud\nSources: INSEE & IGN, 2018")
+# Plot a scale bar
+mf_scale(size = 5)
+# Plot a north arrow
+mf_arrow('topleft')
+dev.off()
+```
+
+![](fig/mtq.svg){width="500px"}
+
+```{r reset_theme}
+#| include: false
+mf_theme("default")
+```
+
+:::
+
+:::{.callout-note}
+D'autres packages peuvent être utilisés pour réaliser des cartes thématiques.  
+Le package `ggplot2` [@R-ggplot2], en association avec le package `ggspatial` [@R-ggspatial], permet par exemple d'afficher des objets spatiaux et de réaliser des cartes thématiques simples.   
+Le package `tmap` [@R-tmap] est dédié à la création de cartes thématiques, il utilise une syntaxe proche de celle de `ggplot2` (enchaînement d'instructions combinées avec le signe `+`).   
+La documentation et les tutoriels pour utiliser ces deux packages sont facilement accessibles sur le web.
+:::
+
+
+
+
+
+
+
+## Ressources
+
+[Geocomputation with R](https://r.geocompx.org/) - @lovelace2019
+
+[Spatial Data Science with applications in R](https://r-spatial.org/book/) - @pebesma2023
+
+[Spatial Data Science with R and "terra"](https://rspatial.org/) - Robert J. Hijmans
+
+[Progress in the R ecosystem for representing and handling spatial data ](https://link.springer.com/article/10.1007/s10109-020-00336-0) - @bivand2021
+
+[Cartographie avec R ](https://rcarto.github.io/cartographie_avec_r/) - @Giraud_Cartographie_avec_R_2023
+
+[Géomatique avec R](https://rcarto.github.io/geomatique_avec_r/) - @Giraud_Geomatique_avec_R_2023
+
+[CRAN Task View: Analysis of Spatial Data](https://cran.r-project.org/web/views/Spatial.html)
+
+[R Special Interest Group on using Geographical data and Mapping](https://stat.ethz.ch/mailman/listinfo/r-sig-geo) (mailing list)
+
+## Exemples d'analyse sur les données du Québec
+
+### Import et préparation des données
+
+Nous utilisons le package `sf` pour importer 2 fichiers geojson.   
+Il est ensuite possible de changer la projection des couches avec la fonction `st_transform()`.  
+Nous pouvons aussi créer une couche des régions du Québec en agrégeant les Municipalité Régionales de Comté. 
+
+```{r import}
+#| message: false
+# Import des données
+library(sf)
+mun_raw <- st_read("geom/munic.geojson", quiet= TRUE)
+mrc_raw <- st_read("geom/mrc.geojson", quiet = TRUE)
+# Projection NAD83 / Quebec Albers
+mun <- st_transform(mun_raw, "EPSG:6623")
+mrc <- st_transform(mrc_raw, "EPSG:6623")
+# Création d'une couche des régions
+reg <- aggregate(x = mrc[,'MUS_NM_REG'], 
+                 by = list(REG = mrc$MUS_NM_REG), 
+                 FUN = head, 1)
+```
+
+### Première cartographie simple
+
+Sur cette première carte nous allons simplement afficher les différentes couches en les superposant.   
+Nous utilisons le package `mapsf` qui permet aussi de créer une couche d'étiquettes avec la fonction `mf_label()`. 
+
+```{r carto_quebec_reg}
+#| fig-width: 8
+#| fig-height: 10.05
+library(mapsf)
+mf_map(mun, border = "white")
+mf_map(mrc, col = NA, border = "grey70", lwd = 1, add = TRUE)
+mf_map(reg, col = NA, border = "black", lwd = 1.2, add = TRUE)
+mf_label(reg, var = "MUS_NM_REG", halo = TRUE, overlap = FALSE)
+mf_scale(size = 100)
+mf_title("Le Québec")
+mf_credits(txt = "Ministère des Ressources naturelles et des Forêts, 2023", 
+           bg = "#ffffffCC")
+```
+
+
+
+
+### Où sont les restaurants dans la ville de Québec? 
+
+Nous voulons savoir dans quelles zones de la ville de Québec se trouvent les restaurants.  
+Pour connaître la position des restaurants dans la ville nous allons extraire des informations la base de donnés cartographique libre OpenStreetMap avec le package `osmdata` [@R-osmdata]. Le package `osmdata` utilise l’API du service [Overpass turbo](https://overpass-turbo.eu/) pour extraire des données vectorielles de la base de données OpenStreetMap.
+
+
+Nous devons tout d'abord définir une emprise spatiale à partir de laquelle nous pourrons extraire les informations sur les restaurants.  
+Après avoir démarré les packages nécessaires, nous allons tout d'abord sélectionner la MRC de Québec dans la couche des MRC. 
+
+```{r target_city}
+#| message: false
+library(sf)
+library(osmdata)
+target <- mrc[mrc$MUS_NM_MRC == "Québec", ]
+```
+
+Nous allons ensuite définir une *bounding box* correspondant à l'emprise de la MRC. Le package `osmdata` fonctionne avec des objets en WGS84 nous avons donc besoin de reprojeter les données.
+
+```{r create_bb}
+# Reprojection en WGS84
+target_4326 <- st_transform(target, "EPSG:4326")
+# Création de la bounding box
+bbox <- st_bbox(target_4326)
+```
+
+Nous pouvons maintenant définir ce que nous voulons extraire de la base de donnée OSM. Une connaissance de la structuration de la base de données OSM est nécessaire. Nous utilisons le système de clef/valeur pour construire la requête.  
+
+```{r define_request}
+# Initialisation de la requête à envoyer
+q <- opq(bbox = st_bbox(bbox))
+# Choix des objets à extraire
+req <- add_osm_feature(opq = q, 
+                       key = 'amenity', 
+                       value = "restaurant")
+
+
+```
+
+La fonction `osmdata_sf()` permet d'envoyer la requête et de recevoir les résultats sous forme de `data.frame` `sf`.
+
+```{r send_request}
+#| cache: true
+# Reception de la requete
+res <- osmdata_sf(q = req)
+res
+```
+
+Ce résultat contient des restaurants représentés par de points (*osm_points*) et d'autre représentés par des polygones (*osm_polygons*). La couche des points contient également les points qui composent les polygones de la couche de polygones. La fonction `unique_osmdata()` permet de filtrer ces "doublons". 
+
+```{r filter_osm}
+# Reduction du resultats 
+# (les points composant les polygones sont supprimés)
+res <- unique_osmdata(res)
+res
+```
+
+L'étape suivante consiste à utiliser extraire les points et les polygones, puis à extraire les centroides des polygones pour constituer une couche de points complète. 
+
+```{r build_layer}
+#| warning: false
+# Extraction des points
+resto_point <- res$osm_points
+# Extraction des polygones
+resto_poly <- res$osm_polygons
+# Transformation des polygones en points (centroides)
+resto_poly_point <- st_centroid(resto_poly)
+# Listes des champs à conserver
+chps <- c("osm_id", "name", "cuisine")
+# Rassembler les 2 couches de points
+resto <- rbind(resto_point[, chps], resto_poly_point[, chps])
+resto
+```
+
+Maintenant que nous avons cette couche de restaurants nous allons pouvoir l'afficher.   
+Pour cela nous pouvons utiliser un fond de carte issues de tuiles raster grâce au package `maptiles` [@R-maptiles]. Nous allons d'abord reprojeter les différentes couches d'information en Web/Mercator (EPSG:3857) car les tuiles raster sont fournies dans cette projection .
+
+```{r reproj_layers}
+target <- st_transform(target, "EPSG:3857")
+resto <- st_transform(resto, "EPSG:3857")
+```
+
+Nous pouvons maintenant télécharger les tuiles raster grace à la fonction `get_tiles()`.
+```{r get_tiles}
+library(maptiles)
+tiles <- get_tiles(x = target, 
+                   provider = "CartoDB.PositronNoLabels",
+                   project = FALSE, 
+                   crop = TRUE, 
+                   zoom = 11)
+```
+
+Nous créons ensuite la carte avec `mapsf`.
+```{r resto_map1}
+#| results: hide
+library(mapsf)
+mf_theme(mar = c(0,0,0,0), inner = TRUE)
+mf_export(x = tiles,
+          filename = "fig/restaurants01.png",
+          width = ncol(tiles), height = nrow(tiles))
+mf_raster(tiles, add = TRUE)
+mf_map(target, col = NA, lwd = 2, add = TRUE)
+mf_map(resto, col = "red", add = TRUE)
+mf_title("Les restaurants à Québec")
+mf_credits("© OpenStreetMap contributors © CARTO", bg = "white")
+dev.off()
+```
+
+![](fig/restaurants01.png)
+
+Nous allons maintenant agréger les restaurants dans une grille régulière pour tenter rendre plus lisible l'organisation spatiale des restaurant à Québec. 
+
+
+```{r grid}
+#| results: hide
+# Création d'une grille régulière (carreaux : 2km * 2km)
+grid <- st_make_grid(target, cellsize = 2000)
+grid <- st_sf(id = 1:length(grid), geom = grid)
+
+# Comptage des points dans les polygones
+grid$n <- lengths(st_intersects(grid, resto, sparse = TRUE))
+
+# Cartographie
+mf_export(x = tiles,
+          filename = "fig/restaurants02.png",
+          width = ncol(tiles), height = nrow(tiles))
+mf_raster(tiles, add = TRUE)
+mf_map(target, add = T, col = NA, lwd = 2)
+mf_map(x = grid[grid$n >0 , ], 
+       var = "n", 
+       type = "choro", 
+       breaks = 'geom', 
+       nbreak = 6, 
+       alpha= .75, 
+       border = NA, 
+       pal = "Burg", 
+       leg_frame = TRUE, 
+       leg_pos = "left", 
+       leg_title = "Nombre de restaurants",
+       leg_val_rnd = 0,
+       add = TRUE)
+mf_title("Les restaurants à Québec")
+mf_credits("© OpenStreetMap contributors © CARTO", bg = "white")
+dev.off()
+```
+
+![](fig/restaurants02.png)
+
+
+
+Nous pouvons aussi utiliser une méthode de lissage telle que la méthode de lissage par noyaux (KDE) grâce au package `spatstat` [@R-spatstat].
+
+```{r kde}
+#| results: hide
+#| message: false
+#| warning: false
+library(spatstat)
+library(terra)
+library(tanaka)
+p <- as.ppp(st_coordinates(resto), W = as.owin(st_bbox(target)))
+ds <- density.ppp(p, sigma = 500, 
+                  eps = c(100, 100), positive = TRUE)
+rasdens <- rast(ds) * 1000 * 1000
+crs(rasdens) <- 'EPSG:3857'
+mf_export(x = tiles,
+          filename = "fig/restaurants03.png",
+          width = ncol(tiles), height = nrow(tiles))
+mf_raster(tiles, add = TRUE)
+mf_map(target, add = T, col = NA, lwd = 2)
+cols <- mf_get_pal(n = 5, palette = "Teal", rev = TRUE)
+x <- tanaka_contour(rasdens, breaks = c(1,2,5,10,20,25))
+tanaka(x[-1, ], legend.title = "Nombre de\nrestaurants\nau km²",
+       legend.pos = "topright", shift = 65,
+       col = cols,
+       add = TRUE)
+mf_title("Les restaurants à Québec")
+mf_credits("© OpenStreetMap contributors © CARTO",bg = "white")
+dev.off()
+```
+
+![](fig/restaurants03.png)
+
