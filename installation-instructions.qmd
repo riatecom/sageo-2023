@@ -74,7 +74,7 @@ python -m pip install numpy geopandas rasterio rasterstats matplotlib
 - Ouvrir RStudio et saisir la commande suivante dans l'interpréteur R :
 
 ```r
-install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf', 'osmdata', 'maptiles', 'tanaka', 'spatstats', 'terra'))
+install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf', 'osmdata', 'maptiles', 'tanaka', 'spatstat', 'terra'))
 ```
 
 ### Vous disposez de tout le nécessaire pour l'atelier !
@@ -83,10 +83,41 @@ Les instructions pour utiliser l'environnement virtuel Python créé depuis RStu
 
 # Linux (Ubuntu 22)
 
-### Installation de R et des dépendances pour RStudio
+### Installation / mise-à-jour de R et des dépendances pour RStudio et les différents packages R
+
+- Ajouter le dépôt de paquets logiciels (PPA) du CRAN pour obtenir R dans sa dernière version qui n'est pas proposée par défaut par Ubuntu (il s'agit des instructions issues de la page [https://cloud.r-project.org/bin/linux/ubuntu/](https://cloud.r-project.org/bin/linux/ubuntu/)).
 
 ```bash
-sudo apt install r-base curl libssl-dev libpq5 libclang-dev libudunits2-dev libcurl4-openssl-dev libxml2-dev libpng-dev libfontconfig1-dev
+# update indices
+sudo apt update -qq
+# install two helper packages we need
+sudo apt install --no-install-recommends software-properties-common dirmngr
+# add the signing key (by Michael Rutter) for these repos
+# To verify key, run gpg --show-keys /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc 
+# Fingerprint: E298A3A825C0D65DFD57CBB651716619E084DAB9
+wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+# add the R 4.0 repo from CRAN -- adjust 'focal' to 'groovy' or 'bionic' as needed
+sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
+```
+
+- Si vous avez déjà R, pour mettre à jour vers la dernière version :
+
+```bash
+sudo apt update && sudo apt upgrade
+```
+
+- Sinon pour installer R :
+
+```bash
+sudo apt install r-base
+```
+
+- Pour installer les dépendances nécessaires pour RStudio et pour les packages R qui seront installés par la suite :
+
+```bash
+sudo apt install libssl-dev libpq5 libclang-dev curl \
+  libudunits2-dev libgdal-dev libgeos-dev libproj-dev \
+  libcurl4-openssl-dev libxml2-dev libpng-dev libfontconfig1-dev
 ```
 
 ### Installation de RStudio
@@ -116,7 +147,7 @@ python -m pip install numpy geopandas rasterio rasterstats matplotlib
 - Ouvrir RStudio et saisir la commande suivante dans l'interpréteur R :
 
 ```r
-install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf', 'osmdata', 'maptiles', 'tanaka', 'spatstats', 'terra'))
+install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf', 'osmdata', 'maptiles', 'tanaka', 'spatstat', 'terra'))
 ```
 
 ### Vous disposez de tout le nécessaire pour l'atelier !
@@ -174,7 +205,7 @@ python -m pip install numpy geopandas rasterio rasterstats matplotlib
 - Ouvrir RStudio et saisir la commande suivante dans l'interpréteur R :
 
 ```r
-install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf', 'osmdata', 'maptiles', 'tanaka', 'spatstats', 'terra'))
+install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf', 'osmdata', 'maptiles', 'tanaka', 'spatstat', 'terra'))
 ```
 
 ### Vous disposez de tout le nécessaire pour l'atelier !
