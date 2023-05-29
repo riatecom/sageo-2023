@@ -21,7 +21,7 @@ execute:
   echo: true
 ---
 
-```{r}
+```{r reticulate-env}
 #| echo: false
 library(reticulate)
 use_virtualenv("~/env-quarto")
@@ -33,7 +33,7 @@ use_virtualenv("~/env-quarto")
 ::: {.column width="70%"}
 - **Python** : un langage *polyvalent*, *interprété* et *multi-paradigme*
 
-- De plus en plus utilisé pour la *data science*
+- De plus en plus utilisé pour la *science des données*
 
 :::{.fragment}
 - Un écosystème robuste pour différents domaines d'application scientifiques
@@ -89,12 +89,62 @@ use_virtualenv("~/env-quarto")
     * résumer des données raster sur la base de géométries vectorielles
     * extraction de valeurs à un point précis
 
+- [**xarray**](https://docs.xarray.dev/en/stable/) et [**rioxarray**](https://corteva.github.io/rioxarray/) :
+    * *xarray* pour travailler avec des tableaux multidimensionnels étiquetés
+    * *rioxarray* pour ouvrir des jeux des données raster avec *rasterio* et les stocker dans le format de *xarray*
+    * moins "rustique" que d'utiliser rasterio seul / dépend des usages
 
 ## Écosystème pour le géospatial - *Rasterio*
 
-Exemple d'utilisation 
+Exemple d'utilisation :
 
-```{python}
+```{python example-rio-1}
+import rasterio as rio
+
+with rio.open('data/MODIS_ARRAY.nc') as f:
+    # Métadonnées :
+    metadata = f.meta
+    # Lire toutes les bandes :
+    data = f.read()
+    # Ou f.read(1) pour lire seulement la première bande
+```
+
+- Un dictionnaire de méta-données + un tableau NumPy contenant la (ou les) bande(s) :
+
+```{python example-rio-2}
+print(metadata)
+print(data)
+```
+
+## Écosystème pour le géospatial - *Xarray*
+
+Exemple d'utilisation :
+
+```{python example-rioxarray-1}
+import rioxarray
+import xarray
+import matplotlib.pyplot as plt
+
+xds = xarray.open_dataarray("./data/MODIS_ARRAY.nc")
+```
+
+- Un objet de type `xarray.DataArray` ou `xarray.Dataset` qui contient les différentes méta-données et les données :
+
+```{python example-rioxarray-2}
+print(xds)
+```
+
+## Écosystème pour le géospatial - *Xarray*
+
+```{python example-rioxarray-3}
+# Interpolate missing data:
+filled = xds.rio.interpolate_na()
+
+fig = plt.figure(figsize=(15, 5))
+ax1, ax2 = (fig.add_subplot(131), fig.add_subplot(133))
+
+xds.isel(x=slice(0, 20), y=slice(0, 20)).plot(ax=ax1)
+filled.isel(x=slice(0, 20), y=slice(0, 20)).plot(ax=ax2)
 ```
 
 ## Écosystème pour le géospatial - autre
@@ -113,13 +163,47 @@ Exemple d'utilisation
 
 :::: {.columns}
 
-::: {.column width="66%"}
+::: {.column width="80%"}
 
--   [PySAL](https://pysal.org/)
+Écosystème de bibliothèques pour l'analyse spatiale [PySAL](https://pysal.org/) (Python Spatial Analysis Library) :
+
+- **Explorer**:
+  - Analyse exploratoire des données spatiales (package [esda](https://pysal.org/esda/))
+  - Analyse de la dynamique des données spatiales longitudinales (package [giddy](https://pysal.org/giddy/))
+  - Mesure des inégalités dans l'espace et dans le temps (package [inequality](https://inequality.readthedocs.io/en/latest/))
+  - Analyse statistique de motifs ponctuels planaires (package [pointpats](https://pysal.org/pointpats/))
+  - Mesure de la ségrégation dans le temps et dans l'espace (package [segregation](https://pysal.org/segregation/))
+  - Morphométrie urbaine (package [momepy](https://docs.momepy.org/en/stable/))
 
 :::
 
-::: {.column width="33%"}
+::: {.column width="20%"}
+
+![](./fig/logo-pysal.png)
+:::
+
+::::
+
+## Écosystème pour le géospatial - Analyse spatiale
+
+:::: {.columns}
+
+::: {.column width="80%"}
+
+Écosystème de bibliothèques pour l'analyse spatiale [PySAL](https://pysal.org/) (Python Spatial Analysis Library) :
+
+- **Modéliser**:
+  - Régression géographiquement pondérée à plusieurs échelles (package [mgwr](https://mgwr.readthedocs.io/en/latest/))
+  - Modèles linéaires généralisés épars (package [spglm](https://spglm.readthedocs.io/en/latest/))
+  - Modèles d'interaction spatiale (package [spint](https://spint.readthedocs.io/en/latest/))
+  - Modèles de régression spatiale (package [spreg](https://spreg.readthedocs.io/en/latest/))
+  - Modèles de composantes de variance à corrélation spatiale à plusieurs niveaux (package [spvcm](https://github.com/pysal/spvcm))
+  - *Areal interpolation* et cartographie dasymétrique (package [tobler](https://pysal.org/tobler/))
+  - Accessibilité spatiale (package [access](https://pysal.org/access/))
+  - Optimisation spatiale (package [spopt](https://pysal.org/spopt/))
+:::
+
+::: {.column width="20%"}
 
 ![](./fig/logo-pysal.png)
 :::
@@ -142,7 +226,7 @@ Exemple d'utilisation
 
 - Définition de variable dans un chunk R :
 
-```{r}
+```{r example-r-1}
 a <- 42
 b <- list(1, 2, 3)
 c <- c(12, 13, 14)
@@ -152,7 +236,7 @@ c <- c(12, 13, 14)
 
 *en utilisant la variable `r`, un point, et le nom de la variable R à récupérer*
 
-```{python}
+```{python example-python-1}
 print(r.a)
 print(r.b)
 print(r.c)
@@ -163,7 +247,7 @@ print(r.c)
 
 - Définition de variable dans un chunk Python :
 
-```{python}
+```{python example-python-2}
 a = 42
 b = [1, 2, 3]
 ```
@@ -172,7 +256,7 @@ b = [1, 2, 3]
 
 *en utilisant la variable `py`, un dollar `$`, et le nom de la variable Python à récupérer*
 
-```{r}
+```{r example-r-2}
 print(py$a)
 print(py$b)
 ```
@@ -194,7 +278,7 @@ print(py$b)
 
 - Depuis un chunk R :
 
-```{r}
+```{r example-r-3}
 df <- data.frame(
    emp_id = c(1:5),
    emp_name = c("Rick","Dan","Michelle","Ryan","Jane"),
@@ -206,7 +290,7 @@ df <- data.frame(
 
 - Récupération depuis un chunk Python :
 
-```{python}
+```{python example-python-3}
 df = r.df
 print(df.head())
 ```
@@ -216,7 +300,7 @@ print(df.head())
 
 - Depuis un chunk Python :
 
-```{python}
+```{python example-python-4}
 import pandas as pd
 import numpy as np
 
@@ -232,13 +316,55 @@ arr = np.array([[12, 47], [34, 90], [23, 19]])
 
 - Utilisation depuis un chunk R :
 
-```{r}
+```{r example-r-4}
 head(py$df2)
 print(py$arr)
 ```
 
 :::
 
+## Interaction R ⇄ Python dans Quarto (suite)
+
+Et pour les objets spatiaux ? (*sf* / *geopandas*)
+
+- Si la conversion `data.frame` ⇄ `DataFrame` est transparente, il n'en est pas de même pour les dataframe avec une composante spatiale (perte de la dimension spatiale / colonne `geometry` contient désormais ...)
+
+- L'écriture d'une petite function permet de résoudre ça :
+
+```{r import}
+#| message: false
+#| echo: false
+# Import des données
+library(sf)
+mun_raw <- st_read("geom/munic.geojson", quiet= TRUE)
+mrc_raw <- st_read("geom/mrc.geojson", quiet = TRUE)
+# Projection NAD83 / Quebec Albers
+crs <- "EPSG:6623"
+mun <- st_transform(mun_raw, crs)
+mrc <- st_transform(mrc_raw, crs)
+# Création d'une couche des régions
+reg <- aggregate(x = mrc[,'MUS_NM_REG'], 
+                 by = list(REG = mrc$MUS_NM_REG), 
+                 FUN = head, 1)
+```
+
+```{python}
+from shapely.geometry import shape
+import geopandas as gpd
+
+def restore_geodataframe(df, crs, geom_type):
+  geom = df.geometry.apply(lambda coords: shape({ "type": geom_type, "coordinates": coords }))
+  gdf = gpd.GeoDataFrame(df.drop(['geometry'], axis=1), geometry=geom)
+  gdf.set_crs(crs, inplace=True)
+  return gdf
+```
+
+Ainsi, les objets `sf` pourront être convertis en `GeoDataFrame` ainsi :
+
+```{python}
+my_df = restore_geodataframe(r.mun, r.crs, "MultiPolygon")
+my_df.head()
+```
 
 
 ## Python, Quarto et interactivité
@@ -251,7 +377,7 @@ print(py$arr)
 
 -   Les imports nécessaires :
 
-```{python}
+```{python demo-import}
 import numpy as np
 import rasterio as rio
 import pandas as pd
@@ -265,7 +391,7 @@ from rasterstats import zonal_stats
 
 -   On ouvre les jeux de données :
 
-```{python}
+```{python demo-dataset-opening}
 reg_fp = './geom/regio_l.shp'
 mun_fp = './geom/munic_s.shp'
 lc_fp = '../../Téléchargements/T01_PROVINCE.tif'
@@ -314,14 +440,14 @@ with rio.open(lc_fp) as src:
         'height': height
     })
     
-    # Read first band
+    # Lecture de la première bande
     band = src.read(1)
 
-    # Create the destination array
+    # Création du tableau de destination
     img = np.zeros_like(band)
 
-    # Reproject and store the result in the
-    # destination array
+    # Reprojection and stockage du
+    # résultat dans le tableau de destination
     reproject(
         band,
         img,
@@ -332,7 +458,7 @@ with rio.open(lc_fp) as src:
         resampling=Resampling.nearest,
     )
 
-    # Store the extent of our raster data (we will need it later for plotting)
+    # Stockage de l'extent de notre raster (on en aura besoin plus tard)
     left = transform[2]
     top = transform[5]
     right = left + transform[0] * width
@@ -343,14 +469,14 @@ with rio.open(lc_fp) as src:
 ## Python et géospatial dans Quarto
 
 ```{python}
-# Replace '255' values by '0'
+# Remplacer les '255' par '0'
 img[img == 255] = 0
 
-# Create an empty figure
+# Création d'une figure vide
 fig, ax = plt.subplots(figsize=(16, 12))
-# Plot the raster using the previously computed extent
+# Affichage du raster, en utilisant son extent calculée précédemment
 show(img, ax=ax, extent=extent, cmap="Set3")
-# Plot Québec municipality on top
+# Affichage de la ville de Québec en rouge par dessus
 extract.plot(ax=ax, color='red', edgecolor='red', linewidth=2)
 
 ```
@@ -358,24 +484,26 @@ extract.plot(ax=ax, color='red', edgecolor='red', linewidth=2)
 ## Python et géospatial dans Quarto
 
 ```{python}
-# Open the DBF file that contains the correspondences between the codes and the names of land use categories:
+# Ouverture du fichier DBF qui contient les correspondances entre les
+# codes et les noms des catégories d'utilisation des sols
 categories = pd.DataFrame(gpd.read_file(lc_categories_fp, encoding='utf-8')[['ID', 'CL_COUV', 'Descriptio']])
 categories.head(11)
 ```
 
 ## Python et géospatial dans Quarto
 
--   Compute the zonal statistics (how many cell of each type in the selection):
+-   Calculer les statistiques zonales (combien de cellules de chaque type dans la sélection) :
 
 ```{python}
 stats = zonal_stats(extract, img, affine=transform, categorical=True, nodata=0)
 stats
 ```
 
--   Lets group the values into a single dict:
+-   Regroupons les valeurs dans un seul dictionnaire :
 
 ```{python}
-# We convert the dict objects into Counter objects, which allows us to add them up by simply using the "+" operator.
+# Nous convertissons les objets dict en objets Counter,
+# ce qui nous permet de les additionner en utilisant simplement l'opérateur "+".
 from collections import Counter
 stats = Counter(stats[0]) + Counter(stats[1])
 stats = dict(stats) # Convert back to dict
@@ -384,16 +512,16 @@ stats
 
 ## Python
 
--   Lets plot an histogram of this result, using the appropriate names of land use categories:
+-   Traçons un histogramme de ce résultat, en utilisant les noms appropriés des catégories d'utilisation des sols :
 
 ```{python}
 #| output-location: slide 
-# Use the category names from the `categories` DataFrame
+# Utilise les noms de catégories du DataFrame `categories`...
 x = [
   categories[categories.ID == int(v)]['Descriptio'].iloc[0]
   for v in stats.keys()
 ]
-# and the values we just computed with the `zonal_stats` function
+# ...et les valeurs que nous venons de calculer avec la fonction `zonal_stats`
 height = stats.values()
 
 fig, ax = plt.subplots(figsize=(8, 5))
