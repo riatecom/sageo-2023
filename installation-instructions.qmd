@@ -20,7 +20,7 @@ Afin de suivre l'atelier, il est nécessaire de disposer des logiciels suivants 
 - [R](https://www.r-project.org/)
 - [RStudio](https://posit.co/download/rstudio-desktop/)
 - [Python](https://www.python.org/)
-- [Quarto](https://quarto.org/)
+- [Quarto](https://quarto.org/) (RStudio inclus Quarto depuis la version *2022.07*)
 - Plusieurs packages R et Python
 
 Au cours de l'atelier, une fois les instructions d'installation effectuées, toutes les manipulations nécessaires à la production d'un document avec Quarto seront réalisées directement depuis l'IDE RStudio.
@@ -64,7 +64,7 @@ python -m venv env-quarto
 - Installer les dépendances Python requises :
 
 ```powershell
-python -m pip install numpy geopandas rasterio rasterstats matplotlib
+python -m pip install numpy geopandas rasterio rasterstats matplotlib rioxarray netCDF4 scipy
 ```
 
 - Fermer le terminal
@@ -137,7 +137,7 @@ sudo dpkg -i rstudio-2023.03.1-446-amd64.deb
 sudo apt install python3-venv
 python3 -m venv env-quarto
 source env-quarto/bin/activate
-python -m pip install numpy geopandas rasterio rasterstats matplotlib
+python -m pip install numpy geopandas rasterio rasterstats matplotlib rioxarray netCDF4 scipy
 ```
 
 - Fermer le terminal
@@ -195,7 +195,7 @@ source env-quarto/bin/activate
 - Installer les dépendances Python requises :
 
 ```sh
-python -m pip install numpy geopandas rasterio rasterstats matplotlib
+python -m pip install numpy geopandas rasterio rasterstats matplotlib rioxarray netCDF4 scipy
 ```
 
 - Fermer le terminal

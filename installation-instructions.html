@@ -2669,7 +2669,7 @@ vertical-align: -.125em;
 <li><a href="https://www.r-project.org/">R</a></li>
 <li><a href="https://posit.co/download/rstudio-desktop/">RStudio</a></li>
 <li><a href="https://www.python.org/">Python</a></li>
-<li><a href="https://quarto.org/">Quarto</a></li>
+<li><a href="https://quarto.org/">Quarto</a> (RStudio inclus Quarto depuis la version <em>2022.07</em>)</li>
 <li>Plusieurs packages R et Python</li>
 </ul>
 <p>Au cours de l’atelier, une fois les instructions d’installation effectuées, toutes les manipulations nécessaires à la production d’un document avec Quarto seront réalisées directement depuis l’IDE RStudio.</p>
@@ -2713,7 +2713,7 @@ vertical-align: -.125em;
 <ul>
 <li>Installer les dépendances Python requises :</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m pip install numpy geopandas rasterio rasterstats matplotlib</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m pip install numpy geopandas rasterio rasterstats matplotlib rioxarray netCDF4 scipy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>Fermer le terminal</li>
 </ul>
@@ -2776,7 +2776,7 @@ vertical-align: -.125em;
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install python3-venv</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv env-quarto</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> env-quarto/bin/activate</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install numpy geopandas rasterio rasterstats matplotlib</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install numpy geopandas rasterio rasterstats matplotlib rioxarray netCDF4 scipy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>Fermer le terminal</li>
 </ul>
@@ -2835,7 +2835,7 @@ vertical-align: -.125em;
 <ul>
 <li>Installer les dépendances Python requises :</li>
 </ul>
-<div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install numpy geopandas rasterio rasterstats matplotlib</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install numpy geopandas rasterio rasterstats matplotlib rioxarray netCDF4 scipy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>Fermer le terminal</li>
 </ul>
@@ -3067,7 +3067,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">R</span><span class="co">](https://www.r-project.org/)</span></span>
 <span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">RStudio</span><span class="co">](https://posit.co/download/rstudio-desktop/)</span></span>
 <span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Python</span><span class="co">](https://www.python.org/)</span></span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Quarto</span><span class="co">](https://quarto.org/)</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Quarto</span><span class="co">](https://quarto.org/)</span> (RStudio inclus Quarto depuis la version *2022.07*)</span>
 <span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Plusieurs packages R et Python</span>
 <span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>Au cours de l&#39;atelier, une fois les instructions d&#39;installation effectuées, toutes les manipulations nécessaires à la production d&#39;un document avec Quarto seront réalisées directement depuis l&#39;IDE RStudio.</span>
@@ -3111,7 +3111,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Installer les dépendances Python requises :</span>
 <span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a><span class="in">```powershell</span></span>
-<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a><span class="in">python -m pip install numpy geopandas rasterio rasterstats matplotlib</span></span>
+<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a><span class="in">python -m pip install numpy geopandas rasterio rasterstats matplotlib rioxarray netCDF4 scipy</span></span>
 <span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fermer le terminal</span>
@@ -3184,7 +3184,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install python3-venv</span>
 <span id="cb16-138"><a href="#cb16-138" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv env-quarto</span>
 <span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> env-quarto/bin/activate</span>
-<span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install numpy geopandas rasterio rasterstats matplotlib</span>
+<span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install numpy geopandas rasterio rasterstats matplotlib rioxarray netCDF4 scipy</span>
 <span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fermer le terminal</span>
@@ -3242,7 +3242,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-195"><a href="#cb16-195" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Installer les dépendances Python requises :</span>
 <span id="cb16-196"><a href="#cb16-196" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-197"><a href="#cb16-197" aria-hidden="true" tabindex="-1"></a><span class="in">```sh</span></span>
-<span id="cb16-198"><a href="#cb16-198" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install numpy geopandas rasterio rasterstats matplotlib</span>
+<span id="cb16-198"><a href="#cb16-198" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install numpy geopandas rasterio rasterstats matplotlib rioxarray netCDF4 scipy</span>
 <span id="cb16-199"><a href="#cb16-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-200"><a href="#cb16-200" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-201"><a href="#cb16-201" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fermer le terminal</span>
