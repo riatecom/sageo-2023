@@ -690,13 +690,164 @@ bertin.draw({
 })
 ```
 
-**Cartographie de données raster**
+## A vous de jouer
 
-Pour cartographier des données raster, on peut utiliser la bibliothèque **`gridviz`**.
+::: {.callout-caution appearance="simple"}
 
-TODO.....
+## faire des cartes avec {ojs}
+
+
+::: {.callout-note icon=false}
+## Objectif
+
+Réaliser comme ci-dessous, une carte [choroplèthe](http://geoconfluences.ens-lyon.fr/glossaire/choroplethe-choroisoplethe) sur une région du Québec que l'on peut selectionner dans une liste déroulante.
 
 ```{ojs}
-gviz = require("gridviz@2.0.6")
+//| echo: false
+//| eval: true
+viewof myregion =  Inputs.select(["Estrie","Capitale-Nationale","Bas-Saint-Laurent"], {label: "Choisissez une région"})
+myreg = bertin.properties.subset({
+    geojson: munic,
+    field: "MUS_NM_REG",
+    selection:   [myregion]
+})
+bertin.draw({ layers: [{type:"header", text: `Les actifs (${myregion})`},{type:"scalebar"},{ geojson: myreg, rewind: true, fill: {type:"choro", values: "TX_2564", colors: "RdYlGn", leg_x: 2, leg_y:2, leg_title:"Taux d'actifs", leg_round:1}, tooltip:["$MUS_NM_MUN", d => "Taux d'actifs :" + d.properties.TX_2564 + "%"]}] })
 ```
+:::
+
+
+
+**A vous de jouer**
+
+- Chargez la bibliothèque [`bertin`](https://github.com/neocarto/bertin)
+- Importez la couche `munic.geojson`
+
+::: {.callout-tip icon=false collapse="true"}
+## Besoin d'aide ?
+Pour importer des données au format JSON en Observable JavaScript, on utilise l'instruction `FileAttachment()`
+:::
+
+
+- Afficher le fond de carte avec la fonction [`draw`](https://github.com/neocarto/bertin#drawing-a-map)
+
+::: {.callout-tip icon=false collapse="true"}
+## Besoin d'aide ?
+La fonction draw prend en entrée un objet qui a la structure suivante : 
+```js
+bertin.draw({
+  layers: [{...}]
+})
+```
+:::
+
+::: {.callout-tip icon=false collapse="true"}
+## Astuce
+Si la carte ne s'affiche pas correctement, utiliser l'attribut `rewind:true`
+:::
+
+- Afficher les données attributaires.
+
+::: {.callout-tip icon=false collapse="true"}
+## Besoin d'aide ?
+On peut afficher les données avec l'instruction. `Inputs.table()`
+Mais auparavant, il faut récupérer les propriétés du geoJSON comme ceci :
+```js
+munic.features.map((d) => d.properties)
+```
+:::
+
+- Créer une liste déroulante pour choisir parmi 3 régions à étudier
+
+::: {.callout-tip icon=false collapse="true"}
+## Besoin d'aide ?
+Par exemple :
+```js
+mesregions = ["Estrie","Capitale-Nationale","Bas-Saint-Laurent"]
+viewof myregion =  Inputs.select(mesregions, {label: "Choisissez une région"})
+```
+:::
+
+- Créez un nouveau fond de carte contenant les municipalités de la région concernée.
+
+::: {.callout-tip icon=false collapse="true"}
+## Besoin d'aide ?
+
+
+Pour créer ce sous jeu de données, on peut utiliser la fonction `subset` de la bibliothèque `bertin`.
+```js
+myreg = bertin.properties.subset({
+    geojson: munic,
+    field: "MUS_NM_REG",
+    selection:   [myregion]
+})
+```
+:::
+
+- Afficher le nouveau fond de carte
+- Définisser la couleur de fond, l'épaisseur des traits, la couleur des contours.
+- Réaliser une carte [chorplèthe](https://github.com/neocarto/bertin#choropleth) à partir d'une variable disponible. Par exemple, le taux d'actifs (TX_2564).
+
+::: {.callout-tip icon=false collapse="true"}
+## Besoin d'aide ?
+Définissez l'attribut `fill` par un objet commençant par `{type: choro, values: ...}`
+:::
+
+- Changez les couleurs et la méthode de discretisation
+
+::: {.callout-tip icon=false collapse="true"}
+## Besoin d'aide ?
+La documentation est disponible [ici](https://github.com/neocarto/bertin#choropleth)
+:::
+
+- Ajouter un [titre](https://github.com/neocarto/bertin#header)
+- Ajouter la légende
+- Ajouter l'[échelle](https://github.com/neocarto/bertin#scalebar)
+- Ajoutez des [infobulles](https://observablehq.com/@neocartocnrs/bertin-js-tooltips)
+
+::: {.callout-caution collapse="true"}
+## SOLUTION
+
+```{ojs}
+//| echo: true
+//| eval: false
+bertin = require("bertin")
+munic = FileAttachment("munic.geojson").json()
+viewof myregion = Inputs.select(
+  ["Estrie", "Capitale-Nationale", "Bas-Saint-Laurent"],
+  { label: "Choisissez une région" }
+)
+myreg = bertin.properties.subset({
+    geojson: munic,
+    field: "MUS_NM_REG",
+    selection:   [myregion]
+})
+bertin.draw({
+  layers: [
+    { type: "header", text: `Les actifs (${myregion})` },
+    { type: "scalebar" },
+    {
+      geojson: myreg,
+      rewind: true,
+      fill: {
+        type: "choro",
+        values: "TX_2564",
+        colors: "RdYlGn",
+        leg_x: 2,
+        leg_y: 2,
+        leg_title: "Taux d'actifs",
+        leg_round: 1
+      },
+      tooltip: [
+        "$MUS_NM_MUN",
+        (d) => "Taux d'actifs :" + d.properties.TX_2564 + "%"
+      ]
+    }
+  ]
+})
+```
+:::
+
+:::
+
+
 
