@@ -64,7 +64,7 @@ python -m venv env-quarto
 - Installer les dépendances Python requises :
 
 ```powershell
-python -m pip install numpy geopandas rasterio rasterstats matplotlib rioxarray netCDF4 scipy
+python -m pip install numpy geopandas rasterio rasterstats matplotlib rioxarray netCDF4 scipy geodatasets contextily
 ```
 
 - Fermer le terminal
@@ -137,7 +137,7 @@ sudo dpkg -i rstudio-2023.03.1-446-amd64.deb
 sudo apt install python3-venv
 python3 -m venv env-quarto
 source env-quarto/bin/activate
-python -m pip install numpy geopandas rasterio rasterstats matplotlib rioxarray netCDF4 scipy
+python -m pip install numpy geopandas rasterio rasterstats matplotlib rioxarray netCDF4 scipy geodatasets contextily
 ```
 
 - Fermer le terminal
@@ -195,7 +195,7 @@ source env-quarto/bin/activate
 - Installer les dépendances Python requises :
 
 ```sh
-python -m pip install numpy geopandas rasterio rasterstats matplotlib rioxarray netCDF4 scipy
+python -m pip install numpy geopandas rasterio rasterstats matplotlib rioxarray netCDF4 scipy geodatasets contextily
 ```
 
 - Fermer le terminal
