@@ -223,7 +223,7 @@ Exemple d'utilisation :
 ```{python example-rio-1}
 import rasterio as rio
 
-with rio.open('data/MODIS_ARRAY.nc') as f:
+with rio.open('./data/MODIS_ARRAY.nc') as f:
     # Métadonnées :
     metadata = f.meta
     # Lire toutes les bandes :
@@ -294,6 +294,8 @@ xds = xds.rio.reproject("EPSG:6623")
 ```
 
 ### Découpage
+
+- Découpage selon l'emprise des données contenues dans un `GeoDataFrame` (ici `gdf`) :
 
 ```{python xarray-tuto-clipping}
 #| eval: false
@@ -564,8 +566,8 @@ sel = r.sel # Québec
 
 # Chemin du jeu de données raster
 # et du fichier contenant les descriptions des catégories
-lc_fp = '../../Téléchargements/T01_PROVINCE.tif'
-lc_categories_fp = '../../Téléchargements/correspondance_raster_CL_COUV.dbf'
+lc_fp = './data/T01_PROVINCE.tif'
+lc_categories_fp = './data/correspondance_raster_CL_COUV.dbf'
 ```
 
 -   On extrait les entités correspondantes et on les affiche, relativement au reste de la province :

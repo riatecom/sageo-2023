@@ -379,7 +379,7 @@ div.csl-indent {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio <span class="im">as</span> rio</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rio.<span class="bu">open</span>(<span class="st">'data/MODIS_ARRAY.nc'</span>) <span class="im">as</span> f:</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rio.<span class="bu">open</span>(<span class="st">'./data/MODIS_ARRAY.nc'</span>) <span class="im">as</span> f:</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Métadonnées :</span></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    metadata <span class="op">=</span> f.meta</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Lire toutes les bandes :</span></span>
@@ -800,7 +800,7 @@ Attributes:
     res:        [231.65635826 231.65635826]
     is_tiled:   0
     nodata:     -28672.0
-    transform:  [ 2.31656358e+02  0.00000000e+00 -7.27400965e+06  0.00000000e...</pre><div class="xr-wrap" style="display:none"><div class="xr-header"><div class="xr-obj-type">xarray.DataArray</div><div class="xr-array-name"></div><ul class="xr-dim-list"><li><span class="xr-has-index">y</span>: 200</li><li><span class="xr-has-index">x</span>: 200</li></ul></div><ul class="xr-sections"><li class="xr-section-item"><div class="xr-array-wrap"><input id="section-467962bc-45fc-41bd-981c-0c87090dfad8" class="xr-array-in" type="checkbox" checked=""><label for="section-467962bc-45fc-41bd-981c-0c87090dfad8" title="Show/hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-array-preview xr-preview"><span>...</span></div><div class="xr-array-data"><pre>[40000 values with dtype=float32]</pre></div></div></li><li class="xr-section-item"><input id="section-5987ae9c-3284-45c4-ad78-38d4a69e399a" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-5987ae9c-3284-45c4-ad78-38d4a69e399a" class="xr-section-summary">Coordinates: <span>(2)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">y</span></div><div class="xr-var-dims">(y)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">5.05e+06 5.05e+06 ... 5.004e+06</div><input id="attrs-93f50fd5-5d52-44d7-9f47-b410d356edf6" class="xr-var-attrs-in" type="checkbox"><label for="attrs-93f50fd5-5d52-44d7-9f47-b410d356edf6" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-b1bfdd42-c3b1-4c61-831e-68a320aec23d" class="xr-var-data-in" type="checkbox"><label for="data-b1bfdd42-c3b1-4c61-831e-68a320aec23d" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>Y</dd><dt><span>long_name :</span></dt><dd>y coordinate of projection</dd><dt><span>standard_name :</span></dt><dd>projection_y_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd></dl></div><div class="xr-var-data"><pre>array([5049992.781974, 5049761.125615, 5049529.469257, 5049297.812899,
+    transform:  [ 2.31656358e+02  0.00000000e+00 -7.27400965e+06  0.00000000e...</pre><div class="xr-wrap" style="display:none"><div class="xr-header"><div class="xr-obj-type">xarray.DataArray</div><div class="xr-array-name"></div><ul class="xr-dim-list"><li><span class="xr-has-index">y</span>: 200</li><li><span class="xr-has-index">x</span>: 200</li></ul></div><ul class="xr-sections"><li class="xr-section-item"><div class="xr-array-wrap"><input id="section-e4299c9d-991c-4cf4-a134-6c201afee2dc" class="xr-array-in" type="checkbox" checked=""><label for="section-e4299c9d-991c-4cf4-a134-6c201afee2dc" title="Show/hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-array-preview xr-preview"><span>...</span></div><div class="xr-array-data"><pre>[40000 values with dtype=float32]</pre></div></div></li><li class="xr-section-item"><input id="section-1c708214-f5b6-4b53-9455-11cbf1292d05" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-1c708214-f5b6-4b53-9455-11cbf1292d05" class="xr-section-summary">Coordinates: <span>(2)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">y</span></div><div class="xr-var-dims">(y)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">5.05e+06 5.05e+06 ... 5.004e+06</div><input id="attrs-b4ea1546-f0ab-4417-ba1b-14e17133cf88" class="xr-var-attrs-in" type="checkbox"><label for="attrs-b4ea1546-f0ab-4417-ba1b-14e17133cf88" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-ef0c6ab8-9770-4c90-8015-4284ecaf7193" class="xr-var-data-in" type="checkbox"><label for="data-ef0c6ab8-9770-4c90-8015-4284ecaf7193" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>Y</dd><dt><span>long_name :</span></dt><dd>y coordinate of projection</dd><dt><span>standard_name :</span></dt><dd>projection_y_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd></dl></div><div class="xr-var-data"><pre>array([5049992.781974, 5049761.125615, 5049529.469257, 5049297.812899,
        5049066.156541, 5048834.500182, 5048602.843824, 5048371.187466,
        5048139.531108, 5047907.874749, 5047676.218391, 5047444.562033,
        5047212.905674, 5046981.249316, 5046749.592958, 5046517.9366  ,
@@ -849,7 +849,7 @@ Attributes:
        5007368.012053, 5007136.355695, 5006904.699337, 5006673.042978,
        5006441.38662 , 5006209.730262, 5005978.073904, 5005746.417545,
        5005514.761187, 5005283.104829, 5005051.44847 , 5004819.792112,
-       5004588.135754, 5004356.479396, 5004124.823037, 5003893.166679])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">x</span></div><div class="xr-var-dims">(x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">-7.274e+06 ... -7.228e+06</div><input id="attrs-e07702ab-def9-492a-bcb0-c1fc0c87f857" class="xr-var-attrs-in" type="checkbox"><label for="attrs-e07702ab-def9-492a-bcb0-c1fc0c87f857" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-f5aa530d-107d-4601-8cd6-de754f465018" class="xr-var-data-in" type="checkbox"><label for="data-f5aa530d-107d-4601-8cd6-de754f465018" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>X</dd><dt><span>long_name :</span></dt><dd>x coordinate of projection</dd><dt><span>standard_name :</span></dt><dd>projection_x_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd></dl></div><div class="xr-var-data"><pre>array([-7273893.821307, -7273662.164949, -7273430.508591, -7273198.852232,
+       5004588.135754, 5004356.479396, 5004124.823037, 5003893.166679])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">x</span></div><div class="xr-var-dims">(x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">-7.274e+06 ... -7.228e+06</div><input id="attrs-f1bdb265-9be1-4efa-b84e-cb79c803ed04" class="xr-var-attrs-in" type="checkbox"><label for="attrs-f1bdb265-9be1-4efa-b84e-cb79c803ed04" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-eec6319a-3e8c-47f5-bbab-b1bee110ba72" class="xr-var-data-in" type="checkbox"><label for="data-eec6319a-3e8c-47f5-bbab-b1bee110ba72" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>X</dd><dt><span>long_name :</span></dt><dd>x coordinate of projection</dd><dt><span>standard_name :</span></dt><dd>projection_x_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd></dl></div><div class="xr-var-data"><pre>array([-7273893.821307, -7273662.164949, -7273430.508591, -7273198.852232,
        -7272967.195874, -7272735.539516, -7272503.883158, -7272272.226799,
        -7272040.570441, -7271808.914083, -7271577.257725, -7271345.601366,
        -7271113.945008, -7270882.28865 , -7270650.632291, -7270418.975933,
@@ -898,11 +898,11 @@ Attributes:
        -7231269.051387, -7231037.395028, -7230805.73867 , -7230574.082312,
        -7230342.425954, -7230110.769595, -7229879.113237, -7229647.456879,
        -7229415.80052 , -7229184.144162, -7228952.487804, -7228720.831446,
-       -7228489.175087, -7228257.518729, -7228025.862371, -7227794.206013])</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-d09078c6-53a9-4db6-b837-f72c19ddad76" class="xr-section-summary-in" type="checkbox"><label for="section-d09078c6-53a9-4db6-b837-f72c19ddad76" class="xr-section-summary">Indexes: <span>(2)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-index-name"><div>y</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-13e50fc8-abb9-4de3-a4be-d14eadcb084f" class="xr-index-data-in" type="checkbox"><label for="index-13e50fc8-abb9-4de3-a4be-d14eadcb084f" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([ 5049992.781973618,  5049761.125615354,   5049529.46925709,  5049297.812898827,  5049066.156540562,  5048834.500182299, 5048602.8438240355,  5048371.187465771,  5048139.531107508,  5047907.874749244,
+       -7228489.175087, -7228257.518729, -7228025.862371, -7227794.206013])</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-9cd0c915-38a0-41d1-85fb-8e7a7cf9b2a3" class="xr-section-summary-in" type="checkbox"><label for="section-9cd0c915-38a0-41d1-85fb-8e7a7cf9b2a3" class="xr-section-summary">Indexes: <span>(2)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-index-name"><div>y</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-827a77a7-8c5f-4982-8462-96a59a5a698c" class="xr-index-data-in" type="checkbox"><label for="index-827a77a7-8c5f-4982-8462-96a59a5a698c" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([ 5049992.781973618,  5049761.125615354,   5049529.46925709,  5049297.812898827,  5049066.156540562,  5048834.500182299, 5048602.8438240355,  5048371.187465771,  5048139.531107508,  5047907.874749244,
        ...
-        5005978.073903505,  5005746.417545241,  5005514.761186978,  5005283.104828713,   5005051.44847045,  5004819.792112187,  5004588.135753923,  5004356.479395659,  5004124.823037395,  5003893.166679132], dtype='float64', name='y', length=200))</pre></div></li><li class="xr-var-item"><div class="xr-index-name"><div>x</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-8ae36394-8780-425a-9aa1-3c0206242072" class="xr-index-data-in" type="checkbox"><label for="index-8ae36394-8780-425a-9aa1-3c0206242072" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([ -7273893.821307159,  -7273662.164948896,  -7273430.508590631,  -7273198.852232368,  -7272967.195874103,   -7272735.53951584, -7272503.8831575755,  -7272272.226799311,  -7272040.570441048,  -7271808.914082783,
+        5005978.073903505,  5005746.417545241,  5005514.761186978,  5005283.104828713,   5005051.44847045,  5004819.792112187,  5004588.135753923,  5004356.479395659,  5004124.823037395,  5003893.166679132], dtype='float64', name='y', length=200))</pre></div></li><li class="xr-var-item"><div class="xr-index-name"><div>x</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-d1f15b43-0041-4755-8caa-cdd9ec168569" class="xr-index-data-in" type="checkbox"><label for="index-d1f15b43-0041-4755-8caa-cdd9ec168569" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([ -7273893.821307159,  -7273662.164948896,  -7273430.508590631,  -7273198.852232368,  -7272967.195874103,   -7272735.53951584, -7272503.8831575755,  -7272272.226799311,  -7272040.570441048,  -7271808.914082783,
        ...
-       -7229879.1132370075,  -7229647.456878743,   -7229415.80052048,  -7229184.144162215,  -7228952.487803951,  -7228720.831445687,  -7228489.175087423,   -7228257.51872916,  -7228025.862370895,  -7227794.206012632], dtype='float64', name='x', length=200))</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-68ca6db8-ae7d-426e-8048-405ba79c8e3e" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-68ca6db8-ae7d-426e-8048-405ba79c8e3e" class="xr-section-summary">Attributes: <span>(5)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><dl class="xr-attrs"><dt><span>crs :</span></dt><dd>+a=6371007.181 +b=6371007.181 +lon_0=0 +no_defs +proj=sinu +units=m +x_0=0 +y_0=0</dd><dt><span>res :</span></dt><dd>[231.65635826 231.65635826]</dd><dt><span>is_tiled :</span></dt><dd>0</dd><dt><span>nodata :</span></dt><dd>-28672.0</dd><dt><span>transform :</span></dt><dd>[ 2.31656358e+02  0.00000000e+00 -7.27400965e+06  0.00000000e+00
+       -7229879.1132370075,  -7229647.456878743,   -7229415.80052048,  -7229184.144162215,  -7228952.487803951,  -7228720.831445687,  -7228489.175087423,   -7228257.51872916,  -7228025.862370895,  -7227794.206012632], dtype='float64', name='x', length=200))</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-ee722540-92b5-4ebd-b244-50a65ebd9a93" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-ee722540-92b5-4ebd-b244-50a65ebd9a93" class="xr-section-summary">Attributes: <span>(5)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><dl class="xr-attrs"><dt><span>crs :</span></dt><dd>+a=6371007.181 +b=6371007.181 +lon_0=0 +no_defs +proj=sinu +units=m +x_0=0 +y_0=0</dd><dt><span>res :</span></dt><dd>[231.65635826 231.65635826]</dd><dt><span>is_tiled :</span></dt><dd>0</dd><dt><span>nodata :</span></dt><dd>-28672.0</dd><dt><span>transform :</span></dt><dd>[ 2.31656358e+02  0.00000000e+00 -7.27400965e+06  0.00000000e+00
  -2.31656358e+02  5.05010861e+06  0.00000000e+00  0.00000000e+00
   1.00000000e+00]</dd></dl></div></li></ul></div></div>
 </div>
@@ -1243,8 +1243,8 @@ Attributes:
 <span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Chemin du jeu de données raster</span></span>
 <span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a><span class="co"># et du fichier contenant les descriptions des catégories</span></span>
-<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>lc_fp <span class="op">=</span> <span class="st">'../../Téléchargements/T01_PROVINCE.tif'</span></span>
-<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a>lc_categories_fp <span class="op">=</span> <span class="st">'../../Téléchargements/correspondance_raster_CL_COUV.dbf'</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>lc_fp <span class="op">=</span> <span class="st">'./data/T01_PROVINCE.tif'</span></span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a>lc_categories_fp <span class="op">=</span> <span class="st">'./data/correspondance_raster_CL_COUV.dbf'</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>On extrait les entités correspondantes et on les affiche, relativement au reste de la province :</li>
@@ -1646,32 +1646,31 @@ Coordinates:
   * y            (y) float64 1.303e+06 1.303e+06 ... 1.173e+05 1.172e+05
   * band         (band) int64 1
     spatial_ref  int64 0
-Attributes: (12/13)
-    AREA_OR_POINT:             Area
-    RepresentationType:        THEMATIC
-    STATISTICS_COVARIANCES:    5.53386940676013
-    STATISTICS_MAXIMUM:        11
-    STATISTICS_MEAN:           6.4740178066376
-    STATISTICS_MINIMUM:        1
-    ...                        ...
-    STATISTICS_SKIPFACTORY:    1
-    STATISTICS_STDDEV:         2.3524177748412
-    STATISTICS_VALID_PERCENT:  41.95
-    scale_factor:              1.0
-    add_offset:                0.0
-    _FillValue:                255</pre><div class="xr-wrap" style="display:none"><div class="xr-header"><div class="xr-obj-type">xarray.DataArray</div><div class="xr-array-name"></div><ul class="xr-dim-list"><li><span class="xr-has-index">band</span>: 1</li><li><span class="xr-has-index">y</span>: 23726</li><li><span class="xr-has-index">x</span>: 28690</li></ul></div><ul class="xr-sections"><li class="xr-section-item"><div class="xr-array-wrap"><input id="section-d11ec68c-4894-4598-a216-76afa4b48fb2" class="xr-array-in" type="checkbox" checked=""><label for="section-d11ec68c-4894-4598-a216-76afa4b48fb2" title="Show/hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-array-preview xr-preview"><span>255 255 255 255 255 255 255 255 ... 255 255 255 255 255 255 255 255</span></div><div class="xr-array-data"><pre>array([[[255, 255, 255, ..., 255, 255, 255],
+Attributes:
+    AREA_OR_POINT:           Area
+    RepresentationType:      THEMATIC
+    STATISTICS_COVARIANCES:  5.53386940676013
+    STATISTICS_MAXIMUM:      11
+    STATISTICS_MEAN:         6.4740178066355
+    STATISTICS_MINIMUM:      1
+    STATISTICS_SKIPFACTORX:  1
+    STATISTICS_SKIPFACTORY:  1
+    STATISTICS_STDDEV:       2.3524177789585
+    scale_factor:            1.0
+    add_offset:              0.0
+    _FillValue:              255</pre><div class="xr-wrap" style="display:none"><div class="xr-header"><div class="xr-obj-type">xarray.DataArray</div><div class="xr-array-name"></div><ul class="xr-dim-list"><li><span class="xr-has-index">band</span>: 1</li><li><span class="xr-has-index">y</span>: 23726</li><li><span class="xr-has-index">x</span>: 28690</li></ul></div><ul class="xr-sections"><li class="xr-section-item"><div class="xr-array-wrap"><input id="section-bf74a1d7-0f26-4866-8260-17ea8ead6d4d" class="xr-array-in" type="checkbox" checked=""><label for="section-bf74a1d7-0f26-4866-8260-17ea8ead6d4d" title="Show/hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-array-preview xr-preview"><span>255 255 255 255 255 255 255 255 ... 255 255 255 255 255 255 255 255</span></div><div class="xr-array-data"><pre>array([[[255, 255, 255, ..., 255, 255, 255],
         [255, 255, 255, ..., 255, 255, 255],
         [255, 255, 255, ..., 255, 255, 255],
         ...,
         [255, 255, 255, ..., 255, 255, 255],
         [255, 255, 255, ..., 255, 255, 255],
-        [255, 255, 255, ..., 255, 255, 255]]], dtype=uint8)</pre></div></div></li><li class="xr-section-item"><input id="section-734060c5-cd81-41fb-a14f-9f58110d3664" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-734060c5-cd81-41fb-a14f-9f58110d3664" class="xr-section-summary">Coordinates: <span>(4)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">x</span></div><div class="xr-var-dims">(x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">-8.306e+05 -8.305e+05 ... 6.039e+05</div><input id="attrs-3201b6d0-03fe-47f0-a549-8d1d7ea2feff" class="xr-var-attrs-in" type="checkbox"><label for="attrs-3201b6d0-03fe-47f0-a549-8d1d7ea2feff" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-1ab22038-493a-491e-88c5-ef5ab10cef83" class="xr-var-data-in" type="checkbox"><label for="data-1ab22038-493a-491e-88c5-ef5ab10cef83" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>X</dd><dt><span>long_name :</span></dt><dd>x coordinate of projection</dd><dt><span>standard_name :</span></dt><dd>projection_x_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd></dl></div><div class="xr-var-data"><pre>array([-830559.8693, -830509.8693, -830459.8693, ...,  603790.1307,
-        603840.1307,  603890.1307])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">y</span></div><div class="xr-var-dims">(y)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">1.303e+06 1.303e+06 ... 1.172e+05</div><input id="attrs-a735fdea-21e6-416a-b3c2-813c93b94b83" class="xr-var-attrs-in" type="checkbox"><label for="attrs-a735fdea-21e6-416a-b3c2-813c93b94b83" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-bf75b12c-122d-40b6-a4f1-8706a52b3200" class="xr-var-data-in" type="checkbox"><label for="data-bf75b12c-122d-40b6-a4f1-8706a52b3200" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>Y</dd><dt><span>long_name :</span></dt><dd>y coordinate of projection</dd><dt><span>standard_name :</span></dt><dd>projection_y_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd></dl></div><div class="xr-var-data"><pre>array([1303477.2747, 1303427.2747, 1303377.2747, ...,  117327.2747,
-        117277.2747,  117227.2747])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">band</span></div><div class="xr-var-dims">(band)</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">1</div><input id="attrs-6ca11a91-33c9-4abd-870c-426b92c11c39" class="xr-var-attrs-in" type="checkbox" disabled=""><label for="attrs-6ca11a91-33c9-4abd-870c-426b92c11c39" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-f332a941-eaf4-40ea-9693-3b1d96583af4" class="xr-var-data-in" type="checkbox"><label for="data-f332a941-eaf4-40ea-9693-3b1d96583af4" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([1])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>spatial_ref</span></div><div class="xr-var-dims">()</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">0</div><input id="attrs-97ae00eb-779a-405d-9da9-e54d9ea7b39a" class="xr-var-attrs-in" type="checkbox"><label for="attrs-97ae00eb-779a-405d-9da9-e54d9ea7b39a" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-b99f9035-672d-49ff-b736-e4b1a0845904" class="xr-var-data-in" type="checkbox"><label for="data-b99f9035-672d-49ff-b736-e4b1a0845904" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>crs_wkt :</span></dt><dd>PROJCS["NAD83 / Quebec Albers",GEOGCS["NAD83",DATUM["North_American_Datum_1983",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","6269"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4269"]],PROJECTION["Albers_Conic_Equal_Area"],PARAMETER["latitude_of_center",44],PARAMETER["longitude_of_center",-68.5],PARAMETER["standard_parallel_1",60],PARAMETER["standard_parallel_2",46],PARAMETER["false_easting",0],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","6623"]]</dd><dt><span>semi_major_axis :</span></dt><dd>6378137.0</dd><dt><span>semi_minor_axis :</span></dt><dd>6356752.314140356</dd><dt><span>inverse_flattening :</span></dt><dd>298.257222101</dd><dt><span>reference_ellipsoid_name :</span></dt><dd>GRS 1980</dd><dt><span>longitude_of_prime_meridian :</span></dt><dd>0.0</dd><dt><span>prime_meridian_name :</span></dt><dd>Greenwich</dd><dt><span>geographic_crs_name :</span></dt><dd>NAD83</dd><dt><span>horizontal_datum_name :</span></dt><dd>North American Datum 1983</dd><dt><span>projected_crs_name :</span></dt><dd>NAD83 / Quebec Albers</dd><dt><span>grid_mapping_name :</span></dt><dd>albers_conical_equal_area</dd><dt><span>standard_parallel :</span></dt><dd>(60.0, 46.0)</dd><dt><span>latitude_of_projection_origin :</span></dt><dd>44.0</dd><dt><span>longitude_of_central_meridian :</span></dt><dd>-68.5</dd><dt><span>false_easting :</span></dt><dd>0.0</dd><dt><span>false_northing :</span></dt><dd>0.0</dd><dt><span>spatial_ref :</span></dt><dd>PROJCS["NAD83 / Quebec Albers",GEOGCS["NAD83",DATUM["North_American_Datum_1983",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","6269"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4269"]],PROJECTION["Albers_Conic_Equal_Area"],PARAMETER["latitude_of_center",44],PARAMETER["longitude_of_center",-68.5],PARAMETER["standard_parallel_1",60],PARAMETER["standard_parallel_2",46],PARAMETER["false_easting",0],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","6623"]]</dd><dt><span>GeoTransform :</span></dt><dd>-830584.8693000015 50.00000000000006 0.0 1303502.274700009 0.0 -50.00000000000006</dd></dl></div><div class="xr-var-data"><pre>array(0)</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-d1646852-fb1e-4384-8aff-b507a96e351d" class="xr-section-summary-in" type="checkbox"><label for="section-d1646852-fb1e-4384-8aff-b507a96e351d" class="xr-section-summary">Indexes: <span>(3)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-index-name"><div>x</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-69921d81-1739-4889-a598-ba1b176f9655" class="xr-index-data-in" type="checkbox"><label for="index-69921d81-1739-4889-a598-ba1b176f9655" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([-830559.8693000015, -830509.8693000015, -830459.8693000015, -830409.8693000015, -830359.8693000015, -830309.8693000015, -830259.8693000015, -830209.8693000015, -830159.8693000015, -830109.8693000015,
+        [255, 255, 255, ..., 255, 255, 255]]], dtype=uint8)</pre></div></div></li><li class="xr-section-item"><input id="section-cd3bee7f-fc58-4c88-b90e-2dab1026b034" class="xr-section-summary-in" type="checkbox" checked=""><label for="section-cd3bee7f-fc58-4c88-b90e-2dab1026b034" class="xr-section-summary">Coordinates: <span>(4)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">x</span></div><div class="xr-var-dims">(x)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">-8.306e+05 -8.305e+05 ... 6.039e+05</div><input id="attrs-e7fe4644-dfca-4782-a08b-30cbdc8cc4de" class="xr-var-attrs-in" type="checkbox"><label for="attrs-e7fe4644-dfca-4782-a08b-30cbdc8cc4de" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-28a02994-2db7-402e-b355-5ef1445c1e4d" class="xr-var-data-in" type="checkbox"><label for="data-28a02994-2db7-402e-b355-5ef1445c1e4d" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>X</dd><dt><span>long_name :</span></dt><dd>x coordinate of projection</dd><dt><span>standard_name :</span></dt><dd>projection_x_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd></dl></div><div class="xr-var-data"><pre>array([-830559.8693, -830509.8693, -830459.8693, ...,  603790.1307,
+        603840.1307,  603890.1307])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">y</span></div><div class="xr-var-dims">(y)</div><div class="xr-var-dtype">float64</div><div class="xr-var-preview xr-preview">1.303e+06 1.303e+06 ... 1.172e+05</div><input id="attrs-c96a5290-f572-4dc0-a58a-2ef29d0d8d25" class="xr-var-attrs-in" type="checkbox"><label for="attrs-c96a5290-f572-4dc0-a58a-2ef29d0d8d25" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-0785dd57-a7b4-4d73-a3cf-269ce6dc76cc" class="xr-var-data-in" type="checkbox"><label for="data-0785dd57-a7b4-4d73-a3cf-269ce6dc76cc" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>axis :</span></dt><dd>Y</dd><dt><span>long_name :</span></dt><dd>y coordinate of projection</dd><dt><span>standard_name :</span></dt><dd>projection_y_coordinate</dd><dt><span>units :</span></dt><dd>metre</dd></dl></div><div class="xr-var-data"><pre>array([1303477.2747, 1303427.2747, 1303377.2747, ...,  117327.2747,
+        117277.2747,  117227.2747])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span class="xr-has-index">band</span></div><div class="xr-var-dims">(band)</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">1</div><input id="attrs-8652ca78-3c7b-4960-997c-0c5f902f8b73" class="xr-var-attrs-in" type="checkbox" disabled=""><label for="attrs-8652ca78-3c7b-4960-997c-0c5f902f8b73" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-30bf7c0d-adff-41e6-8f85-0c42e705cdbb" class="xr-var-data-in" type="checkbox"><label for="data-30bf7c0d-adff-41e6-8f85-0c42e705cdbb" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"></dl></div><div class="xr-var-data"><pre>array([1])</pre></div></li><li class="xr-var-item"><div class="xr-var-name"><span>spatial_ref</span></div><div class="xr-var-dims">()</div><div class="xr-var-dtype">int64</div><div class="xr-var-preview xr-preview">0</div><input id="attrs-f8070f95-742b-44a9-ba0a-b0d014e25de2" class="xr-var-attrs-in" type="checkbox"><label for="attrs-f8070f95-742b-44a9-ba0a-b0d014e25de2" title="Show/Hide attributes"><svg class="icon xr-icon-file-text2"><use href="#icon-file-text2"></use></svg></label><input id="data-dca438af-5c6f-4add-a1a8-a8caf36ef1fc" class="xr-var-data-in" type="checkbox"><label for="data-dca438af-5c6f-4add-a1a8-a8caf36ef1fc" title="Show/Hide data repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-var-attrs"><dl class="xr-attrs"><dt><span>crs_wkt :</span></dt><dd>PROJCS["NAD83 / Quebec Albers",GEOGCS["NAD83",DATUM["North_American_Datum_1983",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","6269"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4269"]],PROJECTION["Albers_Conic_Equal_Area"],PARAMETER["latitude_of_center",44],PARAMETER["longitude_of_center",-68.5],PARAMETER["standard_parallel_1",60],PARAMETER["standard_parallel_2",46],PARAMETER["false_easting",0],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","6623"]]</dd><dt><span>semi_major_axis :</span></dt><dd>6378137.0</dd><dt><span>semi_minor_axis :</span></dt><dd>6356752.314140356</dd><dt><span>inverse_flattening :</span></dt><dd>298.257222101</dd><dt><span>reference_ellipsoid_name :</span></dt><dd>GRS 1980</dd><dt><span>longitude_of_prime_meridian :</span></dt><dd>0.0</dd><dt><span>prime_meridian_name :</span></dt><dd>Greenwich</dd><dt><span>geographic_crs_name :</span></dt><dd>NAD83</dd><dt><span>horizontal_datum_name :</span></dt><dd>North American Datum 1983</dd><dt><span>projected_crs_name :</span></dt><dd>NAD83 / Quebec Albers</dd><dt><span>grid_mapping_name :</span></dt><dd>albers_conical_equal_area</dd><dt><span>standard_parallel :</span></dt><dd>(60.0, 46.0)</dd><dt><span>latitude_of_projection_origin :</span></dt><dd>44.0</dd><dt><span>longitude_of_central_meridian :</span></dt><dd>-68.5</dd><dt><span>false_easting :</span></dt><dd>0.0</dd><dt><span>false_northing :</span></dt><dd>0.0</dd><dt><span>spatial_ref :</span></dt><dd>PROJCS["NAD83 / Quebec Albers",GEOGCS["NAD83",DATUM["North_American_Datum_1983",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","6269"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4269"]],PROJECTION["Albers_Conic_Equal_Area"],PARAMETER["latitude_of_center",44],PARAMETER["longitude_of_center",-68.5],PARAMETER["standard_parallel_1",60],PARAMETER["standard_parallel_2",46],PARAMETER["false_easting",0],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","6623"]]</dd><dt><span>GeoTransform :</span></dt><dd>-830584.8693000015 50.00000000000006 0.0 1303502.274700009 0.0 -50.00000000000006</dd></dl></div><div class="xr-var-data"><pre>array(0)</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-4ad53959-12a0-4e39-ae48-2214c413df69" class="xr-section-summary-in" type="checkbox"><label for="section-4ad53959-12a0-4e39-ae48-2214c413df69" class="xr-section-summary">Indexes: <span>(3)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><ul class="xr-var-list"><li class="xr-var-item"><div class="xr-index-name"><div>x</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-cd14a74a-470e-4ee5-b2a2-047da2aadd0e" class="xr-index-data-in" type="checkbox"><label for="index-cd14a74a-470e-4ee5-b2a2-047da2aadd0e" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([-830559.8693000015, -830509.8693000015, -830459.8693000015, -830409.8693000015, -830359.8693000015, -830309.8693000015, -830259.8693000015, -830209.8693000015, -830159.8693000015, -830109.8693000015,
        ...
-        603440.1307000001,  603490.1307000001,  603540.1307000001,  603590.1307000001,  603640.1307000001,  603690.1307000001,  603740.1307000001,  603790.1307000001,  603840.1307000001,  603890.1307000001], dtype='float64', name='x', length=28690))</pre></div></li><li class="xr-var-item"><div class="xr-index-name"><div>y</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-5db47169-8899-42a2-931b-60fd40219b1b" class="xr-index-data-in" type="checkbox"><label for="index-5db47169-8899-42a2-931b-60fd40219b1b" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([ 1303477.274700009,  1303427.274700009,  1303377.274700009,  1303327.274700009,  1303277.274700009,  1303227.274700009,  1303177.274700009,  1303127.274700009,  1303077.274700009,  1303027.274700009,
+        603440.1307000001,  603490.1307000001,  603540.1307000001,  603590.1307000001,  603640.1307000001,  603690.1307000001,  603740.1307000001,  603790.1307000001,  603840.1307000001,  603890.1307000001], dtype='float64', name='x', length=28690))</pre></div></li><li class="xr-var-item"><div class="xr-index-name"><div>y</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-81b13222-8524-49bc-b811-5072505e08c3" class="xr-index-data-in" type="checkbox"><label for="index-81b13222-8524-49bc-b811-5072505e08c3" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([ 1303477.274700009,  1303427.274700009,  1303377.274700009,  1303327.274700009,  1303277.274700009,  1303227.274700009,  1303177.274700009,  1303127.274700009,  1303077.274700009,  1303027.274700009,
        ...
-       117677.27470000763, 117627.27470000763, 117577.27470000763, 117527.27470000763, 117477.27470000763, 117427.27470000763, 117377.27470000763, 117327.27470000763, 117277.27470000763, 117227.27470000763], dtype='float64', name='y', length=23726))</pre></div></li><li class="xr-var-item"><div class="xr-index-name"><div>band</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-c79423d2-b9f1-493a-8ec2-173950fe273c" class="xr-index-data-in" type="checkbox"><label for="index-c79423d2-b9f1-493a-8ec2-173950fe273c" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([1], dtype='int64', name='band'))</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-0c17c542-cf2a-4d13-bf4a-fe40b5d7d44c" class="xr-section-summary-in" type="checkbox"><label for="section-0c17c542-cf2a-4d13-bf4a-fe40b5d7d44c" class="xr-section-summary">Attributes: <span>(13)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><dl class="xr-attrs"><dt><span>AREA_OR_POINT :</span></dt><dd>Area</dd><dt><span>RepresentationType :</span></dt><dd>THEMATIC</dd><dt><span>STATISTICS_COVARIANCES :</span></dt><dd>5.53386940676013</dd><dt><span>STATISTICS_MAXIMUM :</span></dt><dd>11</dd><dt><span>STATISTICS_MEAN :</span></dt><dd>6.4740178066376</dd><dt><span>STATISTICS_MINIMUM :</span></dt><dd>1</dd><dt><span>STATISTICS_SKIPFACTORX :</span></dt><dd>1</dd><dt><span>STATISTICS_SKIPFACTORY :</span></dt><dd>1</dd><dt><span>STATISTICS_STDDEV :</span></dt><dd>2.3524177748412</dd><dt><span>STATISTICS_VALID_PERCENT :</span></dt><dd>41.95</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>_FillValue :</span></dt><dd>255</dd></dl></div></li></ul></div></div>
+       117677.27470000763, 117627.27470000763, 117577.27470000763, 117527.27470000763, 117477.27470000763, 117427.27470000763, 117377.27470000763, 117327.27470000763, 117277.27470000763, 117227.27470000763], dtype='float64', name='y', length=23726))</pre></div></li><li class="xr-var-item"><div class="xr-index-name"><div>band</div></div><div class="xr-index-preview">PandasIndex</div><div></div><input id="index-a4ea42e4-654e-4e3a-973e-e67cb3af963f" class="xr-index-data-in" type="checkbox"><label for="index-a4ea42e4-654e-4e3a-973e-e67cb3af963f" title="Show/Hide index repr"><svg class="icon xr-icon-database"><use href="#icon-database"></use></svg></label><div class="xr-index-data"><pre>PandasIndex(Index([1], dtype='int64', name='band'))</pre></div></li></ul></div></li><li class="xr-section-item"><input id="section-07fb2594-e03c-4548-9d3d-9ded94b48a91" class="xr-section-summary-in" type="checkbox"><label for="section-07fb2594-e03c-4548-9d3d-9ded94b48a91" class="xr-section-summary">Attributes: <span>(12)</span></label><div class="xr-section-inline-details"></div><div class="xr-section-details"><dl class="xr-attrs"><dt><span>AREA_OR_POINT :</span></dt><dd>Area</dd><dt><span>RepresentationType :</span></dt><dd>THEMATIC</dd><dt><span>STATISTICS_COVARIANCES :</span></dt><dd>5.53386940676013</dd><dt><span>STATISTICS_MAXIMUM :</span></dt><dd>11</dd><dt><span>STATISTICS_MEAN :</span></dt><dd>6.4740178066355</dd><dt><span>STATISTICS_MINIMUM :</span></dt><dd>1</dd><dt><span>STATISTICS_SKIPFACTORX :</span></dt><dd>1</dd><dt><span>STATISTICS_SKIPFACTORY :</span></dt><dd>1</dd><dt><span>STATISTICS_STDDEV :</span></dt><dd>2.3524177789585</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>_FillValue :</span></dt><dd>255</dd></dl></div></li></ul></div></div>
 </div>
 </div>
 <ul>
@@ -2443,7 +2442,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb77-223"><a href="#cb77-223" aria-hidden="true" tabindex="-1"></a><span class="in">```{python example-rio-1}</span></span>
 <span id="cb77-224"><a href="#cb77-224" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio <span class="im">as</span> rio</span>
 <span id="cb77-225"><a href="#cb77-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-226"><a href="#cb77-226" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rio.<span class="bu">open</span>(<span class="st">'data/MODIS_ARRAY.nc'</span>) <span class="im">as</span> f:</span>
+<span id="cb77-226"><a href="#cb77-226" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rio.<span class="bu">open</span>(<span class="st">'./data/MODIS_ARRAY.nc'</span>) <span class="im">as</span> f:</span>
 <span id="cb77-227"><a href="#cb77-227" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Métadonnées :</span></span>
 <span id="cb77-228"><a href="#cb77-228" aria-hidden="true" tabindex="-1"></a>    metadata <span class="op">=</span> f.meta</span>
 <span id="cb77-229"><a href="#cb77-229" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Lire toutes les bandes :</span></span>
@@ -2515,510 +2514,512 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb77-295"><a href="#cb77-295" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-296"><a href="#cb77-296" aria-hidden="true" tabindex="-1"></a><span class="fu">### Découpage</span></span>
 <span id="cb77-297"><a href="#cb77-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-298"><a href="#cb77-298" aria-hidden="true" tabindex="-1"></a><span class="in">```{python xarray-tuto-clipping}</span></span>
-<span id="cb77-299"><a href="#cb77-299" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb77-300"><a href="#cb77-300" aria-hidden="true" tabindex="-1"></a>clipped <span class="op">=</span> xds.rio.clip(gdf.geometry.values, gdf.crs, drop<span class="op">=</span><span class="va">False</span>, invert<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb77-301"><a href="#cb77-301" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-302"><a href="#cb77-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-303"><a href="#cb77-303" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb77-298"><a href="#cb77-298" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Découpage selon l'emprise des données contenues dans un <span class="in">`GeoDataFrame`</span> (ici <span class="in">`gdf`</span>) :</span>
+<span id="cb77-299"><a href="#cb77-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-300"><a href="#cb77-300" aria-hidden="true" tabindex="-1"></a><span class="in">```{python xarray-tuto-clipping}</span></span>
+<span id="cb77-301"><a href="#cb77-301" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb77-302"><a href="#cb77-302" aria-hidden="true" tabindex="-1"></a>clipped <span class="op">=</span> xds.rio.clip(gdf.geometry.values, gdf.crs, drop<span class="op">=</span><span class="va">False</span>, invert<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb77-303"><a href="#cb77-303" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-304"><a href="#cb77-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-305"><a href="#cb77-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-306"><a href="#cb77-306" aria-hidden="true" tabindex="-1"></a><span class="fu">## Analyse spatiale</span></span>
+<span id="cb77-305"><a href="#cb77-305" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb77-306"><a href="#cb77-306" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-307"><a href="#cb77-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-308"><a href="#cb77-308" aria-hidden="true" tabindex="-1"></a>:::: {.columns}</span>
+<span id="cb77-308"><a href="#cb77-308" aria-hidden="true" tabindex="-1"></a><span class="fu">## Analyse spatiale</span></span>
 <span id="cb77-309"><a href="#cb77-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-310"><a href="#cb77-310" aria-hidden="true" tabindex="-1"></a>::: {.column width="80%"}</span>
+<span id="cb77-310"><a href="#cb77-310" aria-hidden="true" tabindex="-1"></a>:::: {.columns}</span>
 <span id="cb77-311"><a href="#cb77-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-312"><a href="#cb77-312" aria-hidden="true" tabindex="-1"></a>Écosystème de bibliothèques pour l'analyse spatiale <span class="co">[</span><span class="ot">PySAL</span><span class="co">](https://pysal.org/)</span> (Python Spatial Analysis Library, @pysal2007) :</span>
+<span id="cb77-312"><a href="#cb77-312" aria-hidden="true" tabindex="-1"></a>::: {.column width="80%"}</span>
 <span id="cb77-313"><a href="#cb77-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-314"><a href="#cb77-314" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Explorer**:</span>
-<span id="cb77-315"><a href="#cb77-315" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Analyse exploratoire des données spatiales (package <span class="co">[</span><span class="ot">esda</span><span class="co">](https://pysal.org/esda/)</span>)</span>
-<span id="cb77-316"><a href="#cb77-316" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Analyse de la dynamique des données spatiales longitudinales (package <span class="co">[</span><span class="ot">giddy</span><span class="co">](https://pysal.org/giddy/)</span>)</span>
-<span id="cb77-317"><a href="#cb77-317" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Mesure des inégalités dans l'espace et dans le temps (package <span class="co">[</span><span class="ot">inequality</span><span class="co">](https://inequality.readthedocs.io/en/latest/)</span>)</span>
-<span id="cb77-318"><a href="#cb77-318" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Analyse statistique de motifs ponctuels planaires (package <span class="co">[</span><span class="ot">pointpats</span><span class="co">](https://pysal.org/pointpats/)</span>)</span>
-<span id="cb77-319"><a href="#cb77-319" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Mesure de la ségrégation dans le temps et dans l'espace (package <span class="co">[</span><span class="ot">segregation</span><span class="co">](https://pysal.org/segregation/)</span>)</span>
-<span id="cb77-320"><a href="#cb77-320" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Morphométrie urbaine (package <span class="co">[</span><span class="ot">momepy</span><span class="co">](https://docs.momepy.org/en/stable/)</span>)</span>
-<span id="cb77-321"><a href="#cb77-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-322"><a href="#cb77-322" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Modéliser**:</span>
-<span id="cb77-323"><a href="#cb77-323" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Régression géographiquement pondérée à plusieurs échelles (package <span class="co">[</span><span class="ot">mgwr</span><span class="co">](https://mgwr.readthedocs.io/en/latest/)</span>)</span>
-<span id="cb77-324"><a href="#cb77-324" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Modèles linéaires généralisés épars (package <span class="co">[</span><span class="ot">spglm</span><span class="co">](https://spglm.readthedocs.io/en/latest/)</span>)</span>
-<span id="cb77-325"><a href="#cb77-325" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Modèles d'interaction spatiale (package <span class="co">[</span><span class="ot">spint</span><span class="co">](https://spint.readthedocs.io/en/latest/)</span>)</span>
-<span id="cb77-326"><a href="#cb77-326" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Modèles de régression spatiale (package <span class="co">[</span><span class="ot">spreg</span><span class="co">](https://spreg.readthedocs.io/en/latest/)</span>)</span>
-<span id="cb77-327"><a href="#cb77-327" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Modèles de composantes de variance à corrélation spatiale à plusieurs niveaux (package <span class="co">[</span><span class="ot">spvcm</span><span class="co">](https://github.com/pysal/spvcm)</span>)</span>
-<span id="cb77-328"><a href="#cb77-328" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>*Areal interpolation* et cartographie dasymétrique (package <span class="co">[</span><span class="ot">tobler</span><span class="co">](https://pysal.org/tobler/)</span>)</span>
-<span id="cb77-329"><a href="#cb77-329" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Accessibilité spatiale (package <span class="co">[</span><span class="ot">access</span><span class="co">](https://pysal.org/access/)</span>)</span>
-<span id="cb77-330"><a href="#cb77-330" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Optimisation spatiale (package <span class="co">[</span><span class="ot">spopt</span><span class="co">](https://pysal.org/spopt/)</span>)</span>
-<span id="cb77-331"><a href="#cb77-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-332"><a href="#cb77-332" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb77-314"><a href="#cb77-314" aria-hidden="true" tabindex="-1"></a>Écosystème de bibliothèques pour l'analyse spatiale <span class="co">[</span><span class="ot">PySAL</span><span class="co">](https://pysal.org/)</span> (Python Spatial Analysis Library, @pysal2007) :</span>
+<span id="cb77-315"><a href="#cb77-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-316"><a href="#cb77-316" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Explorer**:</span>
+<span id="cb77-317"><a href="#cb77-317" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Analyse exploratoire des données spatiales (package <span class="co">[</span><span class="ot">esda</span><span class="co">](https://pysal.org/esda/)</span>)</span>
+<span id="cb77-318"><a href="#cb77-318" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Analyse de la dynamique des données spatiales longitudinales (package <span class="co">[</span><span class="ot">giddy</span><span class="co">](https://pysal.org/giddy/)</span>)</span>
+<span id="cb77-319"><a href="#cb77-319" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Mesure des inégalités dans l'espace et dans le temps (package <span class="co">[</span><span class="ot">inequality</span><span class="co">](https://inequality.readthedocs.io/en/latest/)</span>)</span>
+<span id="cb77-320"><a href="#cb77-320" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Analyse statistique de motifs ponctuels planaires (package <span class="co">[</span><span class="ot">pointpats</span><span class="co">](https://pysal.org/pointpats/)</span>)</span>
+<span id="cb77-321"><a href="#cb77-321" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Mesure de la ségrégation dans le temps et dans l'espace (package <span class="co">[</span><span class="ot">segregation</span><span class="co">](https://pysal.org/segregation/)</span>)</span>
+<span id="cb77-322"><a href="#cb77-322" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Morphométrie urbaine (package <span class="co">[</span><span class="ot">momepy</span><span class="co">](https://docs.momepy.org/en/stable/)</span>)</span>
+<span id="cb77-323"><a href="#cb77-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-324"><a href="#cb77-324" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Modéliser**:</span>
+<span id="cb77-325"><a href="#cb77-325" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Régression géographiquement pondérée à plusieurs échelles (package <span class="co">[</span><span class="ot">mgwr</span><span class="co">](https://mgwr.readthedocs.io/en/latest/)</span>)</span>
+<span id="cb77-326"><a href="#cb77-326" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Modèles linéaires généralisés épars (package <span class="co">[</span><span class="ot">spglm</span><span class="co">](https://spglm.readthedocs.io/en/latest/)</span>)</span>
+<span id="cb77-327"><a href="#cb77-327" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Modèles d'interaction spatiale (package <span class="co">[</span><span class="ot">spint</span><span class="co">](https://spint.readthedocs.io/en/latest/)</span>)</span>
+<span id="cb77-328"><a href="#cb77-328" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Modèles de régression spatiale (package <span class="co">[</span><span class="ot">spreg</span><span class="co">](https://spreg.readthedocs.io/en/latest/)</span>)</span>
+<span id="cb77-329"><a href="#cb77-329" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Modèles de composantes de variance à corrélation spatiale à plusieurs niveaux (package <span class="co">[</span><span class="ot">spvcm</span><span class="co">](https://github.com/pysal/spvcm)</span>)</span>
+<span id="cb77-330"><a href="#cb77-330" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>*Areal interpolation* et cartographie dasymétrique (package <span class="co">[</span><span class="ot">tobler</span><span class="co">](https://pysal.org/tobler/)</span>)</span>
+<span id="cb77-331"><a href="#cb77-331" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Accessibilité spatiale (package <span class="co">[</span><span class="ot">access</span><span class="co">](https://pysal.org/access/)</span>)</span>
+<span id="cb77-332"><a href="#cb77-332" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Optimisation spatiale (package <span class="co">[</span><span class="ot">spopt</span><span class="co">](https://pysal.org/spopt/)</span>)</span>
 <span id="cb77-333"><a href="#cb77-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-334"><a href="#cb77-334" aria-hidden="true" tabindex="-1"></a>::: {.column width="20%"}</span>
+<span id="cb77-334"><a href="#cb77-334" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb77-335"><a href="#cb77-335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-336"><a href="#cb77-336" aria-hidden="true" tabindex="-1"></a><span class="al">![](./fig/logo-pysal.png)</span></span>
-<span id="cb77-337"><a href="#cb77-337" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb77-338"><a href="#cb77-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-339"><a href="#cb77-339" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb77-336"><a href="#cb77-336" aria-hidden="true" tabindex="-1"></a>::: {.column width="20%"}</span>
+<span id="cb77-337"><a href="#cb77-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-338"><a href="#cb77-338" aria-hidden="true" tabindex="-1"></a><span class="al">![](./fig/logo-pysal.png)</span></span>
+<span id="cb77-339"><a href="#cb77-339" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb77-340"><a href="#cb77-340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-341"><a href="#cb77-341" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-342"><a href="#cb77-342" aria-hidden="true" tabindex="-1"></a><span class="fu">## Autres packages utiles ...</span></span>
+<span id="cb77-341"><a href="#cb77-341" aria-hidden="true" tabindex="-1"></a>::::</span>
+<span id="cb77-342"><a href="#cb77-342" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-343"><a href="#cb77-343" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-344"><a href="#cb77-344" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Binding Python pour <span class="co">[</span><span class="ot">GRASS</span><span class="co">](https://grass.osgeo.org/grass82/manuals/libpython/index.html)</span> + Intégration dans les notebooks Jupyter</span>
+<span id="cb77-344"><a href="#cb77-344" aria-hidden="true" tabindex="-1"></a><span class="fu">## Autres packages utiles ...</span></span>
 <span id="cb77-345"><a href="#cb77-345" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-346"><a href="#cb77-346" aria-hidden="true" tabindex="-1"></a><span class="al">![Source: &lt;https://grass.osgeo.org/news/2022_06_05_results_student_grant_caitlin/&gt;](./fig/grass_jupyter_combo_vis.png)</span></span>
+<span id="cb77-346"><a href="#cb77-346" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Binding Python pour <span class="co">[</span><span class="ot">GRASS</span><span class="co">](https://grass.osgeo.org/grass82/manuals/libpython/index.html)</span> + Intégration dans les notebooks Jupyter</span>
 <span id="cb77-347"><a href="#cb77-347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-348"><a href="#cb77-348" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Iris</span><span class="co">](https://scitools-iris.readthedocs.io/en/stable/)</span></span>
+<span id="cb77-348"><a href="#cb77-348" aria-hidden="true" tabindex="-1"></a><span class="al">![Source: &lt;https://grass.osgeo.org/news/2022_06_05_results_student_grant_caitlin/&gt;](./fig/grass_jupyter_combo_vis.png)</span></span>
 <span id="cb77-349"><a href="#cb77-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-350"><a href="#cb77-350" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pour la cartographie : <span class="co">[</span><span class="ot">cartopy</span><span class="co">](https://scitools.org.uk/cartopy/docs/latest/)</span> ; <span class="co">[</span><span class="ot">geoviews</span><span class="co">](https://geoviews.org/)</span> et <span class="co">[</span><span class="ot">geoplot</span><span class="co">](https://residentmario.github.io/geoplot/)</span> basés sur *cartopy* ; <span class="co">[</span><span class="ot">PyGMT</span><span class="co">](https://www.pygmt.org/latest/)</span> (selon les usages - pas de solution aussi aboutie que <span class="in">`mapsf`</span> pour les cartes réalisées en SHS).</span>
+<span id="cb77-350"><a href="#cb77-350" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Iris</span><span class="co">](https://scitools-iris.readthedocs.io/en/stable/)</span></span>
 <span id="cb77-351"><a href="#cb77-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-352"><a href="#cb77-352" aria-hidden="true" tabindex="-1"></a><span class="al">![](./fig/cartopy.png)</span></span>
+<span id="cb77-352"><a href="#cb77-352" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pour la cartographie : <span class="co">[</span><span class="ot">cartopy</span><span class="co">](https://scitools.org.uk/cartopy/docs/latest/)</span> ; <span class="co">[</span><span class="ot">geoviews</span><span class="co">](https://geoviews.org/)</span> et <span class="co">[</span><span class="ot">geoplot</span><span class="co">](https://residentmario.github.io/geoplot/)</span> basés sur *cartopy* ; <span class="co">[</span><span class="ot">PyGMT</span><span class="co">](https://www.pygmt.org/latest/)</span> (selon les usages - pas de solution aussi aboutie que <span class="in">`mapsf`</span> pour les cartes réalisées en SHS).</span>
 <span id="cb77-353"><a href="#cb77-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-354"><a href="#cb77-354" aria-hidden="true" tabindex="-1"></a><span class="fu">## Ressources Python Géospatial</span></span>
+<span id="cb77-354"><a href="#cb77-354" aria-hidden="true" tabindex="-1"></a><span class="al">![](./fig/cartopy.png)</span></span>
 <span id="cb77-355"><a href="#cb77-355" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-356"><a href="#cb77-356" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">https://py.geocompx.org/</span><span class="co">](https://py.geocompx.org/)</span> <span class="co">[</span><span class="ot">@Dorman2022</span><span class="co">]</span></span>
+<span id="cb77-356"><a href="#cb77-356" aria-hidden="true" tabindex="-1"></a><span class="fu">## Ressources Python Géospatial</span></span>
 <span id="cb77-357"><a href="#cb77-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-358"><a href="#cb77-358" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">https://geo-python-site.readthedocs.io/en/latest/</span><span class="co">](https://geo-python-site.readthedocs.io/en/latest/)</span></span>
+<span id="cb77-358"><a href="#cb77-358" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">https://py.geocompx.org/</span><span class="co">](https://py.geocompx.org/)</span> <span class="co">[</span><span class="ot">@Dorman2022</span><span class="co">]</span></span>
 <span id="cb77-359"><a href="#cb77-359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-360"><a href="#cb77-360" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">https://automating-gis-processes.github.io</span><span class="co">](https://automating-gis-processes.github.io)</span></span>
+<span id="cb77-360"><a href="#cb77-360" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">https://geo-python-site.readthedocs.io/en/latest/</span><span class="co">](https://geo-python-site.readthedocs.io/en/latest/)</span></span>
 <span id="cb77-361"><a href="#cb77-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-362"><a href="#cb77-362" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">https://www.earthdatascience.org/courses/use-data-open-source-python/</span><span class="co">](https://www.earthdatascience.org/courses/use-data-open-source-python/)</span></span>
+<span id="cb77-362"><a href="#cb77-362" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">https://automating-gis-processes.github.io</span><span class="co">](https://automating-gis-processes.github.io)</span></span>
 <span id="cb77-363"><a href="#cb77-363" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-364"><a href="#cb77-364" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">https://geographicdata.science/book/intro.html</span><span class="co">](https://geographicdata.science/book/intro.html)</span></span>
+<span id="cb77-364"><a href="#cb77-364" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">https://www.earthdatascience.org/courses/use-data-open-source-python/</span><span class="co">](https://www.earthdatascience.org/courses/use-data-open-source-python/)</span></span>
 <span id="cb77-365"><a href="#cb77-365" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-366"><a href="#cb77-366" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-367"><a href="#cb77-367" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaction R ⇄ Python dans Quarto</span></span>
+<span id="cb77-366"><a href="#cb77-366" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">https://geographicdata.science/book/intro.html</span><span class="co">](https://geographicdata.science/book/intro.html)</span></span>
+<span id="cb77-367"><a href="#cb77-367" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-368"><a href="#cb77-368" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-369"><a href="#cb77-369" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb77-369"><a href="#cb77-369" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaction R ⇄ Python dans Quarto</span></span>
 <span id="cb77-370"><a href="#cb77-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-371"><a href="#cb77-371" aria-hidden="true" tabindex="-1"></a><span class="fu">### R → Python</span></span>
+<span id="cb77-371"><a href="#cb77-371" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
 <span id="cb77-372"><a href="#cb77-372" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-373"><a href="#cb77-373" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Définition de variables dans un chunk R :</span>
+<span id="cb77-373"><a href="#cb77-373" aria-hidden="true" tabindex="-1"></a><span class="fu">### R → Python</span></span>
 <span id="cb77-374"><a href="#cb77-374" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-375"><a href="#cb77-375" aria-hidden="true" tabindex="-1"></a><span class="in">```{r example-r-1}</span></span>
-<span id="cb77-376"><a href="#cb77-376" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">42</span></span>
-<span id="cb77-377"><a href="#cb77-377" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb77-378"><a href="#cb77-378" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">14</span>)</span>
-<span id="cb77-379"><a href="#cb77-379" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-380"><a href="#cb77-380" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-381"><a href="#cb77-381" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Récupération depuis un chunk Python :</span>
+<span id="cb77-375"><a href="#cb77-375" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Définition de variables dans un chunk R :</span>
+<span id="cb77-376"><a href="#cb77-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-377"><a href="#cb77-377" aria-hidden="true" tabindex="-1"></a><span class="in">```{r example-r-1}</span></span>
+<span id="cb77-378"><a href="#cb77-378" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">42</span></span>
+<span id="cb77-379"><a href="#cb77-379" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb77-380"><a href="#cb77-380" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">14</span>)</span>
+<span id="cb77-381"><a href="#cb77-381" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-382"><a href="#cb77-382" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-383"><a href="#cb77-383" aria-hidden="true" tabindex="-1"></a>*en utilisant la variable `r`, un point, et le nom de la variable R à récupérer*</span>
+<span id="cb77-383"><a href="#cb77-383" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Récupération depuis un chunk Python :</span>
 <span id="cb77-384"><a href="#cb77-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-385"><a href="#cb77-385" aria-hidden="true" tabindex="-1"></a><span class="in">```{python example-python-1}</span></span>
-<span id="cb77-386"><a href="#cb77-386" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r.a)</span>
-<span id="cb77-387"><a href="#cb77-387" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r.b)</span>
-<span id="cb77-388"><a href="#cb77-388" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r.c)</span>
-<span id="cb77-389"><a href="#cb77-389" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-390"><a href="#cb77-390" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-391"><a href="#cb77-391" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-392"><a href="#cb77-392" aria-hidden="true" tabindex="-1"></a><span class="fu">### Python → R</span></span>
+<span id="cb77-385"><a href="#cb77-385" aria-hidden="true" tabindex="-1"></a>*en utilisant la variable `r`, un point, et le nom de la variable R à récupérer*</span>
+<span id="cb77-386"><a href="#cb77-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-387"><a href="#cb77-387" aria-hidden="true" tabindex="-1"></a><span class="in">```{python example-python-1}</span></span>
+<span id="cb77-388"><a href="#cb77-388" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r.a)</span>
+<span id="cb77-389"><a href="#cb77-389" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r.b)</span>
+<span id="cb77-390"><a href="#cb77-390" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r.c)</span>
+<span id="cb77-391"><a href="#cb77-391" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb77-392"><a href="#cb77-392" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-393"><a href="#cb77-393" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-394"><a href="#cb77-394" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Définition de variables dans un chunk Python :</span>
+<span id="cb77-394"><a href="#cb77-394" aria-hidden="true" tabindex="-1"></a><span class="fu">### Python → R</span></span>
 <span id="cb77-395"><a href="#cb77-395" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-396"><a href="#cb77-396" aria-hidden="true" tabindex="-1"></a><span class="in">```{python example-python-2}</span></span>
-<span id="cb77-397"><a href="#cb77-397" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">42</span></span>
-<span id="cb77-398"><a href="#cb77-398" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb77-399"><a href="#cb77-399" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-400"><a href="#cb77-400" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-401"><a href="#cb77-401" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Récupération depuis un chunk R :</span>
+<span id="cb77-396"><a href="#cb77-396" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Définition de variables dans un chunk Python :</span>
+<span id="cb77-397"><a href="#cb77-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-398"><a href="#cb77-398" aria-hidden="true" tabindex="-1"></a><span class="in">```{python example-python-2}</span></span>
+<span id="cb77-399"><a href="#cb77-399" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">42</span></span>
+<span id="cb77-400"><a href="#cb77-400" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb77-401"><a href="#cb77-401" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-402"><a href="#cb77-402" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-403"><a href="#cb77-403" aria-hidden="true" tabindex="-1"></a>*en utilisant la variable `py`, un dollar `$`, et le nom de la variable Python à récupérer*</span>
+<span id="cb77-403"><a href="#cb77-403" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Récupération depuis un chunk R :</span>
 <span id="cb77-404"><a href="#cb77-404" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-405"><a href="#cb77-405" aria-hidden="true" tabindex="-1"></a><span class="in">```{r example-r-2}</span></span>
-<span id="cb77-406"><a href="#cb77-406" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(py<span class="sc">$</span>a)</span>
-<span id="cb77-407"><a href="#cb77-407" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(py<span class="sc">$</span>b)</span>
-<span id="cb77-408"><a href="#cb77-408" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-409"><a href="#cb77-409" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-410"><a href="#cb77-410" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-411"><a href="#cb77-411" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb77-405"><a href="#cb77-405" aria-hidden="true" tabindex="-1"></a>*en utilisant la variable `py`, un dollar `$`, et le nom de la variable Python à récupérer*</span>
+<span id="cb77-406"><a href="#cb77-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-407"><a href="#cb77-407" aria-hidden="true" tabindex="-1"></a><span class="in">```{r example-r-2}</span></span>
+<span id="cb77-408"><a href="#cb77-408" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(py<span class="sc">$</span>a)</span>
+<span id="cb77-409"><a href="#cb77-409" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(py<span class="sc">$</span>b)</span>
+<span id="cb77-410"><a href="#cb77-410" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb77-411"><a href="#cb77-411" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-412"><a href="#cb77-412" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-413"><a href="#cb77-413" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaction R ⇄ Python dans Quarto (suite)</span></span>
+<span id="cb77-413"><a href="#cb77-413" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb77-414"><a href="#cb77-414" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-415"><a href="#cb77-415" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Il est possible d'échanger des types plus complexes (<span class="in">`data.frame`</span> ⇄ <span class="in">`DataFrame`</span> pandas, tableau numpy, etc.)</span>
+<span id="cb77-415"><a href="#cb77-415" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaction R ⇄ Python dans Quarto (suite)</span></span>
 <span id="cb77-416"><a href="#cb77-416" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-417"><a href="#cb77-417" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-418"><a href="#cb77-418" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
+<span id="cb77-417"><a href="#cb77-417" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Il est possible d'échanger des types plus complexes (<span class="in">`data.frame`</span> ⇄ <span class="in">`DataFrame`</span> pandas, tableau numpy, etc.)</span>
+<span id="cb77-418"><a href="#cb77-418" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-419"><a href="#cb77-419" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-420"><a href="#cb77-420" aria-hidden="true" tabindex="-1"></a><span class="fu">### R → Python</span></span>
+<span id="cb77-420"><a href="#cb77-420" aria-hidden="true" tabindex="-1"></a>::: {.panel-tabset}</span>
 <span id="cb77-421"><a href="#cb77-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-422"><a href="#cb77-422" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Depuis un chunk R :</span>
+<span id="cb77-422"><a href="#cb77-422" aria-hidden="true" tabindex="-1"></a><span class="fu">### R → Python</span></span>
 <span id="cb77-423"><a href="#cb77-423" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-424"><a href="#cb77-424" aria-hidden="true" tabindex="-1"></a><span class="in">```{r example-r-3}</span></span>
-<span id="cb77-425"><a href="#cb77-425" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb77-426"><a href="#cb77-426" aria-hidden="true" tabindex="-1"></a>   <span class="at">emp_id =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
-<span id="cb77-427"><a href="#cb77-427" aria-hidden="true" tabindex="-1"></a>   <span class="at">emp_name =</span> <span class="fu">c</span>(<span class="st">"Rick"</span>,<span class="st">"Dan"</span>,<span class="st">"Michelle"</span>,<span class="st">"Ryan"</span>,<span class="st">"Jane"</span>),</span>
-<span id="cb77-428"><a href="#cb77-428" aria-hidden="true" tabindex="-1"></a>   <span class="at">salary =</span> <span class="fu">c</span>(<span class="fl">623.3</span>,<span class="fl">515.2</span>,<span class="fl">611.0</span>,<span class="fl">729.0</span>,<span class="fl">843.25</span>),</span>
-<span id="cb77-429"><a href="#cb77-429" aria-hidden="true" tabindex="-1"></a>   <span class="at">start_date =</span> <span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">"2012-01-01"</span>, <span class="st">"2013-09-23"</span>, <span class="st">"2014-11-15"</span>, <span class="st">"2014-05-11"</span>, <span class="st">"2015-03-27"</span>)),</span>
-<span id="cb77-430"><a href="#cb77-430" aria-hidden="true" tabindex="-1"></a>   <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
-<span id="cb77-431"><a href="#cb77-431" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb77-432"><a href="#cb77-432" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-433"><a href="#cb77-433" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-434"><a href="#cb77-434" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Récupération depuis un chunk Python :</span>
+<span id="cb77-424"><a href="#cb77-424" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Depuis un chunk R :</span>
+<span id="cb77-425"><a href="#cb77-425" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-426"><a href="#cb77-426" aria-hidden="true" tabindex="-1"></a><span class="in">```{r example-r-3}</span></span>
+<span id="cb77-427"><a href="#cb77-427" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb77-428"><a href="#cb77-428" aria-hidden="true" tabindex="-1"></a>   <span class="at">emp_id =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb77-429"><a href="#cb77-429" aria-hidden="true" tabindex="-1"></a>   <span class="at">emp_name =</span> <span class="fu">c</span>(<span class="st">"Rick"</span>,<span class="st">"Dan"</span>,<span class="st">"Michelle"</span>,<span class="st">"Ryan"</span>,<span class="st">"Jane"</span>),</span>
+<span id="cb77-430"><a href="#cb77-430" aria-hidden="true" tabindex="-1"></a>   <span class="at">salary =</span> <span class="fu">c</span>(<span class="fl">623.3</span>,<span class="fl">515.2</span>,<span class="fl">611.0</span>,<span class="fl">729.0</span>,<span class="fl">843.25</span>),</span>
+<span id="cb77-431"><a href="#cb77-431" aria-hidden="true" tabindex="-1"></a>   <span class="at">start_date =</span> <span class="fu">as.Date</span>(<span class="fu">c</span>(<span class="st">"2012-01-01"</span>, <span class="st">"2013-09-23"</span>, <span class="st">"2014-11-15"</span>, <span class="st">"2014-05-11"</span>, <span class="st">"2015-03-27"</span>)),</span>
+<span id="cb77-432"><a href="#cb77-432" aria-hidden="true" tabindex="-1"></a>   <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
+<span id="cb77-433"><a href="#cb77-433" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb77-434"><a href="#cb77-434" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-435"><a href="#cb77-435" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-436"><a href="#cb77-436" aria-hidden="true" tabindex="-1"></a><span class="in">```{python example-python-3}</span></span>
-<span id="cb77-437"><a href="#cb77-437" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> r.df</span>
-<span id="cb77-438"><a href="#cb77-438" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.head())</span>
-<span id="cb77-439"><a href="#cb77-439" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-440"><a href="#cb77-440" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-441"><a href="#cb77-441" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-442"><a href="#cb77-442" aria-hidden="true" tabindex="-1"></a><span class="fu">### Python → R</span></span>
+<span id="cb77-436"><a href="#cb77-436" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Récupération depuis un chunk Python :</span>
+<span id="cb77-437"><a href="#cb77-437" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-438"><a href="#cb77-438" aria-hidden="true" tabindex="-1"></a><span class="in">```{python example-python-3}</span></span>
+<span id="cb77-439"><a href="#cb77-439" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> r.df</span>
+<span id="cb77-440"><a href="#cb77-440" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.head())</span>
+<span id="cb77-441"><a href="#cb77-441" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb77-442"><a href="#cb77-442" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-443"><a href="#cb77-443" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-444"><a href="#cb77-444" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Depuis un chunk Python :</span>
+<span id="cb77-444"><a href="#cb77-444" aria-hidden="true" tabindex="-1"></a><span class="fu">### Python → R</span></span>
 <span id="cb77-445"><a href="#cb77-445" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-446"><a href="#cb77-446" aria-hidden="true" tabindex="-1"></a><span class="in">```{python example-python-4}</span></span>
-<span id="cb77-447"><a href="#cb77-447" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb77-448"><a href="#cb77-448" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb77-449"><a href="#cb77-449" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-450"><a href="#cb77-450" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb77-451"><a href="#cb77-451" aria-hidden="true" tabindex="-1"></a>  <span class="st">"emp_id"</span>: <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">5</span>)),</span>
-<span id="cb77-452"><a href="#cb77-452" aria-hidden="true" tabindex="-1"></a>  <span class="st">"emp_name"</span>: [<span class="st">"Rick"</span>, <span class="st">"Dan"</span>, <span class="st">"Michelle"</span>, <span class="st">"Ryan"</span>, <span class="st">"Jane"</span>],</span>
-<span id="cb77-453"><a href="#cb77-453" aria-hidden="true" tabindex="-1"></a>  <span class="st">"salary"</span>: [<span class="fl">623.3</span>, <span class="fl">515.2</span>, <span class="fl">611.0</span>, <span class="fl">729.0</span>, <span class="fl">843.25</span>],</span>
-<span id="cb77-454"><a href="#cb77-454" aria-hidden="true" tabindex="-1"></a>  <span class="st">"start_date"</span>: pd.to_datetime([<span class="st">"2012-01-01"</span>, <span class="st">"2013-09-23"</span>, <span class="st">"2014-11-15"</span>, <span class="st">"2014-05-11"</span>, <span class="st">"2015-03-27"</span>]),</span>
-<span id="cb77-455"><a href="#cb77-455" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb77-456"><a href="#cb77-456" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-457"><a href="#cb77-457" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> np.array([[<span class="dv">12</span>, <span class="dv">47</span>], [<span class="dv">34</span>, <span class="dv">90</span>], [<span class="dv">23</span>, <span class="dv">19</span>]])</span>
-<span id="cb77-458"><a href="#cb77-458" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-459"><a href="#cb77-459" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-460"><a href="#cb77-460" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Utilisation depuis un chunk R :</span>
+<span id="cb77-446"><a href="#cb77-446" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Depuis un chunk Python :</span>
+<span id="cb77-447"><a href="#cb77-447" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-448"><a href="#cb77-448" aria-hidden="true" tabindex="-1"></a><span class="in">```{python example-python-4}</span></span>
+<span id="cb77-449"><a href="#cb77-449" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb77-450"><a href="#cb77-450" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb77-451"><a href="#cb77-451" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-452"><a href="#cb77-452" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb77-453"><a href="#cb77-453" aria-hidden="true" tabindex="-1"></a>  <span class="st">"emp_id"</span>: <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">5</span>)),</span>
+<span id="cb77-454"><a href="#cb77-454" aria-hidden="true" tabindex="-1"></a>  <span class="st">"emp_name"</span>: [<span class="st">"Rick"</span>, <span class="st">"Dan"</span>, <span class="st">"Michelle"</span>, <span class="st">"Ryan"</span>, <span class="st">"Jane"</span>],</span>
+<span id="cb77-455"><a href="#cb77-455" aria-hidden="true" tabindex="-1"></a>  <span class="st">"salary"</span>: [<span class="fl">623.3</span>, <span class="fl">515.2</span>, <span class="fl">611.0</span>, <span class="fl">729.0</span>, <span class="fl">843.25</span>],</span>
+<span id="cb77-456"><a href="#cb77-456" aria-hidden="true" tabindex="-1"></a>  <span class="st">"start_date"</span>: pd.to_datetime([<span class="st">"2012-01-01"</span>, <span class="st">"2013-09-23"</span>, <span class="st">"2014-11-15"</span>, <span class="st">"2014-05-11"</span>, <span class="st">"2015-03-27"</span>]),</span>
+<span id="cb77-457"><a href="#cb77-457" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb77-458"><a href="#cb77-458" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-459"><a href="#cb77-459" aria-hidden="true" tabindex="-1"></a>arr <span class="op">=</span> np.array([[<span class="dv">12</span>, <span class="dv">47</span>], [<span class="dv">34</span>, <span class="dv">90</span>], [<span class="dv">23</span>, <span class="dv">19</span>]])</span>
+<span id="cb77-460"><a href="#cb77-460" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-461"><a href="#cb77-461" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-462"><a href="#cb77-462" aria-hidden="true" tabindex="-1"></a><span class="in">```{r example-r-4}</span></span>
-<span id="cb77-463"><a href="#cb77-463" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(py<span class="sc">$</span>df2)</span>
-<span id="cb77-464"><a href="#cb77-464" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(py<span class="sc">$</span>arr)</span>
-<span id="cb77-465"><a href="#cb77-465" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-466"><a href="#cb77-466" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-467"><a href="#cb77-467" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb77-462"><a href="#cb77-462" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Utilisation depuis un chunk R :</span>
+<span id="cb77-463"><a href="#cb77-463" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-464"><a href="#cb77-464" aria-hidden="true" tabindex="-1"></a><span class="in">```{r example-r-4}</span></span>
+<span id="cb77-465"><a href="#cb77-465" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(py<span class="sc">$</span>df2)</span>
+<span id="cb77-466"><a href="#cb77-466" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(py<span class="sc">$</span>arr)</span>
+<span id="cb77-467"><a href="#cb77-467" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-468"><a href="#cb77-468" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-469"><a href="#cb77-469" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaction R ⇄ Python dans Quarto (suite)</span></span>
+<span id="cb77-469"><a href="#cb77-469" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb77-470"><a href="#cb77-470" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-471"><a href="#cb77-471" aria-hidden="true" tabindex="-1"></a>Et pour les objets spatiaux ? (*sf* / *geopandas*)</span>
+<span id="cb77-471"><a href="#cb77-471" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaction R ⇄ Python dans Quarto (suite)</span></span>
 <span id="cb77-472"><a href="#cb77-472" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-473"><a href="#cb77-473" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Si la conversion <span class="in">`data.frame`</span> ⇄ <span class="in">`DataFrame`</span> est transparente, il n'en est pas de même pour les dataframe avec une composante spatiale (perte de la dimension spatiale / colonne <span class="in">`geometry`</span> contient désormais ...)</span>
+<span id="cb77-473"><a href="#cb77-473" aria-hidden="true" tabindex="-1"></a>Et pour les objets spatiaux ? (*sf* / *geopandas*)</span>
 <span id="cb77-474"><a href="#cb77-474" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-475"><a href="#cb77-475" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>L'écriture d'une petite function permet de résoudre ça :</span>
+<span id="cb77-475"><a href="#cb77-475" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Si la conversion <span class="in">`data.frame`</span> ⇄ <span class="in">`DataFrame`</span> est transparente, il n'en est pas de même pour les dataframe avec une composante spatiale (perte de la dimension spatiale / colonne <span class="in">`geometry`</span> contient désormais ...)</span>
 <span id="cb77-476"><a href="#cb77-476" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-477"><a href="#cb77-477" aria-hidden="true" tabindex="-1"></a><span class="in">```{r import}</span></span>
-<span id="cb77-478"><a href="#cb77-478" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb77-479"><a href="#cb77-479" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb77-480"><a href="#cb77-480" aria-hidden="true" tabindex="-1"></a><span class="co"># Import des données</span></span>
-<span id="cb77-481"><a href="#cb77-481" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb77-482"><a href="#cb77-482" aria-hidden="true" tabindex="-1"></a>mun_raw <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"geom/munic.geojson"</span>, <span class="at">quiet=</span> <span class="cn">TRUE</span>)</span>
-<span id="cb77-483"><a href="#cb77-483" aria-hidden="true" tabindex="-1"></a>mrc_raw <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"geom/mrc.geojson"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb77-484"><a href="#cb77-484" aria-hidden="true" tabindex="-1"></a><span class="co"># Projection NAD83 / Quebec Albers</span></span>
-<span id="cb77-485"><a href="#cb77-485" aria-hidden="true" tabindex="-1"></a>crs <span class="ot">&lt;-</span> <span class="st">"EPSG:6623"</span></span>
-<span id="cb77-486"><a href="#cb77-486" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(mun_raw, crs)</span>
-<span id="cb77-487"><a href="#cb77-487" aria-hidden="true" tabindex="-1"></a>mrc <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(mrc_raw, crs)</span>
-<span id="cb77-488"><a href="#cb77-488" aria-hidden="true" tabindex="-1"></a><span class="co"># Création d'une couche des régions</span></span>
-<span id="cb77-489"><a href="#cb77-489" aria-hidden="true" tabindex="-1"></a>reg <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(<span class="at">x =</span> mrc[,<span class="st">'MUS_NM_REG'</span>], </span>
-<span id="cb77-490"><a href="#cb77-490" aria-hidden="true" tabindex="-1"></a>                 <span class="at">by =</span> <span class="fu">list</span>(<span class="at">REG =</span> mrc<span class="sc">$</span>MUS_NM_REG), </span>
-<span id="cb77-491"><a href="#cb77-491" aria-hidden="true" tabindex="-1"></a>                 <span class="at">FUN =</span> head, <span class="dv">1</span>)</span>
-<span id="cb77-492"><a href="#cb77-492" aria-hidden="true" tabindex="-1"></a>resto_raw <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">'geom/resto.geojson'</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb77-493"><a href="#cb77-493" aria-hidden="true" tabindex="-1"></a>resto <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(resto_raw, crs)</span>
-<span id="cb77-494"><a href="#cb77-494" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-495"><a href="#cb77-495" aria-hidden="true" tabindex="-1"></a>sel <span class="ot">&lt;-</span> <span class="st">"Québec"</span></span>
-<span id="cb77-496"><a href="#cb77-496" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-497"><a href="#cb77-497" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-500"><a href="#cb77-500" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb77-501"><a href="#cb77-501" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> shape</span>
-<span id="cb77-502"><a href="#cb77-502" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
-<span id="cb77-503"><a href="#cb77-503" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-504"><a href="#cb77-504" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> restore_geodataframe(df, crs, geom_type):</span>
-<span id="cb77-505"><a href="#cb77-505" aria-hidden="true" tabindex="-1"></a>  geom <span class="op">=</span> df.geometry.<span class="bu">apply</span>(<span class="kw">lambda</span> coords: shape({ <span class="st">"type"</span>: geom_type, <span class="st">"coordinates"</span>: coords }))</span>
-<span id="cb77-506"><a href="#cb77-506" aria-hidden="true" tabindex="-1"></a>  gdf <span class="op">=</span> gpd.GeoDataFrame(df.drop([<span class="st">'geometry'</span>], axis<span class="op">=</span><span class="dv">1</span>), geometry<span class="op">=</span>geom)</span>
-<span id="cb77-507"><a href="#cb77-507" aria-hidden="true" tabindex="-1"></a>  gdf.set_crs(crs, inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb77-508"><a href="#cb77-508" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> gdf</span>
-<span id="cb77-509"><a href="#cb77-509" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-510"><a href="#cb77-510" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-511"><a href="#cb77-511" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-512"><a href="#cb77-512" aria-hidden="true" tabindex="-1"></a>Ainsi, les objets <span class="in">`sf`</span> pourront être convertis en <span class="in">`GeoDataFrame`</span> ainsi :</span>
+<span id="cb77-477"><a href="#cb77-477" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>L'écriture d'une petite function permet de résoudre ça :</span>
+<span id="cb77-478"><a href="#cb77-478" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-479"><a href="#cb77-479" aria-hidden="true" tabindex="-1"></a><span class="in">```{r import}</span></span>
+<span id="cb77-480"><a href="#cb77-480" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb77-481"><a href="#cb77-481" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb77-482"><a href="#cb77-482" aria-hidden="true" tabindex="-1"></a><span class="co"># Import des données</span></span>
+<span id="cb77-483"><a href="#cb77-483" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb77-484"><a href="#cb77-484" aria-hidden="true" tabindex="-1"></a>mun_raw <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"geom/munic.geojson"</span>, <span class="at">quiet=</span> <span class="cn">TRUE</span>)</span>
+<span id="cb77-485"><a href="#cb77-485" aria-hidden="true" tabindex="-1"></a>mrc_raw <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"geom/mrc.geojson"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb77-486"><a href="#cb77-486" aria-hidden="true" tabindex="-1"></a><span class="co"># Projection NAD83 / Quebec Albers</span></span>
+<span id="cb77-487"><a href="#cb77-487" aria-hidden="true" tabindex="-1"></a>crs <span class="ot">&lt;-</span> <span class="st">"EPSG:6623"</span></span>
+<span id="cb77-488"><a href="#cb77-488" aria-hidden="true" tabindex="-1"></a>mun <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(mun_raw, crs)</span>
+<span id="cb77-489"><a href="#cb77-489" aria-hidden="true" tabindex="-1"></a>mrc <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(mrc_raw, crs)</span>
+<span id="cb77-490"><a href="#cb77-490" aria-hidden="true" tabindex="-1"></a><span class="co"># Création d'une couche des régions</span></span>
+<span id="cb77-491"><a href="#cb77-491" aria-hidden="true" tabindex="-1"></a>reg <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(<span class="at">x =</span> mrc[,<span class="st">'MUS_NM_REG'</span>], </span>
+<span id="cb77-492"><a href="#cb77-492" aria-hidden="true" tabindex="-1"></a>                 <span class="at">by =</span> <span class="fu">list</span>(<span class="at">REG =</span> mrc<span class="sc">$</span>MUS_NM_REG), </span>
+<span id="cb77-493"><a href="#cb77-493" aria-hidden="true" tabindex="-1"></a>                 <span class="at">FUN =</span> head, <span class="dv">1</span>)</span>
+<span id="cb77-494"><a href="#cb77-494" aria-hidden="true" tabindex="-1"></a>resto_raw <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">'geom/resto.geojson'</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb77-495"><a href="#cb77-495" aria-hidden="true" tabindex="-1"></a>resto <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(resto_raw, crs)</span>
+<span id="cb77-496"><a href="#cb77-496" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-497"><a href="#cb77-497" aria-hidden="true" tabindex="-1"></a>sel <span class="ot">&lt;-</span> <span class="st">"Québec"</span></span>
+<span id="cb77-498"><a href="#cb77-498" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb77-499"><a href="#cb77-499" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-502"><a href="#cb77-502" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb77-503"><a href="#cb77-503" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> shape</span>
+<span id="cb77-504"><a href="#cb77-504" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb77-505"><a href="#cb77-505" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-506"><a href="#cb77-506" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> restore_geodataframe(df, crs, geom_type):</span>
+<span id="cb77-507"><a href="#cb77-507" aria-hidden="true" tabindex="-1"></a>  geom <span class="op">=</span> df.geometry.<span class="bu">apply</span>(<span class="kw">lambda</span> coords: shape({ <span class="st">"type"</span>: geom_type, <span class="st">"coordinates"</span>: coords }))</span>
+<span id="cb77-508"><a href="#cb77-508" aria-hidden="true" tabindex="-1"></a>  gdf <span class="op">=</span> gpd.GeoDataFrame(df.drop([<span class="st">'geometry'</span>], axis<span class="op">=</span><span class="dv">1</span>), geometry<span class="op">=</span>geom)</span>
+<span id="cb77-509"><a href="#cb77-509" aria-hidden="true" tabindex="-1"></a>  gdf.set_crs(crs, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb77-510"><a href="#cb77-510" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> gdf</span>
+<span id="cb77-511"><a href="#cb77-511" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb77-512"><a href="#cb77-512" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-513"><a href="#cb77-513" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-516"><a href="#cb77-516" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb77-517"><a href="#cb77-517" aria-hidden="true" tabindex="-1"></a>mrc <span class="op">=</span> restore_geodataframe(r.mrc, r.crs, <span class="st">"MultiPolygon"</span>)</span>
-<span id="cb77-518"><a href="#cb77-518" aria-hidden="true" tabindex="-1"></a>mrc.head()</span>
-<span id="cb77-519"><a href="#cb77-519" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-520"><a href="#cb77-520" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-523"><a href="#cb77-523" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb77-524"><a href="#cb77-524" aria-hidden="true" tabindex="-1"></a>resto <span class="op">=</span> restore_geodataframe(r.resto, r.crs, <span class="st">"Point"</span>)</span>
-<span id="cb77-525"><a href="#cb77-525" aria-hidden="true" tabindex="-1"></a>resto.head()</span>
-<span id="cb77-526"><a href="#cb77-526" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-527"><a href="#cb77-527" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-528"><a href="#cb77-528" aria-hidden="true" tabindex="-1"></a><span class="fu">## Python, Quarto et interactivité</span></span>
+<span id="cb77-514"><a href="#cb77-514" aria-hidden="true" tabindex="-1"></a>Ainsi, les objets <span class="in">`sf`</span> pourront être convertis en <span class="in">`GeoDataFrame`</span> ainsi :</span>
+<span id="cb77-515"><a href="#cb77-515" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-518"><a href="#cb77-518" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb77-519"><a href="#cb77-519" aria-hidden="true" tabindex="-1"></a>mrc <span class="op">=</span> restore_geodataframe(r.mrc, r.crs, <span class="st">"MultiPolygon"</span>)</span>
+<span id="cb77-520"><a href="#cb77-520" aria-hidden="true" tabindex="-1"></a>mrc.head()</span>
+<span id="cb77-521"><a href="#cb77-521" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb77-522"><a href="#cb77-522" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-525"><a href="#cb77-525" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb77-526"><a href="#cb77-526" aria-hidden="true" tabindex="-1"></a>resto <span class="op">=</span> restore_geodataframe(r.resto, r.crs, <span class="st">"Point"</span>)</span>
+<span id="cb77-527"><a href="#cb77-527" aria-hidden="true" tabindex="-1"></a>resto.head()</span>
+<span id="cb77-528"><a href="#cb77-528" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-529"><a href="#cb77-529" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-530"><a href="#cb77-530" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Utilisation des widgets Jupyter possible (seulement is utilisation de l'engin de rendu <span class="in">`jupyter`</span>, pas avec <span class="in">`knitr`</span> - i.e. l'inverse des *htmlwidgets* en R qui ne fonctionne que si <span class="in">`knitr`</span> est utilisé)</span>
+<span id="cb77-530"><a href="#cb77-530" aria-hidden="true" tabindex="-1"></a><span class="fu">## Python, Quarto et interactivité</span></span>
 <span id="cb77-531"><a href="#cb77-531" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-532"><a href="#cb77-532" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Exemple :</span>
+<span id="cb77-532"><a href="#cb77-532" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Utilisation des widgets Jupyter possible (seulement is utilisation de l'engin de rendu <span class="in">`jupyter`</span>, pas avec <span class="in">`knitr`</span> - i.e. l'inverse des *htmlwidgets* en R qui ne fonctionne que si <span class="in">`knitr`</span> est utilisé)</span>
 <span id="cb77-533"><a href="#cb77-533" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-534"><a href="#cb77-534" aria-hidden="true" tabindex="-1"></a><span class="al">![](./fig/example-quarto-jupyter-widgets.jpg)</span></span>
+<span id="cb77-534"><a href="#cb77-534" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Exemple :</span>
 <span id="cb77-535"><a href="#cb77-535" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-536"><a href="#cb77-536" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Documentation : <span class="co">[</span><span class="ot">https://quarto.org/docs/interactive/widgets/jupyter.html</span><span class="co">](https://quarto.org/docs/interactive/widgets/jupyter.html)</span></span>
+<span id="cb77-536"><a href="#cb77-536" aria-hidden="true" tabindex="-1"></a><span class="al">![](./fig/example-quarto-jupyter-widgets.jpg)</span></span>
 <span id="cb77-537"><a href="#cb77-537" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-538"><a href="#cb77-538" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exemples d'analyse sur les données du Québec</span></span>
+<span id="cb77-538"><a href="#cb77-538" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Documentation : <span class="co">[</span><span class="ot">https://quarto.org/docs/interactive/widgets/jupyter.html</span><span class="co">](https://quarto.org/docs/interactive/widgets/jupyter.html)</span></span>
 <span id="cb77-539"><a href="#cb77-539" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-540"><a href="#cb77-540" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Les imports nécessaires :</span>
+<span id="cb77-540"><a href="#cb77-540" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exemples d'analyse sur les données du Québec</span></span>
 <span id="cb77-541"><a href="#cb77-541" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-542"><a href="#cb77-542" aria-hidden="true" tabindex="-1"></a><span class="in">```{python demo-import}</span></span>
-<span id="cb77-543"><a href="#cb77-543" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb77-544"><a href="#cb77-544" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio <span class="im">as</span> rio</span>
-<span id="cb77-545"><a href="#cb77-545" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb77-546"><a href="#cb77-546" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
-<span id="cb77-547"><a href="#cb77-547" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rioxarray</span>
-<span id="cb77-548"><a href="#cb77-548" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray</span>
-<span id="cb77-549"><a href="#cb77-549" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-550"><a href="#cb77-550" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.warp <span class="im">import</span> calculate_default_transform, reproject, Resampling</span>
-<span id="cb77-551"><a href="#cb77-551" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
-<span id="cb77-552"><a href="#cb77-552" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.plot <span class="im">import</span> show</span>
-<span id="cb77-553"><a href="#cb77-553" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.mask <span class="im">import</span> mask</span>
-<span id="cb77-554"><a href="#cb77-554" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterstats <span class="im">import</span> zonal_stats, point_query</span>
-<span id="cb77-555"><a href="#cb77-555" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-556"><a href="#cb77-556" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-557"><a href="#cb77-557" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>On récupère les jeux de données et quelques autres infos (SRC, etc.) depuis l'environnement R :</span>
+<span id="cb77-542"><a href="#cb77-542" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Les imports nécessaires :</span>
+<span id="cb77-543"><a href="#cb77-543" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-544"><a href="#cb77-544" aria-hidden="true" tabindex="-1"></a><span class="in">```{python demo-import}</span></span>
+<span id="cb77-545"><a href="#cb77-545" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb77-546"><a href="#cb77-546" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio <span class="im">as</span> rio</span>
+<span id="cb77-547"><a href="#cb77-547" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb77-548"><a href="#cb77-548" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb77-549"><a href="#cb77-549" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rioxarray</span>
+<span id="cb77-550"><a href="#cb77-550" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray</span>
+<span id="cb77-551"><a href="#cb77-551" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-552"><a href="#cb77-552" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.warp <span class="im">import</span> calculate_default_transform, reproject, Resampling</span>
+<span id="cb77-553"><a href="#cb77-553" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> pyplot <span class="im">as</span> plt</span>
+<span id="cb77-554"><a href="#cb77-554" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.plot <span class="im">import</span> show</span>
+<span id="cb77-555"><a href="#cb77-555" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.mask <span class="im">import</span> mask</span>
+<span id="cb77-556"><a href="#cb77-556" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterstats <span class="im">import</span> zonal_stats, point_query</span>
+<span id="cb77-557"><a href="#cb77-557" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-558"><a href="#cb77-558" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-559"><a href="#cb77-559" aria-hidden="true" tabindex="-1"></a><span class="in">```{python demo-vector-dataset-opening}</span></span>
-<span id="cb77-560"><a href="#cb77-560" aria-hidden="true" tabindex="-1"></a><span class="co"># Le SCR des données</span></span>
-<span id="cb77-561"><a href="#cb77-561" aria-hidden="true" tabindex="-1"></a>dst_crs <span class="op">=</span> r.crs</span>
-<span id="cb77-562"><a href="#cb77-562" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-563"><a href="#cb77-563" aria-hidden="true" tabindex="-1"></a><span class="co"># On récupère le jeu de données "mrc" (municipalités régionales de comté)</span></span>
-<span id="cb77-564"><a href="#cb77-564" aria-hidden="true" tabindex="-1"></a><span class="co"># et le jeu de données "resto"</span></span>
-<span id="cb77-565"><a href="#cb77-565" aria-hidden="true" tabindex="-1"></a>mrc <span class="op">=</span> restore_geodataframe(r.mrc, dst_crs, <span class="st">"MultiPolygon"</span>)</span>
-<span id="cb77-566"><a href="#cb77-566" aria-hidden="true" tabindex="-1"></a>resto <span class="op">=</span> restore_geodataframe(r.resto, dst_crs, <span class="st">"Point"</span>)</span>
-<span id="cb77-567"><a href="#cb77-567" aria-hidden="true" tabindex="-1"></a>reg <span class="op">=</span> mrc.dissolve(by<span class="op">=</span><span class="st">"MUS_NM_REG"</span>)</span>
-<span id="cb77-568"><a href="#cb77-568" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-569"><a href="#cb77-569" aria-hidden="true" tabindex="-1"></a>sel <span class="op">=</span> r.sel <span class="co"># Québec</span></span>
+<span id="cb77-559"><a href="#cb77-559" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>On récupère les jeux de données et quelques autres infos (SRC, etc.) depuis l'environnement R :</span>
+<span id="cb77-560"><a href="#cb77-560" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-561"><a href="#cb77-561" aria-hidden="true" tabindex="-1"></a><span class="in">```{python demo-vector-dataset-opening}</span></span>
+<span id="cb77-562"><a href="#cb77-562" aria-hidden="true" tabindex="-1"></a><span class="co"># Le SCR des données</span></span>
+<span id="cb77-563"><a href="#cb77-563" aria-hidden="true" tabindex="-1"></a>dst_crs <span class="op">=</span> r.crs</span>
+<span id="cb77-564"><a href="#cb77-564" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-565"><a href="#cb77-565" aria-hidden="true" tabindex="-1"></a><span class="co"># On récupère le jeu de données "mrc" (municipalités régionales de comté)</span></span>
+<span id="cb77-566"><a href="#cb77-566" aria-hidden="true" tabindex="-1"></a><span class="co"># et le jeu de données "resto"</span></span>
+<span id="cb77-567"><a href="#cb77-567" aria-hidden="true" tabindex="-1"></a>mrc <span class="op">=</span> restore_geodataframe(r.mrc, dst_crs, <span class="st">"MultiPolygon"</span>)</span>
+<span id="cb77-568"><a href="#cb77-568" aria-hidden="true" tabindex="-1"></a>resto <span class="op">=</span> restore_geodataframe(r.resto, dst_crs, <span class="st">"Point"</span>)</span>
+<span id="cb77-569"><a href="#cb77-569" aria-hidden="true" tabindex="-1"></a>reg <span class="op">=</span> mrc.dissolve(by<span class="op">=</span><span class="st">"MUS_NM_REG"</span>)</span>
 <span id="cb77-570"><a href="#cb77-570" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-571"><a href="#cb77-571" aria-hidden="true" tabindex="-1"></a><span class="co"># Chemin du jeu de données raster</span></span>
-<span id="cb77-572"><a href="#cb77-572" aria-hidden="true" tabindex="-1"></a><span class="co"># et du fichier contenant les descriptions des catégories</span></span>
-<span id="cb77-573"><a href="#cb77-573" aria-hidden="true" tabindex="-1"></a>lc_fp <span class="op">=</span> <span class="st">'../../Téléchargements/T01_PROVINCE.tif'</span></span>
-<span id="cb77-574"><a href="#cb77-574" aria-hidden="true" tabindex="-1"></a>lc_categories_fp <span class="op">=</span> <span class="st">'../../Téléchargements/correspondance_raster_CL_COUV.dbf'</span></span>
-<span id="cb77-575"><a href="#cb77-575" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-576"><a href="#cb77-576" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-577"><a href="#cb77-577" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>On extrait les entités correspondantes et on les affiche, relativement au reste de la province :</span>
+<span id="cb77-571"><a href="#cb77-571" aria-hidden="true" tabindex="-1"></a>sel <span class="op">=</span> r.sel <span class="co"># Québec</span></span>
+<span id="cb77-572"><a href="#cb77-572" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-573"><a href="#cb77-573" aria-hidden="true" tabindex="-1"></a><span class="co"># Chemin du jeu de données raster</span></span>
+<span id="cb77-574"><a href="#cb77-574" aria-hidden="true" tabindex="-1"></a><span class="co"># et du fichier contenant les descriptions des catégories</span></span>
+<span id="cb77-575"><a href="#cb77-575" aria-hidden="true" tabindex="-1"></a>lc_fp <span class="op">=</span> <span class="st">'./data/T01_PROVINCE.tif'</span></span>
+<span id="cb77-576"><a href="#cb77-576" aria-hidden="true" tabindex="-1"></a>lc_categories_fp <span class="op">=</span> <span class="st">'./data/correspondance_raster_CL_COUV.dbf'</span></span>
+<span id="cb77-577"><a href="#cb77-577" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-578"><a href="#cb77-578" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-579"><a href="#cb77-579" aria-hidden="true" tabindex="-1"></a><span class="in">```{python demo-first-plot}</span></span>
-<span id="cb77-580"><a href="#cb77-580" aria-hidden="true" tabindex="-1"></a>extract <span class="op">=</span> mrc[mrc.MUS_NM_MRC <span class="op">==</span> sel]</span>
-<span id="cb77-581"><a href="#cb77-581" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-582"><a href="#cb77-582" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> mrc.plot(color<span class="op">=</span><span class="st">"lightblue"</span>, edgecolor<span class="op">=</span><span class="st">"grey"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">12</span>))</span>
-<span id="cb77-583"><a href="#cb77-583" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> reg.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="va">None</span>, edgecolor<span class="op">=</span><span class="st">"orange"</span>, alpha<span class="op">=</span><span class="fl">0.8</span>)</span>
-<span id="cb77-584"><a href="#cb77-584" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> extract.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">"red"</span>)</span>
-<span id="cb77-585"><a href="#cb77-585" aria-hidden="true" tabindex="-1"></a>ax.set_axis_off()</span>
-<span id="cb77-586"><a href="#cb77-586" aria-hidden="true" tabindex="-1"></a>ax</span>
-<span id="cb77-587"><a href="#cb77-587" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-588"><a href="#cb77-588" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-589"><a href="#cb77-589" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Ouverture et reprojection d'un jeu de données raster (avec *rioxarray*) :</span>
+<span id="cb77-579"><a href="#cb77-579" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>On extrait les entités correspondantes et on les affiche, relativement au reste de la province :</span>
+<span id="cb77-580"><a href="#cb77-580" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-581"><a href="#cb77-581" aria-hidden="true" tabindex="-1"></a><span class="in">```{python demo-first-plot}</span></span>
+<span id="cb77-582"><a href="#cb77-582" aria-hidden="true" tabindex="-1"></a>extract <span class="op">=</span> mrc[mrc.MUS_NM_MRC <span class="op">==</span> sel]</span>
+<span id="cb77-583"><a href="#cb77-583" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-584"><a href="#cb77-584" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> mrc.plot(color<span class="op">=</span><span class="st">"lightblue"</span>, edgecolor<span class="op">=</span><span class="st">"grey"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">12</span>))</span>
+<span id="cb77-585"><a href="#cb77-585" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> reg.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="va">None</span>, edgecolor<span class="op">=</span><span class="st">"orange"</span>, alpha<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb77-586"><a href="#cb77-586" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> extract.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb77-587"><a href="#cb77-587" aria-hidden="true" tabindex="-1"></a>ax.set_axis_off()</span>
+<span id="cb77-588"><a href="#cb77-588" aria-hidden="true" tabindex="-1"></a>ax</span>
+<span id="cb77-589"><a href="#cb77-589" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-590"><a href="#cb77-590" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-591"><a href="#cb77-591" aria-hidden="true" tabindex="-1"></a><span class="in">```{python demo-open-raster}</span></span>
-<span id="cb77-592"><a href="#cb77-592" aria-hidden="true" tabindex="-1"></a>xds <span class="op">=</span> rioxarray.open_rasterio(lc_fp)</span>
-<span id="cb77-593"><a href="#cb77-593" aria-hidden="true" tabindex="-1"></a>xds <span class="op">=</span> xds.rio.reproject(dst_crs)</span>
-<span id="cb77-594"><a href="#cb77-594" aria-hidden="true" tabindex="-1"></a>xds</span>
-<span id="cb77-595"><a href="#cb77-595" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-596"><a href="#cb77-596" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-597"><a href="#cb77-597" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Affichons le raster reprojeté et l'emprise de la ville de Québec :</span>
+<span id="cb77-591"><a href="#cb77-591" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Ouverture et reprojection d'un jeu de données raster (avec *rioxarray*) :</span>
+<span id="cb77-592"><a href="#cb77-592" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-593"><a href="#cb77-593" aria-hidden="true" tabindex="-1"></a><span class="in">```{python demo-open-raster}</span></span>
+<span id="cb77-594"><a href="#cb77-594" aria-hidden="true" tabindex="-1"></a>xds <span class="op">=</span> rioxarray.open_rasterio(lc_fp)</span>
+<span id="cb77-595"><a href="#cb77-595" aria-hidden="true" tabindex="-1"></a>xds <span class="op">=</span> xds.rio.reproject(dst_crs)</span>
+<span id="cb77-596"><a href="#cb77-596" aria-hidden="true" tabindex="-1"></a>xds</span>
+<span id="cb77-597"><a href="#cb77-597" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-598"><a href="#cb77-598" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-599"><a href="#cb77-599" aria-hidden="true" tabindex="-1"></a><span class="in">```{python demo-plot-raster}</span></span>
-<span id="cb77-600"><a href="#cb77-600" aria-hidden="true" tabindex="-1"></a><span class="co"># Remplacer les '255' par '0'</span></span>
-<span id="cb77-601"><a href="#cb77-601" aria-hidden="true" tabindex="-1"></a>xds.data[xds.data <span class="op">==</span> <span class="dv">255</span>] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb77-602"><a href="#cb77-602" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-603"><a href="#cb77-603" aria-hidden="true" tabindex="-1"></a><span class="co"># Étendue des données</span></span>
-<span id="cb77-604"><a href="#cb77-604" aria-hidden="true" tabindex="-1"></a>bounds <span class="op">=</span> xds.rio.bounds()</span>
-<span id="cb77-605"><a href="#cb77-605" aria-hidden="true" tabindex="-1"></a>extent <span class="op">=</span> [bounds[<span class="dv">0</span>], bounds[<span class="dv">2</span>], bounds[<span class="dv">1</span>], bounds[<span class="dv">3</span>]]</span>
-<span id="cb77-606"><a href="#cb77-606" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-607"><a href="#cb77-607" aria-hidden="true" tabindex="-1"></a><span class="co"># Création d'une figure vide</span></span>
-<span id="cb77-608"><a href="#cb77-608" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">12</span>))</span>
-<span id="cb77-609"><a href="#cb77-609" aria-hidden="true" tabindex="-1"></a><span class="co"># Affichage du raster (attribut 'data' de l'objet xds)</span></span>
-<span id="cb77-610"><a href="#cb77-610" aria-hidden="true" tabindex="-1"></a>show(xds.data[<span class="dv">0</span>], ax<span class="op">=</span>ax, extent<span class="op">=</span>extent, cmap<span class="op">=</span><span class="st">"Set3"</span>)</span>
-<span id="cb77-611"><a href="#cb77-611" aria-hidden="true" tabindex="-1"></a><span class="co"># Affichage de la ville de Québec en rouge par dessus</span></span>
-<span id="cb77-612"><a href="#cb77-612" aria-hidden="true" tabindex="-1"></a>extract.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'red'</span>, edgecolor<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb77-613"><a href="#cb77-613" aria-hidden="true" tabindex="-1"></a><span class="co"># On enlève l'affichage des axes</span></span>
-<span id="cb77-614"><a href="#cb77-614" aria-hidden="true" tabindex="-1"></a>ax.set_axis_off()</span>
-<span id="cb77-615"><a href="#cb77-615" aria-hidden="true" tabindex="-1"></a>ax</span>
-<span id="cb77-616"><a href="#cb77-616" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-617"><a href="#cb77-617" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-618"><a href="#cb77-618" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ouverture du fichier DBF qui contient les correspondances entre les codes et les noms des catégories d'utilisation des sols</span>
+<span id="cb77-599"><a href="#cb77-599" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Affichons le raster reprojeté et l'emprise de la ville de Québec :</span>
+<span id="cb77-600"><a href="#cb77-600" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-601"><a href="#cb77-601" aria-hidden="true" tabindex="-1"></a><span class="in">```{python demo-plot-raster}</span></span>
+<span id="cb77-602"><a href="#cb77-602" aria-hidden="true" tabindex="-1"></a><span class="co"># Remplacer les '255' par '0'</span></span>
+<span id="cb77-603"><a href="#cb77-603" aria-hidden="true" tabindex="-1"></a>xds.data[xds.data <span class="op">==</span> <span class="dv">255</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb77-604"><a href="#cb77-604" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-605"><a href="#cb77-605" aria-hidden="true" tabindex="-1"></a><span class="co"># Étendue des données</span></span>
+<span id="cb77-606"><a href="#cb77-606" aria-hidden="true" tabindex="-1"></a>bounds <span class="op">=</span> xds.rio.bounds()</span>
+<span id="cb77-607"><a href="#cb77-607" aria-hidden="true" tabindex="-1"></a>extent <span class="op">=</span> [bounds[<span class="dv">0</span>], bounds[<span class="dv">2</span>], bounds[<span class="dv">1</span>], bounds[<span class="dv">3</span>]]</span>
+<span id="cb77-608"><a href="#cb77-608" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-609"><a href="#cb77-609" aria-hidden="true" tabindex="-1"></a><span class="co"># Création d'une figure vide</span></span>
+<span id="cb77-610"><a href="#cb77-610" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">12</span>))</span>
+<span id="cb77-611"><a href="#cb77-611" aria-hidden="true" tabindex="-1"></a><span class="co"># Affichage du raster (attribut 'data' de l'objet xds)</span></span>
+<span id="cb77-612"><a href="#cb77-612" aria-hidden="true" tabindex="-1"></a>show(xds.data[<span class="dv">0</span>], ax<span class="op">=</span>ax, extent<span class="op">=</span>extent, cmap<span class="op">=</span><span class="st">"Set3"</span>)</span>
+<span id="cb77-613"><a href="#cb77-613" aria-hidden="true" tabindex="-1"></a><span class="co"># Affichage de la ville de Québec en rouge par dessus</span></span>
+<span id="cb77-614"><a href="#cb77-614" aria-hidden="true" tabindex="-1"></a>extract.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'red'</span>, edgecolor<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb77-615"><a href="#cb77-615" aria-hidden="true" tabindex="-1"></a><span class="co"># On enlève l'affichage des axes</span></span>
+<span id="cb77-616"><a href="#cb77-616" aria-hidden="true" tabindex="-1"></a>ax.set_axis_off()</span>
+<span id="cb77-617"><a href="#cb77-617" aria-hidden="true" tabindex="-1"></a>ax</span>
+<span id="cb77-618"><a href="#cb77-618" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-619"><a href="#cb77-619" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-620"><a href="#cb77-620" aria-hidden="true" tabindex="-1"></a><span class="in">```{python demo-open-dbf}</span></span>
-<span id="cb77-621"><a href="#cb77-621" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb77-622"><a href="#cb77-622" aria-hidden="true" tabindex="-1"></a>  gpd.read_file(lc_categories_fp, encoding<span class="op">=</span><span class="st">'utf-8'</span>)[[<span class="st">'ID'</span>, <span class="st">'CL_COUV'</span>, <span class="st">'Descriptio'</span>]])</span>
-<span id="cb77-623"><a href="#cb77-623" aria-hidden="true" tabindex="-1"></a>categories.head(<span class="dv">11</span>)</span>
-<span id="cb77-624"><a href="#cb77-624" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-625"><a href="#cb77-625" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-626"><a href="#cb77-626" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb77-620"><a href="#cb77-620" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ouverture du fichier DBF qui contient les correspondances entre les codes et les noms des catégories d'utilisation des sols</span>
+<span id="cb77-621"><a href="#cb77-621" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-622"><a href="#cb77-622" aria-hidden="true" tabindex="-1"></a><span class="in">```{python demo-open-dbf}</span></span>
+<span id="cb77-623"><a href="#cb77-623" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb77-624"><a href="#cb77-624" aria-hidden="true" tabindex="-1"></a>  gpd.read_file(lc_categories_fp, encoding<span class="op">=</span><span class="st">'utf-8'</span>)[[<span class="st">'ID'</span>, <span class="st">'CL_COUV'</span>, <span class="st">'Descriptio'</span>]])</span>
+<span id="cb77-625"><a href="#cb77-625" aria-hidden="true" tabindex="-1"></a>categories.head(<span class="dv">11</span>)</span>
+<span id="cb77-626"><a href="#cb77-626" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-627"><a href="#cb77-627" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-630"><a href="#cb77-630" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb77-631"><a href="#cb77-631" aria-hidden="true" tabindex="-1"></a><span class="co"># On va convertir cette DataFrame en un dictionnaire pour l'utiliser</span></span>
-<span id="cb77-632"><a href="#cb77-632" aria-hidden="true" tabindex="-1"></a><span class="co"># comme un mapping ID -&gt; Description</span></span>
-<span id="cb77-633"><a href="#cb77-633" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> {</span>
-<span id="cb77-634"><a href="#cb77-634" aria-hidden="true" tabindex="-1"></a>  <span class="bu">int</span>(k): v[<span class="st">'Descriptio'</span>]</span>
-<span id="cb77-635"><a href="#cb77-635" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> k,v <span class="kw">in</span> categories[[<span class="st">'ID'</span>, <span class="st">'Descriptio'</span>]].set_index(<span class="st">'ID'</span>).to_dict(orient<span class="op">=</span><span class="st">'index'</span>).items()</span>
-<span id="cb77-636"><a href="#cb77-636" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb77-637"><a href="#cb77-637" aria-hidden="true" tabindex="-1"></a><span class="co"># Bien qu'il y ait une catégorie 'Pas de données' (ID 10)</span></span>
-<span id="cb77-638"><a href="#cb77-638" aria-hidden="true" tabindex="-1"></a><span class="co"># certaines cellules ne comportent pas de valeur (nodata, ici avec la valeur 0)</span></span>
-<span id="cb77-639"><a href="#cb77-639" aria-hidden="true" tabindex="-1"></a>categories[<span class="dv">0</span>] <span class="op">=</span> <span class="st">'Pas de données'</span></span>
-<span id="cb77-640"><a href="#cb77-640" aria-hidden="true" tabindex="-1"></a>categories</span>
-<span id="cb77-641"><a href="#cb77-641" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-642"><a href="#cb77-642" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-643"><a href="#cb77-643" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Calculer les statistiques zonales (combien de cellules de chaque type dans la sélection) :</span>
+<span id="cb77-628"><a href="#cb77-628" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb77-629"><a href="#cb77-629" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-632"><a href="#cb77-632" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb77-633"><a href="#cb77-633" aria-hidden="true" tabindex="-1"></a><span class="co"># On va convertir cette DataFrame en un dictionnaire pour l'utiliser</span></span>
+<span id="cb77-634"><a href="#cb77-634" aria-hidden="true" tabindex="-1"></a><span class="co"># comme un mapping ID -&gt; Description</span></span>
+<span id="cb77-635"><a href="#cb77-635" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> {</span>
+<span id="cb77-636"><a href="#cb77-636" aria-hidden="true" tabindex="-1"></a>  <span class="bu">int</span>(k): v[<span class="st">'Descriptio'</span>]</span>
+<span id="cb77-637"><a href="#cb77-637" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> k,v <span class="kw">in</span> categories[[<span class="st">'ID'</span>, <span class="st">'Descriptio'</span>]].set_index(<span class="st">'ID'</span>).to_dict(orient<span class="op">=</span><span class="st">'index'</span>).items()</span>
+<span id="cb77-638"><a href="#cb77-638" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb77-639"><a href="#cb77-639" aria-hidden="true" tabindex="-1"></a><span class="co"># Bien qu'il y ait une catégorie 'Pas de données' (ID 10)</span></span>
+<span id="cb77-640"><a href="#cb77-640" aria-hidden="true" tabindex="-1"></a><span class="co"># certaines cellules ne comportent pas de valeur (nodata, ici avec la valeur 0)</span></span>
+<span id="cb77-641"><a href="#cb77-641" aria-hidden="true" tabindex="-1"></a>categories[<span class="dv">0</span>] <span class="op">=</span> <span class="st">'Pas de données'</span></span>
+<span id="cb77-642"><a href="#cb77-642" aria-hidden="true" tabindex="-1"></a>categories</span>
+<span id="cb77-643"><a href="#cb77-643" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-644"><a href="#cb77-644" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-647"><a href="#cb77-647" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb77-648"><a href="#cb77-648" aria-hidden="true" tabindex="-1"></a>stats <span class="op">=</span> zonal_stats(extract, xds.data[<span class="dv">0</span>], affine<span class="op">=</span>xds.rio.transform(), categorical<span class="op">=</span><span class="va">True</span>, nodata<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb77-649"><a href="#cb77-649" aria-hidden="true" tabindex="-1"></a>stats</span>
-<span id="cb77-650"><a href="#cb77-650" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-651"><a href="#cb77-651" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-652"><a href="#cb77-652" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Traçons un histogramme de ce résultat, en utilisant les noms appropriés des catégories d'utilisation des sols :</span>
+<span id="cb77-645"><a href="#cb77-645" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Calculer les statistiques zonales (combien de cellules de chaque type dans la sélection) :</span>
+<span id="cb77-646"><a href="#cb77-646" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-649"><a href="#cb77-649" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb77-650"><a href="#cb77-650" aria-hidden="true" tabindex="-1"></a>stats <span class="op">=</span> zonal_stats(extract, xds.data[<span class="dv">0</span>], affine<span class="op">=</span>xds.rio.transform(), categorical<span class="op">=</span><span class="va">True</span>, nodata<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb77-651"><a href="#cb77-651" aria-hidden="true" tabindex="-1"></a>stats</span>
+<span id="cb77-652"><a href="#cb77-652" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-653"><a href="#cb77-653" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-656"><a href="#cb77-656" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb77-657"><a href="#cb77-657" aria-hidden="true" tabindex="-1"></a><span class="co">#| output-location: slide </span></span>
-<span id="cb77-658"><a href="#cb77-658" aria-hidden="true" tabindex="-1"></a><span class="co"># Utilise les noms de catégories du DataFrame `categories`...</span></span>
-<span id="cb77-659"><a href="#cb77-659" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [categories[<span class="bu">int</span>(v)] <span class="cf">for</span> v <span class="kw">in</span> stats[<span class="dv">0</span>].keys()]</span>
-<span id="cb77-660"><a href="#cb77-660" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-661"><a href="#cb77-661" aria-hidden="true" tabindex="-1"></a><span class="co"># ...et les valeurs que nous venons de calculer avec la fonction `zonal_stats`</span></span>
-<span id="cb77-662"><a href="#cb77-662" aria-hidden="true" tabindex="-1"></a>height <span class="op">=</span> stats[<span class="dv">0</span>].values()</span>
-<span id="cb77-663"><a href="#cb77-663" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-664"><a href="#cb77-664" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
-<span id="cb77-665"><a href="#cb77-665" aria-hidden="true" tabindex="-1"></a>bar_container <span class="op">=</span> ax.bar(x, height)</span>
-<span id="cb77-666"><a href="#cb77-666" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels(</span>
-<span id="cb77-667"><a href="#cb77-667" aria-hidden="true" tabindex="-1"></a>    ax.get_xticklabels(),</span>
-<span id="cb77-668"><a href="#cb77-668" aria-hidden="true" tabindex="-1"></a>    rotation<span class="op">=</span><span class="dv">45</span>,</span>
-<span id="cb77-669"><a href="#cb77-669" aria-hidden="true" tabindex="-1"></a>    horizontalalignment<span class="op">=</span><span class="st">'right'</span></span>
-<span id="cb77-670"><a href="#cb77-670" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb77-671"><a href="#cb77-671" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
-<span id="cb77-672"><a href="#cb77-672" aria-hidden="true" tabindex="-1"></a>ax</span>
-<span id="cb77-673"><a href="#cb77-673" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-674"><a href="#cb77-674" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-675"><a href="#cb77-675" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Affichons un petit résumé utilisant des valeurs en m</span>
-<span id="cb77-676"><a href="#cb77-676" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Dans quel type d'occupation du sol se trouvent les restaurants précédemment récupérés ?</span>
-<span id="cb77-677"><a href="#cb77-677" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-680"><a href="#cb77-680" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb77-681"><a href="#cb77-681" aria-hidden="true" tabindex="-1"></a>geoms <span class="op">=</span> resto[<span class="st">'geometry'</span>].tolist()</span>
-<span id="cb77-682"><a href="#cb77-682" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-683"><a href="#cb77-683" aria-hidden="true" tabindex="-1"></a>resto[<span class="st">"lc"</span>] <span class="op">=</span> [categories[<span class="bu">int</span>(x)] <span class="cf">for</span> x <span class="kw">in</span> point_query(vectors<span class="op">=</span>geoms, raster<span class="op">=</span>xds.data[<span class="dv">0</span>], nodata<span class="op">=</span><span class="dv">0</span>, affine<span class="op">=</span>xds.rio.transform())]</span>
-<span id="cb77-684"><a href="#cb77-684" aria-hidden="true" tabindex="-1"></a>resto.head()</span>
-<span id="cb77-685"><a href="#cb77-685" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-686"><a href="#cb77-686" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-687"><a href="#cb77-687" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Quels restaurants ne sont pas situés dans une zone artificialisée ?</span>
+<span id="cb77-654"><a href="#cb77-654" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Traçons un histogramme de ce résultat, en utilisant les noms appropriés des catégories d'utilisation des sols :</span>
+<span id="cb77-655"><a href="#cb77-655" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-658"><a href="#cb77-658" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb77-659"><a href="#cb77-659" aria-hidden="true" tabindex="-1"></a><span class="co">#| output-location: slide </span></span>
+<span id="cb77-660"><a href="#cb77-660" aria-hidden="true" tabindex="-1"></a><span class="co"># Utilise les noms de catégories du DataFrame `categories`...</span></span>
+<span id="cb77-661"><a href="#cb77-661" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [categories[<span class="bu">int</span>(v)] <span class="cf">for</span> v <span class="kw">in</span> stats[<span class="dv">0</span>].keys()]</span>
+<span id="cb77-662"><a href="#cb77-662" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-663"><a href="#cb77-663" aria-hidden="true" tabindex="-1"></a><span class="co"># ...et les valeurs que nous venons de calculer avec la fonction `zonal_stats`</span></span>
+<span id="cb77-664"><a href="#cb77-664" aria-hidden="true" tabindex="-1"></a>height <span class="op">=</span> stats[<span class="dv">0</span>].values()</span>
+<span id="cb77-665"><a href="#cb77-665" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-666"><a href="#cb77-666" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
+<span id="cb77-667"><a href="#cb77-667" aria-hidden="true" tabindex="-1"></a>bar_container <span class="op">=</span> ax.bar(x, height)</span>
+<span id="cb77-668"><a href="#cb77-668" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels(</span>
+<span id="cb77-669"><a href="#cb77-669" aria-hidden="true" tabindex="-1"></a>    ax.get_xticklabels(),</span>
+<span id="cb77-670"><a href="#cb77-670" aria-hidden="true" tabindex="-1"></a>    rotation<span class="op">=</span><span class="dv">45</span>,</span>
+<span id="cb77-671"><a href="#cb77-671" aria-hidden="true" tabindex="-1"></a>    horizontalalignment<span class="op">=</span><span class="st">'right'</span></span>
+<span id="cb77-672"><a href="#cb77-672" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb77-673"><a href="#cb77-673" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
+<span id="cb77-674"><a href="#cb77-674" aria-hidden="true" tabindex="-1"></a>ax</span>
+<span id="cb77-675"><a href="#cb77-675" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb77-676"><a href="#cb77-676" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-677"><a href="#cb77-677" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Affichons un petit résumé utilisant des valeurs en m</span>
+<span id="cb77-678"><a href="#cb77-678" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Dans quel type d'occupation du sol se trouvent les restaurants précédemment récupérés ?</span>
+<span id="cb77-679"><a href="#cb77-679" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-682"><a href="#cb77-682" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb77-683"><a href="#cb77-683" aria-hidden="true" tabindex="-1"></a>geoms <span class="op">=</span> resto[<span class="st">'geometry'</span>].tolist()</span>
+<span id="cb77-684"><a href="#cb77-684" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-685"><a href="#cb77-685" aria-hidden="true" tabindex="-1"></a>resto[<span class="st">"lc"</span>] <span class="op">=</span> [categories[<span class="bu">int</span>(x)] <span class="cf">for</span> x <span class="kw">in</span> point_query(vectors<span class="op">=</span>geoms, raster<span class="op">=</span>xds.data[<span class="dv">0</span>], nodata<span class="op">=</span><span class="dv">0</span>, affine<span class="op">=</span>xds.rio.transform())]</span>
+<span id="cb77-686"><a href="#cb77-686" aria-hidden="true" tabindex="-1"></a>resto.head()</span>
+<span id="cb77-687"><a href="#cb77-687" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-688"><a href="#cb77-688" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-691"><a href="#cb77-691" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb77-692"><a href="#cb77-692" aria-hidden="true" tabindex="-1"></a>selection <span class="op">=</span> resto[(resto.lc <span class="op">!=</span> <span class="st">'Surfaces artificielles'</span>) <span class="op">&amp;</span> (resto.lc <span class="op">!=</span> <span class="st">'Pas de données'</span>)]</span>
-<span id="cb77-693"><a href="#cb77-693" aria-hidden="true" tabindex="-1"></a>selection</span>
-<span id="cb77-694"><a href="#cb77-694" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-695"><a href="#cb77-695" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-696"><a href="#cb77-696" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-699"><a href="#cb77-699" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb77-700"><a href="#cb77-700" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> extract.plot(color<span class="op">=</span><span class="va">None</span>, edgecolor<span class="op">=</span><span class="st">"black"</span>)</span>
-<span id="cb77-701"><a href="#cb77-701" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> selection.plot(ax<span class="op">=</span>ax, marker<span class="op">=</span><span class="st">'x'</span>, color<span class="op">=</span><span class="st">'red'</span>, markersize<span class="op">=</span><span class="dv">8</span>)</span>
-<span id="cb77-702"><a href="#cb77-702" aria-hidden="true" tabindex="-1"></a>ax.set_axis_off()</span>
-<span id="cb77-703"><a href="#cb77-703" aria-hidden="true" tabindex="-1"></a>ax</span>
-<span id="cb77-704"><a href="#cb77-704" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-705"><a href="#cb77-705" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-706"><a href="#cb77-706" aria-hidden="true" tabindex="-1"></a><span class="fu">## A vous de jouer 🚀</span></span>
+<span id="cb77-689"><a href="#cb77-689" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Quels restaurants ne sont pas situés dans une zone artificialisée ?</span>
+<span id="cb77-690"><a href="#cb77-690" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-693"><a href="#cb77-693" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb77-694"><a href="#cb77-694" aria-hidden="true" tabindex="-1"></a>selection <span class="op">=</span> resto[(resto.lc <span class="op">!=</span> <span class="st">'Surfaces artificielles'</span>) <span class="op">&amp;</span> (resto.lc <span class="op">!=</span> <span class="st">'Pas de données'</span>)]</span>
+<span id="cb77-695"><a href="#cb77-695" aria-hidden="true" tabindex="-1"></a>selection</span>
+<span id="cb77-696"><a href="#cb77-696" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb77-697"><a href="#cb77-697" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-698"><a href="#cb77-698" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-701"><a href="#cb77-701" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb77-702"><a href="#cb77-702" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> extract.plot(color<span class="op">=</span><span class="va">None</span>, edgecolor<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb77-703"><a href="#cb77-703" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> selection.plot(ax<span class="op">=</span>ax, marker<span class="op">=</span><span class="st">'x'</span>, color<span class="op">=</span><span class="st">'red'</span>, markersize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb77-704"><a href="#cb77-704" aria-hidden="true" tabindex="-1"></a>ax.set_axis_off()</span>
+<span id="cb77-705"><a href="#cb77-705" aria-hidden="true" tabindex="-1"></a>ax</span>
+<span id="cb77-706"><a href="#cb77-706" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-707"><a href="#cb77-707" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-708"><a href="#cb77-708" aria-hidden="true" tabindex="-1"></a>**Objectif** : Comparez l'occupation du sol de l'ensemble de la province du Québec à l'occupation du sol de la MRC de Montréal.</span>
+<span id="cb77-708"><a href="#cb77-708" aria-hidden="true" tabindex="-1"></a><span class="fu">## A vous de jouer 🚀</span></span>
 <span id="cb77-709"><a href="#cb77-709" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-710"><a href="#cb77-710" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Vous cherchez à obtenir :</span>
-<span id="cb77-711"><a href="#cb77-711" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>2 graphiques en barres (un pour le Québec et un pour la MRC de Montréal)</span>
-<span id="cb77-712"><a href="#cb77-712" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>un résumé (pourquoi pas en HTML !) de la surface de chaque type d'occupation du sol, comme celui présenté en exemple ci-dessous</span>
-<span id="cb77-713"><a href="#cb77-713" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb77-714"><a href="#cb77-714" aria-hidden="true" tabindex="-1"></a><span class="al">![Exemple de tableau de résumé](./fig/summary-lc.png)</span></span>
-<span id="cb77-715"><a href="#cb77-715" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-716"><a href="#cb77-716" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Au début de votre document, vous devez insérer un chunk de code <span class="in">`R`</span> pour préciser la localisation de votre environnement virtuel Python - comme nous utilisons <span class="in">`knitr`</span>, c'est ce qui va permettre à <span class="in">`reticulate`</span> de savoir où chercher les packages Python qui ont été installés pour cet atelier :</span>
+<span id="cb77-710"><a href="#cb77-710" aria-hidden="true" tabindex="-1"></a>**Objectif** : Comparez l'occupation du sol de l'ensemble de la province du Québec à l'occupation du sol de la MRC de Montréal.</span>
+<span id="cb77-711"><a href="#cb77-711" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-712"><a href="#cb77-712" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Vous cherchez à obtenir :</span>
+<span id="cb77-713"><a href="#cb77-713" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>2 graphiques en barres (un pour le Québec et un pour la MRC de Montréal)</span>
+<span id="cb77-714"><a href="#cb77-714" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>un résumé (pourquoi pas en HTML !) de la surface de chaque type d'occupation du sol, comme celui présenté en exemple ci-dessous</span>
+<span id="cb77-715"><a href="#cb77-715" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb77-716"><a href="#cb77-716" aria-hidden="true" tabindex="-1"></a><span class="al">![Exemple de tableau de résumé](./fig/summary-lc.png)</span></span>
 <span id="cb77-717"><a href="#cb77-717" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-718"><a href="#cb77-718" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
-<span id="cb77-719"><a href="#cb77-719" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb77-720"><a href="#cb77-720" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
-<span id="cb77-721"><a href="#cb77-721" aria-hidden="true" tabindex="-1"></a><span class="in">library(reticulate)</span></span>
-<span id="cb77-722"><a href="#cb77-722" aria-hidden="true" tabindex="-1"></a><span class="in">use_virtualenv("~/env-quarto")</span></span>
-<span id="cb77-723"><a href="#cb77-723" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-724"><a href="#cb77-724" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
-<span id="cb77-725"><a href="#cb77-725" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-726"><a href="#cb77-726" aria-hidden="true" tabindex="-1"></a>**_Besoin d'aide ?_**</span>
+<span id="cb77-718"><a href="#cb77-718" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Au début de votre document, vous devez insérer un chunk de code <span class="in">`R`</span> pour préciser la localisation de votre environnement virtuel Python - comme nous utilisons <span class="in">`knitr`</span>, c'est ce qui va permettre à <span class="in">`reticulate`</span> de savoir où chercher les packages Python qui ont été installés pour cet atelier :</span>
+<span id="cb77-719"><a href="#cb77-719" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-720"><a href="#cb77-720" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb77-721"><a href="#cb77-721" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb77-722"><a href="#cb77-722" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
+<span id="cb77-723"><a href="#cb77-723" aria-hidden="true" tabindex="-1"></a><span class="in">library(reticulate)</span></span>
+<span id="cb77-724"><a href="#cb77-724" aria-hidden="true" tabindex="-1"></a><span class="in">use_virtualenv("~/env-quarto")</span></span>
+<span id="cb77-725"><a href="#cb77-725" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb77-726"><a href="#cb77-726" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
 <span id="cb77-727"><a href="#cb77-727" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-728"><a href="#cb77-728" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip icon=false collapse="true"}</span>
-<span id="cb77-729"><a href="#cb77-729" aria-hidden="true" tabindex="-1"></a><span class="fu">### Quelle suite d'action réaliser ?</span></span>
-<span id="cb77-730"><a href="#cb77-730" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-731"><a href="#cb77-731" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Créer un chunk 'r' pour dfinir la localisation de l'environnement virtuel</span>
-<span id="cb77-732"><a href="#cb77-732" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Créer les chunks 'python' correspondants aux actions suivantes :</span>
-<span id="cb77-733"><a href="#cb77-733" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Ouvrir le jeu de données raster</span>
-<span id="cb77-734"><a href="#cb77-734" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Ouvrir le jeu de données vecteur</span>
-<span id="cb77-735"><a href="#cb77-735" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>S'assurer qu'ils sont dans le même système de coordonnées de référence et effectuer la transformation si ce n'est pas le cas</span>
-<span id="cb77-736"><a href="#cb77-736" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Obtenir les statistiques zonales pour l'ensemble de la province du Québec</span>
-<span id="cb77-737"><a href="#cb77-737" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Obtenir les statistiques zonales pour la MRC de Montréal</span>
-<span id="cb77-738"><a href="#cb77-738" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Produire les deux graphiques et un tableau synthétisant ces informations</span>
-<span id="cb77-739"><a href="#cb77-739" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-740"><a href="#cb77-740" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb77-728"><a href="#cb77-728" aria-hidden="true" tabindex="-1"></a>**_Besoin d'aide ?_**</span>
+<span id="cb77-729"><a href="#cb77-729" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-730"><a href="#cb77-730" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip icon=false collapse="true"}</span>
+<span id="cb77-731"><a href="#cb77-731" aria-hidden="true" tabindex="-1"></a><span class="fu">### Quelle suite d'action réaliser ?</span></span>
+<span id="cb77-732"><a href="#cb77-732" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-733"><a href="#cb77-733" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Créer un chunk 'r' pour dfinir la localisation de l'environnement virtuel</span>
+<span id="cb77-734"><a href="#cb77-734" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Créer les chunks 'python' correspondants aux actions suivantes :</span>
+<span id="cb77-735"><a href="#cb77-735" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Ouvrir le jeu de données raster</span>
+<span id="cb77-736"><a href="#cb77-736" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Ouvrir le jeu de données vecteur</span>
+<span id="cb77-737"><a href="#cb77-737" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>S'assurer qu'ils sont dans le même système de coordonnées de référence et effectuer la transformation si ce n'est pas le cas</span>
+<span id="cb77-738"><a href="#cb77-738" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Obtenir les statistiques zonales pour l'ensemble de la province du Québec</span>
+<span id="cb77-739"><a href="#cb77-739" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Obtenir les statistiques zonales pour la MRC de Montréal</span>
+<span id="cb77-740"><a href="#cb77-740" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Produire les deux graphiques et un tableau synthétisant ces informations</span>
 <span id="cb77-741"><a href="#cb77-741" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-742"><a href="#cb77-742" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip icon=false collapse="true"}</span>
-<span id="cb77-743"><a href="#cb77-743" aria-hidden="true" tabindex="-1"></a><span class="fu">### De quelles bibliothèques a-t-on besoin ?</span></span>
-<span id="cb77-744"><a href="#cb77-744" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-745"><a href="#cb77-745" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-748"><a href="#cb77-748" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb77-749"><a href="#cb77-749" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb77-750"><a href="#cb77-750" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rioxarray</span>
-<span id="cb77-751"><a href="#cb77-751" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray</span>
-<span id="cb77-752"><a href="#cb77-752" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb77-753"><a href="#cb77-753" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
-<span id="cb77-754"><a href="#cb77-754" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterstats</span>
-<span id="cb77-755"><a href="#cb77-755" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb77-756"><a href="#cb77-756" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-757"><a href="#cb77-757" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-758"><a href="#cb77-758" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb77-742"><a href="#cb77-742" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb77-743"><a href="#cb77-743" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-744"><a href="#cb77-744" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip icon=false collapse="true"}</span>
+<span id="cb77-745"><a href="#cb77-745" aria-hidden="true" tabindex="-1"></a><span class="fu">### De quelles bibliothèques a-t-on besoin ?</span></span>
+<span id="cb77-746"><a href="#cb77-746" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-747"><a href="#cb77-747" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-750"><a href="#cb77-750" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb77-751"><a href="#cb77-751" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb77-752"><a href="#cb77-752" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rioxarray</span>
+<span id="cb77-753"><a href="#cb77-753" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray</span>
+<span id="cb77-754"><a href="#cb77-754" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb77-755"><a href="#cb77-755" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb77-756"><a href="#cb77-756" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterstats</span>
+<span id="cb77-757"><a href="#cb77-757" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb77-758"><a href="#cb77-758" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-759"><a href="#cb77-759" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-760"><a href="#cb77-760" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip icon=false collapse="true"}</span>
-<span id="cb77-761"><a href="#cb77-761" aria-hidden="true" tabindex="-1"></a><span class="fu">### Besoin d'aide pour ouvrir les données raster ?</span></span>
-<span id="cb77-762"><a href="#cb77-762" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-763"><a href="#cb77-763" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-766"><a href="#cb77-766" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb77-767"><a href="#cb77-767" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb77-768"><a href="#cb77-768" aria-hidden="true" tabindex="-1"></a>xds <span class="op">=</span> xarray.open_dataarray(<span class="st">"/chemin/vers/le/fichier"</span>)</span>
-<span id="cb77-769"><a href="#cb77-769" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-770"><a href="#cb77-770" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-771"><a href="#cb77-771" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb77-760"><a href="#cb77-760" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb77-761"><a href="#cb77-761" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-762"><a href="#cb77-762" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip icon=false collapse="true"}</span>
+<span id="cb77-763"><a href="#cb77-763" aria-hidden="true" tabindex="-1"></a><span class="fu">### Besoin d'aide pour ouvrir les données raster ?</span></span>
+<span id="cb77-764"><a href="#cb77-764" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-765"><a href="#cb77-765" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-768"><a href="#cb77-768" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb77-769"><a href="#cb77-769" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb77-770"><a href="#cb77-770" aria-hidden="true" tabindex="-1"></a>xds <span class="op">=</span> xarray.open_dataarray(<span class="st">"/chemin/vers/le/fichier"</span>)</span>
+<span id="cb77-771"><a href="#cb77-771" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-772"><a href="#cb77-772" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-773"><a href="#cb77-773" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip icon=false collapse="true"}</span>
-<span id="cb77-774"><a href="#cb77-774" aria-hidden="true" tabindex="-1"></a><span class="fu">### Besoin d'aide pour ouvrir les données vecteur ?</span></span>
-<span id="cb77-775"><a href="#cb77-775" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-776"><a href="#cb77-776" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-779"><a href="#cb77-779" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb77-780"><a href="#cb77-780" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb77-781"><a href="#cb77-781" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> gpd.read_file(<span class="st">'/chemin/vers/le/fichier'</span>)</span>
-<span id="cb77-782"><a href="#cb77-782" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-783"><a href="#cb77-783" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-784"><a href="#cb77-784" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb77-773"><a href="#cb77-773" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb77-774"><a href="#cb77-774" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-775"><a href="#cb77-775" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip icon=false collapse="true"}</span>
+<span id="cb77-776"><a href="#cb77-776" aria-hidden="true" tabindex="-1"></a><span class="fu">### Besoin d'aide pour ouvrir les données vecteur ?</span></span>
+<span id="cb77-777"><a href="#cb77-777" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-778"><a href="#cb77-778" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-781"><a href="#cb77-781" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb77-782"><a href="#cb77-782" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb77-783"><a href="#cb77-783" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> gpd.read_file(<span class="st">'/chemin/vers/le/fichier'</span>)</span>
+<span id="cb77-784"><a href="#cb77-784" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-785"><a href="#cb77-785" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-786"><a href="#cb77-786" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip icon=false collapse="true"}</span>
-<span id="cb77-787"><a href="#cb77-787" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comment connaitre la taille d'une cellule raster ?</span></span>
-<span id="cb77-788"><a href="#cb77-788" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-789"><a href="#cb77-789" aria-hidden="true" tabindex="-1"></a>En utilisant les paramètres décrivant la matrice de transformation de géoréférencement du jeu de données raster en question (cette transformation fait correspondre les coordonnées ligne/colonne des pixels aux coordonnées du système de référence de l'ensemble de données) :</span>
+<span id="cb77-786"><a href="#cb77-786" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb77-787"><a href="#cb77-787" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-788"><a href="#cb77-788" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip icon=false collapse="true"}</span>
+<span id="cb77-789"><a href="#cb77-789" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comment connaitre la taille d'une cellule raster ?</span></span>
 <span id="cb77-790"><a href="#cb77-790" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-793"><a href="#cb77-793" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb77-794"><a href="#cb77-794" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb77-795"><a href="#cb77-795" aria-hidden="true" tabindex="-1"></a>transform <span class="op">=</span> xds.rio.transform()</span>
-<span id="cb77-796"><a href="#cb77-796" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-797"><a href="#cb77-797" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-798"><a href="#cb77-798" aria-hidden="true" tabindex="-1"></a>Puis en utilisant la première et la cinquième valeur qui représentent respectivement la largeur et la hauteur du pixel :</span>
+<span id="cb77-791"><a href="#cb77-791" aria-hidden="true" tabindex="-1"></a>En utilisant les paramètres décrivant la matrice de transformation de géoréférencement du jeu de données raster en question (cette transformation fait correspondre les coordonnées ligne/colonne des pixels aux coordonnées du système de référence de l'ensemble de données) :</span>
+<span id="cb77-792"><a href="#cb77-792" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-795"><a href="#cb77-795" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb77-796"><a href="#cb77-796" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb77-797"><a href="#cb77-797" aria-hidden="true" tabindex="-1"></a>transform <span class="op">=</span> xds.rio.transform()</span>
+<span id="cb77-798"><a href="#cb77-798" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-799"><a href="#cb77-799" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-802"><a href="#cb77-802" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb77-803"><a href="#cb77-803" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb77-804"><a href="#cb77-804" aria-hidden="true" tabindex="-1"></a>area_pixel <span class="op">=</span> transform[<span class="dv">0</span>] <span class="op">*</span> <span class="bu">abs</span>(transform[<span class="dv">4</span>]) <span class="co"># la hauteur est généralement négative</span></span>
-<span id="cb77-805"><a href="#cb77-805" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-806"><a href="#cb77-806" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-807"><a href="#cb77-807" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb77-800"><a href="#cb77-800" aria-hidden="true" tabindex="-1"></a>Puis en utilisant la première et la cinquième valeur qui représentent respectivement la largeur et la hauteur du pixel :</span>
+<span id="cb77-801"><a href="#cb77-801" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-804"><a href="#cb77-804" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb77-805"><a href="#cb77-805" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb77-806"><a href="#cb77-806" aria-hidden="true" tabindex="-1"></a>area_pixel <span class="op">=</span> transform[<span class="dv">0</span>] <span class="op">*</span> <span class="bu">abs</span>(transform[<span class="dv">4</span>]) <span class="co"># la hauteur est généralement négative</span></span>
+<span id="cb77-807"><a href="#cb77-807" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb77-808"><a href="#cb77-808" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-809"><a href="#cb77-809" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip icon=false collapse="true"}</span>
-<span id="cb77-810"><a href="#cb77-810" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comment faire pour qu'un *chunk* retourne du HTML ?</span></span>
-<span id="cb77-811"><a href="#cb77-811" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-812"><a href="#cb77-812" aria-hidden="true" tabindex="-1"></a>Par exemple en stockant du Markdown dans une chaîne de caractère et en le transformant en HTML avec <span class="in">`IPython.display.Markdown`</span> :</span>
+<span id="cb77-809"><a href="#cb77-809" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb77-810"><a href="#cb77-810" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-811"><a href="#cb77-811" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip icon=false collapse="true"}</span>
+<span id="cb77-812"><a href="#cb77-812" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comment faire pour qu'un *chunk* retourne du HTML ?</span></span>
 <span id="cb77-813"><a href="#cb77-813" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-816"><a href="#cb77-816" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb77-817"><a href="#cb77-817" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb77-818"><a href="#cb77-818" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown</span>
-<span id="cb77-819"><a href="#cb77-819" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-820"><a href="#cb77-820" aria-hidden="true" tabindex="-1"></a>rendu <span class="op">=</span> <span class="st">'''</span></span>
-<span id="cb77-821"><a href="#cb77-821" aria-hidden="true" tabindex="-1"></a><span class="st">## Résumé</span></span>
-<span id="cb77-822"><a href="#cb77-822" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-823"><a href="#cb77-823" aria-hidden="true" tabindex="-1"></a><span class="st">| Catégorie | Superficie |</span></span>
-<span id="cb77-824"><a href="#cb77-824" aria-hidden="true" tabindex="-1"></a><span class="st">|---------|----------|</span></span>
-<span id="cb77-825"><a href="#cb77-825" aria-hidden="true" tabindex="-1"></a><span class="st">| Aahah | 21.34 |</span></span>
-<span id="cb77-826"><a href="#cb77-826" aria-hidden="true" tabindex="-1"></a><span class="st">'''</span></span>
-<span id="cb77-827"><a href="#cb77-827" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-828"><a href="#cb77-828" aria-hidden="true" tabindex="-1"></a>Markdown(rendu)</span>
-<span id="cb77-829"><a href="#cb77-829" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb77-830"><a href="#cb77-830" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb77-831"><a href="#cb77-831" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb77-814"><a href="#cb77-814" aria-hidden="true" tabindex="-1"></a>Par exemple en stockant du Markdown dans une chaîne de caractère et en le transformant en HTML avec <span class="in">`IPython.display.Markdown`</span> :</span>
+<span id="cb77-815"><a href="#cb77-815" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-818"><a href="#cb77-818" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb77-819"><a href="#cb77-819" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb77-820"><a href="#cb77-820" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown</span>
+<span id="cb77-821"><a href="#cb77-821" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-822"><a href="#cb77-822" aria-hidden="true" tabindex="-1"></a>rendu <span class="op">=</span> <span class="st">'''</span></span>
+<span id="cb77-823"><a href="#cb77-823" aria-hidden="true" tabindex="-1"></a><span class="st">## Résumé</span></span>
+<span id="cb77-824"><a href="#cb77-824" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-825"><a href="#cb77-825" aria-hidden="true" tabindex="-1"></a><span class="st">| Catégorie | Superficie |</span></span>
+<span id="cb77-826"><a href="#cb77-826" aria-hidden="true" tabindex="-1"></a><span class="st">|---------|----------|</span></span>
+<span id="cb77-827"><a href="#cb77-827" aria-hidden="true" tabindex="-1"></a><span class="st">| Aahah | 21.34 |</span></span>
+<span id="cb77-828"><a href="#cb77-828" aria-hidden="true" tabindex="-1"></a><span class="st">'''</span></span>
+<span id="cb77-829"><a href="#cb77-829" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-830"><a href="#cb77-830" aria-hidden="true" tabindex="-1"></a>Markdown(rendu)</span>
+<span id="cb77-831"><a href="#cb77-831" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb77-832"><a href="#cb77-832" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-833"><a href="#cb77-833" aria-hidden="true" tabindex="-1"></a>:::</span>
 </code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
