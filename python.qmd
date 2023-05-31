@@ -14,6 +14,10 @@ execute:
   cache: false
 editor_options: 
   chunk_output_type: console
+
+bibliography: references.bib
+csl: "universite-de-montreal-apa.csl"
+lang: fr
 ---
 
 ```{r reticulate-env}
@@ -58,21 +62,15 @@ pd.set_option('display.width', 1000)
 
 ## Données vectorielles
 
-::: columns
-::: {.column width="66%"}
--   [**Bindings Python de GDAL/OGR**](https://gdal.org/api/python_bindings.html)
--   [**Fiona**](https://fiona.readthedocs.io/en/stable/) - I/O (*wrapper* de haut niveau autour d'OGR)
--   [**Shapely**](https://shapely.readthedocs.io/) (bindings Python de GEOS)
--   [**Pyproj**](https://pyproj4.github.io/pyproj) (bindings Python de [PROJ](https://proj.org/))
--   [**Geopandas**](https://geopandas.org/) - Étend les `DataFrame`s de [pandas](https://pandas.pydata.org/) pour ... (basé sur Fiona / Shapely / Pyproj)
-:::
+-   [**Bindings Python de GDAL/OGR**](https://gdal.org/api/python_bindings.html) [@GDAL]
+-   [**Fiona**](https://fiona.readthedocs.io/en/stable/) [@fiona] - I/O (*wrapper* de haut niveau autour d'OGR)
+-   [**Shapely**](https://shapely.readthedocs.io/)  [@sgillies_2023] - bindings Python de [GEOS](https://github.com/libgeos/geos) [@GEOS]
+-   [**Pyproj**](https://pyproj4.github.io/pyproj) [@pyproj] - bindings Python de [PROJ](https://proj.org/) [@PROJ]
+-   [**Geopandas**](https://geopandas.org/)  [@kelsey_jordahl_2020_3946761] - Étend les `DataFrame`s de [pandas](https://pandas.pydata.org/) [@pandas]
 
-::: {.column width="33%"}
 ![](./fig/logo-pandas.svg)
 
 ![](./fig/logo_geopandas.svg)
-:::
-:::
 
 ## Le package *GeoPandas*
 
@@ -201,7 +199,7 @@ ax
 
 ## Données raster
 
--   [**Rasterio**](https://rasterio.readthedocs.io/) :
+-   [**Rasterio**](https://rasterio.readthedocs.io/) [@gillies_2019] :
     * lecture / écriture de raster (*wrapper* de haut niveau autour de GDAL)
     * données représentées sous forme d'`array` NumPy
     * reprojection
@@ -213,7 +211,7 @@ ax
     * résumer des données raster sur la base de géométries vectorielles
     * extraction de valeurs à un point précis
 
--   [**xarray**](https://docs.xarray.dev/en/stable/) et [**rioxarray**](https://corteva.github.io/rioxarray/) :
+-   [**xarray**](https://docs.xarray.dev/en/stable/) [@xarray] et [**rioxarray**](https://corteva.github.io/rioxarray/) [@rioxarray]:
     * *xarray* pour travailler avec des tableaux multidimensionnels étiquetés
     * *rioxarray* pour ouvrir des jeux des données raster avec *rasterio*, les stocker dans le format de *xarray*, et avoir accès à différentes fonctionnalités de *rasterio*
     * moins "rustique" que d'utiliser rasterio seul / dépend de l'usage souhaité
@@ -244,23 +242,35 @@ print(data)
 
 Exemple d'utilisation :
 
-```{python example-rioxarray-1}
+::: {.panel-tabset .custom-tab}
+
+### Import et lecture
+
+```{python xarray-tuto-import-1}
 import rioxarray
 import xarray
-import matplotlib.pyplot as plt
 
 xds = xarray.open_dataarray("./data/MODIS_ARRAY.nc")
 ```
 
 - Un objet de type `xarray.DataArray` ou `xarray.Dataset` qui contient les différentes méta-données et les données :
 
-```{python example-rioxarray-2}
+```{python xarray-tuto-import-2}
 xds
 ```
 
-```{python example-rioxarray-3}
-# Interpolate missing data:
+### Complétion des valeurs manquantes
+
+```{python xarray-tuto-na}
 filled = xds.rio.interpolate_na()
+```
+
+### Affichage
+
+En utilisant la méthode `plot` des objets `xarray.DataArray` (ici après avoir sélections un *subset* des données) :
+
+```{python xarray-tuto-plot}
+import matplotlib.pyplot as plt
 
 fig = plt.figure(figsize=(15, 5))
 ax1, ax2 = (fig.add_subplot(131), fig.add_subplot(133))
@@ -269,6 +279,29 @@ xds.isel(x=slice(0, 20), y=slice(0, 20)).plot(ax=ax1)
 filled.isel(x=slice(0, 20), y=slice(0, 20)).plot(ax=ax2)
 ```
 
+### SCR
+
+- Affichage :
+
+```{python xarray-tuto-crs-1}
+xds.rio.crs
+```
+
+- Transformation :
+
+```{python xarray-tuto-crs-2}
+xds = xds.rio.reproject("EPSG:6623")
+```
+
+### Découpage
+
+```{python xarray-tuto-clipping}
+#| eval: false
+clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
+```
+
+:::
+
 
 ## Analyse spatiale
 
@@ -276,7 +309,7 @@ filled.isel(x=slice(0, 20), y=slice(0, 20)).plot(ax=ax2)
 
 ::: {.column width="80%"}
 
-Écosystème de bibliothèques pour l'analyse spatiale [PySAL](https://pysal.org/) (Python Spatial Analysis Library) :
+Écosystème de bibliothèques pour l'analyse spatiale [PySAL](https://pysal.org/) (Python Spatial Analysis Library, @pysal2007) :
 
 - **Explorer**:
   - Analyse exploratoire des données spatiales (package [esda](https://pysal.org/esda/))
@@ -320,7 +353,9 @@ filled.isel(x=slice(0, 20), y=slice(0, 20)).plot(ax=ax2)
 
 ## Ressources Python Géospatial
 
-- [https://py.geocompx.org/](https://py.geocompx.org/)
+- [https://py.geocompx.org/](https://py.geocompx.org/) [@Dorman2022]
+
+- [https://geo-python-site.readthedocs.io/en/latest/](https://geo-python-site.readthedocs.io/en/latest/)
 
 - [https://automating-gis-processes.github.io](https://automating-gis-processes.github.io)
 
@@ -519,7 +554,8 @@ from rasterstats import zonal_stats, point_query
 # Le SCR des données
 dst_crs = r.crs
 
-# On récupère le jeu de données "mrc" et le jeu de données "resto"
+# On récupère le jeu de données "mrc" (municipalités régionales de comté)
+# et le jeu de données "resto"
 mrc = restore_geodataframe(r.mrc, dst_crs, "MultiPolygon")
 resto = restore_geodataframe(r.resto, dst_crs, "Point")
 reg = mrc.dissolve(by="MUS_NM_REG")
@@ -624,6 +660,7 @@ fig.tight_layout()
 ax
 ```
 
+- Affichons un petit résumé utilisant des valeurs en m
 - Dans quel type d'occupation du sol se trouvent les restaurants précédemment récupérés ?
 
 ```{python}
@@ -647,3 +684,118 @@ ax = selection.plot(ax=ax, marker='x', color='red', markersize=8)
 ax.set_axis_off()
 ax
 ```
+
+## A vous de jouer 🚀
+
+**Objectif** : Comparez l'occupation du sol de l'ensemble de la province du Québec à l'occupation du sol de la MRC de Montréal.
+
+- Vous cherchez à obtenir :
+    - 2 graphiques en barres (un pour le Québec et un pour la MRC de Montréal)
+    - un résumé (pourquoi pas en HTML !) de la surface de chaque type d'occupation du sol, comme celui présenté en exemple ci-dessous
+    
+![Exemple de tableau de résumé](./fig/summary-lc.png)
+
+- Au début de votre document, vous devez insérer un chunk de code `R` pour préciser la localisation de votre environnement virtuel Python - comme nous utilisons `knitr`, c'est ce qui va permettre à `reticulate` de savoir où chercher les packages Python qui ont été installés pour cet atelier :
+
+````
+```{{r}}
+#| echo: false
+library(reticulate)
+use_virtualenv("~/env-quarto")
+```
+````
+
+**_Besoin d'aide ?_**
+
+::: {.callout-tip icon=false collapse="true"}
+### Quelle suite d'action réaliser ?
+
+- Créer un chunk 'r' pour dfinir la localisation de l'environnement virtuel
+- Créer les chunks 'python' correspondants aux actions suivantes :
+    - Ouvrir le jeu de données raster
+    - Ouvrir le jeu de données vecteur
+    - S'assurer qu'ils sont dans le même système de coordonnées de référence et effectuer la transformation si ce n'est pas le cas
+    - Obtenir les statistiques zonales pour l'ensemble de la province du Québec
+    - Obtenir les statistiques zonales pour la MRC de Montréal
+    - Produire les deux graphiques et un tableau synthétisant ces informations
+
+:::
+
+::: {.callout-tip icon=false collapse="true"}
+### De quelles bibliothèques a-t-on besoin ?
+
+
+```{python}
+#| eval: false
+import rioxarray
+import xarray
+import pandas as pd
+import geopandas as gpd
+import rasterstats
+import matplotlib.pyplot as plt
+```
+
+:::
+
+::: {.callout-tip icon=false collapse="true"}
+### Besoin d'aide pour ouvrir les données raster ?
+
+
+```{python}
+#| eval: false
+xds = xarray.open_dataarray("/chemin/vers/le/fichier")
+```
+
+:::
+
+::: {.callout-tip icon=false collapse="true"}
+### Besoin d'aide pour ouvrir les données vecteur ?
+
+
+```{python}
+#| eval: false
+gdf = gpd.read_file('/chemin/vers/le/fichier')
+```
+
+:::
+
+::: {.callout-tip icon=false collapse="true"}
+### Comment connaitre la taille d'une cellule raster ?
+
+En utilisant les paramètres décrivant la matrice de transformation de géoréférencement du jeu de données raster en question (cette transformation fait correspondre les coordonnées ligne/colonne des pixels aux coordonnées du système de référence de l'ensemble de données) :
+
+```{python}
+#| eval: false
+transform = xds.rio.transform()
+```
+
+Puis en utilisant la première et la cinquième valeur qui représentent respectivement la largeur et la hauteur du pixel :
+
+```{python}
+#| eval: false
+area_pixel = transform[0] * abs(transform[4]) # la hauteur est généralement négative
+```
+
+:::
+
+::: {.callout-tip icon=false collapse="true"}
+### Comment faire pour qu'un *chunk* retourne du HTML ?
+
+Par exemple en stockant du Markdown dans une chaîne de caractère et en le transformant en HTML avec `IPython.display.Markdown` :
+
+```{python}
+#| eval: false
+from IPython.display import Markdown
+
+rendu = '''
+## Résumé
+
+| Catégorie | Superficie |
+|---------|----------|
+| Aahah | 21.34 |
+'''
+
+Markdown(rendu)
+```
+
+:::
