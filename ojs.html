@@ -1038,6 +1038,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
+<section id="références" class="level3">
+<h3 class="anchored" data-anchor-id="références">Références</h3>
+<ins>
+Documentation
+</ins>
+<ul>
+<li><a href="https://github.com/neocarto/bertin">github.com/neocarto/bertin</a></li>
+</ul>
+<ins>
+Exemples
+</ins>
+<ul>
+<li><a href="https://observablehq.com/@neocartocnrs/bertin-js-tooltips?collection=@neocartocnrs/bertin">observablehq.com/<span class="citation" data-cites="neocartocnrs/bertin-js-tooltips?collection">@neocartocnrs/bertin-js-tooltips?collection</span>=<span class="citation" data-cites="neocartocnrs/bertin">@neocartocnrs/bertin</span></a></li>
+</ul>
+<ins>
+Bibliographie
+</ins>
+<ul>
+<li><strong>Bostock M. (2021) JavaScript for Data Analysis. towardsdatascience. <a href="https://towardsdatascience.com/javascript-for-data-analysis-2e8e7dbf63a7">towardsdatascience.com/javascript-for-data-analysis-2e8e7dbf63a7</a></strong></li>
+<li>Bostock M., Ogievetsky V., Heer J. (2011). D³ Data-Driven Documents, IEEE, Volume: 17 <a href="https://ieeexplore.ieee.org/abstract/document/6064996">ieeexplore.ieee.org/abstract/document/6064996</a></li>
+<li>Giraud T., Lambert N., (2023). bertin: Thematic Cartography with ‘bertin.js’. <a href="https://github.com/riatelab/bertin/,%20https://riatelab.github.io/bertin">github.com/riatelab/bertin/, https://riatelab.github.io/bertin</a></li>
+<li><strong>Lambert N, Giraud T, Viry Matthieu and, Ysebaert R. (2023) Cartographier pour le web avec la bibliothèque JavaScript ’bertin‘. SAGEO</strong></li>
+<li>Lambert N. (2023) Observable en bref. Webinaire ‘Interroger les données’, Groupe de travail ‘Atelier Données’ du CNRS.</li>
+<li>Lambert N., Zanin C., (2020). Practical handbook of thematic cartography: principles, methods, and applications. CRC Press. <a href="https://observablehq.com/@neocartocnrs/webinaire-interroger-les-donnees">observablehq.com/<span class="citation" data-cites="neocartocnrs/webinaire-interroger-les-donnees">@neocartocnrs/webinaire-interroger-les-donnees</span></a></li>
+<li>Lambert N. (2023) Cartographie thématique avec ojs. École d’été internationale, Ouidah. <a href="ee-cist.github.io/CAR2_cartodyn/intro/docs/index.html%5D">https://ee-cist.github.io/CAR2_cartodyn/intro/docs/index.html</a></li>
+<li><strong>Perkel M. J. (2021) Reactive, reproducible, collaborative: computational notebooks evolve, Nature. <a href="https://www.nature.com/articles/d41586-021-01174-w">nature.com/articles/d41586-021-01174-w</a></strong></li>
+<li>Rice J., Farquhar A., Piernot P., Gruber T., (1996). “Using the Web instead of a window system”. In: Proceedings of the SIGCHI conference on Human factors in computing systems common ground - CHI ’96. the SIGCHI conference. Vancouver, British Columbia, Canada: ACM Press, pp.&nbsp;103–110. isbn: 978-0-89791-777-3. doi: 10.1145/238386.238442.</li>
+<li>Roth R.E., Donohue R.G., Sack C.M., Wallace T.R., Buckingham T.M.A., (2015). “A Process for Keeping Pace with Evolving Web Mapping Technologies”. In: Cartographic Perspectives 78, pp.&nbsp;25–52. issn: 1048-9053. doi: 10.14714/CP78.1273. url: https://cartographicperspectives.org/index.php/journal/article/view/cp78-roth-et-al</li>
+<li>Shen H. (2014). Interactive notebooks: Sharing the code. Nature, 515(7525), 151-152.</li>
+</ul>
+</section>
 </section>
 <section id="a-vous-de-jouer" class="level2">
 <h2 class="anchored" data-anchor-id="a-vous-de-jouer">A vous de jouer</h2>
@@ -1063,13 +1094,13 @@ Objectif
 <div class="callout-body-container callout-body">
 <p>Réaliser comme ci-dessous, une carte <a href="http://geoconfluences.ens-lyon.fr/glossaire/choroplethe-choroisoplethe">choroplèthe</a> sur une région du Québec que l’on peut selectionner dans une liste déroulante.</p>
 <div class="cell" data-eval="true">
-<div class="sourceCode cell-code hidden" id="cb41" data-startfrom="708" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 707;"><span id="cb41-708"><a href="#cb41-708" aria-hidden="true" tabindex="-1"></a>viewof myregion <span class="op">=</span>  Inputs<span class="op">.</span><span class="fu">select</span>([<span class="st">"Estrie"</span><span class="op">,</span><span class="st">"Capitale-Nationale"</span><span class="op">,</span><span class="st">"Bas-Saint-Laurent"</span>]<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Choisissez une région"</span>})</span>
-<span id="cb41-709"><a href="#cb41-709" aria-hidden="true" tabindex="-1"></a>myreg <span class="op">=</span> bertin<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="fu">subset</span>({</span>
-<span id="cb41-710"><a href="#cb41-710" aria-hidden="true" tabindex="-1"></a>    <span class="dt">geojson</span><span class="op">:</span> munic<span class="op">,</span></span>
-<span id="cb41-711"><a href="#cb41-711" aria-hidden="true" tabindex="-1"></a>    <span class="dt">field</span><span class="op">:</span> <span class="st">"MUS_NM_REG"</span><span class="op">,</span></span>
-<span id="cb41-712"><a href="#cb41-712" aria-hidden="true" tabindex="-1"></a>    <span class="dt">selection</span><span class="op">:</span>   [myregion]</span>
-<span id="cb41-713"><a href="#cb41-713" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb41-714"><a href="#cb41-714" aria-hidden="true" tabindex="-1"></a>bertin<span class="op">.</span><span class="fu">draw</span>({ <span class="dt">layers</span><span class="op">:</span> [{<span class="dt">type</span><span class="op">:</span><span class="st">"header"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="vs">`Les actifs (</span><span class="sc">${</span>myregion<span class="sc">}</span><span class="vs">)`</span>}<span class="op">,</span>{<span class="dt">type</span><span class="op">:</span><span class="st">"scalebar"</span>}<span class="op">,</span>{ <span class="dt">geojson</span><span class="op">:</span> myreg<span class="op">,</span> <span class="dt">rewind</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> {<span class="dt">type</span><span class="op">:</span><span class="st">"choro"</span><span class="op">,</span> <span class="dt">values</span><span class="op">:</span> <span class="st">"TX_2564"</span><span class="op">,</span> <span class="dt">colors</span><span class="op">:</span> <span class="st">"RdYlGn"</span><span class="op">,</span> <span class="dt">leg_x</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">leg_y</span><span class="op">:</span><span class="dv">2</span><span class="op">,</span> <span class="dt">leg_title</span><span class="op">:</span><span class="st">"Taux d'actifs"</span><span class="op">,</span> <span class="dt">leg_round</span><span class="op">:</span><span class="dv">1</span>}<span class="op">,</span> <span class="dt">tooltip</span><span class="op">:</span>[<span class="st">"$MUS_NM_MUN"</span><span class="op">,</span> d <span class="kw">=&gt;</span> <span class="st">"Taux d'actifs :"</span> <span class="op">+</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">TX_2564</span> <span class="op">+</span> <span class="st">"%"</span>]}] })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code hidden" id="cb41" data-startfrom="733" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 732;"><span id="cb41-733"><a href="#cb41-733" aria-hidden="true" tabindex="-1"></a>viewof myregion <span class="op">=</span>  Inputs<span class="op">.</span><span class="fu">select</span>([<span class="st">"Estrie"</span><span class="op">,</span><span class="st">"Capitale-Nationale"</span><span class="op">,</span><span class="st">"Bas-Saint-Laurent"</span>]<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Choisissez une région"</span>})</span>
+<span id="cb41-734"><a href="#cb41-734" aria-hidden="true" tabindex="-1"></a>myreg <span class="op">=</span> bertin<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="fu">subset</span>({</span>
+<span id="cb41-735"><a href="#cb41-735" aria-hidden="true" tabindex="-1"></a>    <span class="dt">geojson</span><span class="op">:</span> munic<span class="op">,</span></span>
+<span id="cb41-736"><a href="#cb41-736" aria-hidden="true" tabindex="-1"></a>    <span class="dt">field</span><span class="op">:</span> <span class="st">"MUS_NM_REG"</span><span class="op">,</span></span>
+<span id="cb41-737"><a href="#cb41-737" aria-hidden="true" tabindex="-1"></a>    <span class="dt">selection</span><span class="op">:</span>   [myregion]</span>
+<span id="cb41-738"><a href="#cb41-738" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb41-739"><a href="#cb41-739" aria-hidden="true" tabindex="-1"></a>bertin<span class="op">.</span><span class="fu">draw</span>({ <span class="dt">layers</span><span class="op">:</span> [{<span class="dt">type</span><span class="op">:</span><span class="st">"header"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="vs">`Les actifs (</span><span class="sc">${</span>myregion<span class="sc">}</span><span class="vs">)`</span>}<span class="op">,</span>{<span class="dt">type</span><span class="op">:</span><span class="st">"scalebar"</span>}<span class="op">,</span>{ <span class="dt">geojson</span><span class="op">:</span> myreg<span class="op">,</span> <span class="dt">rewind</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> {<span class="dt">type</span><span class="op">:</span><span class="st">"choro"</span><span class="op">,</span> <span class="dt">values</span><span class="op">:</span> <span class="st">"TX_2564"</span><span class="op">,</span> <span class="dt">colors</span><span class="op">:</span> <span class="st">"RdYlGn"</span><span class="op">,</span> <span class="dt">leg_x</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">leg_y</span><span class="op">:</span><span class="dv">2</span><span class="op">,</span> <span class="dt">leg_title</span><span class="op">:</span><span class="st">"Taux d'actifs"</span><span class="op">,</span> <span class="dt">leg_round</span><span class="op">:</span><span class="dv">1</span>}<span class="op">,</span> <span class="dt">tooltip</span><span class="op">:</span>[<span class="st">"$MUS_NM_MUN"</span><span class="op">,</span> d <span class="kw">=&gt;</span> <span class="st">"Taux d'actifs :"</span> <span class="op">+</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">TX_2564</span> <span class="op">+</span> <span class="st">"%"</span>]}] })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-32-1" data-nodetype="declaration">
@@ -1277,40 +1308,40 @@ SOLUTION
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell" data-eval="false">
-<div class="sourceCode cell-code" id="cb46" data-startfrom="813" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 812;"><span id="cb46-813"><a href="#cb46-813" aria-hidden="true" tabindex="-1"></a>bertin <span class="op">=</span> <span class="pp">require</span>(<span class="st">"bertin"</span>)</span>
-<span id="cb46-814"><a href="#cb46-814" aria-hidden="true" tabindex="-1"></a>munic <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"munic.geojson"</span>)<span class="op">.</span><span class="fu">json</span>()</span>
-<span id="cb46-815"><a href="#cb46-815" aria-hidden="true" tabindex="-1"></a>viewof myregion <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(</span>
-<span id="cb46-816"><a href="#cb46-816" aria-hidden="true" tabindex="-1"></a>  [<span class="st">"Estrie"</span><span class="op">,</span> <span class="st">"Capitale-Nationale"</span><span class="op">,</span> <span class="st">"Bas-Saint-Laurent"</span>]<span class="op">,</span></span>
-<span id="cb46-817"><a href="#cb46-817" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">label</span><span class="op">:</span> <span class="st">"Choisissez une région"</span> }</span>
-<span id="cb46-818"><a href="#cb46-818" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb46-819"><a href="#cb46-819" aria-hidden="true" tabindex="-1"></a>myreg <span class="op">=</span> bertin<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="fu">subset</span>({</span>
-<span id="cb46-820"><a href="#cb46-820" aria-hidden="true" tabindex="-1"></a>    <span class="dt">geojson</span><span class="op">:</span> munic<span class="op">,</span></span>
-<span id="cb46-821"><a href="#cb46-821" aria-hidden="true" tabindex="-1"></a>    <span class="dt">field</span><span class="op">:</span> <span class="st">"MUS_NM_REG"</span><span class="op">,</span></span>
-<span id="cb46-822"><a href="#cb46-822" aria-hidden="true" tabindex="-1"></a>    <span class="dt">selection</span><span class="op">:</span>   [myregion]</span>
-<span id="cb46-823"><a href="#cb46-823" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb46-824"><a href="#cb46-824" aria-hidden="true" tabindex="-1"></a>bertin<span class="op">.</span><span class="fu">draw</span>({</span>
-<span id="cb46-825"><a href="#cb46-825" aria-hidden="true" tabindex="-1"></a>  <span class="dt">layers</span><span class="op">:</span> [</span>
-<span id="cb46-826"><a href="#cb46-826" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"header"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="vs">`Les actifs (</span><span class="sc">${</span>myregion<span class="sc">}</span><span class="vs">)`</span> }<span class="op">,</span></span>
-<span id="cb46-827"><a href="#cb46-827" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"scalebar"</span> }<span class="op">,</span></span>
-<span id="cb46-828"><a href="#cb46-828" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb46-829"><a href="#cb46-829" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geojson</span><span class="op">:</span> myreg<span class="op">,</span></span>
-<span id="cb46-830"><a href="#cb46-830" aria-hidden="true" tabindex="-1"></a>      <span class="dt">rewind</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
-<span id="cb46-831"><a href="#cb46-831" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> {</span>
-<span id="cb46-832"><a href="#cb46-832" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> <span class="st">"choro"</span><span class="op">,</span></span>
-<span id="cb46-833"><a href="#cb46-833" aria-hidden="true" tabindex="-1"></a>        <span class="dt">values</span><span class="op">:</span> <span class="st">"TX_2564"</span><span class="op">,</span></span>
-<span id="cb46-834"><a href="#cb46-834" aria-hidden="true" tabindex="-1"></a>        <span class="dt">colors</span><span class="op">:</span> <span class="st">"RdYlGn"</span><span class="op">,</span></span>
-<span id="cb46-835"><a href="#cb46-835" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_x</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span></span>
-<span id="cb46-836"><a href="#cb46-836" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_y</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span></span>
-<span id="cb46-837"><a href="#cb46-837" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_title</span><span class="op">:</span> <span class="st">"Taux d'actifs"</span><span class="op">,</span></span>
-<span id="cb46-838"><a href="#cb46-838" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_round</span><span class="op">:</span> <span class="dv">1</span></span>
-<span id="cb46-839"><a href="#cb46-839" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
-<span id="cb46-840"><a href="#cb46-840" aria-hidden="true" tabindex="-1"></a>      <span class="dt">tooltip</span><span class="op">:</span> [</span>
-<span id="cb46-841"><a href="#cb46-841" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$MUS_NM_MUN"</span><span class="op">,</span></span>
-<span id="cb46-842"><a href="#cb46-842" aria-hidden="true" tabindex="-1"></a>        (d) <span class="kw">=&gt;</span> <span class="st">"Taux d'actifs :"</span> <span class="op">+</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">TX_2564</span> <span class="op">+</span> <span class="st">"%"</span></span>
-<span id="cb46-843"><a href="#cb46-843" aria-hidden="true" tabindex="-1"></a>      ]</span>
-<span id="cb46-844"><a href="#cb46-844" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb46-845"><a href="#cb46-845" aria-hidden="true" tabindex="-1"></a>  ]</span>
-<span id="cb46-846"><a href="#cb46-846" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46" data-startfrom="838" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 837;"><span id="cb46-838"><a href="#cb46-838" aria-hidden="true" tabindex="-1"></a>bertin <span class="op">=</span> <span class="pp">require</span>(<span class="st">"bertin"</span>)</span>
+<span id="cb46-839"><a href="#cb46-839" aria-hidden="true" tabindex="-1"></a>munic <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"munic.geojson"</span>)<span class="op">.</span><span class="fu">json</span>()</span>
+<span id="cb46-840"><a href="#cb46-840" aria-hidden="true" tabindex="-1"></a>viewof myregion <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(</span>
+<span id="cb46-841"><a href="#cb46-841" aria-hidden="true" tabindex="-1"></a>  [<span class="st">"Estrie"</span><span class="op">,</span> <span class="st">"Capitale-Nationale"</span><span class="op">,</span> <span class="st">"Bas-Saint-Laurent"</span>]<span class="op">,</span></span>
+<span id="cb46-842"><a href="#cb46-842" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">label</span><span class="op">:</span> <span class="st">"Choisissez une région"</span> }</span>
+<span id="cb46-843"><a href="#cb46-843" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-844"><a href="#cb46-844" aria-hidden="true" tabindex="-1"></a>myreg <span class="op">=</span> bertin<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="fu">subset</span>({</span>
+<span id="cb46-845"><a href="#cb46-845" aria-hidden="true" tabindex="-1"></a>    <span class="dt">geojson</span><span class="op">:</span> munic<span class="op">,</span></span>
+<span id="cb46-846"><a href="#cb46-846" aria-hidden="true" tabindex="-1"></a>    <span class="dt">field</span><span class="op">:</span> <span class="st">"MUS_NM_REG"</span><span class="op">,</span></span>
+<span id="cb46-847"><a href="#cb46-847" aria-hidden="true" tabindex="-1"></a>    <span class="dt">selection</span><span class="op">:</span>   [myregion]</span>
+<span id="cb46-848"><a href="#cb46-848" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb46-849"><a href="#cb46-849" aria-hidden="true" tabindex="-1"></a>bertin<span class="op">.</span><span class="fu">draw</span>({</span>
+<span id="cb46-850"><a href="#cb46-850" aria-hidden="true" tabindex="-1"></a>  <span class="dt">layers</span><span class="op">:</span> [</span>
+<span id="cb46-851"><a href="#cb46-851" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"header"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="vs">`Les actifs (</span><span class="sc">${</span>myregion<span class="sc">}</span><span class="vs">)`</span> }<span class="op">,</span></span>
+<span id="cb46-852"><a href="#cb46-852" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"scalebar"</span> }<span class="op">,</span></span>
+<span id="cb46-853"><a href="#cb46-853" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb46-854"><a href="#cb46-854" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geojson</span><span class="op">:</span> myreg<span class="op">,</span></span>
+<span id="cb46-855"><a href="#cb46-855" aria-hidden="true" tabindex="-1"></a>      <span class="dt">rewind</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb46-856"><a href="#cb46-856" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> {</span>
+<span id="cb46-857"><a href="#cb46-857" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> <span class="st">"choro"</span><span class="op">,</span></span>
+<span id="cb46-858"><a href="#cb46-858" aria-hidden="true" tabindex="-1"></a>        <span class="dt">values</span><span class="op">:</span> <span class="st">"TX_2564"</span><span class="op">,</span></span>
+<span id="cb46-859"><a href="#cb46-859" aria-hidden="true" tabindex="-1"></a>        <span class="dt">colors</span><span class="op">:</span> <span class="st">"RdYlGn"</span><span class="op">,</span></span>
+<span id="cb46-860"><a href="#cb46-860" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_x</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span></span>
+<span id="cb46-861"><a href="#cb46-861" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_y</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span></span>
+<span id="cb46-862"><a href="#cb46-862" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_title</span><span class="op">:</span> <span class="st">"Taux d'actifs"</span><span class="op">,</span></span>
+<span id="cb46-863"><a href="#cb46-863" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_round</span><span class="op">:</span> <span class="dv">1</span></span>
+<span id="cb46-864"><a href="#cb46-864" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb46-865"><a href="#cb46-865" aria-hidden="true" tabindex="-1"></a>      <span class="dt">tooltip</span><span class="op">:</span> [</span>
+<span id="cb46-866"><a href="#cb46-866" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$MUS_NM_MUN"</span><span class="op">,</span></span>
+<span id="cb46-867"><a href="#cb46-867" aria-hidden="true" tabindex="-1"></a>        (d) <span class="kw">=&gt;</span> <span class="st">"Taux d'actifs :"</span> <span class="op">+</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">TX_2564</span> <span class="op">+</span> <span class="st">"%"</span></span>
+<span id="cb46-868"><a href="#cb46-868" aria-hidden="true" tabindex="-1"></a>      ]</span>
+<span id="cb46-869"><a href="#cb46-869" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb46-870"><a href="#cb46-870" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb46-871"><a href="#cb46-871" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-33-1" data-nodetype="declaration">
@@ -2260,166 +2291,191 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb47-752"><a href="#cb47-752" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb47-753"><a href="#cb47-753" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
 <span id="cb47-754"><a href="#cb47-754" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-755"><a href="#cb47-755" aria-hidden="true" tabindex="-1"></a><span class="vs">## A vous de jouer</span></span>
+<span id="cb47-755"><a href="#cb47-755" aria-hidden="true" tabindex="-1"></a><span class="vs">### Références</span></span>
 <span id="cb47-756"><a href="#cb47-756" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-757"><a href="#cb47-757" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-caution appearance="simple"}</span></span>
+<span id="cb47-757"><a href="#cb47-757" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;ins&gt;Documentation&lt;/ins&gt;</span></span>
 <span id="cb47-758"><a href="#cb47-758" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-759"><a href="#cb47-759" aria-hidden="true" tabindex="-1"></a><span class="vs">## faire des cartes avec {ojs}</span></span>
+<span id="cb47-759"><a href="#cb47-759" aria-hidden="true" tabindex="-1"></a><span class="vs">- [github.com/neocarto/bertin](https://github.com/neocarto/bertin)</span></span>
 <span id="cb47-760"><a href="#cb47-760" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-761"><a href="#cb47-761" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-762"><a href="#cb47-762" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-note icon=false}</span></span>
-<span id="cb47-763"><a href="#cb47-763" aria-hidden="true" tabindex="-1"></a><span class="vs">## Objectif</span></span>
+<span id="cb47-761"><a href="#cb47-761" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;ins&gt;Exemples&lt;/ins&gt;</span></span>
+<span id="cb47-762"><a href="#cb47-762" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-763"><a href="#cb47-763" aria-hidden="true" tabindex="-1"></a><span class="vs">- [observablehq.com/@neocartocnrs/bertin-js-tooltips?collection=@neocartocnrs/bertin](https://observablehq.com/@neocartocnrs/bertin-js-tooltips?collection=@neocartocnrs/bertin)</span></span>
 <span id="cb47-764"><a href="#cb47-764" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-765"><a href="#cb47-765" aria-hidden="true" tabindex="-1"></a><span class="vs">Réaliser comme ci-dessous, une carte [choroplèthe](http://geoconfluences.ens-lyon.fr/glossaire/choroplethe-choroisoplethe) sur une région du Québec que l'on peut selectionner dans une liste déroulante.</span></span>
+<span id="cb47-765"><a href="#cb47-765" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;ins&gt;Bibliographie&lt;/ins&gt;</span></span>
 <span id="cb47-766"><a href="#cb47-766" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-769"><a href="#cb47-769" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
-<span id="cb47-770"><a href="#cb47-770" aria-hidden="true" tabindex="-1"></a><span class="co">//| echo: false</span></span>
-<span id="cb47-771"><a href="#cb47-771" aria-hidden="true" tabindex="-1"></a><span class="co">//| eval: true</span></span>
-<span id="cb47-772"><a href="#cb47-772" aria-hidden="true" tabindex="-1"></a>viewof myregion <span class="op">=</span>  Inputs<span class="op">.</span><span class="fu">select</span>([<span class="st">"Estrie"</span><span class="op">,</span><span class="st">"Capitale-Nationale"</span><span class="op">,</span><span class="st">"Bas-Saint-Laurent"</span>]<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Choisissez une région"</span>})</span>
-<span id="cb47-773"><a href="#cb47-773" aria-hidden="true" tabindex="-1"></a>myreg <span class="op">=</span> bertin<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="fu">subset</span>({</span>
-<span id="cb47-774"><a href="#cb47-774" aria-hidden="true" tabindex="-1"></a>    <span class="dt">geojson</span><span class="op">:</span> munic<span class="op">,</span></span>
-<span id="cb47-775"><a href="#cb47-775" aria-hidden="true" tabindex="-1"></a>    <span class="dt">field</span><span class="op">:</span> <span class="st">"MUS_NM_REG"</span><span class="op">,</span></span>
-<span id="cb47-776"><a href="#cb47-776" aria-hidden="true" tabindex="-1"></a>    <span class="dt">selection</span><span class="op">:</span>   [myregion]</span>
-<span id="cb47-777"><a href="#cb47-777" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb47-778"><a href="#cb47-778" aria-hidden="true" tabindex="-1"></a>bertin<span class="op">.</span><span class="fu">draw</span>({ <span class="dt">layers</span><span class="op">:</span> [{<span class="dt">type</span><span class="op">:</span><span class="st">"header"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="vs">`Les actifs (</span><span class="sc">${</span>myregion<span class="sc">}</span><span class="vs">)`</span>}<span class="op">,</span>{<span class="dt">type</span><span class="op">:</span><span class="st">"scalebar"</span>}<span class="op">,</span>{ <span class="dt">geojson</span><span class="op">:</span> myreg<span class="op">,</span> <span class="dt">rewind</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> {<span class="dt">type</span><span class="op">:</span><span class="st">"choro"</span><span class="op">,</span> <span class="dt">values</span><span class="op">:</span> <span class="st">"TX_2564"</span><span class="op">,</span> <span class="dt">colors</span><span class="op">:</span> <span class="st">"RdYlGn"</span><span class="op">,</span> <span class="dt">leg_x</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">leg_y</span><span class="op">:</span><span class="dv">2</span><span class="op">,</span> <span class="dt">leg_title</span><span class="op">:</span><span class="st">"Taux d'actifs"</span><span class="op">,</span> <span class="dt">leg_round</span><span class="op">:</span><span class="dv">1</span>}<span class="op">,</span> <span class="dt">tooltip</span><span class="op">:</span>[<span class="st">"$MUS_NM_MUN"</span><span class="op">,</span> d <span class="kw">=&gt;</span> <span class="st">"Taux d'actifs :"</span> <span class="op">+</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">TX_2564</span> <span class="op">+</span> <span class="st">"%"</span>]}] })</span>
-<span id="cb47-779"><a href="#cb47-779" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
-<span id="cb47-780"><a href="#cb47-780" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb47-767"><a href="#cb47-767" aria-hidden="true" tabindex="-1"></a><span class="vs">- **Bostock M. (2021) JavaScript for Data Analysis. towardsdatascience. [towardsdatascience.com/javascript-for-data-analysis-2e8e7dbf63a7](https://towardsdatascience.com/javascript-for-data-analysis-2e8e7dbf63a7)**</span></span>
+<span id="cb47-768"><a href="#cb47-768" aria-hidden="true" tabindex="-1"></a><span class="vs">- Bostock M., Ogievetsky V., Heer J. (2011). D³ Data-Driven Documents, IEEE,  Volume: 17 [ieeexplore.ieee.org/abstract/document/6064996](https://ieeexplore.ieee.org/abstract/document/6064996)</span></span>
+<span id="cb47-769"><a href="#cb47-769" aria-hidden="true" tabindex="-1"></a><span class="vs">- Giraud T., Lambert N., (2023). bertin: Thematic Cartography with 'bertin.js'. [github.com/riatelab/bertin/, https://riatelab.github.io/bertin](https://github.com/riatelab/bertin/, https://riatelab.github.io/bertin)</span></span>
+<span id="cb47-770"><a href="#cb47-770" aria-hidden="true" tabindex="-1"></a><span class="vs">- **Lambert N, Giraud T, Viry Matthieu and, Ysebaert R. (2023) Cartographier pour le web avec la bibliothèque JavaScript ‘bertin‘. SAGEO**</span></span>
+<span id="cb47-771"><a href="#cb47-771" aria-hidden="true" tabindex="-1"></a><span class="vs">- Lambert N. (2023) Observable en bref. Webinaire ‘Interroger les données’, Groupe de travail ‘Atelier Données’ du CNRS.</span></span>
+<span id="cb47-772"><a href="#cb47-772" aria-hidden="true" tabindex="-1"></a><span class="vs">- Lambert N., Zanin C., (2020). Practical handbook of thematic cartography: principles, methods, and applications. CRC Press.</span></span>
+<span id="cb47-773"><a href="#cb47-773" aria-hidden="true" tabindex="-1"></a><span class="vs">[observablehq.com/@neocartocnrs/webinaire-interroger-les-donnees](https://observablehq.com/@neocartocnrs/webinaire-interroger-les-donnees)</span></span>
+<span id="cb47-774"><a href="#cb47-774" aria-hidden="true" tabindex="-1"></a><span class="vs">- Lambert N. (2023) Cartographie thématique avec ojs. École d’été internationale, Ouidah. [https://ee-cist.github.io/CAR2_cartodyn/intro/docs/index.html](ee-cist.github.io/CAR2_cartodyn/intro/docs/index.html])</span></span>
+<span id="cb47-775"><a href="#cb47-775" aria-hidden="true" tabindex="-1"></a><span class="vs">- **Perkel M. J. (2021) Reactive, reproducible, collaborative: computational notebooks evolve, Nature. [nature.com/articles/d41586-021-01174-w](https://www.nature.com/articles/d41586-021-01174-w)**</span></span>
+<span id="cb47-776"><a href="#cb47-776" aria-hidden="true" tabindex="-1"></a><span class="vs">- Rice J., Farquhar A., Piernot P., Gruber T., (1996). “Using the Web instead of a window system”. In: Proceedings of the SIGCHI conference on Human factors in computing systems common ground - CHI ’96. the SIGCHI conference. Vancouver, British Columbia, Canada: ACM Press, pp. 103–110. isbn: 978-0-89791-777-3. doi: 10.1145/238386.238442.</span></span>
+<span id="cb47-777"><a href="#cb47-777" aria-hidden="true" tabindex="-1"></a><span class="vs">- Roth R.E., Donohue R.G., Sack C.M., Wallace T.R., Buckingham T.M.A., (2015). “A Process for Keeping Pace with Evolving Web Mapping Technologies”. In: Cartographic Perspectives 78, pp. 25–52. issn: 1048-9053. doi: 10.14714/CP78.1273. url: https://cartographicperspectives.org/index.php/journal/article/view/cp78-roth-et-al</span></span>
+<span id="cb47-778"><a href="#cb47-778" aria-hidden="true" tabindex="-1"></a><span class="vs">- Shen H. (2014). Interactive notebooks: Sharing the code. Nature, 515(7525), 151-152.</span></span>
+<span id="cb47-779"><a href="#cb47-779" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-780"><a href="#cb47-780" aria-hidden="true" tabindex="-1"></a><span class="vs">## A vous de jouer</span></span>
 <span id="cb47-781"><a href="#cb47-781" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-782"><a href="#cb47-782" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-782"><a href="#cb47-782" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-caution appearance="simple"}</span></span>
 <span id="cb47-783"><a href="#cb47-783" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-784"><a href="#cb47-784" aria-hidden="true" tabindex="-1"></a><span class="vs">**A vous de jouer**</span></span>
+<span id="cb47-784"><a href="#cb47-784" aria-hidden="true" tabindex="-1"></a><span class="vs">## faire des cartes avec {ojs}</span></span>
 <span id="cb47-785"><a href="#cb47-785" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-786"><a href="#cb47-786" aria-hidden="true" tabindex="-1"></a><span class="vs">- Chargez la bibliothèque [`</span><span class="fu">bertin</span><span class="vs">`](https://github.com/neocarto/bertin)</span></span>
-<span id="cb47-787"><a href="#cb47-787" aria-hidden="true" tabindex="-1"></a><span class="vs">- Importez la couche `</span>munic<span class="op">.</span><span class="fu">geojson</span><span class="vs">`</span></span>
-<span id="cb47-788"><a href="#cb47-788" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-789"><a href="#cb47-789" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-tip icon=false collapse="true"}</span></span>
-<span id="cb47-790"><a href="#cb47-790" aria-hidden="true" tabindex="-1"></a><span class="vs">## Besoin d'aide ?</span></span>
-<span id="cb47-791"><a href="#cb47-791" aria-hidden="true" tabindex="-1"></a><span class="vs">Pour importer des données au format JSON en Observable JavaScript, on utilise l'instruction `</span><span class="fu">FileAttachment</span>()<span class="vs">`</span></span>
-<span id="cb47-792"><a href="#cb47-792" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
-<span id="cb47-793"><a href="#cb47-793" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-794"><a href="#cb47-794" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-795"><a href="#cb47-795" aria-hidden="true" tabindex="-1"></a><span class="vs">- Afficher le fond de carte avec la fonction [`</span><span class="fu">draw</span><span class="vs">`](https://github.com/neocarto/bertin#drawing-a-map)</span></span>
-<span id="cb47-796"><a href="#cb47-796" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-797"><a href="#cb47-797" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-tip icon=false collapse="true"}</span></span>
-<span id="cb47-798"><a href="#cb47-798" aria-hidden="true" tabindex="-1"></a><span class="vs">## Besoin d'aide ?</span></span>
-<span id="cb47-799"><a href="#cb47-799" aria-hidden="true" tabindex="-1"></a><span class="vs">La fonction draw prend en entrée un objet qui a la structure suivante : </span></span>
-<span id="cb47-800"><a href="#cb47-800" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span>js</span>
-<span id="cb47-801"><a href="#cb47-801" aria-hidden="true" tabindex="-1"></a>bertin<span class="op">.</span><span class="fu">draw</span>({</span>
-<span id="cb47-802"><a href="#cb47-802" aria-hidden="true" tabindex="-1"></a>  <span class="dt">layers</span><span class="op">:</span> [{<span class="op">...</span>}]</span>
-<span id="cb47-803"><a href="#cb47-803" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb47-786"><a href="#cb47-786" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-787"><a href="#cb47-787" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-note icon=false}</span></span>
+<span id="cb47-788"><a href="#cb47-788" aria-hidden="true" tabindex="-1"></a><span class="vs">## Objectif</span></span>
+<span id="cb47-789"><a href="#cb47-789" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-790"><a href="#cb47-790" aria-hidden="true" tabindex="-1"></a><span class="vs">Réaliser comme ci-dessous, une carte [choroplèthe](http://geoconfluences.ens-lyon.fr/glossaire/choroplethe-choroisoplethe) sur une région du Québec que l'on peut selectionner dans une liste déroulante.</span></span>
+<span id="cb47-791"><a href="#cb47-791" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-794"><a href="#cb47-794" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb47-795"><a href="#cb47-795" aria-hidden="true" tabindex="-1"></a><span class="co">//| echo: false</span></span>
+<span id="cb47-796"><a href="#cb47-796" aria-hidden="true" tabindex="-1"></a><span class="co">//| eval: true</span></span>
+<span id="cb47-797"><a href="#cb47-797" aria-hidden="true" tabindex="-1"></a>viewof myregion <span class="op">=</span>  Inputs<span class="op">.</span><span class="fu">select</span>([<span class="st">"Estrie"</span><span class="op">,</span><span class="st">"Capitale-Nationale"</span><span class="op">,</span><span class="st">"Bas-Saint-Laurent"</span>]<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Choisissez une région"</span>})</span>
+<span id="cb47-798"><a href="#cb47-798" aria-hidden="true" tabindex="-1"></a>myreg <span class="op">=</span> bertin<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="fu">subset</span>({</span>
+<span id="cb47-799"><a href="#cb47-799" aria-hidden="true" tabindex="-1"></a>    <span class="dt">geojson</span><span class="op">:</span> munic<span class="op">,</span></span>
+<span id="cb47-800"><a href="#cb47-800" aria-hidden="true" tabindex="-1"></a>    <span class="dt">field</span><span class="op">:</span> <span class="st">"MUS_NM_REG"</span><span class="op">,</span></span>
+<span id="cb47-801"><a href="#cb47-801" aria-hidden="true" tabindex="-1"></a>    <span class="dt">selection</span><span class="op">:</span>   [myregion]</span>
+<span id="cb47-802"><a href="#cb47-802" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb47-803"><a href="#cb47-803" aria-hidden="true" tabindex="-1"></a>bertin<span class="op">.</span><span class="fu">draw</span>({ <span class="dt">layers</span><span class="op">:</span> [{<span class="dt">type</span><span class="op">:</span><span class="st">"header"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="vs">`Les actifs (</span><span class="sc">${</span>myregion<span class="sc">}</span><span class="vs">)`</span>}<span class="op">,</span>{<span class="dt">type</span><span class="op">:</span><span class="st">"scalebar"</span>}<span class="op">,</span>{ <span class="dt">geojson</span><span class="op">:</span> myreg<span class="op">,</span> <span class="dt">rewind</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> {<span class="dt">type</span><span class="op">:</span><span class="st">"choro"</span><span class="op">,</span> <span class="dt">values</span><span class="op">:</span> <span class="st">"TX_2564"</span><span class="op">,</span> <span class="dt">colors</span><span class="op">:</span> <span class="st">"RdYlGn"</span><span class="op">,</span> <span class="dt">leg_x</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">leg_y</span><span class="op">:</span><span class="dv">2</span><span class="op">,</span> <span class="dt">leg_title</span><span class="op">:</span><span class="st">"Taux d'actifs"</span><span class="op">,</span> <span class="dt">leg_round</span><span class="op">:</span><span class="dv">1</span>}<span class="op">,</span> <span class="dt">tooltip</span><span class="op">:</span>[<span class="st">"$MUS_NM_MUN"</span><span class="op">,</span> d <span class="kw">=&gt;</span> <span class="st">"Taux d'actifs :"</span> <span class="op">+</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">TX_2564</span> <span class="op">+</span> <span class="st">"%"</span>]}] })</span>
 <span id="cb47-804"><a href="#cb47-804" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
 <span id="cb47-805"><a href="#cb47-805" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
 <span id="cb47-806"><a href="#cb47-806" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-807"><a href="#cb47-807" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-tip icon=false collapse="true"}</span></span>
-<span id="cb47-808"><a href="#cb47-808" aria-hidden="true" tabindex="-1"></a><span class="vs">## Astuce</span></span>
-<span id="cb47-809"><a href="#cb47-809" aria-hidden="true" tabindex="-1"></a><span class="vs">Si la carte ne s'affiche pas correctement, utiliser l'attribut `</span>rewind<span class="op">:</span><span class="fu">true</span><span class="vs">`</span></span>
-<span id="cb47-810"><a href="#cb47-810" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
-<span id="cb47-811"><a href="#cb47-811" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-812"><a href="#cb47-812" aria-hidden="true" tabindex="-1"></a><span class="vs">- Afficher les données attributaires.</span></span>
+<span id="cb47-807"><a href="#cb47-807" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-808"><a href="#cb47-808" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-809"><a href="#cb47-809" aria-hidden="true" tabindex="-1"></a><span class="vs">**A vous de jouer**</span></span>
+<span id="cb47-810"><a href="#cb47-810" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-811"><a href="#cb47-811" aria-hidden="true" tabindex="-1"></a><span class="vs">- Chargez la bibliothèque [`</span><span class="fu">bertin</span><span class="vs">`](https://github.com/neocarto/bertin)</span></span>
+<span id="cb47-812"><a href="#cb47-812" aria-hidden="true" tabindex="-1"></a><span class="vs">- Importez la couche `</span>munic<span class="op">.</span><span class="fu">geojson</span><span class="vs">`</span></span>
 <span id="cb47-813"><a href="#cb47-813" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-814"><a href="#cb47-814" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-tip icon=false collapse="true"}</span></span>
 <span id="cb47-815"><a href="#cb47-815" aria-hidden="true" tabindex="-1"></a><span class="vs">## Besoin d'aide ?</span></span>
-<span id="cb47-816"><a href="#cb47-816" aria-hidden="true" tabindex="-1"></a><span class="vs">On peut afficher les données avec l'instruction. `</span>Inputs<span class="op">.</span><span class="fu">table</span>()<span class="vs">`</span></span>
-<span id="cb47-817"><a href="#cb47-817" aria-hidden="true" tabindex="-1"></a><span class="vs">Mais auparavant, il faut récupérer les propriétés du geoJSON comme ceci :</span></span>
-<span id="cb47-818"><a href="#cb47-818" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span>js</span>
-<span id="cb47-819"><a href="#cb47-819" aria-hidden="true" tabindex="-1"></a>munic<span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span>)</span>
-<span id="cb47-820"><a href="#cb47-820" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
-<span id="cb47-821"><a href="#cb47-821" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
-<span id="cb47-822"><a href="#cb47-822" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-823"><a href="#cb47-823" aria-hidden="true" tabindex="-1"></a><span class="vs">- Créer une liste déroulante pour choisir parmi 3 régions à étudier</span></span>
-<span id="cb47-824"><a href="#cb47-824" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-825"><a href="#cb47-825" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-tip icon=false collapse="true"}</span></span>
-<span id="cb47-826"><a href="#cb47-826" aria-hidden="true" tabindex="-1"></a><span class="vs">## Besoin d'aide ?</span></span>
-<span id="cb47-827"><a href="#cb47-827" aria-hidden="true" tabindex="-1"></a><span class="vs">Par exemple :</span></span>
-<span id="cb47-828"><a href="#cb47-828" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span>js</span>
-<span id="cb47-829"><a href="#cb47-829" aria-hidden="true" tabindex="-1"></a>mesregions <span class="op">=</span> [<span class="st">"Estrie"</span><span class="op">,</span><span class="st">"Capitale-Nationale"</span><span class="op">,</span><span class="st">"Bas-Saint-Laurent"</span>]</span>
-<span id="cb47-830"><a href="#cb47-830" aria-hidden="true" tabindex="-1"></a>viewof myregion <span class="op">=</span>  Inputs<span class="op">.</span><span class="fu">select</span>(mesregions<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Choisissez une région"</span>})</span>
-<span id="cb47-831"><a href="#cb47-831" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
-<span id="cb47-832"><a href="#cb47-832" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
-<span id="cb47-833"><a href="#cb47-833" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-834"><a href="#cb47-834" aria-hidden="true" tabindex="-1"></a><span class="vs">- Créez un nouveau fond de carte contenant les municipalités de la région concernée.</span></span>
-<span id="cb47-835"><a href="#cb47-835" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-836"><a href="#cb47-836" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-tip icon=false collapse="true"}</span></span>
-<span id="cb47-837"><a href="#cb47-837" aria-hidden="true" tabindex="-1"></a><span class="vs">## Besoin d'aide ?</span></span>
+<span id="cb47-816"><a href="#cb47-816" aria-hidden="true" tabindex="-1"></a><span class="vs">Pour importer des données au format JSON en Observable JavaScript, on utilise l'instruction `</span><span class="fu">FileAttachment</span>()<span class="vs">`</span></span>
+<span id="cb47-817"><a href="#cb47-817" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb47-818"><a href="#cb47-818" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-819"><a href="#cb47-819" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-820"><a href="#cb47-820" aria-hidden="true" tabindex="-1"></a><span class="vs">- Afficher le fond de carte avec la fonction [`</span><span class="fu">draw</span><span class="vs">`](https://github.com/neocarto/bertin#drawing-a-map)</span></span>
+<span id="cb47-821"><a href="#cb47-821" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-822"><a href="#cb47-822" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-tip icon=false collapse="true"}</span></span>
+<span id="cb47-823"><a href="#cb47-823" aria-hidden="true" tabindex="-1"></a><span class="vs">## Besoin d'aide ?</span></span>
+<span id="cb47-824"><a href="#cb47-824" aria-hidden="true" tabindex="-1"></a><span class="vs">La fonction draw prend en entrée un objet qui a la structure suivante : </span></span>
+<span id="cb47-825"><a href="#cb47-825" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span>js</span>
+<span id="cb47-826"><a href="#cb47-826" aria-hidden="true" tabindex="-1"></a>bertin<span class="op">.</span><span class="fu">draw</span>({</span>
+<span id="cb47-827"><a href="#cb47-827" aria-hidden="true" tabindex="-1"></a>  <span class="dt">layers</span><span class="op">:</span> [{<span class="op">...</span>}]</span>
+<span id="cb47-828"><a href="#cb47-828" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb47-829"><a href="#cb47-829" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb47-830"><a href="#cb47-830" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb47-831"><a href="#cb47-831" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-832"><a href="#cb47-832" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-tip icon=false collapse="true"}</span></span>
+<span id="cb47-833"><a href="#cb47-833" aria-hidden="true" tabindex="-1"></a><span class="vs">## Astuce</span></span>
+<span id="cb47-834"><a href="#cb47-834" aria-hidden="true" tabindex="-1"></a><span class="vs">Si la carte ne s'affiche pas correctement, utiliser l'attribut `</span>rewind<span class="op">:</span><span class="fu">true</span><span class="vs">`</span></span>
+<span id="cb47-835"><a href="#cb47-835" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb47-836"><a href="#cb47-836" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-837"><a href="#cb47-837" aria-hidden="true" tabindex="-1"></a><span class="vs">- Afficher les données attributaires.</span></span>
 <span id="cb47-838"><a href="#cb47-838" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-839"><a href="#cb47-839" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-840"><a href="#cb47-840" aria-hidden="true" tabindex="-1"></a><span class="vs">Pour créer ce sous jeu de données, on peut utiliser la fonction `</span><span class="fu">subset</span><span class="vs">` de la bibliothèque `</span><span class="fu">bertin</span><span class="vs">`.</span></span>
-<span id="cb47-841"><a href="#cb47-841" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span>js</span>
-<span id="cb47-842"><a href="#cb47-842" aria-hidden="true" tabindex="-1"></a>myreg <span class="op">=</span> bertin<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="fu">subset</span>({</span>
-<span id="cb47-843"><a href="#cb47-843" aria-hidden="true" tabindex="-1"></a>    <span class="dt">geojson</span><span class="op">:</span> munic<span class="op">,</span></span>
-<span id="cb47-844"><a href="#cb47-844" aria-hidden="true" tabindex="-1"></a>    <span class="dt">field</span><span class="op">:</span> <span class="st">"MUS_NM_REG"</span><span class="op">,</span></span>
-<span id="cb47-845"><a href="#cb47-845" aria-hidden="true" tabindex="-1"></a>    <span class="dt">selection</span><span class="op">:</span>   [myregion]</span>
-<span id="cb47-846"><a href="#cb47-846" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb47-847"><a href="#cb47-847" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
-<span id="cb47-848"><a href="#cb47-848" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb47-839"><a href="#cb47-839" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-tip icon=false collapse="true"}</span></span>
+<span id="cb47-840"><a href="#cb47-840" aria-hidden="true" tabindex="-1"></a><span class="vs">## Besoin d'aide ?</span></span>
+<span id="cb47-841"><a href="#cb47-841" aria-hidden="true" tabindex="-1"></a><span class="vs">On peut afficher les données avec l'instruction. `</span>Inputs<span class="op">.</span><span class="fu">table</span>()<span class="vs">`</span></span>
+<span id="cb47-842"><a href="#cb47-842" aria-hidden="true" tabindex="-1"></a><span class="vs">Mais auparavant, il faut récupérer les propriétés du geoJSON comme ceci :</span></span>
+<span id="cb47-843"><a href="#cb47-843" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span>js</span>
+<span id="cb47-844"><a href="#cb47-844" aria-hidden="true" tabindex="-1"></a>munic<span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span>)</span>
+<span id="cb47-845"><a href="#cb47-845" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb47-846"><a href="#cb47-846" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb47-847"><a href="#cb47-847" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-848"><a href="#cb47-848" aria-hidden="true" tabindex="-1"></a><span class="vs">- Créer une liste déroulante pour choisir parmi 3 régions à étudier</span></span>
 <span id="cb47-849"><a href="#cb47-849" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-850"><a href="#cb47-850" aria-hidden="true" tabindex="-1"></a><span class="vs">- Afficher le nouveau fond de carte</span></span>
-<span id="cb47-851"><a href="#cb47-851" aria-hidden="true" tabindex="-1"></a><span class="vs">- Définisser la couleur de fond, l'épaisseur des traits, la couleur des contours.</span></span>
-<span id="cb47-852"><a href="#cb47-852" aria-hidden="true" tabindex="-1"></a><span class="vs">- Réaliser une carte [chorplèthe](https://github.com/neocarto/bertin#choropleth) à partir d'une variable disponible. Par exemple, le taux d'actifs (TX_2564).</span></span>
-<span id="cb47-853"><a href="#cb47-853" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-854"><a href="#cb47-854" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-tip icon=false collapse="true"}</span></span>
-<span id="cb47-855"><a href="#cb47-855" aria-hidden="true" tabindex="-1"></a><span class="vs">## Besoin d'aide ?</span></span>
-<span id="cb47-856"><a href="#cb47-856" aria-hidden="true" tabindex="-1"></a><span class="vs">Définissez l'attribut `</span><span class="fu">fill</span><span class="vs">` par un objet commençant par `</span>{<span class="dt">type</span><span class="op">:</span> choro<span class="op">,</span> <span class="dt">values</span><span class="op">:</span> <span class="op">...</span>}<span class="vs">`</span></span>
+<span id="cb47-850"><a href="#cb47-850" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-tip icon=false collapse="true"}</span></span>
+<span id="cb47-851"><a href="#cb47-851" aria-hidden="true" tabindex="-1"></a><span class="vs">## Besoin d'aide ?</span></span>
+<span id="cb47-852"><a href="#cb47-852" aria-hidden="true" tabindex="-1"></a><span class="vs">Par exemple :</span></span>
+<span id="cb47-853"><a href="#cb47-853" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span>js</span>
+<span id="cb47-854"><a href="#cb47-854" aria-hidden="true" tabindex="-1"></a>mesregions <span class="op">=</span> [<span class="st">"Estrie"</span><span class="op">,</span><span class="st">"Capitale-Nationale"</span><span class="op">,</span><span class="st">"Bas-Saint-Laurent"</span>]</span>
+<span id="cb47-855"><a href="#cb47-855" aria-hidden="true" tabindex="-1"></a>viewof myregion <span class="op">=</span>  Inputs<span class="op">.</span><span class="fu">select</span>(mesregions<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Choisissez une région"</span>})</span>
+<span id="cb47-856"><a href="#cb47-856" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
 <span id="cb47-857"><a href="#cb47-857" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
 <span id="cb47-858"><a href="#cb47-858" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-859"><a href="#cb47-859" aria-hidden="true" tabindex="-1"></a><span class="vs">- Changez les couleurs et la méthode de discretisation</span></span>
+<span id="cb47-859"><a href="#cb47-859" aria-hidden="true" tabindex="-1"></a><span class="vs">- Créez un nouveau fond de carte contenant les municipalités de la région concernée.</span></span>
 <span id="cb47-860"><a href="#cb47-860" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-861"><a href="#cb47-861" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-tip icon=false collapse="true"}</span></span>
 <span id="cb47-862"><a href="#cb47-862" aria-hidden="true" tabindex="-1"></a><span class="vs">## Besoin d'aide ?</span></span>
-<span id="cb47-863"><a href="#cb47-863" aria-hidden="true" tabindex="-1"></a><span class="vs">La documentation est disponible [ici](https://github.com/neocarto/bertin#choropleth)</span></span>
-<span id="cb47-864"><a href="#cb47-864" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
-<span id="cb47-865"><a href="#cb47-865" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-866"><a href="#cb47-866" aria-hidden="true" tabindex="-1"></a><span class="vs">- Ajouter un [titre](https://github.com/neocarto/bertin#header)</span></span>
-<span id="cb47-867"><a href="#cb47-867" aria-hidden="true" tabindex="-1"></a><span class="vs">- Ajouter la légende</span></span>
-<span id="cb47-868"><a href="#cb47-868" aria-hidden="true" tabindex="-1"></a><span class="vs">- Ajouter l'[échelle](https://github.com/neocarto/bertin#scalebar)</span></span>
-<span id="cb47-869"><a href="#cb47-869" aria-hidden="true" tabindex="-1"></a><span class="vs">- Ajoutez des [infobulles](https://observablehq.com/@neocartocnrs/bertin-js-tooltips)</span></span>
-<span id="cb47-870"><a href="#cb47-870" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-871"><a href="#cb47-871" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-caution collapse="true"}</span></span>
-<span id="cb47-872"><a href="#cb47-872" aria-hidden="true" tabindex="-1"></a><span class="vs">## SOLUTION</span></span>
-<span id="cb47-873"><a href="#cb47-873" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-876"><a href="#cb47-876" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
-<span id="cb47-877"><a href="#cb47-877" aria-hidden="true" tabindex="-1"></a><span class="co">//| echo: true</span></span>
-<span id="cb47-878"><a href="#cb47-878" aria-hidden="true" tabindex="-1"></a><span class="co">//| eval: false</span></span>
-<span id="cb47-879"><a href="#cb47-879" aria-hidden="true" tabindex="-1"></a>bertin <span class="op">=</span> <span class="pp">require</span>(<span class="st">"bertin"</span>)</span>
-<span id="cb47-880"><a href="#cb47-880" aria-hidden="true" tabindex="-1"></a>munic <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"munic.geojson"</span>)<span class="op">.</span><span class="fu">json</span>()</span>
-<span id="cb47-881"><a href="#cb47-881" aria-hidden="true" tabindex="-1"></a>viewof myregion <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(</span>
-<span id="cb47-882"><a href="#cb47-882" aria-hidden="true" tabindex="-1"></a>  [<span class="st">"Estrie"</span><span class="op">,</span> <span class="st">"Capitale-Nationale"</span><span class="op">,</span> <span class="st">"Bas-Saint-Laurent"</span>]<span class="op">,</span></span>
-<span id="cb47-883"><a href="#cb47-883" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">label</span><span class="op">:</span> <span class="st">"Choisissez une région"</span> }</span>
-<span id="cb47-884"><a href="#cb47-884" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb47-885"><a href="#cb47-885" aria-hidden="true" tabindex="-1"></a>myreg <span class="op">=</span> bertin<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="fu">subset</span>({</span>
-<span id="cb47-886"><a href="#cb47-886" aria-hidden="true" tabindex="-1"></a>    <span class="dt">geojson</span><span class="op">:</span> munic<span class="op">,</span></span>
-<span id="cb47-887"><a href="#cb47-887" aria-hidden="true" tabindex="-1"></a>    <span class="dt">field</span><span class="op">:</span> <span class="st">"MUS_NM_REG"</span><span class="op">,</span></span>
-<span id="cb47-888"><a href="#cb47-888" aria-hidden="true" tabindex="-1"></a>    <span class="dt">selection</span><span class="op">:</span>   [myregion]</span>
-<span id="cb47-889"><a href="#cb47-889" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb47-890"><a href="#cb47-890" aria-hidden="true" tabindex="-1"></a>bertin<span class="op">.</span><span class="fu">draw</span>({</span>
-<span id="cb47-891"><a href="#cb47-891" aria-hidden="true" tabindex="-1"></a>  <span class="dt">layers</span><span class="op">:</span> [</span>
-<span id="cb47-892"><a href="#cb47-892" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"header"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="vs">`Les actifs (</span><span class="sc">${</span>myregion<span class="sc">}</span><span class="vs">)`</span> }<span class="op">,</span></span>
-<span id="cb47-893"><a href="#cb47-893" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"scalebar"</span> }<span class="op">,</span></span>
-<span id="cb47-894"><a href="#cb47-894" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb47-895"><a href="#cb47-895" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geojson</span><span class="op">:</span> myreg<span class="op">,</span></span>
-<span id="cb47-896"><a href="#cb47-896" aria-hidden="true" tabindex="-1"></a>      <span class="dt">rewind</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
-<span id="cb47-897"><a href="#cb47-897" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> {</span>
-<span id="cb47-898"><a href="#cb47-898" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> <span class="st">"choro"</span><span class="op">,</span></span>
-<span id="cb47-899"><a href="#cb47-899" aria-hidden="true" tabindex="-1"></a>        <span class="dt">values</span><span class="op">:</span> <span class="st">"TX_2564"</span><span class="op">,</span></span>
-<span id="cb47-900"><a href="#cb47-900" aria-hidden="true" tabindex="-1"></a>        <span class="dt">colors</span><span class="op">:</span> <span class="st">"RdYlGn"</span><span class="op">,</span></span>
-<span id="cb47-901"><a href="#cb47-901" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_x</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span></span>
-<span id="cb47-902"><a href="#cb47-902" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_y</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span></span>
-<span id="cb47-903"><a href="#cb47-903" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_title</span><span class="op">:</span> <span class="st">"Taux d'actifs"</span><span class="op">,</span></span>
-<span id="cb47-904"><a href="#cb47-904" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_round</span><span class="op">:</span> <span class="dv">1</span></span>
-<span id="cb47-905"><a href="#cb47-905" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
-<span id="cb47-906"><a href="#cb47-906" aria-hidden="true" tabindex="-1"></a>      <span class="dt">tooltip</span><span class="op">:</span> [</span>
-<span id="cb47-907"><a href="#cb47-907" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$MUS_NM_MUN"</span><span class="op">,</span></span>
-<span id="cb47-908"><a href="#cb47-908" aria-hidden="true" tabindex="-1"></a>        (d) <span class="kw">=&gt;</span> <span class="st">"Taux d'actifs :"</span> <span class="op">+</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">TX_2564</span> <span class="op">+</span> <span class="st">"%"</span></span>
-<span id="cb47-909"><a href="#cb47-909" aria-hidden="true" tabindex="-1"></a>      ]</span>
-<span id="cb47-910"><a href="#cb47-910" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb47-911"><a href="#cb47-911" aria-hidden="true" tabindex="-1"></a>  ]</span>
-<span id="cb47-912"><a href="#cb47-912" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb47-913"><a href="#cb47-913" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
-<span id="cb47-914"><a href="#cb47-914" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
-<span id="cb47-915"><a href="#cb47-915" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-916"><a href="#cb47-916" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
-<span id="cb47-917"><a href="#cb47-917" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-918"><a href="#cb47-918" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-863"><a href="#cb47-863" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-864"><a href="#cb47-864" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-865"><a href="#cb47-865" aria-hidden="true" tabindex="-1"></a><span class="vs">Pour créer ce sous jeu de données, on peut utiliser la fonction `</span><span class="fu">subset</span><span class="vs">` de la bibliothèque `</span><span class="fu">bertin</span><span class="vs">`.</span></span>
+<span id="cb47-866"><a href="#cb47-866" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span>js</span>
+<span id="cb47-867"><a href="#cb47-867" aria-hidden="true" tabindex="-1"></a>myreg <span class="op">=</span> bertin<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="fu">subset</span>({</span>
+<span id="cb47-868"><a href="#cb47-868" aria-hidden="true" tabindex="-1"></a>    <span class="dt">geojson</span><span class="op">:</span> munic<span class="op">,</span></span>
+<span id="cb47-869"><a href="#cb47-869" aria-hidden="true" tabindex="-1"></a>    <span class="dt">field</span><span class="op">:</span> <span class="st">"MUS_NM_REG"</span><span class="op">,</span></span>
+<span id="cb47-870"><a href="#cb47-870" aria-hidden="true" tabindex="-1"></a>    <span class="dt">selection</span><span class="op">:</span>   [myregion]</span>
+<span id="cb47-871"><a href="#cb47-871" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb47-872"><a href="#cb47-872" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb47-873"><a href="#cb47-873" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb47-874"><a href="#cb47-874" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-875"><a href="#cb47-875" aria-hidden="true" tabindex="-1"></a><span class="vs">- Afficher le nouveau fond de carte</span></span>
+<span id="cb47-876"><a href="#cb47-876" aria-hidden="true" tabindex="-1"></a><span class="vs">- Définisser la couleur de fond, l'épaisseur des traits, la couleur des contours.</span></span>
+<span id="cb47-877"><a href="#cb47-877" aria-hidden="true" tabindex="-1"></a><span class="vs">- Réaliser une carte [chorplèthe](https://github.com/neocarto/bertin#choropleth) à partir d'une variable disponible. Par exemple, le taux d'actifs (TX_2564).</span></span>
+<span id="cb47-878"><a href="#cb47-878" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-879"><a href="#cb47-879" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-tip icon=false collapse="true"}</span></span>
+<span id="cb47-880"><a href="#cb47-880" aria-hidden="true" tabindex="-1"></a><span class="vs">## Besoin d'aide ?</span></span>
+<span id="cb47-881"><a href="#cb47-881" aria-hidden="true" tabindex="-1"></a><span class="vs">Définissez l'attribut `</span><span class="fu">fill</span><span class="vs">` par un objet commençant par `</span>{<span class="dt">type</span><span class="op">:</span> choro<span class="op">,</span> <span class="dt">values</span><span class="op">:</span> <span class="op">...</span>}<span class="vs">`</span></span>
+<span id="cb47-882"><a href="#cb47-882" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb47-883"><a href="#cb47-883" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-884"><a href="#cb47-884" aria-hidden="true" tabindex="-1"></a><span class="vs">- Changez les couleurs et la méthode de discretisation</span></span>
+<span id="cb47-885"><a href="#cb47-885" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-886"><a href="#cb47-886" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-tip icon=false collapse="true"}</span></span>
+<span id="cb47-887"><a href="#cb47-887" aria-hidden="true" tabindex="-1"></a><span class="vs">## Besoin d'aide ?</span></span>
+<span id="cb47-888"><a href="#cb47-888" aria-hidden="true" tabindex="-1"></a><span class="vs">La documentation est disponible [ici](https://github.com/neocarto/bertin#choropleth)</span></span>
+<span id="cb47-889"><a href="#cb47-889" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb47-890"><a href="#cb47-890" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-891"><a href="#cb47-891" aria-hidden="true" tabindex="-1"></a><span class="vs">- Ajouter un [titre](https://github.com/neocarto/bertin#header)</span></span>
+<span id="cb47-892"><a href="#cb47-892" aria-hidden="true" tabindex="-1"></a><span class="vs">- Ajouter la légende</span></span>
+<span id="cb47-893"><a href="#cb47-893" aria-hidden="true" tabindex="-1"></a><span class="vs">- Ajouter l'[échelle](https://github.com/neocarto/bertin#scalebar)</span></span>
+<span id="cb47-894"><a href="#cb47-894" aria-hidden="true" tabindex="-1"></a><span class="vs">- Ajoutez des [infobulles](https://observablehq.com/@neocartocnrs/bertin-js-tooltips)</span></span>
+<span id="cb47-895"><a href="#cb47-895" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-896"><a href="#cb47-896" aria-hidden="true" tabindex="-1"></a><span class="vs">::: {.callout-caution collapse="true"}</span></span>
+<span id="cb47-897"><a href="#cb47-897" aria-hidden="true" tabindex="-1"></a><span class="vs">## SOLUTION</span></span>
+<span id="cb47-898"><a href="#cb47-898" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-901"><a href="#cb47-901" aria-hidden="true" tabindex="-1"></a><span class="in">```{ojs}</span></span>
+<span id="cb47-902"><a href="#cb47-902" aria-hidden="true" tabindex="-1"></a><span class="co">//| echo: true</span></span>
+<span id="cb47-903"><a href="#cb47-903" aria-hidden="true" tabindex="-1"></a><span class="co">//| eval: false</span></span>
+<span id="cb47-904"><a href="#cb47-904" aria-hidden="true" tabindex="-1"></a>bertin <span class="op">=</span> <span class="pp">require</span>(<span class="st">"bertin"</span>)</span>
+<span id="cb47-905"><a href="#cb47-905" aria-hidden="true" tabindex="-1"></a>munic <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"munic.geojson"</span>)<span class="op">.</span><span class="fu">json</span>()</span>
+<span id="cb47-906"><a href="#cb47-906" aria-hidden="true" tabindex="-1"></a>viewof myregion <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(</span>
+<span id="cb47-907"><a href="#cb47-907" aria-hidden="true" tabindex="-1"></a>  [<span class="st">"Estrie"</span><span class="op">,</span> <span class="st">"Capitale-Nationale"</span><span class="op">,</span> <span class="st">"Bas-Saint-Laurent"</span>]<span class="op">,</span></span>
+<span id="cb47-908"><a href="#cb47-908" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">label</span><span class="op">:</span> <span class="st">"Choisissez une région"</span> }</span>
+<span id="cb47-909"><a href="#cb47-909" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb47-910"><a href="#cb47-910" aria-hidden="true" tabindex="-1"></a>myreg <span class="op">=</span> bertin<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="fu">subset</span>({</span>
+<span id="cb47-911"><a href="#cb47-911" aria-hidden="true" tabindex="-1"></a>    <span class="dt">geojson</span><span class="op">:</span> munic<span class="op">,</span></span>
+<span id="cb47-912"><a href="#cb47-912" aria-hidden="true" tabindex="-1"></a>    <span class="dt">field</span><span class="op">:</span> <span class="st">"MUS_NM_REG"</span><span class="op">,</span></span>
+<span id="cb47-913"><a href="#cb47-913" aria-hidden="true" tabindex="-1"></a>    <span class="dt">selection</span><span class="op">:</span>   [myregion]</span>
+<span id="cb47-914"><a href="#cb47-914" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb47-915"><a href="#cb47-915" aria-hidden="true" tabindex="-1"></a>bertin<span class="op">.</span><span class="fu">draw</span>({</span>
+<span id="cb47-916"><a href="#cb47-916" aria-hidden="true" tabindex="-1"></a>  <span class="dt">layers</span><span class="op">:</span> [</span>
+<span id="cb47-917"><a href="#cb47-917" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"header"</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="vs">`Les actifs (</span><span class="sc">${</span>myregion<span class="sc">}</span><span class="vs">)`</span> }<span class="op">,</span></span>
+<span id="cb47-918"><a href="#cb47-918" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">type</span><span class="op">:</span> <span class="st">"scalebar"</span> }<span class="op">,</span></span>
+<span id="cb47-919"><a href="#cb47-919" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb47-920"><a href="#cb47-920" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geojson</span><span class="op">:</span> myreg<span class="op">,</span></span>
+<span id="cb47-921"><a href="#cb47-921" aria-hidden="true" tabindex="-1"></a>      <span class="dt">rewind</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb47-922"><a href="#cb47-922" aria-hidden="true" tabindex="-1"></a>      <span class="dt">fill</span><span class="op">:</span> {</span>
+<span id="cb47-923"><a href="#cb47-923" aria-hidden="true" tabindex="-1"></a>        <span class="dt">type</span><span class="op">:</span> <span class="st">"choro"</span><span class="op">,</span></span>
+<span id="cb47-924"><a href="#cb47-924" aria-hidden="true" tabindex="-1"></a>        <span class="dt">values</span><span class="op">:</span> <span class="st">"TX_2564"</span><span class="op">,</span></span>
+<span id="cb47-925"><a href="#cb47-925" aria-hidden="true" tabindex="-1"></a>        <span class="dt">colors</span><span class="op">:</span> <span class="st">"RdYlGn"</span><span class="op">,</span></span>
+<span id="cb47-926"><a href="#cb47-926" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_x</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span></span>
+<span id="cb47-927"><a href="#cb47-927" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_y</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span></span>
+<span id="cb47-928"><a href="#cb47-928" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_title</span><span class="op">:</span> <span class="st">"Taux d'actifs"</span><span class="op">,</span></span>
+<span id="cb47-929"><a href="#cb47-929" aria-hidden="true" tabindex="-1"></a>        <span class="dt">leg_round</span><span class="op">:</span> <span class="dv">1</span></span>
+<span id="cb47-930"><a href="#cb47-930" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb47-931"><a href="#cb47-931" aria-hidden="true" tabindex="-1"></a>      <span class="dt">tooltip</span><span class="op">:</span> [</span>
+<span id="cb47-932"><a href="#cb47-932" aria-hidden="true" tabindex="-1"></a>        <span class="st">"$MUS_NM_MUN"</span><span class="op">,</span></span>
+<span id="cb47-933"><a href="#cb47-933" aria-hidden="true" tabindex="-1"></a>        (d) <span class="kw">=&gt;</span> <span class="st">"Taux d'actifs :"</span> <span class="op">+</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">TX_2564</span> <span class="op">+</span> <span class="st">"%"</span></span>
+<span id="cb47-934"><a href="#cb47-934" aria-hidden="true" tabindex="-1"></a>      ]</span>
+<span id="cb47-935"><a href="#cb47-935" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb47-936"><a href="#cb47-936" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb47-937"><a href="#cb47-937" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb47-938"><a href="#cb47-938" aria-hidden="true" tabindex="-1"></a><span class="vs">```</span></span>
+<span id="cb47-939"><a href="#cb47-939" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb47-940"><a href="#cb47-940" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-941"><a href="#cb47-941" aria-hidden="true" tabindex="-1"></a><span class="vs">:::</span></span>
+<span id="cb47-942"><a href="#cb47-942" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-943"><a href="#cb47-943" aria-hidden="true" tabindex="-1"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

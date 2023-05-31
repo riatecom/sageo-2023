@@ -690,6 +690,31 @@ bertin.draw({
 })
 ```
 
+### Références
+
+<ins>Documentation</ins>
+
+- [github.com/neocarto/bertin](https://github.com/neocarto/bertin)
+
+<ins>Exemples</ins>
+
+- [observablehq.com/@neocartocnrs/bertin-js-tooltips?collection=@neocartocnrs/bertin](https://observablehq.com/@neocartocnrs/bertin-js-tooltips?collection=@neocartocnrs/bertin)
+
+<ins>Bibliographie</ins>
+
+- **Bostock M. (2021) JavaScript for Data Analysis. towardsdatascience. [towardsdatascience.com/javascript-for-data-analysis-2e8e7dbf63a7](https://towardsdatascience.com/javascript-for-data-analysis-2e8e7dbf63a7)**
+- Bostock M., Ogievetsky V., Heer J. (2011). D³ Data-Driven Documents, IEEE,  Volume: 17 [ieeexplore.ieee.org/abstract/document/6064996](https://ieeexplore.ieee.org/abstract/document/6064996)
+- Giraud T., Lambert N., (2023). bertin: Thematic Cartography with 'bertin.js'. [github.com/riatelab/bertin/, https://riatelab.github.io/bertin](https://github.com/riatelab/bertin/, https://riatelab.github.io/bertin)
+- **Lambert N, Giraud T, Viry Matthieu and, Ysebaert R. (2023) Cartographier pour le web avec la bibliothèque JavaScript ‘bertin‘. SAGEO**
+- Lambert N. (2023) Observable en bref. Webinaire ‘Interroger les données’, Groupe de travail ‘Atelier Données’ du CNRS.
+- Lambert N., Zanin C., (2020). Practical handbook of thematic cartography: principles, methods, and applications. CRC Press.
+[observablehq.com/@neocartocnrs/webinaire-interroger-les-donnees](https://observablehq.com/@neocartocnrs/webinaire-interroger-les-donnees)
+- Lambert N. (2023) Cartographie thématique avec ojs. École d’été internationale, Ouidah. [https://ee-cist.github.io/CAR2_cartodyn/intro/docs/index.html](ee-cist.github.io/CAR2_cartodyn/intro/docs/index.html])
+- **Perkel M. J. (2021) Reactive, reproducible, collaborative: computational notebooks evolve, Nature. [nature.com/articles/d41586-021-01174-w](https://www.nature.com/articles/d41586-021-01174-w)**
+- Rice J., Farquhar A., Piernot P., Gruber T., (1996). “Using the Web instead of a window system”. In: Proceedings of the SIGCHI conference on Human factors in computing systems common ground - CHI ’96. the SIGCHI conference. Vancouver, British Columbia, Canada: ACM Press, pp. 103–110. isbn: 978-0-89791-777-3. doi: 10.1145/238386.238442.
+- Roth R.E., Donohue R.G., Sack C.M., Wallace T.R., Buckingham T.M.A., (2015). “A Process for Keeping Pace with Evolving Web Mapping Technologies”. In: Cartographic Perspectives 78, pp. 25–52. issn: 1048-9053. doi: 10.14714/CP78.1273. url: https://cartographicperspectives.org/index.php/journal/article/view/cp78-roth-et-al
+- Shen H. (2014). Interactive notebooks: Sharing the code. Nature, 515(7525), 151-152.
+
 ## A vous de jouer
 
 ::: {.callout-caution appearance="simple"}
