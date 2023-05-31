@@ -19,7 +19,12 @@ execute:
   cache: false
 editor_options: 
   chunk_output_type: console
+bibliography: references.bib
+csl: "universite-de-montreal-apa.csl"
+lang: fr
 ---
+
+![](fig/SAGEO.png)
 
 ## Présentation
 
@@ -139,31 +144,1459 @@ Ce script abouti à la création de deux fichiers.
 mrc.geojson est un fond de carte des Municipalité R C. 
 munic.geojson et un fond de carte des municipalités contenant des données socio-démographiques. 
 
-## R
 
-### Ecosystème spatial de R
+# R
 
-### Analyse
+## L'écosystème spatial de R
 
-Repartir de l'analyse de Tim sur les [restos OSM](https://rgeomatic.hypotheses.org/1244) en l'appliquant au Québec ?
+Le logiciel R [@R-base] permet depuis longtemps de traiter et représenter les données spatiales.\
+Le principal package permettant de traiter les données vectorielles avec R est le package `sf` [@R-sf].\
+Les packages `stars` [@pebesma2023] et `terra` [@R-terra] quand à eux sont les principaux packages dédiés au traitement des données raster.
 
-## Python
+Les développements actuels s'appuient sur ce socle et forment un écosystème robuste qui offre aux utilisateurs la plupart des fonctionnalités autrefois réservées aux Systèmes d'Information Géographique.\
+Le package `mapsf` [@R-mapsf] par exemple s'appuie sur le package `sf` pour créer des cartes thématiques. D'autres packages sont dédiés à la cartographie interactive, aux statistiques spatiales, l'interaction avec des API de cartographie, la création de cartogrammes etc.
 
-### Ecosystème spatial avec Python
+## Le package `sf`
 
-### Analyse
+<img src="fig/logo_sf.gif" align="right" width="150"/>
 
-- Analyse de la couverture du sol avec graphique de synthèse ? 
-- Importer un raster, afficher ses valeurs et en faire la synthèse graphique à la façon de ce qui avait été fait [durant SIGR](https://sigr2021.github.io/mardown_data/#sympa-pour-voir-les-%C3%A9toiles)
+Le package `sf` a été publié fin 2016 par Edzer Pebesma. Ce package permet l'import, l'export, la manipulation et l'affichage de données spatiales vectorielles. Pour cela `sf` s'appuie sur une série de bibliothèques spatiales : GDAL [@GDAL] et PROJ [@PROJ] pour les opérations d'import, d'export et de projection, et GEOS [@GEOS] pour les opérations de géotraitement (buffer, intersection...).\
+Ce package propose des objets simples (suivant le standard [*simple feature*](https://en.wikipedia.org/wiki/Simple_Features)) dont la manipulation est assez aisée. Une attention particulière a été portée à la compatibilité du package avec la syntaxe *pipe* (`|>` ou `%>%`) et les opérateurs du `tidyverse` [@R-tidyverse].
+
+![@pebesma2023](fig/sf_deps.png)
+
+::: callout-note
+## Historique
+
+Le package `sf` est venu remplacer les packages `sp` [@R-sp], `rgeos` [@R-rgeos] et `rgdal` [@R-rgdal] en combinant leurs fonctionnalités dans un package unique plus ergonomique.
+:::
+
+::: panel-tabset
+```{r knit_init}
+#| include: false
+#| cache: false
+knitr::knit_hooks$set(nm = function(before, options, envir){
+  if (before){
+    par(mar=c(0,0,0,0))
+  } 
+})
+knitr::opts_chunk$set(nm=TRUE, echo=TRUE)
+```
+
+### Format
+
+![Format des objets spatiaux `sf`](fig/sf.png)
+
+Les objets `sf` sont des `data.frame` dont l'une des colonnes contient des géométries.\
+Ce format est très pratique dans la mesure ou les données et les géométries sont intrinsèquement liées dans un même objet.
+
+::: callout-note
+## Vignette décrivant le format simple feature
+
+[Simple Features for R](https://r-spatial.github.io/sf/articles/sf1.html)
+:::
+
+### Import
+
+```{r sf_import_fake}
+#| eval: false
+library(sf)
+mtq <- st_read(dsn = "data/mtq.gpkg",layer = "mtq")
+```
+
+```{r sf_import}
+#| include: false
+library(sf)
+library(mapsf)
+mtq <- mf_get_mtq()
+```
+
+### Affichage
+
+```{r sf_plot, fig.height=3, fig.width=3, nm=TRUE}
+plot(st_geometry(mtq))
+```
+
+```{r sf_plot_multi, fig.height=4, fig.width=7, nm=TRUE}
+plot(mtq)
+```
+
+### Centroides
+
+```{r sf_centro,  fig.height=3, fig.width=3, nm=TRUE}
+mtq_c <- st_centroid(mtq)
+plot(st_geometry(mtq))
+plot(st_geometry(mtq_c), cex = 1.2, col = "red", pch = 20, add = TRUE)
+```
+
+### Matrice de distance
+
+```{r sf_matrix,  fig.height=3, fig.width=3, nm=TRUE}
+mat <- st_distance(x = mtq_c, y = mtq_c)
+mat[1:5, 1:5]
+```
+
+### Agéregation
+
+```{r sf_agg,  fig.height=3, fig.width=3, nm=TRUE}
+mtq_u <- st_union(mtq)
+plot(st_geometry(mtq), col = "lightblue")
+plot(st_geometry(mtq_u), lwd = 2, border = "red", add = TRUE)
+```
+
+### Zone tampon
+
+```{r sf_buff,  fig.height=3, fig.width=3, nm=TRUE}
+mtq_b <- st_buffer(x = mtq_u, dist = 5000)
+plot(st_geometry(mtq_b), col = "grey", lwd = 2, border = "red")
+plot(st_geometry(mtq), col = "lightblue", add = TRUE)
+plot(st_geometry(mtq_u), lwd = 2, add = TRUE)
+```
+
+### Intersection
+
+```{r sf_interse,  fig.height=3, fig.width=3, nm=TRUE, echo=FALSE}
+m <- rbind(c(700015,1624212), c(700015,1641586), 
+           c(719127,1641586), c(719127,1624212), 
+           c(700015,1624212))
+p <- st_sf(st_sfc(st_polygon(list(m))), crs = st_crs(mtq))
+plot(st_geometry(mtq))
+plot(p, border="red", lwd=2, add=T)
+text(719127,1641586, "p", pos = 4, cex = 3)
+```
+
+```{r sf_intersect2,  fig.height=3, fig.width=3, nm=TRUE, warning=F}
+#| layout-ncol: 2
+mtq_z <- st_intersection(x = mtq, y = p)
+plot(st_geometry(mtq))
+plot(st_geometry(mtq_z), col = "red", border = "green", add = TRUE)
+plot(st_geometry(mtq_z), lwd = 2)
+```
+
+### Polygones de Voronoi
+
+```{r sf_voronoi,  fig.height=3, fig.width=3, nm=TRUE}
+mtq_c |> 
+  st_union() |> 
+  st_voronoi() |> 
+  st_collection_extract("POLYGON") |> 
+  st_intersection(mtq_u) |> 
+  st_sf() |> 
+  st_join(mtq_c, st_intersects) |>
+  st_cast("MULTIPOLYGON") |>
+  st_geometry() |>
+  plot(col = "ivory4")
+```
+:::
+
+## Le package `mapsf`
+
+<img src="fig/logo_mapsf.png" align="right" width="150px"/>
+
+`mapsf` permet de créer la plupart des types de carte utilisés habituellement en cartographie statistique.\
+Pour chaque type de carte, plusieurs paramètres permettent de personnaliser la représentation cartographique. Ces paramètres sont les mêmes que ceux que l'on retrouve dans les logiciels de SIG ou de cartographie usuels.\
+Associées aux fonctions de représentation des données d'autres fonctions sont dédiées à l'habillage cartographique, à la création de cartons ou à l'export des cartes.\
+`mapsf` est le successeur de [`cartography`](http://riatelab.github.io/cartography/docs/) [@R-cartography], il offre les mêmes fonctionnalités principales tout en étant plus léger et plus ergonomique.
+
+![Chaîne de traitement typique](fig/workflow.png)
+
+::: panel-tabset
+### Types de carte
+
+::: {layout="[[1,1,1], [1,1,1]]"}
+![](fig/map01.png)
+
+![](fig/map02.png)
+
+![](fig/map03.png)
+
+![](fig/map04.png)
+
+![](fig/map05.png)
+
+![](fig/map06.png)
+
+![](fig/map07.png)
+
+![](fig/map08.png)
+
+![](fig/map09.png)
+:::
+
+### Utilisation simple
+
+```{r mapsf_simple}
+#| fig-width: 5
+#| fig.height: 6
+library(mapsf)
+# Import the sample dataset
+mtq <- mf_get_mtq()
+# Plot the base map
+mf_map(x = mtq)
+# Plot proportional symbols
+mf_map(x = mtq, var = "POP", type = "prop")
+# Plot a map layout
+mf_layout(title = "Population in Martinique", 
+          credits = "T. Giraud; Sources: INSEE & IGN, 2018")
+```
+
+### Utilisation avancée
+
+```{r mapsf_avance}
+#| results: hide
+# Export a map with a theme and extra margins 
+mf_export(x = mtq, filename = "fig/mtq.svg",  width = 5, 
+          theme = "green", expandBB = c(0,0,0,.3)) 
+# Plot a shadow
+mf_shadow(mtq, col = "grey10", add = TRUE)
+# Plot a choropleth map
+mf_map(x = mtq, var = "MED", type = "choro",
+       pal = "Dark Mint", 
+       breaks = "quantile", 
+       nbreaks = 6, 
+       leg_title = "Median Income\n(euros)", 
+       leg_val_rnd = -2, 
+       add = TRUE)
+# Start an inset map
+mf_inset_on(x = "worldmap", pos = "right")
+# Plot mtq position on a worldmap
+mf_worldmap(mtq, col = "#0E3F5C")
+# Close the inset
+mf_inset_off()
+# Plot a title
+mf_title("Wealth in Martinique, 2015")
+# Plot credits
+mf_credits("T. Giraud\nSources: INSEE & IGN, 2018")
+# Plot a scale bar
+mf_scale(size = 5)
+# Plot a north arrow
+mf_arrow('topleft')
+dev.off()
+```
+
+![](fig/mtq.svg){width="500px"}
+
+```{r reset_theme}
+#| include: false
+mf_theme("default")
+```
+:::
+
+::: callout-note
+D'autres packages peuvent être utilisés pour réaliser des cartes thématiques.\
+Le package `ggplot2` [@R-ggplot2], en association avec le package `ggspatial` [@R-ggspatial], permet par exemple d'afficher des objets spatiaux et de réaliser des cartes thématiques simples.\
+Le package `tmap` [@R-tmap] est dédié à la création de cartes thématiques, il utilise une syntaxe proche de celle de `ggplot2` (enchaînement d'instructions combinées avec le signe `+`).\
+La documentation et les tutoriels pour utiliser ces deux packages sont facilement accessibles sur le web.
+:::
+
+## Ressources
+
+[Geocomputation with R](https://r.geocompx.org/) - @lovelace2019
+
+[Spatial Data Science with applications in R](https://r-spatial.org/book/) - @pebesma2023
+
+[Spatial Data Science with R and "terra"](https://rspatial.org/) - Robert J. Hijmans
+
+[Progress in the R ecosystem for representing and handling spatial data](https://link.springer.com/article/10.1007/s10109-020-00336-0) - @bivand2021
+
+[Cartographie avec R](https://rcarto.github.io/cartographie_avec_r/) - @Giraud_Cartographie_avec_R_2023
+
+[Géomatique avec R](https://rcarto.github.io/geomatique_avec_r/) - @Giraud_Geomatique_avec_R_2023
+
+[CRAN Task View: Analysis of Spatial Data](https://cran.r-project.org/web/views/Spatial.html)
+
+[R Special Interest Group on using Geographical data and Mapping](https://stat.ethz.ch/mailman/listinfo/r-sig-geo) (mailing list)
+
+## Exemples d'analyse sur les données du Québec
+
+### Import et préparation des données
+
+Nous utilisons le package `sf` pour importer 2 fichiers geojson.\
+Il est ensuite possible de changer la projection des couches avec la fonction `st_transform()`.\
+Nous pouvons aussi créer une couche des régions du Québec en agrégeant les Municipalité Régionales de Comté.
+
+```{r import}
+#| message: false
+# Import des données
+library(sf)
+mun_raw <- st_read("geom/munic.geojson", quiet= TRUE)
+mrc_raw <- st_read("geom/mrc.geojson", quiet = TRUE)
+# Projection NAD83 / Quebec Albers
+mun <- st_transform(mun_raw, "EPSG:6623")
+mrc <- st_transform(mrc_raw, "EPSG:6623")
+# Création d'une couche des régions
+reg <- aggregate(x = mrc[,'MUS_NM_REG'], 
+                 by = list(REG = mrc$MUS_NM_REG), 
+                 FUN = head, 1)
+```
+
+### Première cartographie simple
+
+Sur cette première carte nous allons simplement afficher les différentes couches en les superposant.\
+Nous utilisons le package `mapsf` qui permet aussi de créer une couche d'étiquettes avec la fonction `mf_label()`.
+
+```{r carto_quebec_reg}
+#| fig-width: 8
+#| fig-height: 10.05
+library(mapsf)
+mf_map(mun, border = "white")
+mf_map(mrc, col = NA, border = "grey70", lwd = 1, add = TRUE)
+mf_map(reg, col = NA, border = "black", lwd = 1.2, add = TRUE)
+mf_label(reg, var = "MUS_NM_REG", halo = TRUE, overlap = FALSE)
+mf_scale(size = 100)
+mf_title("Le Québec")
+mf_credits(txt = "Ministère des Ressources naturelles et des Forêts, 2023", 
+           bg = "#ffffffCC")
+```
+
+### Où sont les restaurants dans la ville de Québec?
+
+Nous voulons savoir dans quelles zones de la ville de Québec se trouvent les restaurants.\
+Pour connaître la position des restaurants dans la ville nous allons extraire des informations la base de donnés cartographique libre OpenStreetMap avec le package `osmdata` [@R-osmdata]. Le package `osmdata` utilise l'API du service [Overpass turbo](https://overpass-turbo.eu/) pour extraire des données vectorielles de la base de données OpenStreetMap.
+
+Nous devons tout d'abord définir une emprise spatiale à partir de laquelle nous pourrons extraire les informations sur les restaurants.\
+Après avoir démarré les packages nécessaires, nous allons tout d'abord sélectionner la MRC de Québec dans la couche des MRC.
+
+```{r target_city}
+#| message: false
+library(sf)
+library(osmdata)
+target <- mrc[mrc$MUS_NM_MRC == "Québec", ]
+```
+
+Nous allons ensuite définir une *bounding box* correspondant à l'emprise de la MRC. Le package `osmdata` fonctionne avec des objets en WGS84 nous avons donc besoin de reprojeter les données.
+
+```{r create_bb}
+# Reprojection en WGS84
+target_4326 <- st_transform(target, "EPSG:4326")
+# Création de la bounding box
+bbox <- st_bbox(target_4326)
+```
+
+Nous pouvons maintenant définir ce que nous voulons extraire de la base de donnée OSM. Une connaissance de la structuration de la base de données OSM est nécessaire. Nous utilisons le système de clef/valeur pour construire la requête.
+
+```{r define_request}
+# Initialisation de la requête à envoyer
+q <- opq(bbox = st_bbox(bbox))
+# Choix des objets à extraire
+req <- add_osm_feature(opq = q, 
+                       key = 'amenity', 
+                       value = "restaurant")
 
 
-## Observable JavaScript
+```
 
-### Ecosystème spatial avec Ojs
+La fonction `osmdata_sf()` permet d'envoyer la requête et de recevoir les résultats sous forme de `data.frame` `sf`.
 
-### Cartographie interactive avec Observable JavaScript
+```{r send_request}
+#| cache: true
+# Reception de la requete
+res <- osmdata_sf(q = req)
+res
+```
 
-- carto interactive des niveaux de vie des municipalités avec minimap centrée sur l'espace d'étude ? 
-- vizu avec DeckGL (Hexagon layer)[https://observablehq.com/@johnhaldeman/tutorial-on-deckgl]
+Ce résultat contient des restaurants représentés par de points (*osm_points*) et d'autre représentés par des polygones (*osm_polygons*). La couche des points contient également les points qui composent les polygones de la couche de polygones. La fonction `unique_osmdata()` permet de filtrer ces "doublons".
+
+```{r filter_osm}
+# Reduction du resultats 
+# (les points composant les polygones sont supprimés)
+res <- unique_osmdata(res)
+res
+```
+
+L'étape suivante consiste à utiliser extraire les points et les polygones, puis à extraire les centroides des polygones pour constituer une couche de points complète.
+
+```{r build_layer}
+#| warning: false
+# Extraction des points
+resto_point <- res$osm_points
+# Extraction des polygones
+resto_poly <- res$osm_polygons
+# Transformation des polygones en points (centroides)
+resto_poly_point <- st_centroid(resto_poly)
+# Listes des champs à conserver
+chps <- c("osm_id", "name", "cuisine")
+# Rassembler les 2 couches de points
+resto <- rbind(resto_point[, chps], resto_poly_point[, chps])
+resto
+```
+
+Maintenant que nous avons cette couche de restaurants nous allons pouvoir l'afficher.\
+Pour cela nous pouvons utiliser un fond de carte issues de tuiles raster grâce au package `maptiles` [@R-maptiles]. Nous allons d'abord reprojeter les différentes couches d'information en Web/Mercator (EPSG:3857) car les tuiles raster sont fournies dans cette projection .
+
+```{r reproj_layers}
+target <- st_transform(target, "EPSG:3857")
+resto <- st_transform(resto, "EPSG:3857")
+```
+
+Nous pouvons maintenant télécharger les tuiles raster grace à la fonction `get_tiles()`.
+
+```{r get_tiles}
+library(maptiles)
+tiles <- get_tiles(x = target, 
+                   provider = "CartoDB.PositronNoLabels",
+                   project = FALSE, 
+                   crop = TRUE, 
+                   zoom = 11)
+```
+
+Nous créons ensuite la carte avec `mapsf`.
+
+```{r resto_map1}
+#| results: hide
+library(mapsf)
+mf_theme(mar = c(0,0,0,0), inner = TRUE)
+mf_export(x = tiles,
+          filename = "fig/restaurants01.png",
+          width = ncol(tiles), height = nrow(tiles))
+mf_raster(tiles, add = TRUE)
+mf_map(target, col = NA, lwd = 2, add = TRUE)
+mf_map(resto, col = "red", add = TRUE)
+mf_title("Les restaurants à Québec")
+mf_credits("© OpenStreetMap contributors © CARTO", bg = "white")
+dev.off()
+```
+
+![](fig/restaurants01.png)
+
+Nous allons maintenant agréger les restaurants dans une grille régulière pour tenter rendre plus lisible l'organisation spatiale des restaurant à Québec.
+
+```{r grid}
+#| results: hide
+# Création d'une grille régulière (carreaux : 2km * 2km)
+grid <- st_make_grid(target, cellsize = 2000)
+grid <- st_sf(id = 1:length(grid), geom = grid)
+
+# Comptage des points dans les polygones
+grid$n <- lengths(st_intersects(grid, resto, sparse = TRUE))
+
+# Cartographie
+mf_export(x = tiles,
+          filename = "fig/restaurants02.png",
+          width = ncol(tiles), height = nrow(tiles))
+mf_raster(tiles, add = TRUE)
+mf_map(target, add = T, col = NA, lwd = 2)
+mf_map(x = grid[grid$n >0 , ], 
+       var = "n", 
+       type = "choro", 
+       breaks = 'geom', 
+       nbreak = 6, 
+       alpha= .75, 
+       border = NA, 
+       pal = "Burg", 
+       leg_frame = TRUE, 
+       leg_pos = "left", 
+       leg_title = "Nombre de restaurants",
+       leg_val_rnd = 0,
+       add = TRUE)
+mf_title("Les restaurants à Québec")
+mf_credits("© OpenStreetMap contributors © CARTO", bg = "white")
+dev.off()
+```
+
+![](fig/restaurants02.png)
+
+Nous pouvons aussi utiliser une méthode de lissage telle que la méthode de lissage par noyaux (KDE) grâce au package `spatstat` [@R-spatstat].
+
+```{r kde}
+#| results: hide
+#| message: false
+#| warning: false
+library(spatstat)
+library(terra)
+library(tanaka)
+p <- as.ppp(st_coordinates(resto), W = as.owin(st_bbox(target)))
+ds <- density.ppp(p, sigma = 500, 
+                  eps = c(100, 100), positive = TRUE)
+rasdens <- rast(ds) * 1000 * 1000
+crs(rasdens) <- 'EPSG:3857'
+mf_export(x = tiles,
+          filename = "fig/restaurants03.png",
+          width = ncol(tiles), height = nrow(tiles))
+mf_raster(tiles, add = TRUE)
+mf_map(target, add = T, col = NA, lwd = 2)
+cols <- mf_get_pal(n = 5, palette = "Teal", rev = TRUE)
+x <- tanaka_contour(rasdens, breaks = c(1,2,5,10,20,25))
+tanaka(x[-1, ], legend.title = "Nombre de\nrestaurants\nau km²",
+       legend.pos = "topright", shift = 65,
+       col = cols,
+       add = TRUE)
+mf_title("Les restaurants à Québec")
+mf_credits("© OpenStreetMap contributors © CARTO",bg = "white")
+dev.off()
+```
+
+![](fig/restaurants03.png)
+
+# Python
+
+
+# Observable JavaScript
+
+## Qu'est-ce que l'ojs ?
+
+L'<b>Observable javascript {ojs}</b> est un ensemble d'améliorations apportées à vanilla JavaScript créé par Mike Bostock (également auteur de D3). Observable JS se distingue par son exécution réactive, qui convient particulièrement bien à l'exploration et à l'analyse interactives des données.
+
+![](fig/d3.png){width="20%"} ![](fig/arrow.png){width="20%"} ![](fig/observable.png){width="20%"} <br/> **Observable** est aussi une startup fondée par Mike Bostock et Melody Meckfessel, qui propose une plateforme 100% en ligne (<https://observablehq.com>) pour concevoir, partager et diffuser des visualisations de données.
+
+![](fig/frise.png)
+
+**Observable** c'est donc aussi C'est aussi une [plateforme web](https://observablehq.com/) qui héberge des notebooks computationnels sur la visualisation de données.
+
+![](fig/notebookobs.png)
+
+**Objectifs**
+
+👉 Construire un langage et un écosystème dédié à la visualisation de données sur le web
+
+👉 Fédérer et faire collaborer une communauté
+
+## Observable dans Quarto
+
+Le runtime d'Observable est Open Source et est utilisé dans Quarto.
+
+Dans Quarto, toutes les instructions s'écrivent dans des chunks {ojs}
+
+``` {{ojs}}
+```
+
+On peut paramétrer l'affiche et/ou l'execution du code avec **//\| echo** et **//\| eval**.
+
+``` {{ojs}}
+//| echo: false
+//| eval: true
+```
+
+*NB : Contrairement aux chunks R et Python, le code s'execute just in time dans le navigateur web une fois le notebook généré. Seul l'export html est donc pris en compte.*
+
+## Principes
+
+Le langage JavaScript n'a pas du été conçu pour l'analyse de données. Mais, gros point fort, on a tous un navigateur web et JavaScript tourne sur toutes les machines. Le but : bâtir une évolution du langage JavaScript pour en faire un langage adapté à l'analyse et la visualisation de données sur le web.
+
+### 👉 Des bibliothèques préchargées 📊
+
+OJS c'est du JavaScript + plein de bibliothèques pré chargées : <br/>
+
+| Symbol   | Name              | Version            |
+|----------|-------------------|--------------------|
+| \_       | Lodash            | 4.17.21            |
+| aq       | Arquero           | \${aq.version}     |
+| Arrow    | Apache Arrow      | 4.0.1              |
+| d3       | D3.js             | \${d3.version}     |
+| dot      | Graphviz          | 0.2.1              |
+| htl      | Hypertext Literal | \${htl.version}    |
+| Inputs   | Observable Inputs | \${Inputs.version} |
+| L        | Leaflet           | \${L.version}      |
+| mermaid  | Mermaid           | 9.1.6              |
+| Plot     | Observable Plot   | \${Plot.version}   |
+| SQLite   | SQL.js            | 1.7.0              |
+| topojson | TopoJSON Client   | 3.1.0              |
+| vl       | Vega, Vega-Lite   | 5.22.1, 5.2.0      |
+
+### 👉 Chaque début de ligne identifie une cellule ojs 🙋
+
+Chaque ligne définit une variable et une cellule qui doit être unique sur l'ensemble du document.
+
+``` {{ojs}}
+a = 10 // une cellule
+b = 20 // une cellule
+```
+
+``` {{ojs}}
+c = a + b // une cellule
+```
+
+``` {{ojs}}
+d = { 
+  let a = 10 
+  let b = 30
+  return a + b 
+} // Une cellule
+```
+
+### 👉 L'ordre des cellules n'a pas d'importance 🤯
+
+On peut donc écrire ça
+
+``` {{ojs}}
+result = val1 * val2
+```
+
+avant ça
+
+``` {{ojs}}
+val1 = 10
+val2 = 20
+```
+
+Le lien entre les cellules se fait de façon topologique et non de haut en bas.
+
+![](fig/topology.png)
+
+### 👉 Tout est réactif 🔥
+
+Dès lors qu'une cellule est modifiée, les cellules qui en dépendent sont modifiées également.
+
+Pour modifier la valeutr d'une céllule, on utilise des **`Inputs`** (des composants proposés par OJS pour explorer les données) avec le mot clé **`viewof`**. Voir : https://observablehq.com/@observablehq/inputs
+
+```{ojs}
+viewof x = Inputs.range([0, 255], {step: 1})
+```
+
+```{ojs}
+viewof y = Inputs.text({value: 30})
+```
+
+```{ojs}
+viewof z = Inputs.radio([10, 100, 1000], {value: 10})
+```
+
+```{ojs}
+x * y * z
+```
+
+Ce système est pratique pour modifier des visualisations de données.
+
+Ici, un exemple avec un simple cercle dessiné en svg.
+
+```{ojs}
+viewof color = Inputs.color({ label: "Couleur", value: "#4ab58c" })
+viewof radius = Inputs.range([1, 50], { label: "Rayon", step: 1, value: 100 })
+viewof position = Inputs.range([50, 950], { label: "Position", step: 1, value: 50 })
+```
+
+```{ojs}
+html`<svg viewBox="0 0 1000 100" xmlns="http://www.w3.org/2000/svg">
+  <circle cx=${position} cy="50" r=${radius} fill="${color}"/>
+</svg>`
+```
+
+## L'écosystème spatial de l'ojs
+
+L'écosystème spatial de JavaScript est moins étoffé que ce qu'on peut trouver en Python ou en R. Mais on trouve quand même des choses intéressantes qui permettent de faire de la géomatique directement dans le navigateur web. Voici quelques exemples.
+
+**Les fonctionnalités spatiales de `d3.js`**
+
+::: columns
+::: {.column width="8%"}
+![](fig/d3.png)
+:::
+
+::: {.column width="2%"}
+:::
+
+::: {.column width="90%"}
+[**`d3-geo`**](https://github.com/d3/d3-geo) est le module spatial de d3. Il permet de gérer les projections cartographiques, les formes sphériques et la trigonométrie sphérique. Voir aussi [**`d3-geo-projection`**](https://github.com/d3/d3-geo-projection). [**`d3-delaunay`**](https://github.com/d3/d3-delaunay) est une bibliothèque rapide pour calculer le diagramme de Voronoï d'un ensemble de points bidimensionnels. Elle est basée sur Delaunator, une bibliothèque rapide pour calculer la triangulation de Delaunay en utilisant des algorithmes de balayage. Le diagramme de Voronoï est construit en reliant les circonférences des triangles adjacents dans la triangulation de Delaunay. [**`d3-geo-voronoi`**](https://github.com/Fil/d3-geo-voronoi) est une adaptation de d3-delaunay sur la sphère.
+:::
+:::
+
+::: columns
+::: {.column width="8%"}
+![](fig/topojson.svg)
+:::
+
+::: {.column width="2%"}
+:::
+
+::: {.column width="90%"}
+[**`TopoJSON`**](https://github.com/topojson/topojson) est une extension de GeoJSON. La librairie permet de réaliser des opérations SIG basées sur la topologie (agrégation, voisins, simplification, etc.)
+:::
+:::
+
+**Les bibliothèques SIG**
+
+::: columns
+::: {.column width="8%"}
+![](fig/turf.png)
+:::
+
+::: {.column width="2%"}
+:::
+
+::: {.column width="90%"}
+[**`turf`**](https://turfjs.org/) est une bibliothèque JavaScript pour l'analyse spatiale (de type SIG). Elle comprend les opérations spatiales traditionnelles, des fonctions d'aide pour la création de données GeoJSON, ainsi que des outils de classification des données et de statistiques. L'avantage de turf est d'être modulaire. On ne charge que ce dont on a besoin.
+:::
+:::
+
+::: columns
+::: {.column width="8%"}
+![](fig/spljs.jpg)
+:::
+
+::: {.column width="2%"}
+:::
+
+::: {.column width="90%"}
+[**`spl.js`**](https://turfjs.org/) est une implémentation de SpatiaLite (et de ses amis : sqlite, geos, proj, rttopo) pour le navigateur.
+:::
+:::
+
+::: columns
+::: {.column width="8%"}
+![](fig/geotoolbox.svg)
+:::
+
+::: {.column width="2%"}
+:::
+
+::: {.column width="90%"}
+[**`geotoolbox`**](https://github.com/neocarto/geotoolbox) est un outil javascript pour les géographes basé sur d3geo, topojson et jsts. Il permet de traiter simplement les propriétés geojson et fournit plusieurs opérations SIG utiles pour la cartographie thématique.
+:::
+:::
+
+::: columns
+::: {.column width="8%"}
+![](fig/gdal.png)
+:::
+
+::: {.column width="2%"}
+:::
+
+::: {.column width="90%"}
+[**`Gdals3.js`**](https://github.com/bugra9/gdal3.js) est un portage des applications Gdal (gdal_translate, ogr2ogr, gdal_rasterize, gdalwarp, gdaltransform) vers Webassembly. Il permet de convertir des données géospatiales matricielles et vectorielles dans divers formats et systèmes de coordonnées.
+:::
+:::
+
+::: columns
+::: {.column width="8%"}
+![](fig/proj4.png)
+:::
+
+::: {.column width="2%"}
+:::
+
+::: {.column width="90%"}
+[**`proj4js`**](http://proj4js.org/) est une bibliothèque JavaScript permettant de transformer les coordonnées d'un système de coordonnées à un autre, y compris les transformations de datum
+:::
+:::
+
+**Dataviz / cartographie**
+
+::: columns
+::: {.column width="8%"}
+![](fig/plot.png)
+:::
+
+::: {.column width="2%"}
+:::
+
+::: {.column width="90%"}
+[**`plot`**](https://observablehq.com/plot/) est la bibliothèque de visualisation de donnée développée par Observable (Mike Bostock et Philippe Rivière). Au départ pensée pour la visualisation de données statistiques, elle permet aujourd'hui de réaliser des cartes. Plot est disponible par défaut dans les cellules {ojs}.
+:::
+:::
+
+::: columns
+::: {.column width="8%"}
+![](fig/vega.png)
+:::
+
+::: {.column width="2%"}
+:::
+
+::: {.column width="90%"}
+[**`vega-lite`**](https://github.com/vega/vega-lite) est un outil de visualisation mettant en œuvre une grammaire graphique, similaire à ggplot2. Cette bibliothèque est disponible par défaut dans les cellules {ojs}.
+:::
+:::
+
+::: columns
+::: {.column width="8%"}
+![](fig/bertin.png)
+:::
+
+::: {.column width="2%"}
+:::
+
+::: {.column width="90%"}
+[**`bertin`**](https://github.com/neocarto/bertin) est une bibliothèque écrite en JavaScript qui permet de réaliser des cartes thématiques pour le web. Sa conception vise à permettre aux utilisateurs de créer rapidement des cartes thématiques interactives sans forcement connaître le langage JavaScript.
+:::
+:::
+
+::: columns
+::: {.column width="8%"}
+![](fig/gridviz.png)
+:::
+
+::: {.column width="2%"}
+:::
+
+::: {.column width="90%"}
+[**`Gridviz`**](https://github.com/eurostat/gridviz) est une bibliothèque JavaScript basée sur WebGL développée par Julien Gaffuri et Joe Davies. Elle permet de visualiser des données carroyées (ou tout ensemble de données tabulaires avec une position x/y) dans le navigateur dans une grande variété de styles cartographiques.
+:::
+:::
+
+::: columns
+::: {.column width="8%"}
+![](fig/logo-go-cart-wasm.png)
+:::
+
+::: {.column width="2%"}
+:::
+
+::: {.column width="90%"}
+[**`go-cart-wasm`**](https://github.com/riatelab/go-cart-wasm) est une bibliothèque JS/WASM permettant de réaliser des cartogrammes basés sur le flux (comme décrit dans "Gastner, Seguy, and More (2018).
+:::
+:::
+
+## Importer des données
+
+Pour importer des données en **`{ojs}`**, on utilise l'instruction **`FileAttachment()`**
+
+Pour un fichier JSON
+
+``` js
+mrc = FileAttachment("geom/mrc.geojson").json()
+munic = FileAttachment("geom/munic.geojson").json()
+```
+
+Pour un fichier csv
+
+``` js
+FileAttachment("data.csv").csv({typed: true})
+```
+On peut aussi récupérer des données depuis R ou Python avec l'instruction [**`ojs_define`**](https://neocarto.github.io/docs/notebooks/ojsdefine/)
+
+::: {.callout-tip}
+## NB
+*Souvenez vous que le code JavaScript s'execute dans le navigateur web. Il s'execute donc après le code R et Python.*
+:::
+
+`ojs_define` fonctionne bien pour des simples variables ou des data frames. Mais ne renvoie pas un geoJSON correctement formaté à partir d'un spatial dataframe.
+
+*chunck r*
+
+```{r}
+ojs_define(test = mun)
+```
+
+*Chuck ojs*
+
+```{ojs}
+test
+```
+
+Une solution consiste à utiliser le package `geojsonsf.`
+
+*Chunck r*
+
+```{r}
+library("geojsonsf")
+ojs_define(mun = sf_geojson(st_transform(mun, 4326)))
+```
+
+`mun` existe desormais dans l'univers ojs et est correctement formaté. Mais c'est une chaine de caractere. On utilisera donc `JSON.parse` pour l'utiliser
+
+*Chunk ojs*
+
+```{ojs}
+JSON.parse(mun)
+```
+
+```{ojs}
+//| eval: true
+//| echo: false
+tmp = FileAttachment("geom/munic.geojson").json()
+munic =  geo.rewind(geo.simplify(tmp, {k:0.1}))
+tmp2 = FileAttachment("geom/mrc.geojson").json()
+mrc =  geo.rewind(geo.simplify(tmp2, {k:0.1}))
+
+```
+
+## Visualiser les données statistiques
+
+Pour regarder la table attributaire, on utilise **`Inputs.table()`**
+
+```{ojs}
+Inputs.table(munic.features.map(d => d.properties))
+```
+
+Avec **`{ojs}`**, on va aussi pouvoir faire des graphiques avec la bibliothèque **`plot`**. Pour cela, on fait quelques manipulations de données.
+
+Tout d'abord, on récupère les noms des 20 communes les plus peuplées, classées par ordre décroissant de population.
+
+```{ojs}
+communes = munic.features
+  .map((d) => d.properties)
+  .sort((a, b) => d3.descending(a.POP_2022, b.POP_2022))
+  .map((d) => d.MUS_NM_MUN)
+  .slice(0, 20)
+```
+
+```{ojs}
+//| echo: false
+//| eval: true
+communes
+```
+
+On met en forme les données.
+
+```{ojs}
+data = {
+  let arr = [];
+  communes.forEach((d) => {
+    let tmp = munic.features
+      .map((d) => d.properties)
+      .find((x) => x.MUS_NM_MUN == d);
+    for (let i = 2001; i <= 2022; i++) {
+      arr.push({ year: i, pop: tmp["POP_" + i], com: d });
+    }
+  });
+  return arr;
+}
+```
+
+```{ojs}
+//| echo: false
+//| eval: true
+Inputs.table(data, {width:250, height:250})
+```
+
+Puis on réalise le graphique avec `Plot` en proposant de sélectionner une commune.
+
+::: {.callout-tip}
+## NB
+*Plot est directement disponible dans {ojs}. Mais si on souhaite une autre version, on peut l'appeler.*
+```{ojs}
+Plot = require("@observablehq/plot@0.6.7")
+```
+*La version 0.6.7 implémente les infobulles.*
+:::
+
+
+
+
+
+```{ojs}
+viewof commune = Inputs.select(communes, { label: "Commune" })
+Plot.plot({
+  grid: true,
+  x: {
+    label: "Années →",
+    tickFormat: ""
+  },
+  y: {
+    label: `↑ Population (${commune})`
+  },
+  color: { legend: true },
+  marginLeft: 60,
+  marks: [
+    Plot.lineY(data.filter(d => d.com == commune), {
+      x: "year",
+      y: "pop",
+      stroke: "red",
+      strokeWidth: 2
+    })
+  ]
+})
+```
+
+On peut également mettre toutes les courbes sur un graphique
+
+```{ojs}
+Plot.plot({
+  grid: true,
+  x: {
+    label: "Années →",
+    tickFormat: ""
+  },
+  y: {
+    label: `↑ Population`
+  },
+  color: { legend: true },
+  marginLeft: 60,
+  marks: [
+    Plot.lineY(data, {
+      x: "year",
+      y: "pop",
+      stroke: "com",
+      strokeWidth: 2,
+      tip: true
+    })
+  ]
+})
+```
+
+Ou en normalisant
+
+```{ojs}
+Plot.plot({
+  grid: true,
+  x: {
+    label: "Années →",
+    tickFormat: ""
+  },
+  y: {
+    label: `↑ Population`
+  },
+  marginLeft: 60,
+  marks: [
+    Plot.lineY(data, Plot.normalizeY("first",{
+      x: "year",
+      y: "pop",
+      stroke: "com",
+      strokeWidth: 2,
+      tip: true
+    }))
+  ]
+})
+```
+
+## Visualiser les géométries
+
+Comme leaflet est disponible dans les cellules {ojs}, on peut directement afficher les géométries.
+
+```{ojs}
+{
+  const container = yield htl.html`<div style="height: 500px;">`;
+  const map = L.map(container);
+  const layer = L.geoJSON(mrc).addTo(map);
+  map.fitBounds(layer.getBounds(), { maxZoom: 9 });
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution:
+      "© <a href=https://www.openstreetmap.org/copyright>OpenStreetMap</a> contributors"
+  }).addTo(map);
+}
+```
+
+On peut également afficher la carte simplement avec la bibliothèque [**`bertin`**](https://github.com/neocarto/bertin).
+
+```{ojs}
+bertin = require("bertin")
+```
+
+```{ojs}
+bertin.quickdraw(mrc)
+```
+
+## Un peu de SIG
+
+La bibiothèque **`geotoolbox`** permet de faire facilement differentes operations SIG.
+
+```{ojs}
+geo = require("geotoolbox")
+```
+
+-   **Simplification**
+
+```{ojs}
+viewof simpl = Inputs.range([0.0001, 0.2], { label: "Simplification",  value: 0.1 })
+mrc2 = geo.simplify(mrc, { k: simpl })
+```
+
+```{ojs}
+//| echo: false
+bertin.draw({params:{extent: munic},layers:[{geojson: mrc2, stroke:"black", strokeWidth:1.5, fill:"white", rewind: true}]})
+```
+
+-   **Centroid**
+
+```{ojs}
+ctr = geo.centroid(mrc)
+```
+
+```{ojs}
+//| echo: false
+bertin.draw({params:{extent: mrc}, layers:[{geojson: ctr, fill:"red"},{geojson: mrc, fill:"#CCC"}, ]}) 
+```
+
+-   **Buffer**
+
+```{ojs}
+quebec = geo.filter(mrc, (d) => d.MUS_CO_MRC == "23")
+buff = geo.buffer(quebec, { dist: distance})
+ctr2 = geo.clip(ctr, {clip: buff})
+```
+
+```{ojs}
+//| echo: false
+viewof distance = Inputs.range([0, 500], {
+  label: "Distance",
+  value: 300,
+  step: 10
+})
+bertin.draw({layers:[{geojson: quebec, fill:"red"}, {geojson: ctr2, fill:"red"}, {geojson: buff, stroke:"red", fill: "none", strokeWidth:2},{geojson: mrc, fill:"#CCC"}, ]}) 
+```
+
+## Cartographie thématique
+
+Pour créer des cartes thématiques, on peut utiliser la bibliothèque [**`bertin`**](https://github.com/neocarto/bertin)
+
+La fonction **`draw`** permet de réaliser n'importe quel type de carte.
+
+![](fig/bertin_code.png)
+
+Par défaut, la couche s'affiche simplement.
+
+```{ojs}
+bertin.draw({layers:[{geojson: munic, fill: "#d18de0"}]})
+```
+
+On peut ajouter l'attrubut **`tooltip`** pour afficher des infobulles.
+
+```{ojs}
+bertin.draw({
+  layers:[
+    { 
+      geojson: munic, fill: "#d18de0",
+      tooltip: "$MUS_NM_MUN"
+    }
+  ]
+})
+```
+
+**Cartographie thématique**
+
+A présent, réalisons une carte de la population en 2022. Pour cela, on utilise le type **`bubble`**.
+
+Par défaut, ça donne ceci :
+
+```{ojs}
+bertin.draw({
+    layers: [
+      {
+        type: "bubble",
+        geojson: munic, 
+        values: "POP_2022", 
+        fill:"red"
+      },
+      {
+        geojson: munic,
+        fill: "#CCC"
+      }, 
+  ]
+})
+```
+
+Et en paramétrant un peu, on obtient ceci.
+
+```{ojs}
+bertin.draw({
+  params: { extent: [[-79, 44.5], [-66, 51]]},
+  layers: [
+    { type: "header", text: "Population en 2022", anchor: "start" }, // Titre
+    { type: "minimap", x: 10, y: 10, width: 160 }, 
+    {
+      id : "bub", //  identifiant de la couche
+      type: "bubble", // couche de symboles proportionnels
+      geojson: munic, 
+      values: "POP_2022", // variable à cartographier 
+      k: 50, // Rayon du plus gros cercle
+      leg_x: 740,
+      leg_y: 350,
+      leg_round: 0,
+      leg_title: "Nombre d'habitants",
+      fill: "red",
+      fillOpacity:0.5,
+      tooltip: ["$MUS_NM_MUN", d => d.properties["POP_2022"] + " habitants"] // infobulle
+    },
+    {geojson: munic, fill:"#CCC"}, // Couche des communes
+    {type:"scalebar"}
+  ]
+})
+```
+
+On peut facilement combiner cette couche de cercles avec un une carte choroplèthe.
+
+```{ojs}
+bertin.draw({
+  params: { extent: [[-79, 44.5], [-66, 51]]},
+  layers: [
+    { type: "header", text: "Population en 2022", anchor: "start" }, // Titre
+    { type: "minimap", x: 10, y: 10, width: 160 }, 
+    {
+      id : "bub", 
+      type: "bubble", 
+      geojson: munic, 
+      values: "POP_2022", 
+      k: 50, 
+      leg_x: 690,
+      leg_y: 370,
+      leg_round: 0,
+      leg_title: "Nombre d'habitants",
+      fill: "white",
+      fillOpacity:0.2,
+      stroke:"black",
+      strokeWidth:1.4,
+      tooltip: ["$MUS_NM_MUN", d => d.properties["POP_2022"] + " habitants"] 
+    },
+    { 
+      geojson: munic,
+      fill: {
+            type: "choro",
+            values: "VIT_ECO", 
+            colors: "RdYlBu",
+            leg_x:870,
+            leg_y:315,
+            leg_title: "Indice de\nvitalité\néconomique",
+            leg_round: 2
+        }
+    }, // Couche des communes
+    {type:"scalebar"}
+  ]
+})
+```
+
+On peut aussi colorier les cercles
+
+```{ojs}
+bertin.draw({
+  params: { extent: [[-79, 44.5], [-66, 51]]},
+  layers: [
+    { type: "header", text: "Population en 2022", anchor: "start" }, // Titre
+    { type: "minimap", x: 10, y: 10, width: 160 }, 
+    {
+      id : "bub", 
+      type: "bubble", 
+      geojson: munic, 
+      values: "POP_2022", 
+      k: 50, 
+      leg_x: 690,
+      leg_y: 370,
+      leg_round: 0,
+      leg_title: "Nombre d'habitants",
+      fill: {
+            type: "choro",
+            values: "VIT_ECO", 
+            colors: "RdYlBu",
+            leg_x:870,
+            leg_y:315,
+            leg_title: "Indice de\nvitalité\néconomique",
+            leg_round: 2
+        },
+      tooltip: ["$MUS_NM_MUN", d => d.properties["POP_2022"] + " habitants"] 
+    },
+    { 
+      geojson: munic,
+      fill: "#CCC"
+    }, // Couche des communes
+    {type:"scalebar"}
+  ]
+})
+```
+
+On peut utiliser les **`Inputs`** pour tester des visualisations, explorer les données ou proposer des interactions à un utilisatuer.
+
+```{ojs}
+// Inputs
+viewof symbology = Inputs.radio(["bubble", "square", "spikes", "smooth", "dotdensity"], { label: "symbologie",   value: "bubble"})
+viewof r = Inputs.range([10, 100], { label: "taille", step: 1, value: 50, disabled : ["bubble", "square", "spikes"].includes(symbology) ? false: true})
+viewof toggle = Inputs.toggle({label: "dorling", value: false, disabled : ["bubble", "square", "dotdensity"].includes(symbology) ? false: true})
+viewof thresholds = Inputs.range([5, 50], { label: "thresholds", step: 1, value: 23, disabled : symbology == "smooth" ? false : true})
+viewof bandwidth = Inputs.range([5, 50], { label: "bandwidth", step: 1, value: 27, disabled : symbology == "smooth" ? false : true })
+viewof filterpop = Inputs.range([1000, 100000], { label: "POP >= ", step: 1, value: 1000})
+// Carte
+bertin.draw({
+    params: { extent: [[-79, 44.5], [-66, 51]]},
+    layers: [
+      {
+        type: symbology,
+        geojson: geo.filter(munic, (d) => d.POP_2022 >= filterpop), 
+        values: "POP_2022", 
+        fill: symbology == "smooth" ? "RdYlGn" : "red",
+        fillOpacity:0.7,
+        dorling: toggle,
+        k: r,
+        thresholds,
+        bandwidth,
+        symbol_size:25,
+        w:15,
+        symbol_shift : toggle ? 1 : 0,
+        stroke : symbology == "spikes" ? "red" : "white",
+        tooltip: ["$MUS_NM_MUN", d => d.properties["POP_2022"] + " habitants"] 
+      },
+      {
+        geojson: munic,
+        fill: "#CCC",
+        stroke : toggle ? "#CCC" : "white"
+      }, 
+  ]
+})
+```
+
+## Références
+
+<ins>Documentation</ins>
+
+-   [github.com/neocarto/bertin](https://github.com/neocarto/bertin)
+
+<ins>Exemples</ins>
+
+-   [observablehq.com/\@neocartocnrs/bertin-js-tooltips?collection=\@neocartocnrs/bertin](https://observablehq.com/@neocartocnrs/bertin-js-tooltips?collection=@neocartocnrs/bertin)
+
+<ins>Bibliographie</ins>
+
+-   **Bostock M. (2021) JavaScript for Data Analysis. towardsdatascience. [towardsdatascience.com/javascript-for-data-analysis-2e8e7dbf63a7](https://towardsdatascience.com/javascript-for-data-analysis-2e8e7dbf63a7)**
+-   Bostock M., Ogievetsky V., Heer J. (2011). D³ Data-Driven Documents, IEEE, Volume: 17 [ieeexplore.ieee.org/abstract/document/6064996](https://ieeexplore.ieee.org/abstract/document/6064996)
+-   Giraud T., Lambert N., (2023). bertin: Thematic Cartography with 'bertin.js'. [github.com/riatelab/bertin/, https://riatelab.github.io/bertin](https://github.com/riatelab/bertin/,%20https://riatelab.github.io/bertin)
+-   **Lambert N, Giraud T, Viry Matthieu and, Ysebaert R. (2023) Cartographier pour le web avec la bibliothèque JavaScript 'bertin'. SAGEO**
+-   Lambert N. (2023) Observable en bref. Webinaire 'Interroger les données', Groupe de travail 'Atelier Données' du CNRS.
+-   Lambert N., Zanin C., (2020). Practical handbook of thematic cartography: principles, methods, and applications. CRC Press. [observablehq.com/\@neocartocnrs/webinaire-interroger-les-donnees](https://observablehq.com/@neocartocnrs/webinaire-interroger-les-donnees)
+-   Lambert N. (2023) Cartographie thématique avec ojs. École d'été internationale, Ouidah. [https://ee-cist.github.io/CAR2_cartodyn/intro/docs/index.html](ee-cist.github.io/CAR2_cartodyn/intro/docs/index.html%5D)
+-   **Perkel M. J. (2021) Reactive, reproducible, collaborative: computational notebooks evolve, Nature. [nature.com/articles/d41586-021-01174-w](https://www.nature.com/articles/d41586-021-01174-w)**
+-   Rice J., Farquhar A., Piernot P., Gruber T., (1996). "Using the Web instead of a window system". In: Proceedings of the SIGCHI conference on Human factors in computing systems common ground - CHI '96. the SIGCHI conference. Vancouver, British Columbia, Canada: ACM Press, pp. 103--110. isbn: 978-0-89791-777-3. doi: 10.1145/238386.238442.
+-   Roth R.E., Donohue R.G., Sack C.M., Wallace T.R., Buckingham T.M.A., (2015). "A Process for Keeping Pace with Evolving Web Mapping Technologies". In: Cartographic Perspectives 78, pp. 25--52. issn: 1048-9053. doi: 10.14714/CP78.1273. url: https://cartographicperspectives.org/index.php/journal/article/view/cp78-roth-et-al
+-   Shen H. (2014). Interactive notebooks: Sharing the code. Nature, 515(7525), 151-152.
+
+# A vous de jouer
+
+::: {.callout-caution appearance="simple"}
+## faire des cartes avec {ojs}
+
+::: {.callout-note icon="false"}
+## Objectif
+
+Réaliser comme ci-dessous, une carte [choroplèthe](http://geoconfluences.ens-lyon.fr/glossaire/choroplethe-choroisoplethe) sur une région du Québec que l'on peut selectionner dans une liste déroulante.
+
+```{ojs}
+//| echo: false
+//| eval: true
+viewof myregion =  Inputs.select(["Estrie","Capitale-Nationale","Bas-Saint-Laurent"], {label: "Choisissez une région"})
+myreg = bertin.properties.subset({
+    geojson: munic,
+    field: "MUS_NM_REG",
+    selection:   [myregion]
+})
+bertin.draw({ layers: [{type:"header", text: `Les actifs (${myregion})`},{type:"scalebar"},{ geojson: myreg, rewind: true, fill: {type:"choro", values: "TX_2564", colors: "RdYlGn", leg_x: 2, leg_y:2, leg_title:"Taux d'actifs", leg_round:1}, tooltip:["$MUS_NM_MUN", d => "Taux d'actifs :" + d.properties.TX_2564 + "%"]}] })
+```
+:::
+
+**A vous de jouer**
+
+-   Chargez la bibliothèque [`bertin`](https://github.com/neocarto/bertin)
+-   Importez la couche `munic.geojson`
+
+::: {.callout-tip icon="false" collapse="true"}
+## Besoin d'aide ?
+
+Pour importer des données au format JSON en Observable JavaScript, on utilise l'instruction `FileAttachment()`
+:::
+
+-   Afficher le fond de carte avec la fonction [`draw`](https://github.com/neocarto/bertin#drawing-a-map)
+
+::: {.callout-tip icon="false" collapse="true"}
+## Besoin d'aide ?
+
+La fonction draw prend en entrée un objet qui a la structure suivante :
+
+``` js
+bertin.draw({
+  layers: [{...}]
+})
+```
+:::
+
+::: {.callout-tip icon="false" collapse="true"}
+## Astuce
+
+Si la carte ne s'affiche pas correctement, utiliser l'attribut `rewind:true`
+:::
+
+-   Afficher les données attributaires.
+
+::: {.callout-tip icon="false" collapse="true"}
+## Besoin d'aide ?
+
+On peut afficher les données avec l'instruction. `Inputs.table()` Mais auparavant, il faut récupérer les propriétés du geoJSON comme ceci :
+
+``` js
+munic.features.map((d) => d.properties)
+```
+:::
+
+-   Créer une liste déroulante pour choisir parmi 3 régions à étudier
+
+::: {.callout-tip icon="false" collapse="true"}
+## Besoin d'aide ?
+
+Par exemple :
+
+``` js
+mesregions = ["Estrie","Capitale-Nationale","Bas-Saint-Laurent"]
+viewof myregion =  Inputs.select(mesregions, {label: "Choisissez une région"})
+```
+:::
+
+-   Créez un nouveau fond de carte contenant les municipalités de la région concernée.
+
+::: {.callout-tip icon="false" collapse="true"}
+## Besoin d'aide ?
+
+Pour créer ce sous jeu de données, on peut utiliser la fonction `subset` de la bibliothèque `bertin`.
+
+``` js
+myreg = bertin.properties.subset({
+    geojson: munic,
+    field: "MUS_NM_REG",
+    selection:   [myregion]
+})
+```
+:::
+
+-   Afficher le nouveau fond de carte
+-   Définisser la couleur de fond, l'épaisseur des traits, la couleur des contours.
+-   Réaliser une carte [chorplèthe](https://github.com/neocarto/bertin#choropleth) à partir d'une variable disponible. Par exemple, le taux d'actifs (TX_2564).
+
+::: {.callout-tip icon="false" collapse="true"}
+## Besoin d'aide ?
+
+Définissez l'attribut `fill` par un objet commençant par `{type: choro, values: ...}`
+:::
+
+-   Changez les couleurs et la méthode de discretisation
+
+::: {.callout-tip icon="false" collapse="true"}
+## Besoin d'aide ?
+
+La documentation est disponible [ici](https://github.com/neocarto/bertin#choropleth)
+:::
+
+-   Ajouter un [titre](https://github.com/neocarto/bertin#header)
+-   Ajouter la légende
+-   Ajouter l'[échelle](https://github.com/neocarto/bertin#scalebar)
+-   Ajoutez des [infobulles](https://observablehq.com/@neocartocnrs/bertin-js-tooltips)
+
+::: {.callout-caution collapse="true"}
+## SOLUTION
+
+```{ojs}
+//| echo: true
+//| eval: false
+bertin = require("bertin")
+munic = FileAttachment("munic.geojson").json()
+viewof myregion = Inputs.select(
+  ["Estrie", "Capitale-Nationale", "Bas-Saint-Laurent"],
+  { label: "Choisissez une région" }
+)
+myreg = bertin.properties.subset({
+    geojson: munic,
+    field: "MUS_NM_REG",
+    selection:   [myregion]
+})
+bertin.draw({
+  layers: [
+    { type: "header", text: `Les actifs (${myregion})` },
+    { type: "scalebar" },
+    {
+      geojson: myreg,
+      rewind: true,
+      fill: {
+        type: "choro",
+        values: "TX_2564",
+        colors: "RdYlGn",
+        leg_x: 2,
+        leg_y: 2,
+        leg_title: "Taux d'actifs",
+        leg_round: 1
+      },
+      tooltip: [
+        "$MUS_NM_MUN",
+        (d) => "Taux d'actifs :" + d.properties.TX_2564 + "%"
+      ]
+    }
+  ]
+})
+```
+:::
+:::
+
 
 ## Le petit plus : dépôt et déploiement continu avec GitHub.
