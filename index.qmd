@@ -223,7 +223,7 @@ plot(mtq)
 
 ### Centroides
 
-```{r sf_centro,  fig.height=3, fig.width=3, nm=TRUE}
+```{r sf_centro,  fig.height=3, fig.width=3, nm=TRUE, warning=FALSE}
 mtq_c <- st_centroid(mtq)
 plot(st_geometry(mtq))
 plot(st_geometry(mtq_c), cex = 1.2, col = "red", pch = 20, add = TRUE)
@@ -422,8 +422,9 @@ library(sf)
 mun_raw <- st_read("geom/munic.geojson", quiet= TRUE)
 mrc_raw <- st_read("geom/mrc.geojson", quiet = TRUE)
 # Projection NAD83 / Quebec Albers
-mun <- st_transform(mun_raw, "EPSG:6623")
-mrc <- st_transform(mrc_raw, "EPSG:6623")
+epsg_6623 <- "EPSG:6623"
+mun <- st_transform(mun_raw, epsg_6623)
+mrc <- st_transform(mrc_raw, epsg_6623)
 # Création d'une couche des régions
 reg <- aggregate(x = mrc[,'MUS_NM_REG'], 
                  by = list(REG = mrc$MUS_NM_REG), 
@@ -461,7 +462,8 @@ Après avoir démarré les packages nécessaires, nous allons tout d'abord séle
 #| message: false
 library(sf)
 library(osmdata)
-target <- mrc[mrc$MUS_NM_MRC == "Québec", ]
+nom_mrc <- "Québec"
+target <- mrc[mrc$MUS_NM_MRC == nom_mrc, ]
 ```
 
 Nous allons ensuite définir une *bounding box* correspondant à l'emprise de la MRC. Le package `osmdata` fonctionne avec des objets en WGS84 nous avons donc besoin de reprojeter les données.

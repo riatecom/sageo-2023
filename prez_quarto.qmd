@@ -39,7 +39,7 @@ Solutions open source, gratuites, qui couvrent l'ensemble de la chaîne de trait
 
 <img src="fig/chain_2.png" width="800"/>
 
-Une pratique qui tend aujourd'hui à s'universaliser au sein de la communauté (formation, enseignement, recherche).
+Une pratique qui tend aujourd'hui à se diffuser au sein de la communauté (formation, enseignement, recherche).
 </center>
 
 ## Evolution des pratiques en SHS (FR)
@@ -47,7 +47,7 @@ Une pratique qui tend aujourd'hui à s'universaliser au sein de la communauté (
 <br><center>
 ### Depuis peu... : vers l'ouverture à de nouveaux langages ?
 
-Usage de langages de développement variés en fonction des usages désirés (performence de certaines libs, interactivité, ...) et des échanges interdisciplinaires (dataviz).
+Usage de langages de développement variés en fonction des usages désirés (performance de certaines libs, interactivité, ...) et des échanges interdisciplinaires (dataviz).
 
 <center><img src="fig/chain_3.png" width="800"/></center>
 
@@ -83,8 +83,8 @@ Comment passer d'un langage à l'autre dans des mêmes chaînes de traitement ?
 ::: {.column width="75%"}
 **Ouverture des protocoles** de recherche dans l'objectif de **confirmer** et rendre **répétable** des résultats de recherche :
 
--   Mise à disposition du données et du code, exécutable.
--   Documentation l'environnement logiciel nécessaire à son exécution.
+-   Mise à disposition des données et du code, exécutable.
+-   Documentation de l'environnement logiciel nécessaire à son exécution.
 -   Transparence dans la collecte de données, ses traitements, analyses et sorties graphiques.
 -   Réutilisable par d'autres : documentation du code, de ce qu'il produit et dans quel but.
 -   Ouvert aux retours, commentaires, suggestions, critiques, révisions.
@@ -113,7 +113,7 @@ Comment passer d'un langage à l'autre dans des mêmes chaînes de traitement ?
 :::
 
 ::: {.column width="25%"}
-![](fig/Knuth_b.jpg) <small> Donald Knuth (mathématicien, Univ. Stanford). Pose les bases de la programmation lettrée dans un premier environnement de literate programming : le WEB qui combine du Pascal et du TeX, appliqué aux [nombres premiers (1984)](http://literateprogramming.com/knuthweb.pdf).
+![](fig/Knuth_b.jpg) <small> Donald Knuth (mathématicien, Univ. Stanford). Pose les bases de la programmation lettrée dans un premier environnement de *literate programming* : le WEB qui combine du Pascal et du TeX, appliqué aux [nombres premiers (1984)](http://literateprogramming.com/knuthweb.pdf).
 
 </small>
 :::
@@ -142,10 +142,10 @@ Le **Notebook** est une solution opérationnelle et adaptée pour arriver à ces
 ::: columns
 ::: {.column width="40%"}
 ::: medium
--   Open Source, basé sur Pandoc.
--   Moins dépendant de R : pas d'installation de packages R, comme c'était le cas avec R Markdown.
+-   Open source, basé sur Pandoc.
+-   Moins dépendant de R : pas d'installation obligatoire de packages R, comme c'était le cas avec R Markdown.
 -   Peut fonctionner ailleurs que dans l'IDE RStudio : pas d'utilisation exclusive de Knitr (Jupyter, Observable également).
--   Permet d'exécuter différents langages de programmation : R, Python, Julia ou JavaScript (interactivité ++).
+-   **Permet d'exécuter différents langages de programmation** : R, Python, Julia ou JavaScript (interactivité ++).
 -   Possibilité de mises en page customisées avancées (templates ++)
 -   Fonctionnalités d'auto-complétion très utiles. 
 :::
@@ -646,7 +646,7 @@ Using callouts is an effective way to highlight content that your reader give sp
 
 ## Paramétrer ses blocs de code grâce aux chunks
 
-Le code est à placer dans des ***chunks*** (tronçons), délimités par des triples ***backticks*** (Code > Insert Chunk dans R Studio).
+Le code est à placer dans des ***chunks*** (tronçons), délimités par des triples ***backticks*** (Code > Insert Chunk dans RStudio).
 
 Un même document Quarto peut combiner plusieurs langages de programmation : 
 
@@ -682,7 +682,7 @@ plt.show()
 
 ## Paramétrer ses blocs de code grâce aux chunks
 
-Le code est à placer dans des ***chunks*** (tronçons), délimités par des triples ***backticks*** (Code > Insert Chunk dans R Studio).
+Le code est à placer dans des ***chunks*** (tronçons), délimités par des triples ***backticks*** (Code > Insert Chunk dans RStudio).
 
 Un même document Quarto peut combiner plusieurs langages de programmation : 
 
@@ -703,7 +703,7 @@ ggplot(airquality, aes(Temp, Ozone)) +
 
 ## Paramétrer ses blocs de code grâce aux chunks
 
-Le code est à placer dans des ***chunks*** (tronçons), délimités par des triples ***backticks*** (Code > Insert Chunk dans R Studio).
+Le code est à placer dans des ***chunks*** (tronçons), délimités par des triples ***backticks*** (Code > Insert Chunk dans RStudio).
 
 Un même document Quarto peut combiner plusieurs langages de programmation : 
 
@@ -951,13 +951,13 @@ leaflet() %>%
 ````
 
 ```{r}
-#| fig-width: 5
 #| echo: false
 library(leaflet)
-leaflet() %>%
-  addProviderTiles(providers$Stamen.Watercolor) %>%  
-  addMarkers(lng = -71.2818, lat = 46.7809, 
+x <- leaflet() |>
+  addProviderTiles("Stamen.TonerHybrid") |>
+  addMarkers(lng = -71.2818, lat = 46.7809,
              popup="Sageo 2023")
+x
 ```
 
 :::
