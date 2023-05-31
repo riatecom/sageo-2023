@@ -1015,7 +1015,6 @@ Des services Web d'hébergement et de gestion de développement de logiciels bas
 
 - Brundson C., Comber A., 2020, [Opening practice: supporting reproducibility and critical spatial data science](https://link.springer.com/article/10.1007/s10109-020-00334-2), Journal of Geographical Systems 23. 
 - Desquilbet L., et al., 2019, [Vers une recherche reproductible. Faire évoluer ses pratiques](https://rr-france.github.io/bookrr/).
-- Engelaere-Lefebvre, J., 2022 [PROcessus de Publications ]
 - Nüst D., Pebesma E., 2021, [Practical Reproducibility in Geography and Geosciences](https://eartharxiv.org/repository/view/3216/), Annals of the Americal Association of Geographes, vol 111, 2021, Issue 5.
 
 :::
