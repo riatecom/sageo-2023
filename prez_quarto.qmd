@@ -81,10 +81,10 @@ Comment passer d'un langage à l'autre dans des mêmes chaînes de traitement ?
 
 ::: columns
 ::: {.column width="75%"}
-Ouverture des protocoles de recherche dans l'objectif de **confirmer** et rendre **répétable** des résultats de recherche.
+**Ouverture des protocoles** de recherche dans l'objectif de **confirmer** et rendre **répétable** des résultats de recherche :
 
--   Disponibilité des données et du code, exécutable.
--   Documentation de l'environnement logiciel nécessaire à son exécution.
+-   Mise à disposition du données et du code, exécutable.
+-   Documentation l'environnement logiciel nécessaire à son exécution.
 -   Transparence dans la collecte de données, ses traitements, analyses et sorties graphiques.
 -   Réutilisable par d'autres : documentation du code, de ce qu'il produit et dans quel but.
 -   Ouvert aux retours, commentaires, suggestions, critiques, révisions.
@@ -101,7 +101,7 @@ Ouverture des protocoles de recherche dans l'objectif de **confirmer** et rendre
 
 ::: columns
 ::: {.column width="75%"}
-**Paradigme de programmation** ([Knuth, 1984](https://academic.oup.com/comjnl/article/27/2/97/343244)) qui consiste à associer code source (pour les ordinateurs) et documentation (pour les humains).
+**Paradigme de programmation** qui consiste à associer code source (pour les ordinateurs) et documentation (pour les humains) :
 
 -   Donner les informations suffisantes pour répliquer l'expérimentation, à la manière d'un essai.
 -   Vérifier que les conclusions sont valides.
@@ -137,12 +137,12 @@ Le **Notebook** est une solution opérationnelle et adaptée pour arriver à ces
 
 ## Quarto : un des derniers nés des notebooks (2022)
 
-<br><br>
+<br>
 
 ::: columns
 ::: {.column width="40%"}
 ::: medium
--   Open-source, basé sur Pandoc.
+-   Open Source, basé sur Pandoc.
 -   Moins dépendant de R : pas d'installation de packages R, comme c'était le cas avec R Markdown.
 -   Peut fonctionner ailleurs que dans l'IDE RStudio : pas d'utilisation exclusive de Knitr (Jupyter, Observable également).
 -   Permet d'exécuter différents langages de programmation : R, Python, Julia ou JavaScript (interactivité ++).
@@ -170,7 +170,7 @@ Le **Notebook** est une solution opérationnelle et adaptée pour arriver à ces
 
 Restituer des analyses reproductibles menées lors d'un projet.
 
-<small> <a href="https://rcarto.gitpages.huma-num.fr/centralite/" target="_blank" role="button">Sortie (site Web)</a> // <a href="https://gitlab.huma-num.fr/rCarto/centralite" target="_blank" role="button">Dépôt GitLab</a> </small>
+<small>**Exemple** : <a href="https://rcarto.gitpages.huma-num.fr/centralite/" target="_blank" role="button">Sortie (site Web)</a> // <a href="https://gitlab.huma-num.fr/rCarto/centralite" target="_blank" role="button">Dépôt GitLab</a> </small>
 
 </center>
 :::
@@ -204,17 +204,21 @@ Générer des présentations interactives (iframe, animations, slides interactif
 :::
 
 ::: {.column width="42.5%"}
+<br><br><br><br>
 <center><img src="fig/output_prez1.png" width="400"/></center>
 :::
 ::: {.column width="42.5%"}
 <center><img src="fig/output_prez2.png" width="400"/></center>
+<center><img src="fig/output_prez3.png" width="400"/></center>
 :::
+
+
 :::
 
 #### Rapports Interactifs
 
 ::: columns
-::: {.column width="20%"}
+::: {.column width="30%"}
 ::: medium
 <br><br><br>
 
@@ -222,14 +226,14 @@ Générer des présentations interactives (iframe, animations, slides interactif
 
 Créer des raports interactifs combinant (éventuellement) plusieurs langages de programmation.
 
-<small> <a href="https://rysebaert.github.io/climbing_paris/" target="_blank" role="button">Sortie (Rapport interactif)</a> // <a href="https://github.com/rysebaert/climbing_paris" target="_blank" role="button">Dépôt GitHub</a> // <a href="https://github.com/rysebaert/climbing_paris/blob/main/index.qmd" target="_blank" role="button">Code (Quarto)</a> </small>
+<small>**Exemple** : <a href="https://rysebaert.github.io/climbing_paris/" target="_blank" role="button">Sortie (Rapport interactif)</a> // <a href="https://github.com/rysebaert/climbing_paris" target="_blank" role="button">Dépôt GitHub</a> // <a href="https://github.com/rysebaert/climbing_paris/blob/main/index.qmd" target="_blank" role="button">Code (Quarto)</a> </small>
 
 </center>
 :::
 :::
 
-::: {.column width="80%"}
-![](fig/output_report.png)
+::: {.column width="70%"}
+<center><img src="fig/output_report.png" width="650"/></center>
 :::
 :::
 
@@ -242,7 +246,7 @@ Créer des raports interactifs combinant (éventuellement) plusieurs langages de
 
 <br><br><br>
 
-Créer des manuels ou des sections pédagogiques collaboratifs au format Book.
+Produire des manuels ou des sections pédagogiques collaboratifs au format Book.
 
 <small> <a href="https://py.geocompx.org/" target="_blank" role="button">Sortie (Book)</a> // <a href="https://github.com/geocompx/geocompy" target="_blank" role="button">Dépôt GitHub</a></small>
 
@@ -264,7 +268,7 @@ Créer des manuels ou des sections pédagogiques collaboratifs au format Book.
 
 <br><br><br><br><br>
 
-Soumettre des publications suivant les prérequis (adaptation template LaTeX) de plusieurs revues de référence (Public Library of Science, Elsevier, JSS, etc.)
+Soumettre des publications suivant les prérequis (modèle LaTeX) de plusieurs revues de référence (Public Library of Science, Elsevier, JSS, etc.)
 
 <small> <a href="https://quarto.org/docs/journals/" target="_blank" role="button">Journal Articles (Quarto doc)</a> </small>
 
@@ -273,7 +277,7 @@ Soumettre des publications suivant les prérequis (adaptation template LaTeX) de
 :::
 
 ::: {.column width="60%"}
-<center><img src="fig/output_journal.png" width="500"/></center>
+<center><img src="fig/output_journal.png" width="350"/></center>
 :::
 :::
 :::
@@ -286,24 +290,30 @@ Soumettre des publications suivant les prérequis (adaptation template LaTeX) de
 
 ## Initier un document Quarto dans RStudio
 
-RStudio propose plusieurs modèles pour initier aisément un notebook.
+<center>RStudio propose **plusieurs modèles** pour initier aisément un notebook.
+</center>
+
+<br>
 
 ::: columns
-::: {.column width="50%"}
+::: {.column width="52%"}
+<br><br>
 ![](fig/init_quarto1.png)
 :::
 
-::: {.column width="50%"}
+::: {.column width="48%"}
 ![](fig/init_quarto2.png)
 :::
 :::
 
 ## Initier un document Quarto dans RStudio
 
-RStudio propose plusieurs modèles pour initier aisément un notebook.
+<center>Le document est généré en cliquant sur **render**.</center>
 
 ::: columns
 ::: {.column width="50%"}
+
+
 ![](fig/init_quarto3.png)
 :::
 
@@ -314,6 +324,8 @@ RStudio propose plusieurs modèles pour initier aisément un notebook.
 
 
 ## Paramétrer son document grâce au YAML
+
+<br><br>
 
 ::: columns
 ::: {.column width="50%"}
@@ -338,14 +350,18 @@ format: html
 
 ## Paramétrer son document grâce au YAML
 
+<br><br>
+
 ::: columns
 ::: {.column width="50%"}
 Le YAML permet de définir :
 
--   Le format de document désiré : HTML, **PDF** (installation d'une distribution TeX requise)
+-   Le format de document désiré : HTML, **PDF** (distribution TeX requise)
 :::
 
 ::: {.column width="50%"}
+
+<br>
 
 ``` markdown
 ---
@@ -361,14 +377,18 @@ format: pdf
 
 ## Paramétrer son document grâce au YAML
 
+<br><br>
+
 ::: columns
 ::: {.column width="50%"}
 Le YAML permet de définir :
 
--   Le format de document désiré : HTML, PDF (installation d'une distribution TeX requise), **docx** (requiert une installation de Microsof tOffice ou Libre/Open Office). 
+-   Le format de document désiré : HTML, PDF (distribution TeX requise), **docx** (requiert Microsoft Office ou Libre/Open Office). 
 :::
 
 ::: {.column width="50%"}
+
+<br><br>
 
 ``` markdown
 ---
@@ -384,16 +404,20 @@ format: docx
 
 ## Paramétrer son document grâce au YAML
 
+<br><br>
+
 ::: columns
 ::: {.column width="50%"}
 Le YAML permet de définir :
 
--   Le format de document désiré : HTML, PDF (installation d'une distribution TeX requise), .docx.
+-   Le format de document désiré : HTML, PDF (distribution TeX requise), **docx** (requiert Microsoft Office ou Libre/Open Office). 
 
 -   Le type de sortie souhaité : Document, **Présentation** (revealjs / beamer, PowerPoint)
 :::
 
 ::: {.column width="50%"}
+
+<br><br><br><br>
 
 ``` markdown
 ---
@@ -408,7 +432,7 @@ format: revealjs / beamer / pptx
 
 ## Paramétrer son document grâce au YAML
 
-<center>Ces modèles sont paramétrables en profondeur</center>
+<center>On peut jouer sur ces paramètres pour créer des **documents uniques**.</center>
 
 ::: columns
 
@@ -416,10 +440,10 @@ format: revealjs / beamer / pptx
 
 ::: medium
 
--   choisir un thème
+-   choix d'un thème
 -   table des matières
 -   numérotation des parties du document
--   choix des couleurs
+-   gestion des couleurs
 -   style de la typo : police, couleurs, taille.  
 -   affichage des blocs de code
 -   dimensionnement des figures et tables
@@ -427,7 +451,7 @@ format: revealjs / beamer / pptx
 -   ajout d'une bibliographie (BibTeX)
 -   affichage des notes de bas de page
 -   métadonnées associées au document
--   ajouter une feuille de style css
+-   associer une feuille de style css
 -   ...
 
 ::: 
@@ -447,7 +471,7 @@ format: revealjs / beamer / pptx
 
 ## Paramétrer son document grâce au YAML
 
-<center>Ces modèles sont paramétrables en profondeur (cf documentation [Quarto](https://quarto.org/docs/reference/formats/html.html))</center>
+<center>On peut jouer sur ces paramètres pour créer des **documents uniques**.</center>
 
 ::: columns
 
@@ -455,10 +479,10 @@ format: revealjs / beamer / pptx
 
 ::: medium
 
--   choisir un thème
+-   choix d'un thème
 -   table des matières
 -   numérotation des parties du document
--   choix des couleurs
+-   gestion des couleurs
 -   style de la typo : police, couleurs, taille.  
 -   affichage des blocs de code
 -   dimensionnement des figures et tables
@@ -466,10 +490,12 @@ format: revealjs / beamer / pptx
 -   ajout d'une bibliographie (BibTeX)
 -   affichage des notes de bas de page
 -   métadonnées associées au document
--   ajouter une feuille de style css
+-   associer une feuille de style css
 -   ...
 
 ::: 
+
+Consulter la documentation [Quarto](https://quarto.org/docs/reference/formats/html.html)
 
 :::
 
@@ -513,7 +539,7 @@ format:
 
 ## Décrire simplement son cheminement en markdown
 
-<center>Permet de gérer les **blocs de textes** entre les blocs de code dans les notebooks Quarto</center> 
+<center>Permet de gérer les **blocs de textes** entre les blocs de code dans les notebooks Quarto.</center> 
 <br>
 
 ::: columns
@@ -563,39 +589,55 @@ Se reporter au [Markdown Guide](https://www.markdownguide.org/basic-syntax/) ou 
 
 ## Optimiser sa mise en page avec des classes préformatées
 
-Ceci
+Ceci :
 
 ``` markdown
 ::: columns
 
-::: {.column width="50%"}
+::: {.column width="40%"}
+
 ::: {.callout-tip}
-## 5 types de callouts dispnibles
+## 5 types de callouts disponibles
 `note`, `warning`, `important`, `tip`, and `caution`.
 :::
+
+::: {.callout-note appearance="simple"}
+## Pay Attention
+
+Using callouts is an effective way to highlight content that your reader give special consideration or attention.
+:::
+
 ::: 
 
-::: {.column width="50%"}
+::: {.column width="60%"}
 ![](fig/callout.png)
 :::
 
 :::
 ```
 
-. . .
+## Optimiser sa mise en page avec des classes préformatées
 
-Rend cela
+Rend cela :
 
 ::: columns
 
-::: {.column width="50%"}
+::: {.column width="40%"}
 ::: {.callout-tip}
-## 5 types de callouts dispnibles
+## 5 types de callouts disponibles
 `note`, `warning`, `important`, `tip`, and `caution`.
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Pay Attention
+
+Using callouts is an effective way to highlight content that your reader give special consideration or attention.
+
 :::
 ::: 
 
-::: {.column width="50%"}
+::: {.column width="60%"}
 ![](fig/callout.png)
 :::
 
@@ -717,176 +759,266 @@ En initiant le chunk par un *hash pipe* `#|` on peut paramétrer son exécution 
 - `cache: true/false` : les résultats sont mis en cache et ne sont pas rejoués tant que le bloc de code reste inchangé. 
 - `warning: true/false` : affiche les messages d'alerte ou non. 
 - `fig-height: 4` / `fig-width: 6` : hauteur / largeur du plot de sortie, en pouces. 
-- `dpi: 150`: densité de pixels par pouce. 
+- `dpi: 150` : densité de pixels par pouce. 
+
+
+## Paramétrer ses blocs de code grâce aux chunks / Exemples
+
+::: columns
+
+::: {.column width="50%"}
+
+Ceci dans le .qmd :
+
+````
+
+```{{r}}
+plot(1:10)
+```
+
+````
+
+::: 
+
+::: {.column width="50%"}
+
+Rendra cela dans le fichier de sortie :
+
+```{r}
+plot(1:10)
+```
+
+::: 
+
+::: 
+
+## Paramétrer ses blocs de code grâce aux chunks / Exemples
+
+::: columns
+
+::: {.column width="50%"}
+
+Ceci dans le .qmd :
+
+````
+
+```{{r}}
+#| eval: false
+#| echo: false
+plot(1:10)
+```
+
+````
+
+::: 
+
+::: {.column width="50%"}
+
+Ne rendra rien dans le fichier de sortie...
+
+```{r}
+#| eval: false
+#| echo: false
+plot(1:10)
+```
+
+Et c'est bien normal :) 
+
+::: 
+
+::: 
+
+
+## Paramétrer ses blocs de code grâce aux chunks / Exemples
+
+::: columns
+
+::: {.column width="50%"}
+
+Ceci dans le .qmd :
+
+````
+
+```{{r}}
+#| echo: false
+plot(1:10)
+```
+
+````
+
+::: 
+
+::: {.column width="50%"}
+
+Rendra cela dans le fichier de sortie :
+
+```{r}
+#| echo: false
+plot(1:10)
+```
+
+
+::: 
+
+::: 
+
+
+## Paramétrer ses blocs de code grâce aux chunks / Exemples
+
+::: columns
+
+::: {.column width="50%"}
+
+Ceci dans le .qmd :
+
+````
+
+```{{r}}
+#| fig-height: 4
+#| fig-width: 3
+#| fig-cap: Fig.1 - Un graphique très basique ! 
+#| code-fold: true
+plot(1:10)
+```
+
+````
+
+::: 
+
+::: {.column width="50%"}
+
+Rendra cela dans le fichier de sortie :
+
+```{r}
+#| fig-height: 4
+#| fig-width: 3
+#| fig-cap: Fig.1 - Un graphique très basique ! 
+#| code-fold: true
+plot(1:10)
+```
+
+
+::: 
+
+::: 
 
 
 ## Paramétrer ses blocs de code grâce aux chunks
 
-A noter / quelques conseils :
+::: columns
 
-- Penser à générer (`render`) le document fréquemment pour veiller à la cohérence / bonne exécution de vos blocs de code.
+::: {.column width="50%"}
+
+A noter...
+
+- Générez (`render`) le document fréquemment pour veiller à la cohérence / bonne exécution de vos blocs de code.
 - Pour vous comme pour les autres, évitez les blocs de code trop volumineux ou longs. 
 - Les paramètres des chunks peuvent aussi être spécifiés dans le YAML (setup chunk).
-- L'usage de Knitr rend disponible encore [davantage d'options](https://quarto.org/docs/reference/cells/cells-knitr.html)
+- L'usage de Knitr rend disponible encore [davantage d'options](https://quarto.org/docs/reference/cells/cells-knitr.html).
+- Ces paramètres peuvent légèrement changer si l'on compile le document avec [Jupyter](https://quarto.org/docs/reference/cells/cells-jupyter.html) ou [Observable JS](https://quarto.org/docs/reference/cells/cells-ojs.html).
 
-## Paramétrer ses blocs de code grâce aux chunks / Exemples
+:::
 
-::: columns
+:::
 
-::: {.column width="50%"}
-
-Ceci dans le .qmd :
-
-````
-
-```{{r}}
-plot(1:10)
-```
-
-````
-
-::: 
-
-::: {.column width="50%"}
-
-Rendra cela dans le fichier de sortie :
-
-```{r}
-plot(1:10)
-```
-
-::: 
-
-::: 
-
-## Paramétrer ses blocs de code grâce aux chunks / Exemples
+## Paramétrer ses blocs de code grâce aux chunks
 
 ::: columns
 
 ::: {.column width="50%"}
 
-Ceci dans le .qmd :
+A noter...
 
-````
-
-```{{r}}
-#| eval: false
-#| echo: false
-plot(1:10)
-```
-
-````
-
-::: 
+- Générez (`render`) le document fréquemment pour veiller à la cohérence / bonne exécution de vos blocs de code.
+- Pour vous comme pour les autres, évitez les blocs de code trop volumineux ou longs. 
+- Les paramètres des chunks peuvent aussi être spécifiés dans le YAML (setup chunk).
+- L'usage de Knitr rend disponible encore [davantage d'options](https://quarto.org/docs/reference/cells/cells-knitr.html).
+- Ces paramètres peuvent légèrement changer si l'on compile le document avec [Jupyter](https://quarto.org/docs/reference/cells/cells-jupyter.html) ou [Observable JS](https://quarto.org/docs/reference/cells/cells-ojs.html).
+- Possibilité d'intégrer aisément des librairies JavaScript de visualisation intéractive grâce aux [Jupyter Widgets](https://quarto.org/docs/interactive/widgets/jupyter.html) ou [htmlwidgets pour R](https://quarto.org/docs/interactive/widgets/htmlwidgets.html).
+:::
 
 ::: {.column width="50%"}
 
-Rendra cela dans le fichier de sortie :
-
-```{r}
-#| eval: false
-#| echo: false
-plot(1:10)
+````
+```{{r}}
+library(leaflet)
+leaflet() %>%
+  addProviderTiles(providers$Stamen.Watercolor) %>%  
+  addMarkers(lng = -71.2818, lat = 46.7809, 
+             popup="Sageo 2023")
 ```
 
-Rien, et c'est bien normal :) 
+````
 
-::: 
+```{r}
+#| fig-width: 5
+#| echo: false
+library(leaflet)
+leaflet() %>%
+  addProviderTiles(providers$Stamen.Watercolor) %>%  
+  addMarkers(lng = -71.2818, lat = 46.7809, 
+             popup="Sageo 2023")
+```
 
-::: 
+:::
+
+:::
 
 
-## Paramétrer ses blocs de code grâce aux chunks / Exemples
+## Association puissante Notebooks + Git
 
 ::: columns
 
-::: {.column width="50%"}
+::: {.column width="20%"}
+![](fig/git.jpg)
+:::
 
-Ceci dans le .qmd :
+::: {.column width="80%"}
+Un système gestion de version (Torvald, 2005) distribué pour :
 
-````
-
-```{{r}}
-#| echo: false
-plot(1:10)
-```
-
-````
-
-::: 
-
-::: {.column width="50%"}
-
-Rendra cela dans le fichier de sortie :
-
-```{r}
-#| echo: false
-plot(1:10)
-```
-
-
-::: 
-
-::: 
-
-
-## Paramétrer ses blocs de code grâce aux chunks / Exemples
+-   Tracer des changements dans les fichiers textes.
+-   Gérer l'historique et les versions du code source.
+-   Partager le code dans des dépôts distants.
+:::
+:::
 
 ::: columns
+::: {.column width="20%"}
+![](fig/gitlab-logo.png) ![](fig/github.png)
+:::
 
-::: {.column width="50%"}
+::: {.column width="80%"}
+Des services Web d'hébergement et de gestion de développement de logiciels basés sur Git (2008, 2011). Ils proposent :
 
-Ceci dans le .qmd :
+-   Une interface de **gestion de projets** : inviter des collaborateurs, gérer des accès, assigner des tâches, visualiser l'historique des modifications, etc.
+-   **CI/CD** (*Intégration et déploiement continus*) : compilation, tests immédiats des modifications.
+-   Fonctionnalités de réseaux sociaux: suivre des personnes / projets, contribuer.
+:::
+:::
 
-````
-
-```{{r}}
-#| fig-height: 6
-#| fig-width: 4
-#| fig-align: center
-#| fig-cap: Un beau graphique ! 
-#| code-fold: true
-plot(1:10)
-```
-
-````
-
-::: 
-
-::: {.column width="50%"}
-
-Rendra cela dans le fichier de sortie :
-
-```{r}
-#| fig-height: 6
-#| fig-width: 4
-#| fig-align: center
-#| fig-cap: Un beau graphique ! 
-#| code-fold: true
-plot(1:10)
-```
-
-
-::: 
-
-::: 
-
+> **= Projets collaboratifs + outils pour déployer des ressources sur le Web + visibilité extérieure**.
 
 
 
 
 ## Ressources pour aller plus loin
 
+::: medium
+
 **Supports utiles** 
 
 - [Comprehensive guide to using Quarto](https://quarto.org/docs/guide/) 
+- Aden-Buie, G, 2021, [R Markdown: An Incomplete History](https://www.garrickadenbuie.com/talk/toronto-data-workshop/0), Toronto Data Workshop. 
 - Mock T., 2022, [Get Started with Quarto](https://rstudio-conf-2022.github.io/get-started-quarto/), RStudio Conference : Intro to Quarto, Authoring Quarto, Code and Editors, Static Documents, Presentations, Websites & Books, Plot & Tables, Advanced Quarto.
 
 **Enjeux de la reproductibilité** 
 
 - Brundson C., Comber A., 2020, [Opening practice: supporting reproducibility and critical spatial data science](https://link.springer.com/article/10.1007/s10109-020-00334-2), Journal of Geographical Systems 23. 
 - Desquilbet L., et al., 2019, [Vers une recherche reproductible. Faire évoluer ses pratiques](https://rr-france.github.io/bookrr/).
+- Engelaere-Lefebvre, J., 2022 [PROcessus de Publications ]
 - Nüst D., Pebesma E., 2021, [Practical Reproducibility in Geography and Geosciences](https://eartharxiv.org/repository/view/3216/), Annals of the Americal Association of Geographes, vol 111, 2021, Issue 5.
+
+:::
 
 ## A vous de jouer !
 
@@ -894,7 +1026,7 @@ plot(1:10)
 ### \[To do\] : Initier un document Quarto
 
 -   Créez un document Quarto à partir des modèles proposés par RStudio. 
--   Jouez avec les métadonnées pour paramétrer le document (nom de l'auteur, ajout table des matières, etc.)
+-   Jouez avec les métadonnées (YAML) pour paramétrer le document (nom de l'auteur, ajout table des matières, etc.)
 -   Exportez au format html le document que vous venez de produire (render). 
 :::
 
@@ -904,4 +1036,3 @@ plot(1:10)
 ### Ctrl + espace pour activer l'autocomplétion et envisager les possibilités
 ![](fig/help_quarto_yaml.png)
 :::
-
