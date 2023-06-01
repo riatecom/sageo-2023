@@ -635,9 +635,11 @@ dev.off()
 
 # Observable JavaScript
 
+![](fig/js.png){width="30%"}
+
 ## Qu'est-ce que l'ojs ?
 
-L'<b>Observable javascript {ojs}</b> est un ensemble d'améliorations apportées à vanilla JavaScript créé par Mike Bostock (également auteur de D3). Observable JS se distingue par son exécution réactive, qui convient particulièrement bien à l'exploration et à l'analyse interactives des données.
+L'<b>Observable javascript {ojs}</b> est un ensemble d'améliorations apportées à vanilla JavaScript créé par Mike Bostock (également auteur de D3). Observable JS se distingue par son exécution réactive, qui convient particulièrement bien à l'exploration et à l'analyse interactives des données. 
 
 ![](fig/d3.png){width="20%"} ![](fig/arrow.png){width="20%"} ![](fig/observable.png){width="20%"} <br/> **Observable** est aussi une startup fondée par Mike Bostock et Melody Meckfessel, qui propose une plateforme 100% en ligne (<https://observablehq.com>) pour concevoir, partager et diffuser des visualisations de données.
 
@@ -675,6 +677,8 @@ On peut paramétrer l'affiche et/ou l'execution du code avec **//\| echo** et **
 
 Le langage JavaScript n'a pas du été conçu pour l'analyse de données. Mais, gros point fort, on a tous un navigateur web et JavaScript tourne sur toutes les machines. Le but : bâtir une évolution du langage JavaScript pour en faire un langage adapté à l'analyse et la visualisation de données sur le web.
 
+l'ojs ressemble donc à du JavaScript, mais il y a quelques différences.
+
 ### 👉 Des bibliothèques préchargées 📊
 
 OJS c'est du JavaScript + plein de bibliothèques pré chargées : <br/>
@@ -695,9 +699,11 @@ OJS c'est du JavaScript + plein de bibliothèques pré chargées : <br/>
 | topojson | TopoJSON Client   | 3.1.0              |
 | vl       | Vega, Vega-Lite   | 5.22.1, 5.2.0      |
 
-### 👉 Chaque début de ligne identifie une cellule ojs 🙋
+### 👉 Des cellules 🙋
 
-Chaque ligne définit une variable et une cellule qui doit être unique sur l'ensemble du document.
+Chaque début de ligne identifie une cellule ojs. Chaque ligne définit une variable et une cellule qui doit être unique sur l'ensemble du document.
+
+En début de cellule, on n'utilisera pas les déclarations de variables avec **let**, **const** ou **var**.
 
 ``` {{ojs}}
 a = 10 // une cellule
@@ -708,6 +714,8 @@ b = 20 // une cellule
 c = a + b // une cellule
 ```
 
+A l'intérieur d'un bloc de code, on écrit du vanilla JavaScript.
+
 ``` {{ojs}}
 d = { 
   let a = 10 
@@ -715,6 +723,10 @@ d = {
   return a + b 
 } // Une cellule
 ```
+
+### 👉 Des promesses sont résolues ✅
+
+Dons ojs, les promesses sont résolues d'une cellule à l'autre. Cela permet d'enlever de la complexité liée à la conception asynchrone du JavaCript. Ca va être très ptratique quand on charge un jeu de données par exemple. 
 
 ### 👉 L'ordre des cellules n'a pas d'importance 🤯
 
@@ -739,7 +751,7 @@ Le lien entre les cellules se fait de façon topologique et non de haut en bas.
 
 Dès lors qu'une cellule est modifiée, les cellules qui en dépendent sont modifiées également.
 
-Pour modifier la valeutr d'une céllule, on utilise des **`Inputs`** (des composants proposés par OJS pour explorer les données) avec le mot clé **`viewof`**. Voir : https://observablehq.com/@observablehq/inputs
+Pour modifier la valeur d'une cellule, on utilise des **`Inputs`** (des composants proposés par OJS pour explorer les données) avec le mot clé [**`viewof`**](https://observablehq.com/@observablehq/inputs)
 
 ```{ojs}
 viewof x = Inputs.range([0, 255], {step: 1})
@@ -1517,7 +1529,7 @@ viewof myregion =  Inputs.select(mesregions, {label: "Choisissez une région"})
 ```
 :::
 
--   Créez un nouveau fond de carte contenant les municipalités de la région concernée.
+-   Créez un nouveau fond de carte contenant uniquement les municipalités de la région définie par la liste déroulante.
 
 ::: {.callout-tip icon="false" collapse="true"}
 ## Besoin d'aide ?
