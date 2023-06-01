@@ -135,7 +135,8 @@ st_write(st_transform(mrc, 4326), "geom/mrc.geojson")
 st_write(st_transform(mun, 4326), "geom/munic.geojson")
 ```
 
-Ce script abouti à la création de deux fichiers. 
+Ce script abouti à la création de deux fichiers :
+
 - `mrc.geojson` est un fond de carte des Municipalité Régionales de Comté. 
 - `munic.geojson` et un fond de carte des municipalités contenant des données socio-démographiques. 
 
