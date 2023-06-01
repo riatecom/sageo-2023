@@ -74,7 +74,7 @@ python -m pip install numpy geopandas rasterio rasterstats matplotlib rioxarray 
 - Ouvrir RStudio et saisir la commande suivante dans l'interpréteur R :
 
 ```r
-install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf', 'osmdata', 'maptiles', 'tanaka', 'spatstat', 'terra'))
+install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf', 'osmdata', 'maptiles', 'tanaka', 'spatstat', 'terra', 'geojsonsf'))
 ```
 
 ### Vous disposez de tout le nécessaire pour l'atelier !
@@ -147,7 +147,7 @@ python -m pip install numpy geopandas rasterio rasterstats matplotlib rioxarray 
 - Ouvrir RStudio et saisir la commande suivante dans l'interpréteur R :
 
 ```r
-install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf', 'osmdata', 'maptiles', 'tanaka', 'spatstat', 'terra'))
+install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf', 'osmdata', 'maptiles', 'tanaka', 'spatstat', 'terra', 'geojsonsf'))
 ```
 
 ### Vous disposez de tout le nécessaire pour l'atelier !
@@ -205,7 +205,7 @@ python -m pip install numpy geopandas rasterio rasterstats matplotlib rioxarray 
 - Ouvrir RStudio et saisir la commande suivante dans l'interpréteur R :
 
 ```r
-install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf', 'osmdata', 'maptiles', 'tanaka', 'spatstat', 'terra'))
+install.packages(c('markdown', 'rmarkdown', 'reticulate', 'sf', 'readxl', 'mapsf', 'osmdata', 'maptiles', 'tanaka', 'spatstat', 'terra', 'geojsonsf'))
 ```
 
 ### Vous disposez de tout le nécessaire pour l'atelier !
