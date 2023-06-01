@@ -167,6 +167,15 @@
   url = {https://www.routledge.com/Spatial-Point-Patterns-Methodology-and-Applications-with-R/Baddeley-Rubak-Turner/p/book/9781482210200/},
 }
 
+@Manual{R-tanaka,
+  title = {tanaka: Design Shaded Contour Lines (or Tanaka) Maps},
+  author = {Timothée Giraud},
+  year = {2022},
+  note = {R package version 0.3.0},
+  url = {https://CRAN.R-project.org/package=tanaka},
+}
+
+
 
 # Other Software
 
@@ -195,6 +204,11 @@
   doi = {10.5281/zenodo.5884351},
 }
 
+@misc{Leaflet,
+  title={Leaflet javascript libary},
+  author={Agafonkin, Vladimir},
+  year={2015}
+}
 
 # Articles
 
@@ -265,50 +279,6 @@
 }
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-@Manual{R-leaflet,
-  title = {leaflet: Create Interactive Web Maps with the JavaScript 'Leaflet'
-Library},
-  author = {Joe Cheng and Bhaskar Karambelkar and Yihui Xie},
-  year = {2018},
-  note = {R package version 2.0.2},
-  url = {https://CRAN.R-project.org/package=leaflet},
-}
-
-
-
-@Manual{R-cartogram,
-  title = {cartogram: Create Cartograms with R},
-  author = {Sebastian Jeworutzki},
-  year = {2018},
-  note = {R package version 0.1.1},
-  url = {https://CRAN.R-project.org/package=cartogram},
-}
-
-@misc{JS-Leaflet,
-  title={Leaflet javascript libary},
-  author={Agafonkin, Vladimir},
-  year={2015}
-}
-
-@Article{Tanaka50,
-  author={Tanaka, Kitiro}, 
-  title={The  Relief  Contour  Method  of  Representing  Topography  on  Maps}, 
-  journal={The Geographical Review},
-  year=1950,
-  volume=XL,
-  number=3,
-  doi={doi:10.2307/211219}
-}
-
-@Manual{Tanaka20,
-  title = {tanaka: Design Shaded Contour Lines (or Tanaka) Maps},
-  author = {Timothée Giraud},
-  year = {2020},
-  note = {R package version 0.1.3},
-  url = {https://CRAN.R-project.org/package=tanaka},
-}
 
 # Python resources (book, etc.)
 
@@ -434,3 +404,22 @@ year = {2023}
 title={pyproj4/pyproj: 3.5.0 Release}, DOI={10.5281/zenodo.7776548}, abstractNote={What\'s Changed <ul> <li>WHL: PROJ 9.2 in wheels in <a href="https://github.com/pyproj4/pyproj/pull/1243">https://github.com/pyproj4/pyproj/pull/1243</a></li> <li>DEP: Minimum PROJ version 9.0 by @snowman2 in <a href="https://github.com/pyproj4/pyproj/pull/1244">https://github.com/pyproj4/pyproj/pull/1244</a></li> <li>ENH: Add inplace kwarg to Geod.fwd and Geod.inv by @greglucas in <a href="https://github.com/pyproj4/pyproj/pull/1201">https://github.com/pyproj4/pyproj/pull/1201</a></li> <li>ENH: Add return_back_azimuth kwarg to fwd, inv, fwd_intermediate, inv_intermediate by @idanmiara in <a href="https://github.com/pyproj4/pyproj/pull/1165">https://github.com/pyproj4/pyproj/pull/1165</a></li> <li>ENH: Added only_best kwarg to Transformer.from_crs by @snowman2 in <a href="https://github.com/pyproj4/pyproj/pull/1236">https://github.com/pyproj4/pyproj/pull/1236</a></li> <li>PERF: Optimize point transformations by @greglucas &amp; @snowman2 in <a href="https://github.com/pyproj4/pyproj/pull/1204">https://github.com/pyproj4/pyproj/pull/1204</a>, <a href="https://github.com/pyproj4/pyproj/pull/1209">https://github.com/pyproj4/pyproj/pull/1209</a>, <a href="https://github.com/pyproj4/pyproj/pull/1205">https://github.com/pyproj4/pyproj/pull/1205</a></li> <li>PERF: Optimize for single point in Geod fwd/inv functions by @greglucas in <a href="https://github.com/pyproj4/pyproj/pull/1206">https://github.com/pyproj4/pyproj/pull/1206</a></li> <li>REF: Raise error when CRS.to_wkt, CRS.to_json, or CRS.to_proj4 returns None by @snowman2 in <a href="https://github.com/pyproj4/pyproj/pull/1218">https://github.com/pyproj4/pyproj/pull/1218</a></li> <li>CLN: Remove AzumuthalEquidistantConversion &amp; LambertAzumuthalEqualAreaConversion by @snowman2 in <a href="https://github.com/pyproj4/pyproj/pull/1220">https://github.com/pyproj4/pyproj/pull/1220</a></li> <li>BUG: Fix Derived Projected CRS support by @snowman2 in <a href="https://github.com/pyproj4/pyproj/pull/1222">https://github.com/pyproj4/pyproj/pull/1222</a></li> <li>BUG: Add horizontal_datum_name for geographic CRS in CRS.to_cf by @snowman2 in <a href="https://github.com/pyproj4/pyproj/pull/1255">https://github.com/pyproj4/pyproj/pull/1255</a></li> </ul> New Contributors <ul> <li>@greglucas made their first contribution in <a href="https://github.com/pyproj4/pyproj/pull/1201">https://github.com/pyproj4/pyproj/pull/1201</a></li> </ul> <p><strong>Full Changelog</strong>: <a href="https://github.com/pyproj4/pyproj/compare/3.4.1.3.5.0">https://github.com/pyproj4/pyproj/compare/3.4.1.3.5.0</a></p>}, publisher={Zenodo}, author={Alan D. Snow and Jeff Whitaker and Micah Cochran and Idan Miara and Joris Van den Bossche and Chris Mayo and Paul Cochrane and Greg Lucas and Jos de Kloe and Charles Karney and et al.}, year={2023}, month={Mar}
 }
 
+
+
+@article{D3,
+  author={Bostock, Michael and Ogievetsky, Vadim and Heer, Jeffrey},
+  journal={IEEE Transactions on Visualization and Computer Graphics}, 
+  title={D³ Data-Driven Documents}, 
+  year={2011},
+  volume={17},
+  number={12},
+  pages={2301-2309},
+  doi={10.1109/TVCG.2011.185}
+}
+
+@misc{bertinS,
+  author={Lambert, Nicolas and Giraud, Timothée and Viry, Matthieu and Ysebaert, Ronan},
+  publisher={SAGEO}, 
+  title={Cartographier pour le web avec la bibliothèque JavaScript ‘bertin’}, 
+  year={2023}
+}

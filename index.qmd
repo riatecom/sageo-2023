@@ -22,22 +22,24 @@ editor_options:
 bibliography: references.bib
 csl: "universite-de-montreal-apa.csl"
 lang: fr
+resources: "quebec.zip"
+
 ---
 
 ![](fig/SAGEO.png)
 
 ## Présentation
 
-Dans un contexte d’essor de carnets interactifs (*notebooks*), l’objet de cet atelier consiste à montrer les possibilités offertes par Quarto, un système de publication scientifique et technique open source basé sur Pandoc, qui permet d’articuler différents langages pour réaliser des géovisualisations reproductibles dans un seul et même document. Cet atelier proposera aux participants une prise en main des principales fonctionnalités offertes par Quarto, puis une mise en œuvre de chaînes de traitements de l’information géographique reproductibles avec R, Python et Observable JavaScript dans cet environnement.
+Dans un contexte d'essor de carnets interactifs (*notebooks*), l'objet de cet atelier consiste à montrer les possibilités offertes par Quarto, un système de publication scientifique et technique open source basé sur Pandoc, qui permet d'articuler différents langages pour réaliser des géovisualisations reproductibles dans un seul et même document. Cet atelier proposera aux participants une prise en main des principales fonctionnalités offertes par Quarto, puis une mise en œuvre de chaînes de traitements de l'information géographique reproductibles avec R, Python et Observable JavaScript dans cet environnement.
 
 ### Déroulé de la demi-journée
 
--   Installation des logiciels nécessaires à la mise en - place de l'environnement de développement (Quarto, R, Python, RStudio, etc.).
+-   Installation des logiciels nécessaires à la mise en place de l'environnement de développement (Quarto, R, Python, RStudio, etc.).
 -   Présentation et prise en main des principales fonctionnalités des notebooks Quarto. Présentation des écosystèmes spatiaux de R et Python, et, d'un jeu de données commun sur lequel s'appuiera l'ensemble de l'atelier.
--   Traitement des données vectorielles : Mise en pratique d'une chaîne de traitements reproductible avec R, notamment grâce aux packages sf et mapsf.
--   Traitement des données raster : Mise en pratique d'une chaîne de traitements reproductible avec Python (bibliothèques geopandas, rasterio, xarray, matplotlib, etc.).
--   Création de visualisations cartographiques interactives avec ojs (bibliothèques bertin, Plot, Gridviz, Deck.gl).
--   Export/publication du document quarto produit pendant l'atelier (templates de différentes revues scientifiques, slides, https://quartopub.com/, etc.).
+-   Traitement des données vectorielles : Mise en pratique d'une chaîne de traitements reproductible avec R, notamment grâce aux packages `sf` et `mapsf.`
+-   Traitement des données raster : Mise en pratique d'une chaîne de traitements reproductible avec Python (bibliothèques `geopandas`, `rasterio`, `xarray`, `matplotlib`, etc.).
+-   Création de visualisations cartographiques interactives avec ojs (bibliothèques `bertin`, `Plot`, `Gridviz`, `Deck.gl`).
+-   Export du document quarto produit pendant l'atelier (templates de différentes revues scientifiques, slides, https://quartopub.com/, etc.).
 
 
 ## Données atelier
@@ -54,11 +56,11 @@ Dans un contexte d’essor de carnets interactifs (*notebooks*), l’objet de ce
 
 
 ::: {.callout-caution collapse="true"}
-### \[To do\] : Télécharger les données de l'exercice
+## Télécharger les données de l'exercice
 
-Télécharger les données utiles à reproduire l'exercice (dépôt github à part) - Les données - Les scripts R, Python et Ojs.
+Toutes les données mobilisées dans cet atelier son stockées dans un projet RStudio. Vous devez le télécharger puis le décompresser sur votre machine. Il vous sera ensuite possible de tester l'ensemble des manipulations proposées dans ce document au sein du projet **quebec**.  
+[Télécharger le projet](quebec.zip){.btn .btn-primary .btn-sm role="button"}  
 
-Ouvrir le fichier projet.
 :::
 
 ## Préparation des données
@@ -75,7 +77,7 @@ library(readxl)
 library(rmapshaper)
 
 # Communes
-mun <- st_read("geom/munic_s.shp", quiet = TRUE)
+mun <- st_read("data-raw/munic_s.shp", quiet = TRUE)
 # Transformation conique équivalente d'ALbers
 mun <- st_transform(mun, 6623)
 # Suppression des surfaces en eau
@@ -92,7 +94,7 @@ mun <- aggregate(x = mun[, -1],
 mun <- st_cast(mun, "MULTIPOLYGON")
 
 # Import données population et nettoyage
-df <- read_xlsx("data/stats_socio_eco/Pop-MUN-total.xlsx", 
+df <- read_xlsx("data-raw/stats_socio_eco/Pop-MUN-total.xlsx", 
                 skip = 3, n_max = 1292,
                 col_types = c(rep("text", 2),"numeric",rep("text", 4), 
                               rep("numeric", 22))) 
@@ -106,7 +108,7 @@ mun <- merge(mun, df, by = "MUS_CO_GEO", all.x = T)
 
 
 # Import données socio-éco et nettoyage
-df2 <- data.frame(read_xlsx("data/stats_socio_eco/Tableau.xlsx", 
+df2 <- data.frame(read_xlsx("data-raw/stats_socio_eco/Tableau.xlsx", 
                             skip = 4, n_max = 1163))
 df2 <- df2[-c(1:2),]
 df2 <- df2[,c(2:4,6,8,10)]
@@ -131,8 +133,8 @@ mrc <- aggregate(mun[, c("MUS_NM_MRC","MUS_NM_REG")],
 mrc <- st_cast(mrc, "MULTIPOLYGON")
 mun <- st_set_precision(mun, 0)
 
-st_write(st_transform(mrc, 4326), "geom/mrc.geojson")
-st_write(st_transform(mun, 4326), "geom/munic.geojson")
+st_write(st_transform(mrc, 4326), "data/mrc.geojson")
+st_write(st_transform(mun, 4326), "data/munic.geojson")
 ```
 
 Ce script abouti à la création de deux fichiers :
@@ -145,18 +147,18 @@ Ce script abouti à la création de deux fichiers :
 
 ## L'écosystème spatial de R
 
-Le logiciel R [@R-base] permet depuis longtemps de traiter et représenter les données spatiales.\
-Le principal package permettant de traiter les données vectorielles avec R est le package `sf` [@R-sf].\
+Le logiciel R [@R-base] permet depuis longtemps de traiter et représenter les données spatiales.  
+Le principal package permettant de traiter les données vectorielles avec R est le package `sf` [@R-sf].  
 Les packages `stars` [@pebesma2023] et `terra` [@R-terra] quand à eux sont les principaux packages dédiés au traitement des données raster.
 
-Les développements actuels s'appuient sur ce socle et forment un écosystème robuste qui offre aux utilisateurs la plupart des fonctionnalités autrefois réservées aux Systèmes d'Information Géographique.\
+Les développements actuels s'appuient sur ce socle et forment un écosystème robuste qui offre aux utilisateurs la plupart des fonctionnalités autrefois réservées aux Systèmes d'Information Géographique.  
 Le package `mapsf` [@R-mapsf] par exemple s'appuie sur le package `sf` pour créer des cartes thématiques. D'autres packages sont dédiés à la cartographie interactive, aux statistiques spatiales, l'interaction avec des API de cartographie, la création de cartogrammes etc.
 
 ## Le package `sf`
 
 <img src="fig/logo_sf.gif" align="right" width="150"/>
 
-Le package `sf` a été publié fin 2016 par Edzer Pebesma. Ce package permet l'import, l'export, la manipulation et l'affichage de données spatiales vectorielles. Pour cela `sf` s'appuie sur une série de bibliothèques spatiales : GDAL [@GDAL] et PROJ [@PROJ] pour les opérations d'import, d'export et de projection, et GEOS [@GEOS] pour les opérations de géotraitement (buffer, intersection...).\
+Le package `sf` a été publié fin 2016 par Edzer Pebesma. Ce package permet l'import, l'export, la manipulation et l'affichage de données spatiales vectorielles. Pour cela `sf` s'appuie sur une série de bibliothèques spatiales : GDAL [@GDAL] et PROJ [@PROJ] pour les opérations d'import, d'export et de projection, et GEOS [@GEOS] pour les opérations de géotraitement (buffer, intersection...).  
 Ce package propose des objets simples (suivant le standard [*simple feature*](https://en.wikipedia.org/wiki/Simple_Features)) dont la manipulation est assez aisée. Une attention particulière a été portée à la compatibilité du package avec la syntaxe *pipe* (`|>` ou `%>%`) et les opérateurs du `tidyverse` [@R-tidyverse].
 
 ![@pebesma2023](fig/sf_deps.png)
@@ -183,7 +185,7 @@ knitr::opts_chunk$set(nm=TRUE, echo=TRUE)
 
 ![Format des objets spatiaux `sf`](fig/sf.png)
 
-Les objets `sf` sont des `data.frame` dont l'une des colonnes contient des géométries.\
+Les objets `sf` sont des `data.frame` dont l'une des colonnes contient des géométries.  
 Ce format est très pratique dans la mesure ou les données et les géométries sont intrinsèquement liées dans un même objet.
 
 ::: callout-note
@@ -197,7 +199,7 @@ Ce format est très pratique dans la mesure ou les données et les géométries 
 ```{r sf_import_fake}
 #| eval: false
 library(sf)
-mtq <- st_read(dsn = "data/mtq.gpkg",layer = "mtq")
+mtq <- st_read(dsn = "data/mtq.gpkg", layer = "mtq")
 ```
 
 ```{r sf_import}
@@ -285,13 +287,14 @@ mtq_c |>
 ```
 :::
 
+
 ## Le package `mapsf`
 
 <img src="fig/logo_mapsf.png" align="right" width="150px"/>
 
-`mapsf` permet de créer la plupart des types de carte utilisés habituellement en cartographie statistique.\
-Pour chaque type de carte, plusieurs paramètres permettent de personnaliser la représentation cartographique. Ces paramètres sont les mêmes que ceux que l'on retrouve dans les logiciels de SIG ou de cartographie usuels.\
-Associées aux fonctions de représentation des données d'autres fonctions sont dédiées à l'habillage cartographique, à la création de cartons ou à l'export des cartes.\
+`mapsf` permet de créer la plupart des types de carte utilisés habituellement en cartographie statistique.  
+Pour chaque type de carte, plusieurs paramètres permettent de personnaliser la représentation cartographique. Ces paramètres sont les mêmes que ceux que l'on retrouve dans les logiciels de SIG ou de cartographie usuels.  
+Associées aux fonctions de représentation des données d'autres fonctions sont dédiées à l'habillage cartographique, à la création de cartons ou à l'export des cartes.  
 `mapsf` est le successeur de [`cartography`](http://riatelab.github.io/cartography/docs/) [@R-cartography], il offre les mêmes fonctionnalités principales tout en étant plus léger et plus ergonomique.
 
 ![Chaîne de traitement typique](fig/workflow.png)
@@ -379,9 +382,9 @@ mf_theme("default")
 :::
 
 ::: callout-note
-D'autres packages peuvent être utilisés pour réaliser des cartes thématiques.\
-Le package `ggplot2` [@R-ggplot2], en association avec le package `ggspatial` [@R-ggspatial], permet par exemple d'afficher des objets spatiaux et de réaliser des cartes thématiques simples.\
-Le package `tmap` [@R-tmap] est dédié à la création de cartes thématiques, il utilise une syntaxe proche de celle de `ggplot2` (enchaînement d'instructions combinées avec le signe `+`).\
+D'autres packages peuvent être utilisés pour réaliser des cartes thématiques.  
+Le package `ggplot2` [@R-ggplot2], en association avec le package `ggspatial` [@R-ggspatial], permet par exemple d'afficher des objets spatiaux et de réaliser des cartes thématiques simples.  
+Le package `tmap` [@R-tmap] est dédié à la création de cartes thématiques, il utilise une syntaxe proche de celle de `ggplot2` (enchaînement d'instructions combinées avec le signe `+`).  
 La documentation et les tutoriels pour utiliser ces deux packages sont facilement accessibles sur le web.
 :::
 
@@ -407,16 +410,16 @@ La documentation et les tutoriels pour utiliser ces deux packages sont facilemen
 
 ### Import et préparation des données
 
-Nous utilisons le package `sf` pour importer 2 fichiers geojson.\
-Il est ensuite possible de changer la projection des couches avec la fonction `st_transform()`.\
+Nous utilisons le package `sf` pour importer 2 fichiers geojson.  
+Il est ensuite possible de changer la projection des couches avec la fonction `st_transform()`.  
 Nous pouvons aussi créer une couche des régions du Québec en agrégeant les Municipalité Régionales de Comté.
 
 ```{r import}
 #| message: false
 # Import des données
 library(sf)
-mun_raw <- st_read("geom/munic.geojson", quiet= TRUE)
-mrc_raw <- st_read("geom/mrc.geojson", quiet = TRUE)
+mun_raw <- st_read("data/munic.geojson", quiet= TRUE)
+mrc_raw <- st_read("data/mrc.geojson", quiet = TRUE)
 # Projection NAD83 / Quebec Albers
 epsg_6623 <- "EPSG:6623"
 mun <- st_transform(mun_raw, epsg_6623)
@@ -429,7 +432,7 @@ reg <- aggregate(x = mrc[,'MUS_NM_REG'],
 
 ### Première cartographie simple
 
-Sur cette première carte nous allons simplement afficher les différentes couches en les superposant.\
+Sur cette première carte nous allons simplement afficher les différentes couches en les superposant.  
 Nous utilisons le package `mapsf` qui permet aussi de créer une couche d'étiquettes avec la fonction `mf_label()`.
 
 ```{r carto_quebec_reg}
@@ -448,10 +451,10 @@ mf_credits(txt = "Ministère des Ressources naturelles et des Forêts, 2023",
 
 ### Où sont les restaurants dans la ville de Québec?
 
-Nous voulons savoir dans quelles zones de la ville de Québec se trouvent les restaurants.\
+Nous voulons savoir dans quelles zones de la ville de Québec se trouvent les restaurants.  
 Pour connaître la position des restaurants dans la ville nous allons extraire des informations la base de donnés cartographique libre OpenStreetMap avec le package `osmdata` [@R-osmdata]. Le package `osmdata` utilise l'API du service [Overpass turbo](https://overpass-turbo.eu/) pour extraire des données vectorielles de la base de données OpenStreetMap.
 
-Nous devons tout d'abord définir une emprise spatiale à partir de laquelle nous pourrons extraire les informations sur les restaurants.\
+Nous devons tout d'abord définir une emprise spatiale à partir de laquelle nous pourrons extraire les informations sur les restaurants.  
 Après avoir démarré les packages nécessaires, nous allons tout d'abord sélectionner la MRC de Québec dans la couche des MRC.
 
 ```{r target_city}
@@ -471,7 +474,7 @@ target_4326 <- st_transform(target, "EPSG:4326")
 bbox <- st_bbox(target_4326)
 ```
 
-Nous pouvons maintenant définir ce que nous voulons extraire de la base de donnée OSM. Une connaissance de la structuration de la base de données OSM est nécessaire. Nous utilisons le système de clef/valeur pour construire la requête.
+Nous pouvons maintenant définir ce que nous voulons extraire de la base de donnée OSM. Une connaissance de la structuration de la base de données OSM est nécessaire ([Wiki OpenStreetMap](https://wiki.openstreetmap.org/wiki)). Nous utilisons le système de clef/valeur pour construire la requête.
 
 ```{r define_request}
 # Initialisation de la requête à envoyer
@@ -519,7 +522,7 @@ resto <- rbind(resto_point[, chps], resto_poly_point[, chps])
 resto
 ```
 
-Maintenant que nous avons cette couche de restaurants nous allons pouvoir l'afficher.\
+Maintenant que nous avons cette couche de restaurants nous allons pouvoir l'afficher.  
 Pour cela nous pouvons utiliser un fond de carte issues de tuiles raster grâce au package `maptiles` [@R-maptiles]. Nous allons d'abord reprojeter les différentes couches d'information en Web/Mercator (EPSG:3857) car les tuiles raster sont fournies dans cette projection .
 
 ```{r reproj_layers}
@@ -557,7 +560,7 @@ dev.off()
 
 ![](fig/restaurants01.png)
 
-Nous allons maintenant agréger les restaurants dans une grille régulière pour tenter rendre plus lisible l'organisation spatiale des restaurant à Québec.
+Nous allons maintenant agréger les restaurants dans une grille régulière pour tenter rendre plus lisible l'organisation spatiale des restaurants à Québec.
 
 ```{r grid}
 #| results: hide
@@ -573,7 +576,7 @@ mf_export(x = tiles,
           filename = "fig/restaurants02.png",
           width = ncol(tiles), height = nrow(tiles))
 mf_raster(tiles, add = TRUE)
-mf_map(target, add = T, col = NA, lwd = 2)
+mf_map(target, col = NA, lwd = 2, add = TRUE)
 mf_map(x = grid[grid$n >0 , ], 
        var = "n", 
        type = "choro", 
@@ -604,19 +607,34 @@ library(spatstat)
 library(terra)
 library(tanaka)
 p <- as.ppp(st_coordinates(resto), W = as.owin(st_bbox(target)))
-ds <- density.ppp(p, sigma = 500, 
-                  eps = c(100, 100), positive = TRUE)
+# portée du lissage 500m
+ds <- density.ppp(p, sigma = 500, eps = c(100, 100), positive = TRUE)
+# transformation en raster terra et passage en unité par km²
 rasdens <- rast(ds) * 1000 * 1000
+# ajout des information de projection
 crs(rasdens) <- 'EPSG:3857'
+# affichage par défaut
+plot(rasdens)
+```
+
+Il est ensuite possible de représenter les densités calculées avec les packages `tanaka` [@R-tanaka] et `mapsf`.
+```{r kde2}
+# Calcul des polygones de contour en fonction de bornes de classe
+iso <- tanaka_contour(rasdens, breaks = c(1,2,5,10,20,25))
+# choix d'une palette de couleur
+cols <- mf_get_pal(n = 5, palette = "Teal", rev = TRUE)
+# selection des région ou la densité est >= 1
+iso <- iso[-1, ]
+# Cartographie
 mf_export(x = tiles,
           filename = "fig/restaurants03.png",
           width = ncol(tiles), height = nrow(tiles))
 mf_raster(tiles, add = TRUE)
 mf_map(target, add = T, col = NA, lwd = 2)
-cols <- mf_get_pal(n = 5, palette = "Teal", rev = TRUE)
-x <- tanaka_contour(rasdens, breaks = c(1,2,5,10,20,25))
-tanaka(x[-1, ], legend.title = "Nombre de\nrestaurants\nau km²",
-       legend.pos = "topright", shift = 65,
+tanaka(iso, 
+       legend.title = "Nombre de\nrestaurants\nau km²\n(KDE, sigma=500)",
+       legend.pos = "topright", 
+       shift = 65,
        col = cols,
        add = TRUE)
 mf_title("Les restaurants à Québec")
@@ -625,6 +643,28 @@ dev.off()
 ```
 
 ![](fig/restaurants03.png)
+
+
+## À vous de jouer
+
+- Vous devez étudier la répartition des restaurants dans une autre MRC, par exemple celle de Montréal. 
+
+- Vous devez étudier la répartition des bars et pubs à Québec (dans OpenStreetMap key = "amenity", value = "pub" et value = "bar"). 
+
+
+Pour cela vous devrez construire un document quarto (au format de votre choix) et adapter quelques passage du code présenté précédemment. 
+
+
+
+
+
+
+
+
+
+
+
+# Python
 
 
 ```{r reticulate-env}
@@ -641,7 +681,8 @@ pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
 ```
 
-# Python
+
+
 
 ## Le langage Python
 
@@ -1293,7 +1334,7 @@ ax.set_axis_off()
 ax
 ```
 
-## A vous de jouer 🚀
+## À vous de jouer 🚀
 
 **Objectif** : Comparez l'occupation du sol de la MRC de Trois-Rivières à l'occupation du sol de la MRC de Montréal.
 
@@ -1416,7 +1457,7 @@ Markdown(rendu)
 
 ## Qu'est-ce que l'ojs ?
 
-L'<b>Observable javascript {ojs}</b> est un ensemble d'améliorations apportées à vanilla JavaScript créé par Mike Bostock (également auteur de D3). Observable JS se distingue par son exécution réactive, qui convient particulièrement bien à l'exploration et à l'analyse interactives des données. 
+L'<b>Observable javascript {ojs}</b> est un ensemble d'améliorations apportées à vanilla JavaScript créé par Mike Bostock (également auteur de D3 [@D3]). Observable JS se distingue par son exécution réactive, qui convient particulièrement bien à l'exploration et à l'analyse interactives des données. 
 
 ![](fig/d3.png){width="20%"} ![](fig/arrow.png){width="20%"} ![](fig/observable.png){width="20%"} <br/> **Observable** est aussi une startup fondée par Mike Bostock et Melody Meckfessel, qui propose une plateforme 100% en ligne (<https://observablehq.com>) pour concevoir, partager et diffuser des visualisations de données.
 
@@ -1577,7 +1618,7 @@ L'écosystème spatial de JavaScript est moins étoffé que ce qu'on peut trouve
 :::
 
 ::: {.column width="90%"}
-[**`d3-geo`**](https://github.com/d3/d3-geo) est le module spatial de d3. Il permet de gérer les projections cartographiques, les formes sphériques et la trigonométrie sphérique. Voir aussi [**`d3-geo-projection`**](https://github.com/d3/d3-geo-projection). [**`d3-delaunay`**](https://github.com/d3/d3-delaunay) est une bibliothèque rapide pour calculer le diagramme de Voronoï d'un ensemble de points bidimensionnels. Elle est basée sur Delaunator, une bibliothèque rapide pour calculer la triangulation de Delaunay en utilisant des algorithmes de balayage. Le diagramme de Voronoï est construit en reliant les circonférences des triangles adjacents dans la triangulation de Delaunay. [**`d3-geo-voronoi`**](https://github.com/Fil/d3-geo-voronoi) est une adaptation de d3-delaunay sur la sphère.
+[**`d3-geo`**](https://github.com/d3/d3-geo) est le module spatial de D3. Il permet de gérer les projections cartographiques, les formes sphériques et la trigonométrie sphérique. Voir aussi [**`d3-geo-projection`**](https://github.com/d3/d3-geo-projection). [**`d3-delaunay`**](https://github.com/d3/d3-delaunay) est une bibliothèque rapide pour calculer le diagramme de Voronoï d'un ensemble de points bidimensionnels. Elle est basée sur Delaunator, une bibliothèque rapide pour calculer la triangulation de Delaunay en utilisant des algorithmes de balayage. Le diagramme de Voronoï est construit en reliant les circonférences des triangles adjacents dans la triangulation de Delaunay. [**`d3-geo-voronoi`**](https://github.com/Fil/d3-geo-voronoi) est une adaptation de d3-delaunay sur la sphère.
 :::
 :::
 
@@ -1735,8 +1776,8 @@ Pour importer des données en **`{ojs}`**, on utilise l'instruction **`FileAttac
 Pour un fichier JSON
 
 ``` js
-mrc = FileAttachment("geom/mrc.geojson").json()
-munic = FileAttachment("geom/munic.geojson").json()
+mrc = FileAttachment("data/mrc.geojson").json()
+munic = FileAttachment("data/munic.geojson").json()
 ```
 
 Pour un fichier csv
@@ -1785,9 +1826,9 @@ JSON.parse(mun)
 ```{ojs}
 //| eval: true
 //| echo: false
-tmp = FileAttachment("geom/munic.geojson").json()
+tmp = FileAttachment("data/munic.geojson").json()
 munic =  geo.rewind(geo.simplify(tmp, {k:0.1}))
-tmp2 = FileAttachment("geom/mrc.geojson").json()
+tmp2 = FileAttachment("data/mrc.geojson").json()
 mrc =  geo.rewind(geo.simplify(tmp2, {k:0.1}))
 
 ```
@@ -1933,7 +1974,7 @@ Plot.plot({
 
 ## Visualiser les géométries
 
-Comme leaflet est disponible dans les cellules {ojs}, on peut directement afficher les géométries.
+Comme leaflet [@Leaflet] est disponible dans les cellules {ojs}, on peut directement afficher les géométries.
 
 ```{ojs}
 {
@@ -2009,7 +2050,7 @@ bertin.draw({layers:[{geojson: quebec, fill:"red"}, {geojson: ctr2, fill:"red"},
 
 ## Cartographie thématique
 
-Pour créer des cartes thématiques, on peut utiliser la bibliothèque [**`bertin`**](https://github.com/neocarto/bertin)
+Pour créer des cartes thématiques, on peut utiliser la bibliothèque [**`bertin`**](https://github.com/neocarto/bertin) [@bertinS].
 
 La fonction **`draw`** permet de réaliser n'importe quel type de carte.
 
@@ -2212,22 +2253,10 @@ bertin.draw({
 <ins>Exemples</ins>
 
 -   [observablehq.com/\@neocartocnrs/bertin-js-tooltips?collection=\@neocartocnrs/bertin](https://observablehq.com/@neocartocnrs/bertin-js-tooltips?collection=@neocartocnrs/bertin)
-
-<ins>Bibliographie</ins>
-
--   **Bostock M. (2021) JavaScript for Data Analysis. towardsdatascience. [towardsdatascience.com/javascript-for-data-analysis-2e8e7dbf63a7](https://towardsdatascience.com/javascript-for-data-analysis-2e8e7dbf63a7)**
--   Bostock M., Ogievetsky V., Heer J. (2011). D³ Data-Driven Documents, IEEE, Volume: 17 [ieeexplore.ieee.org/abstract/document/6064996](https://ieeexplore.ieee.org/abstract/document/6064996)
--   Giraud T., Lambert N., (2023). bertin: Thematic Cartography with 'bertin.js'. [github.com/riatelab/bertin/, https://riatelab.github.io/bertin](https://github.com/riatelab/bertin/,%20https://riatelab.github.io/bertin)
--   **Lambert N, Giraud T, Viry Matthieu and, Ysebaert R. (2023) Cartographier pour le web avec la bibliothèque JavaScript 'bertin'. SAGEO**
--   Lambert N. (2023) Observable en bref. Webinaire 'Interroger les données', Groupe de travail 'Atelier Données' du CNRS.
--   Lambert N., Zanin C., (2020). Practical handbook of thematic cartography: principles, methods, and applications. CRC Press. [observablehq.com/\@neocartocnrs/webinaire-interroger-les-donnees](https://observablehq.com/@neocartocnrs/webinaire-interroger-les-donnees)
+-   Lambert N. (2023) Observable en bref. Webinaire 'Interroger les données', Groupe de travail 'Atelier Données' du CNRS. [observablehq.com/\@neocartocnrs/webinaire-interroger-les-donnees](https://observablehq.com/@neocartocnrs/webinaire-interroger-les-donnees)
 -   Lambert N. (2023) Cartographie thématique avec ojs. École d'été internationale, Ouidah. [https://ee-cist.github.io/CAR2_cartodyn/intro/docs/index.html](ee-cist.github.io/CAR2_cartodyn/intro/docs/index.html%5D)
--   **Perkel M. J. (2021) Reactive, reproducible, collaborative: computational notebooks evolve, Nature. [nature.com/articles/d41586-021-01174-w](https://www.nature.com/articles/d41586-021-01174-w)**
--   Rice J., Farquhar A., Piernot P., Gruber T., (1996). "Using the Web instead of a window system". In: Proceedings of the SIGCHI conference on Human factors in computing systems common ground - CHI '96. the SIGCHI conference. Vancouver, British Columbia, Canada: ACM Press, pp. 103--110. isbn: 978-0-89791-777-3. doi: 10.1145/238386.238442.
--   Roth R.E., Donohue R.G., Sack C.M., Wallace T.R., Buckingham T.M.A., (2015). "A Process for Keeping Pace with Evolving Web Mapping Technologies". In: Cartographic Perspectives 78, pp. 25--52. issn: 1048-9053. doi: 10.14714/CP78.1273. url: https://cartographicperspectives.org/index.php/journal/article/view/cp78-roth-et-al
--   Shen H. (2014). Interactive notebooks: Sharing the code. Nature, 515(7525), 151-152.
 
-# A vous de jouer
+## À vous de jouer
 
 ::: {.callout-caution appearance="simple"}
 ## faire des cartes avec {ojs}
@@ -2390,3 +2419,4 @@ bertin.draw({
 :::
 
 <!-- ## Le petit plus : dépôt et déploiement continu avec GitHub. -->
+
