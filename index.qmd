@@ -55,7 +55,7 @@ Dans un contexte d'essor de carnets interactifs (*notebooks*), l'objet de cet at
 - Couverture du sol : [Comptes des terres du Québec Méridional](https://www.donneesquebec.ca/recherche/fr/dataset/comptes-des-terres-du-quebec-meridional-changement-de-la-couverture-terrestre) (années de capture entre 2002 et 2013 selon les régions administratives).
 
 
-::: {.callout-caution collapse="true"}
+::: {.callout-caution}
 ## Télécharger les données de l'exercice
 
 Toutes les données mobilisées dans cet atelier son stockées dans un projet RStudio. Vous devez le télécharger puis le décompresser sur votre machine. Il vous sera ensuite possible de tester l'ensemble des manipulations proposées dans ce document au sein du projet **quebec**.  
