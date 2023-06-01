@@ -716,9 +716,11 @@ pd.set_option('display.width', 1000)
 -   [**Pyproj**](https://pyproj4.github.io/pyproj) [@pyproj] - bindings Python de [PROJ](https://proj.org/) [@PROJ]
 -   [**Geopandas**](https://geopandas.org/)  [@kelsey_jordahl_2020_3946761] - Étend les `DataFrame`s de [pandas](https://pandas.pydata.org/) [@pandas]
 
-![](./fig/logo-pandas.svg)
+![](./fig/logo-pandas.svg){width=300}
 
-![](./fig/logo_geopandas.svg)
+
+![](./fig/logo_geopandas.svg){width=340}
+
 
 ## Le package *GeoPandas*
 
@@ -879,7 +881,7 @@ with rio.open('./data/MODIS_ARRAY.nc') as f:
     # Ou f.read(1) pour lire seulement la première bande
 ```
 
-- Un dictionnaire de méta-données + un tableau NumPy contenant la (ou les) bande(s) :
+- Un dictionnaire de métadonnées + un tableau NumPy contenant la (ou les) bande(s) :
 
 ```{python example-rio-2}
 print(metadata)
@@ -915,7 +917,7 @@ filled = xds.rio.interpolate_na()
 
 ### Affichage
 
-En utilisant la méthode `plot` des objets `xarray.DataArray` (ici après avoir sélections un *subset* des données) :
+En utilisant la méthode `plot` des objets `xarray.DataArray` (ici après sélection d'un *subset* des données) :
 
 ```{python xarray-tuto-plot}
 import matplotlib.pyplot as plt
@@ -995,11 +997,13 @@ clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
 
 ![Source: <https://grass.osgeo.org/news/2022_06_05_results_student_grant_caitlin/>](./fig/grass_jupyter_combo_vis.png)
 
-- [Iris](https://scitools-iris.readthedocs.io/en/stable/)
+- [Iris](https://scitools-iris.readthedocs.io/en/stable/) - Analyse et visualisation de données des sciences de la Terre.
 
 - Pour la cartographie : [cartopy](https://scitools.org.uk/cartopy/docs/latest/) ; [geoviews](https://geoviews.org/) et [geoplot](https://residentmario.github.io/geoplot/) basés sur *cartopy* ; [PyGMT](https://www.pygmt.org/latest/) (selon les usages - pas de solution aussi aboutie que `mapsf` pour les cartes réalisées en SHS).
 
 ![](./fig/cartopy.png)
+
+- Un écosystème riche pour le géospatial (voir par exemple ici : [https://github.com/sacridini/Awesome-Geospatial#python](https://github.com/sacridini/Awesome-Geospatial#python)) et la visualisation de données (voir par exemple les outils listés par la plateforme [PyViz](https://pyviz.org/tools.html)).
 
 ## Ressources Python Géospatial
 
@@ -1120,7 +1124,7 @@ print(py$arr)
 
 Et pour les objets spatiaux ? (*sf* / *geopandas*)
 
-- Si la conversion `data.frame` ⇄ `DataFrame` est transparente, il n'en est pas de même pour les dataframe avec une composante spatiale (perte de la dimension spatiale / colonne `geometry` contient désormais ...)
+- Si la conversion `data.frame` ⇄ `DataFrame` est transparente, il n'en est pas de même pour les dataframes avec une composante spatiale (les objets *sf* sont convertis en `DataFrame`au lieu de `GeoDataFrame` : perte de la dimension spatiale, attribut `crs` non transféré et colonne `geometry` qui contient désormais seulement des listes de coordonnées).
 
 - L'écriture d'une petite function permet de résoudre ça :
 
@@ -1167,7 +1171,7 @@ mrc.head()
 
 ## Python, Quarto et interactivité
 
-- Utilisation des widgets Jupyter possible (seulement is utilisation de l'engin de rendu `jupyter`, pas avec `knitr` - i.e. l'inverse des *htmlwidgets* en R qui ne fonctionne que si `knitr` est utilisé)
+- Utilisation des *widgets Jupyter* possible (seulement si utilisation de l'engin de rendu `jupyter`, pas avec `knitr` - i.e. l'inverse des *htmlwidgets* en R qui ne fonctionne que si `knitr` est utilisé)
 
 - Exemple :
 
@@ -1177,24 +1181,23 @@ mrc.head()
 
 ## Exemples d'analyse sur les données du Québec
 
+**Objectifs** : Récupérer les données préparées avec R (MRC et localisation des restaurants) pour les croiser avec des données d'occupation du sol au format raster.
+
 -   Les imports nécessaires :
 
 ```{python demo-import}
 import numpy as np
-import rasterio as rio
 import pandas as pd
 import geopandas as gpd
 import rioxarray
 import xarray
 
-from rasterio.warp import calculate_default_transform, reproject, Resampling
 from matplotlib import pyplot as plt
 from rasterio.plot import show
-from rasterio.mask import mask
 from rasterstats import zonal_stats, point_query
 ```
 
--   On récupère les jeux de données et quelques autres infos (SRC, etc.) depuis l'environnement R :
+-   Récupération des jeux de données et de quelques autres infos (SRC, etc.) depuis l'environnement R :
 
 ```{python demo-vector-dataset-opening}
 # Le SCR des données
@@ -1215,7 +1218,7 @@ lc_fp = './data/T01_PROVINCE.tif'
 lc_categories_fp = './data/correspondance_raster_CL_COUV.dbf'
 ```
 
--   On extrait les entités correspondantes et on les affiche, relativement au reste de la province :
+-   Sélection des entités correspondantes et affichage, relativement au reste de la province :
 
 ```{python demo-first-plot}
 extract = mrc[mrc.MUS_NM_MRC == sel]
@@ -1256,7 +1259,7 @@ ax.set_axis_off()
 ax
 ```
 
-- Ouverture du fichier DBF qui contient les correspondances entre les codes et les noms des catégories d'utilisation des sols
+- Ouverture du fichier DBF qui contient les correspondances entre les codes et les noms des catégories d'utilisation des sols :
 
 ```{python demo-open-dbf}
 categories = pd.DataFrame(
@@ -1279,7 +1282,7 @@ categories[0] = 'Pas de données'
 categories
 ```
 
--   Calculer les statistiques zonales (combien de cellules de chaque type dans la sélection) :
+-   Calcul des statistiques zonales (combien de cellules de chaque type dans la sélection) :
 
 ```{python demo-zonal-stats}
 stats = zonal_stats(extract, xds.data[0], affine=xds.rio.transform(), categorical=True, nodata=0)
@@ -1336,11 +1339,11 @@ ax
 
 ## À vous de jouer 🚀
 
-**Objectif** : Comparez l'occupation du sol de la MRC de Trois-Rivières à l'occupation du sol de la MRC de Montréal.
+**Objectif** : Comparer l'occupation du sol de la MRC de Trois-Rivières à l'occupation du sol de la MRC de Montréal.
 
 - Vous cherchez à obtenir :
-    - un diagramme en barre (combinant le résultat des statistiques zonales pour la MRC de Trois-Rivières et pour la MRC de Montréal)
-    - un résumé (pourquoi pas en HTML !) de la surface de chaque type d'occupation du sol, comme celui présenté en exemple ci-dessous, pour Trois-Rivières et Montréal
+    - un diagramme en barre (combinant le résultat des statistiques zonales pour la MRC de Trois-Rivières et pour la MRC de Montréal),
+    - un résumé (pourquoi pas en HTML !) de la surface de chaque type d'occupation du sol, comme celui présenté en exemple ci-dessous, pour Trois-Rivières et Montréal.
 
 ![Exemple de tableau de résumé](./fig/summary-lc.png)
 
@@ -1544,7 +1547,7 @@ d = {
 
 ### 👉 Des promesses sont résolues ✅
 
-Dons ojs, les promesses sont résolues d'une cellule à l'autre. Cela permet d'enlever de la complexité liée à la conception asynchrone du JavaCript. Ca va être très ptratique quand on charge un jeu de données par exemple. 
+Dons ojs, les promesses sont résolues d'une cellule à l'autre. Cela permet d'enlever de la complexité liée à la conception asynchrone du JavaCript. Ca va être très pratique quand on charge un jeu de données par exemple. 
 
 ### 👉 L'ordre des cellules n'a pas d'importance 🤯
 
