@@ -28,34 +28,29 @@ lang: fr
 
 ## Présentation
 
-Dans un contexte d’essor de carnets interactifs (Notebooks), l’objet de cet atelier consiste à montrer les possibilités offertes par Quarto, un système de publication scientifique et technique open-source basé sur Pandoc, qui permet d’articuler différents langages pour réaliser des géovisualisations reproductibles dans un seul et même document. Cet atelier proposera aux participants une prise en main des principales fonctionnalités offertes par Quarto, puis une mise en œuvre de chaînes de traitements de l’information géographique reproductibles avec R, Python et Observable JavaScript dans cet environnement.
+Dans un contexte d’essor de carnets interactifs (*notebooks*), l’objet de cet atelier consiste à montrer les possibilités offertes par Quarto, un système de publication scientifique et technique open source basé sur Pandoc, qui permet d’articuler différents langages pour réaliser des géovisualisations reproductibles dans un seul et même document. Cet atelier proposera aux participants une prise en main des principales fonctionnalités offertes par Quarto, puis une mise en œuvre de chaînes de traitements de l’information géographique reproductibles avec R, Python et Observable JavaScript dans cet environnement.
 
 ### Déroulé de la demi-journée
 
--   Installation des logiciels nécessaires à la mise en - place de l'environnement de développement (Quarto, R, Python, RStudio, Jupyter...). / **A envoyer aux participants en début de semaine ?**
--   Présentation et prise en main des principales fonctionnalités des notebooks Quarto. Présentation des écosystèmes spatiaux de R et Python, et, d'un jeu de données commun sur - lequel s'appuiera l'ensemble de l'atelier.
+-   Installation des logiciels nécessaires à la mise en - place de l'environnement de développement (Quarto, R, Python, RStudio, etc.).
+-   Présentation et prise en main des principales fonctionnalités des notebooks Quarto. Présentation des écosystèmes spatiaux de R et Python, et, d'un jeu de données commun sur lequel s'appuiera l'ensemble de l'atelier.
 -   Traitement des données vectorielles : Mise en pratique d'une chaîne de traitements reproductible avec R, notamment grâce aux packages sf et mapsf.
--   Traitement des données raster : Mise en pratique d'une chaîne de traitements reproductible avec Python (bibliothèques geopandas, rasterio, matplotlib, nbdev, etc.).
+-   Traitement des données raster : Mise en pratique d'une chaîne de traitements reproductible avec Python (bibliothèques geopandas, rasterio, xarray, matplotlib, etc.).
 -   Création de visualisations cartographiques interactives avec ojs (bibliothèques bertin, Plot, Gridviz, Deck.gl).
 -   Export/publication du document quarto produit pendant l'atelier (templates de différentes revues scientifiques, slides, https://quartopub.com/, etc.).
 
 
 ## Données atelier
 
-Plusieurs possibilités si espace d'étude canadien : 
-
 **Vecteur**
 
--   [OpenStreetMap](https://www.openstreetmap.org/) (POI) : restos, bars. 
+-   [OpenStreetMap](https://www.openstreetmap.org/) (POI) : restaurants.
 -   Le découpage géographique des municipalités québécoises (Source : [Ministère des Ressources naturelles et des Forêts](https://mrnf.gouv.qc.ca/repertoire-geographique/carte-generale-base-donnees-geographiques-administratives/)).
 -   La série de population 2001-2022 et l'indice de vitalité économique des localités québecoises, délivré par l'[Institut de la Statistique du Québec](https://statistique.quebec.ca/fr/recherche?territoire=municipalites&type_produit=tableau-detaille).
 
 **Raster** 
 
-- Estimations de population désagrégées : [World Pop Canada 100 m res - 42 Mo](https://hub.worldpop.org/geodata/summary?id=49922) + [USA - 417 MB](https://hub.worldpop.org/geodata/summary?id=49916) ou [1km - CAN](https://hub.worldpop.org/geodata/summary?id=34942) / [USA - 49.42 MB](https://hub.worldpop.org/geodata/summary?id=34816)
-- Couverutre du sol : ESA World Cover ? source [European Space Agency](https://worldcover2020.esa.int/download) ou [NASA](https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/science-domain/land-cover-and-phenology/) + [Guide](https://lpdaac.usgs.gov/documents/101/MCD12_User_Guide_V6.pdf). Sur le Québec cf [Comptes des terres du Québec Méridional](https://statistique.quebec.ca/cartovista/comptes_terres/index.html) et [GeoTIFF associé](https://www.donneesquebec.ca/recherche/fr/dataset/comptes-des-terres-du-quebec-meridional-changement-de-la-couverture-terrestre) 
--  Intensité pollution lumineuse : [Earth Observation Group](https://eogdata.mines.edu/products/vnl/)
-
+- Couverture du sol : [Comptes des terres du Québec Méridional](https://www.donneesquebec.ca/recherche/fr/dataset/comptes-des-terres-du-quebec-meridional-changement-de-la-couverture-terrestre) (années de capture entre 2002 et 2013 selon les régions administratives).
 
 
 ::: {.callout-caution collapse="true"}
@@ -141,8 +136,8 @@ st_write(st_transform(mun, 4326), "geom/munic.geojson")
 ```
 
 Ce script abouti à la création de deux fichiers. 
-mrc.geojson est un fond de carte des Municipalité R C. 
-munic.geojson et un fond de carte des municipalités contenant des données socio-démographiques. 
+- `mrc.geojson` est un fond de carte des Municipalité Régionales de Comté. 
+- `munic.geojson` et un fond de carte des municipalités contenant des données socio-démographiques. 
 
 
 # R
@@ -1109,7 +1104,7 @@ resto <- st_transform(resto_raw, crs)
 sel <- "Québec"
 ```
 
-```{python}
+```{python sf-gpd-conversion-function}
 from shapely.geometry import shape
 import geopandas as gpd
 
@@ -1123,7 +1118,7 @@ def restore_geodataframe(df, crs, geom_type):
 
 Ainsi, les objets `sf` pourront être convertis en `GeoDataFrame` ainsi :
 
-```{python}
+```{python sf-gpd-conversion-1}
 mrc = restore_geodataframe(r.mrc, r.epsg_6623, "MultiPolygon")
 mrc.head()
 ```
@@ -1229,7 +1224,7 @@ categories.head(11)
 
 <br>
 
-```{python}
+```{python demo-categories-mapping}
 # On va convertir cette DataFrame en un dictionnaire pour l'utiliser
 # comme un mapping ID -> Description
 categories = {
@@ -1242,20 +1237,16 @@ categories[0] = 'Pas de données'
 categories
 ```
 
-```{python}
-extract
-```
-
 -   Calculer les statistiques zonales (combien de cellules de chaque type dans la sélection) :
 
-```{python}
+```{python demo-zonal-stats}
 stats = zonal_stats(extract, xds.data[0], affine=xds.rio.transform(), categorical=True, nodata=0)
 stats
 ```
 
 -   Traçons un histogramme de ce résultat, en utilisant les noms appropriés des catégories d'utilisation des sols :
 
-```{python}
+```{python demo-plot-zonal-stats}
 #| output-location: slide
 # Trier les valeurs par le nombre de cellule
 sorted_values = sorted(stats[0].items(), key = lambda x: x[1], reverse=True)
@@ -1279,7 +1270,7 @@ ax
 
 - Dans quel type d'occupation du sol se trouvent les restaurants précédemment récupérés ?
 
-```{python}
+```{python demo-resto-point-query}
 geoms = resto['geometry'].tolist()
 
 resto["lc"] = [categories[int(x)] for x in point_query(vectors=geoms, raster=xds.data[0], nodata=0, affine=xds.rio.transform())]
@@ -1288,13 +1279,13 @@ resto.head()
 
 - Quels restaurants ne sont pas situés dans une zone artificialisée ?
 
-```{python}
+```{python demo-resto-selection-1}
 selection = resto[(resto.lc != 'Surfaces artificielles') & (resto.lc != 'Pas de données')]
 selection
 ```
 
 
-```{python}
+```{python demo-resto-selection-plot}
 ax = extract.plot(color=None, edgecolor="black")
 ax = selection.plot(ax=ax, marker='x', color='red', markersize=8)
 ax.set_axis_off()
@@ -1341,7 +1332,7 @@ use_virtualenv("~/env-quarto")
 ### De quelles bibliothèques a-t-on besoin ?
 
 
-```{python}
+```{python help-import}
 #| eval: false
 import rioxarray
 import xarray
@@ -1357,7 +1348,7 @@ import matplotlib.pyplot as plt
 ### Besoin d'aide pour ouvrir les données raster ?
 
 
-```{python}
+```{python help-xarray-opening}
 #| eval: false
 xds = xarray.open_dataarray("/chemin/vers/le/fichier")
 ```
@@ -1368,7 +1359,7 @@ xds = xarray.open_dataarray("/chemin/vers/le/fichier")
 ### Besoin d'aide pour ouvrir les données vecteur ?
 
 
-```{python}
+```{python help-gpd-opening}
 #| eval: false
 gdf = gpd.read_file('/chemin/vers/le/fichier')
 ```
@@ -1380,14 +1371,14 @@ gdf = gpd.read_file('/chemin/vers/le/fichier')
 
 En utilisant les paramètres décrivant la matrice de transformation de géoréférencement du jeu de données raster en question (cette transformation fait correspondre les coordonnées ligne/colonne des pixels aux coordonnées du système de référence de l'ensemble de données) :
 
-```{python}
+```{python help-xarray-transform}
 #| eval: false
 transform = xds.rio.transform()
 ```
 
 Puis en utilisant la première et la cinquième valeur qui représentent respectivement la largeur et la hauteur du pixel :
 
-```{python}
+```{python help-xarray-pixel-size}
 #| eval: false
 area_pixel = transform[0] * abs(transform[4]) # la hauteur est généralement négative
 ```
@@ -1399,7 +1390,7 @@ area_pixel = transform[0] * abs(transform[4]) # la hauteur est généralement n�
 
 Par exemple en stockant du Markdown dans une chaîne de caractère et en le transformant en HTML avec `IPython.display.Markdown` :
 
-```{python}
+```{python help-ipython-markdown}
 #| eval: false
 from IPython.display import Markdown
 
@@ -2397,5 +2388,4 @@ bertin.draw({
 :::
 :::
 
-
-## Le petit plus : dépôt et déploiement continu avec GitHub.
+<!-- ## Le petit plus : dépôt et déploiement continu avec GitHub. -->
