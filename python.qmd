@@ -644,12 +644,15 @@ stats
 -   Traçons un histogramme de ce résultat, en utilisant les noms appropriés des catégories d'utilisation des sols :
 
 ```{python}
-#| output-location: slide 
+#| output-location: slide
+# Trier les valeurs par le nombre de cellule
+sorted_values = sorted(stats[0].items(), key = lambda x: x[1], reverse=True)
+
 # Utilise les noms de catégories du DataFrame `categories`...
-x = [categories[int(v)] for v in stats[0].keys()]
+x = [categories[int(k)] for k, _ in sorted_values]
 
 # ...et les valeurs que nous venons de calculer avec la fonction `zonal_stats`
-height = stats[0].values()
+height = [v for _, v in sorted_values]
 
 fig, ax = plt.subplots(figsize=(8, 8))
 bar_container = ax.bar(x, height)
@@ -662,7 +665,6 @@ fig.tight_layout()
 ax
 ```
 
-- Affichons un petit résumé utilisant des valeurs en m
 - Dans quel type d'occupation du sol se trouvent les restaurants précédemment récupérés ?
 
 ```{python}

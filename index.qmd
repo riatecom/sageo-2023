@@ -630,7 +630,792 @@ dev.off()
 
 ![](fig/restaurants03.png)
 
+
+```{r reticulate-env}
+#| echo: false
+library(reticulate)
+use_virtualenv("~/env-quarto")
+```
+
+```{python pandas-column-width-setup}
+#| echo: false
+import pandas as pd
+pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 1000)
+```
+
 # Python
+
+## Le langage Python
+
+:::: columns
+::: {.column width="70%"}
+- **Python** : un langage *polyvalent*, *interprété* et *multi-paradigme*
+
+- De plus en plus utilisé pour la *science des données*
+
+:::{.fragment}
+- Un écosystème robuste pour différents domaines d'application scientifiques
+
+![](./fig/python-stack.png)
+:::
+
+:::
+
+::: {.column width="30%"}
+![](./fig/logo-python.png)
+
+:::
+::::
+
+## Écosystème pour le géospatial
+
+## Données vectorielles
+
+-   [**Bindings Python de GDAL/OGR**](https://gdal.org/api/python_bindings.html) [@GDAL]
+-   [**Fiona**](https://fiona.readthedocs.io/en/stable/) [@fiona] - I/O (*wrapper* de haut niveau autour d'OGR)
+-   [**Shapely**](https://shapely.readthedocs.io/)  [@sgillies_2023] - bindings Python de [GEOS](https://github.com/libgeos/geos) [@GEOS]
+-   [**Pyproj**](https://pyproj4.github.io/pyproj) [@pyproj] - bindings Python de [PROJ](https://proj.org/) [@PROJ]
+-   [**Geopandas**](https://geopandas.org/)  [@kelsey_jordahl_2020_3946761] - Étend les `DataFrame`s de [pandas](https://pandas.pydata.org/) [@pandas]
+
+![](./fig/logo-pandas.svg)
+
+![](./fig/logo_geopandas.svg)
+
+## Le package *GeoPandas*
+
+Un projet open source pour faciliter le travail avec des données géospatiales vectorielles en Python. GeoPandas étend Pandas pour permettre de disposer d'un type de colonne géométrique et pour permettre d'effectuer des opérations spatiales. Les opérations géométriques sont réalisées avec `shapely`, les accès en lecture / écriture aux fichiers utilisent `fiona` et la visualisation utilise `matplotlib`.
+
+![Format des GeoDataFrame](./fig/geopandas-table.png)
+
+- Utilisation :
+
+::: {.panel-tabset .custom-tab}
+
+### Import et lecture
+
+```{python gpd-tuto-import-1}
+#| echo: false
+import geodatasets
+
+file_path = geodatasets.get_path("nybb")
+```
+
+Avec la fonction `read_file` :
+
+```{python gpd-tuto-import-2}
+import geopandas as gpd
+
+nybb = gpd.read_file(file_path)
+```
+
+### Affichage
+
+Avec la méthode `plot` des `GeoDataFrame` :
+
+```{python gpd-tuto-plot}
+nybb.plot()
+```
+
+### SCR
+
+Affichage :
+
+```{python gpd-tuto-crs}
+print(nybb.crs)
+```
+
+Transformation :
+
+```{python gpd-tuto-transformation}
+nybb_geo = nybb.to_crs('EPSG:4326')
+```
+
+### Affichage avec fond de carte
+
+En utilisant la bibliothèque `contextily` :
+
+```{python gpd-tuto-contextily}
+import contextily as cx
+
+ax = nybb.to_crs('EPSG:3857').plot()
+cx.add_basemap(ax, source='https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png')
+ax.set_axis_off()
+ax
+```
+
+### Centroide
+
+Simplement en utilisant l'attribut `centroid` des `GeoDataFrame` :
+
+```{python gpd-tuto-centroid}
+nybb.centroid.plot()
+```
+
+### Boundary
+
+Simplement en utilisant l'attribut `boundary` des `GeoDataFrame` :
+
+```{python gpd-tuto-boundary}
+nybb.boundary.plot()
+```
+
+### Zone tampon
+
+En utilisant la méthode `buffer` des `GeoDataFrame` :
+
+```{python gpd-tuto-buffer}
+buff_nybb = nybb.buffer(3000)
+```
+
+```{python gpd-tuto-buffer-2}
+ax = buff_nybb.plot(color="red")
+nybb.plot(ax=ax, color="aliceblue")
+```
+
+
+### Aggrégation
+
+En utilisant la méthode `dissolve` des `GeoDataFrame` :
+
+```{python gpd-tuto-agg}
+# On peut utiliser dissolve(by="nom_colonne") si on veut aggréger selon les valeurs d'une colonne
+agg = nybb.dissolve()
+agg.plot()
+```
+
+
+### Intersection
+
+En utilisant la méthode `intersection` des `GeoDataFrame` :
+
+```{python gpd-tuto-intersection}
+from shapely import wkt
+
+point = wkt.loads('Point(998769.1146889535 174169.7607268664)')
+
+intersecting = nybb.intersection(point.buffer(35000))
+```
+
+<br>
+
+```{python gpd-tuto-intersectiob-2}
+ax = nybb.plot()
+ax = intersecting.plot(ax=ax, color="red")
+ax
+```
+
+:::
+
+## Données raster
+
+-   [**Rasterio**](https://rasterio.readthedocs.io/) [@gillies_2019] :
+    * lecture / écriture de raster (*wrapper* de haut niveau autour de GDAL)
+    * données représentées sous forme d'`array` NumPy
+    * reprojection
+    * _resampling_
+    * _virtual files_
+    * etc.
+
+-   [**Rasterstats**](https://pythonhosted.org/rasterstats/) :
+    * résumer des données raster sur la base de géométries vectorielles
+    * extraction de valeurs à un point précis
+
+-   [**xarray**](https://docs.xarray.dev/en/stable/) [@xarray] et [**rioxarray**](https://corteva.github.io/rioxarray/) [@rioxarray]:
+    * *xarray* pour travailler avec des tableaux multidimensionnels étiquetés
+    * *rioxarray* pour ouvrir des jeux des données raster avec *rasterio*, les stocker dans le format de *xarray*, et avoir accès à différentes fonctionnalités de *rasterio*
+    * moins "rustique" que d'utiliser rasterio seul / dépend de l'usage souhaité
+
+## Le package *Rasterio*
+
+Exemple d'utilisation :
+
+```{python example-rio-1}
+import rasterio as rio
+
+with rio.open('./data/MODIS_ARRAY.nc') as f:
+    # Métadonnées :
+    metadata = f.meta
+    # Lire toutes les bandes :
+    data = f.read()
+    # Ou f.read(1) pour lire seulement la première bande
+```
+
+- Un dictionnaire de méta-données + un tableau NumPy contenant la (ou les) bande(s) :
+
+```{python example-rio-2}
+print(metadata)
+print(data)
+```
+
+## Les package *xarray* et *rioxarray*
+
+Exemple d'utilisation :
+
+::: {.panel-tabset .custom-tab}
+
+### Import et lecture
+
+```{python xarray-tuto-import-1}
+import rioxarray
+import xarray
+
+xds = xarray.open_dataarray("./data/MODIS_ARRAY.nc")
+```
+
+- Un objet de type `xarray.DataArray` ou `xarray.Dataset` qui contient les différentes méta-données et les données :
+
+```{python xarray-tuto-import-2}
+xds
+```
+
+### Complétion des valeurs manquantes
+
+```{python xarray-tuto-na}
+filled = xds.rio.interpolate_na()
+```
+
+### Affichage
+
+En utilisant la méthode `plot` des objets `xarray.DataArray` (ici après avoir sélections un *subset* des données) :
+
+```{python xarray-tuto-plot}
+import matplotlib.pyplot as plt
+
+fig = plt.figure(figsize=(15, 5))
+ax1, ax2 = (fig.add_subplot(131), fig.add_subplot(133))
+
+xds.isel(x=slice(0, 20), y=slice(0, 20)).plot(ax=ax1)
+filled.isel(x=slice(0, 20), y=slice(0, 20)).plot(ax=ax2)
+```
+
+### SCR
+
+- Affichage :
+
+```{python xarray-tuto-crs-1}
+xds.rio.crs
+```
+
+- Transformation :
+
+```{python xarray-tuto-crs-2}
+xds = xds.rio.reproject("EPSG:6623")
+```
+
+### Découpage
+
+- Découpage selon l'emprise des données contenues dans un `GeoDataFrame` (ici `gdf`) :
+
+```{python xarray-tuto-clipping}
+#| eval: false
+clipped = xds.rio.clip(gdf.geometry.values, gdf.crs, drop=False, invert=True)
+```
+
+:::
+
+
+## Analyse spatiale
+
+:::: {.columns}
+
+::: {.column width="80%"}
+
+Écosystème de bibliothèques pour l'analyse spatiale [PySAL](https://pysal.org/) (Python Spatial Analysis Library, @pysal2007) :
+
+- **Explorer**:
+  - Analyse exploratoire des données spatiales (package [esda](https://pysal.org/esda/))
+  - Analyse de la dynamique des données spatiales longitudinales (package [giddy](https://pysal.org/giddy/))
+  - Mesure des inégalités dans l'espace et dans le temps (package [inequality](https://inequality.readthedocs.io/en/latest/))
+  - Analyse statistique de motifs ponctuels planaires (package [pointpats](https://pysal.org/pointpats/))
+  - Mesure de la ségrégation dans le temps et dans l'espace (package [segregation](https://pysal.org/segregation/))
+  - Morphométrie urbaine (package [momepy](https://docs.momepy.org/en/stable/))
+
+- **Modéliser**:
+  - Régression géographiquement pondérée à plusieurs échelles (package [mgwr](https://mgwr.readthedocs.io/en/latest/))
+  - Modèles linéaires généralisés épars (package [spglm](https://spglm.readthedocs.io/en/latest/))
+  - Modèles d'interaction spatiale (package [spint](https://spint.readthedocs.io/en/latest/))
+  - Modèles de régression spatiale (package [spreg](https://spreg.readthedocs.io/en/latest/))
+  - Modèles de composantes de variance à corrélation spatiale à plusieurs niveaux (package [spvcm](https://github.com/pysal/spvcm))
+  - *Areal interpolation* et cartographie dasymétrique (package [tobler](https://pysal.org/tobler/))
+  - Accessibilité spatiale (package [access](https://pysal.org/access/))
+  - Optimisation spatiale (package [spopt](https://pysal.org/spopt/))
+
+:::
+
+::: {.column width="20%"}
+
+![](./fig/logo-pysal.png)
+:::
+
+::::
+
+
+## Autres packages utiles ...
+
+-   Binding Python pour [GRASS](https://grass.osgeo.org/grass82/manuals/libpython/index.html) + Intégration dans les notebooks Jupyter
+
+![Source: <https://grass.osgeo.org/news/2022_06_05_results_student_grant_caitlin/>](./fig/grass_jupyter_combo_vis.png)
+
+- [Iris](https://scitools-iris.readthedocs.io/en/stable/)
+
+- Pour la cartographie : [cartopy](https://scitools.org.uk/cartopy/docs/latest/) ; [geoviews](https://geoviews.org/) et [geoplot](https://residentmario.github.io/geoplot/) basés sur *cartopy* ; [PyGMT](https://www.pygmt.org/latest/) (selon les usages - pas de solution aussi aboutie que `mapsf` pour les cartes réalisées en SHS).
+
+![](./fig/cartopy.png)
+
+## Ressources Python Géospatial
+
+- [https://py.geocompx.org/](https://py.geocompx.org/) [@Dorman2022]
+
+- [https://geo-python-site.readthedocs.io/en/latest/](https://geo-python-site.readthedocs.io/en/latest/)
+
+- [https://automating-gis-processes.github.io](https://automating-gis-processes.github.io)
+
+- [https://www.earthdatascience.org/courses/use-data-open-source-python/](https://www.earthdatascience.org/courses/use-data-open-source-python/)
+
+- [https://geographicdata.science/book/intro.html](https://geographicdata.science/book/intro.html)
+
+
+## Interaction R ⇄ Python dans Quarto
+
+::: {.panel-tabset}
+
+### R → Python
+
+- Définition de variables dans un chunk R :
+
+```{r example-r-1}
+a <- 42
+b <- list(1, 2, 3)
+c <- c(12, 13, 14)
+```
+
+- Récupération depuis un chunk Python :
+
+*en utilisant la variable `r`, un point, et le nom de la variable R à récupérer*
+
+```{python example-python-1}
+print(r.a)
+print(r.b)
+print(r.c)
+```
+
+
+### Python → R
+
+- Définition de variables dans un chunk Python :
+
+```{python example-python-2}
+a = 42
+b = [1, 2, 3]
+```
+
+- Récupération depuis un chunk R :
+
+*en utilisant la variable `py`, un dollar `$`, et le nom de la variable Python à récupérer*
+
+```{r example-r-2}
+print(py$a)
+print(py$b)
+```
+
+
+:::
+
+## Interaction R ⇄ Python dans Quarto (suite)
+
+- Il est possible d'échanger des types plus complexes (`data.frame` ⇄ `DataFrame` pandas, tableau numpy, etc.)
+
+
+::: {.panel-tabset}
+
+### R → Python
+
+- Depuis un chunk R :
+
+```{r example-r-3}
+df <- data.frame(
+   emp_id = c(1:5),
+   emp_name = c("Rick","Dan","Michelle","Ryan","Jane"),
+   salary = c(623.3,515.2,611.0,729.0,843.25),
+   start_date = as.Date(c("2012-01-01", "2013-09-23", "2014-11-15", "2014-05-11", "2015-03-27")),
+   stringsAsFactors = FALSE
+)
+```
+
+- Récupération depuis un chunk Python :
+
+```{python example-python-3}
+df = r.df
+print(df.head())
+```
+
+
+### Python → R
+
+- Depuis un chunk Python :
+
+```{python example-python-4}
+import pandas as pd
+import numpy as np
+
+df2 = pd.DataFrame({
+  "emp_id": list(range(5)),
+  "emp_name": ["Rick", "Dan", "Michelle", "Ryan", "Jane"],
+  "salary": [623.3, 515.2, 611.0, 729.0, 843.25],
+  "start_date": pd.to_datetime(["2012-01-01", "2013-09-23", "2014-11-15", "2014-05-11", "2015-03-27"]),
+})
+
+arr = np.array([[12, 47], [34, 90], [23, 19]])
+```
+
+- Utilisation depuis un chunk R :
+
+```{r example-r-4}
+head(py$df2)
+print(py$arr)
+```
+
+:::
+
+## Interaction R ⇄ Python dans Quarto (suite)
+
+Et pour les objets spatiaux ? (*sf* / *geopandas*)
+
+- Si la conversion `data.frame` ⇄ `DataFrame` est transparente, il n'en est pas de même pour les dataframe avec une composante spatiale (perte de la dimension spatiale / colonne `geometry` contient désormais ...)
+
+- L'écriture d'une petite function permet de résoudre ça :
+
+```{r import-py}
+#| message: false
+#| echo: false
+#| eval: false
+# Import des données
+library(sf)
+mun_raw <- st_read("geom/munic.geojson", quiet= TRUE)
+mrc_raw <- st_read("geom/mrc.geojson", quiet = TRUE)
+# Projection NAD83 / Quebec Albers
+crs <- "EPSG:6623"
+mun <- st_transform(mun_raw, crs)
+mrc <- st_transform(mrc_raw, crs)
+# Création d'une couche des régions
+reg <- aggregate(x = mrc[,'MUS_NM_REG'], 
+                 by = list(REG = mrc$MUS_NM_REG), 
+                 FUN = head, 1)
+resto_raw <- st_read('geom/resto.geojson', quiet = TRUE)
+resto <- st_transform(resto_raw, crs)
+
+sel <- "Québec"
+```
+
+```{python}
+from shapely.geometry import shape
+import geopandas as gpd
+
+def restore_geodataframe(df, crs, geom_type):
+  geom = df.geometry.apply(lambda coords: shape({ "type": geom_type, "coordinates": coords }))
+  gdf = gpd.GeoDataFrame(df.drop(['geometry'], axis=1), geometry=geom)
+  gdf.set_crs(crs, inplace=True)
+  return gdf
+```
+
+
+Ainsi, les objets `sf` pourront être convertis en `GeoDataFrame` ainsi :
+
+```{python}
+mrc = restore_geodataframe(r.mrc, r.epsg_6623, "MultiPolygon")
+mrc.head()
+```
+
+## Python, Quarto et interactivité
+
+- Utilisation des widgets Jupyter possible (seulement is utilisation de l'engin de rendu `jupyter`, pas avec `knitr` - i.e. l'inverse des *htmlwidgets* en R qui ne fonctionne que si `knitr` est utilisé)
+
+- Exemple :
+
+![](./fig/example-quarto-jupyter-widgets.jpg)
+
+- Documentation : [https://quarto.org/docs/interactive/widgets/jupyter.html](https://quarto.org/docs/interactive/widgets/jupyter.html)
+
+## Exemples d'analyse sur les données du Québec
+
+-   Les imports nécessaires :
+
+```{python demo-import}
+import numpy as np
+import rasterio as rio
+import pandas as pd
+import geopandas as gpd
+import rioxarray
+import xarray
+
+from rasterio.warp import calculate_default_transform, reproject, Resampling
+from matplotlib import pyplot as plt
+from rasterio.plot import show
+from rasterio.mask import mask
+from rasterstats import zonal_stats, point_query
+```
+
+-   On récupère les jeux de données et quelques autres infos (SRC, etc.) depuis l'environnement R :
+
+```{python demo-vector-dataset-opening}
+# Le SCR des données
+dst_crs = r.epsg_6623
+
+# On récupère le jeu de données "mrc" (municipalités régionales de comté)
+# et le jeu de données "resto"
+mrc = restore_geodataframe(r.mrc, dst_crs, "MultiPolygon")
+resto = restore_geodataframe(r.resto, "EPSG:3857", "Point")
+resto.to_crs(dst_crs, inplace=True)
+reg = mrc.dissolve(by="MUS_NM_REG")
+
+sel = r.nom_mrc # Québec
+
+# Chemin du jeu de données raster
+# et du fichier contenant les descriptions des catégories
+lc_fp = './data/T01_PROVINCE.tif'
+lc_categories_fp = './data/correspondance_raster_CL_COUV.dbf'
+```
+
+-   On extrait les entités correspondantes et on les affiche, relativement au reste de la province :
+
+```{python demo-first-plot}
+extract = mrc[mrc.MUS_NM_MRC == sel]
+
+ax = mrc.plot(color="lightblue", edgecolor="grey", alpha=0.5, figsize=(16, 12))
+ax = reg.plot(ax=ax, color=None, edgecolor="orange", alpha=0.8)
+ax = extract.plot(ax=ax, color="red")
+ax.set_axis_off()
+ax
+```
+
+-   Ouverture et reprojection d'un jeu de données raster (avec *rioxarray*) :
+
+```{python demo-open-raster}
+xds = rioxarray.open_rasterio(lc_fp)
+xds = xds.rio.reproject(dst_crs)
+xds
+```
+
+- Affichons le raster reprojeté et l'emprise de la ville de Québec :
+
+```{python demo-plot-raster}
+# Remplacer les '255' par '0'
+xds.data[xds.data == 255] = 0
+
+# Étendue des données
+bounds = xds.rio.bounds()
+extent = [bounds[0], bounds[2], bounds[1], bounds[3]]
+
+# Création d'une figure vide
+fig, ax = plt.subplots(figsize=(16, 12))
+# Affichage du raster (attribut 'data' de l'objet xds)
+show(xds.data[0], ax=ax, extent=extent, cmap="Set3")
+# Affichage de la ville de Québec en rouge par dessus
+extract.plot(ax=ax, color='red', edgecolor='red', linewidth=2)
+# On enlève l'affichage des axes
+ax.set_axis_off()
+ax
+```
+
+- Ouverture du fichier DBF qui contient les correspondances entre les codes et les noms des catégories d'utilisation des sols
+
+```{python demo-open-dbf}
+categories = pd.DataFrame(
+  gpd.read_file(lc_categories_fp, encoding='utf-8')[['ID', 'CL_COUV', 'Descriptio']])
+categories.head(11)
+```
+
+<br>
+
+```{python}
+# On va convertir cette DataFrame en un dictionnaire pour l'utiliser
+# comme un mapping ID -> Description
+categories = {
+  int(k): v['Descriptio']
+  for k,v in categories[['ID', 'Descriptio']].set_index('ID').to_dict(orient='index').items()
+}
+# Bien qu'il y ait une catégorie 'Pas de données' (ID 10)
+# certaines cellules ne comportent pas de valeur (nodata, ici avec la valeur 0)
+categories[0] = 'Pas de données'
+categories
+```
+
+```{python}
+extract
+```
+
+-   Calculer les statistiques zonales (combien de cellules de chaque type dans la sélection) :
+
+```{python}
+stats = zonal_stats(extract, xds.data[0], affine=xds.rio.transform(), categorical=True, nodata=0)
+stats
+```
+
+-   Traçons un histogramme de ce résultat, en utilisant les noms appropriés des catégories d'utilisation des sols :
+
+```{python}
+#| output-location: slide
+# Trier les valeurs par le nombre de cellule
+sorted_values = sorted(stats[0].items(), key = lambda x: x[1], reverse=True)
+
+# Utilise les noms de catégories du DataFrame `categories`...
+x = [categories[int(k)] for k, _ in sorted_values]
+
+# ...et les valeurs que nous venons de calculer avec la fonction `zonal_stats`
+height = [v for _, v in sorted_values]
+
+fig, ax = plt.subplots(figsize=(8, 8))
+bar_container = ax.bar(x, height)
+ax.set_xticklabels(
+    ax.get_xticklabels(),
+    rotation=45,
+    horizontalalignment='right'
+)
+fig.tight_layout()
+ax
+```
+
+- Dans quel type d'occupation du sol se trouvent les restaurants précédemment récupérés ?
+
+```{python}
+geoms = resto['geometry'].tolist()
+
+resto["lc"] = [categories[int(x)] for x in point_query(vectors=geoms, raster=xds.data[0], nodata=0, affine=xds.rio.transform())]
+resto.head()
+```
+
+- Quels restaurants ne sont pas situés dans une zone artificialisée ?
+
+```{python}
+selection = resto[(resto.lc != 'Surfaces artificielles') & (resto.lc != 'Pas de données')]
+selection
+```
+
+
+```{python}
+ax = extract.plot(color=None, edgecolor="black")
+ax = selection.plot(ax=ax, marker='x', color='red', markersize=8)
+ax.set_axis_off()
+ax
+```
+
+## A vous de jouer 🚀
+
+**Objectif** : Comparez l'occupation du sol de la MRC de Trois-Rivières à l'occupation du sol de la MRC de Montréal.
+
+- Vous cherchez à obtenir :
+    - un diagramme en barre (combinant le résultat des statistiques zonales pour la MRC de Trois-Rivières et pour la MRC de Montréal)
+    - un résumé (pourquoi pas en HTML !) de la surface de chaque type d'occupation du sol, comme celui présenté en exemple ci-dessous, pour Trois-Rivières et Montréal
+
+![Exemple de tableau de résumé](./fig/summary-lc.png)
+
+- Au début de votre document, vous devez insérer un chunk de code `R` pour préciser la localisation de votre environnement virtuel Python - comme nous utilisons `knitr`, c'est ce qui va permettre à `reticulate` de savoir où chercher les packages Python qui ont été installés pour cet atelier :
+
+````
+```{{r}}
+#| echo: false
+library(reticulate)
+use_virtualenv("~/env-quarto")
+```
+````
+
+**_Besoin d'aide ?_**
+
+::: {.callout-tip icon=false collapse="true"}
+### Quelle suite d'action réaliser ?
+
+- Créer un chunk 'r' pour dfinir la localisation de l'environnement virtuel
+- Créer les chunks 'python' correspondants aux actions suivantes :
+    - Ouvrir le jeu de données raster
+    - Ouvrir le jeu de données vecteur
+    - S'assurer qu'ils sont dans le même système de coordonnées de référence et effectuer la transformation si ce n'est pas le cas
+    - Obtenir les statistiques zonales pour la MRC de Trois-Rivières
+    - Obtenir les statistiques zonales pour la MRC de Montréal
+    - Produire le diagramme et le tableau synthétisant ces informations
+
+:::
+
+::: {.callout-tip icon=false collapse="true"}
+### De quelles bibliothèques a-t-on besoin ?
+
+
+```{python}
+#| eval: false
+import rioxarray
+import xarray
+import pandas as pd
+import geopandas as gpd
+import rasterstats
+import matplotlib.pyplot as plt
+```
+
+:::
+
+::: {.callout-tip icon=false collapse="true"}
+### Besoin d'aide pour ouvrir les données raster ?
+
+
+```{python}
+#| eval: false
+xds = xarray.open_dataarray("/chemin/vers/le/fichier")
+```
+
+:::
+
+::: {.callout-tip icon=false collapse="true"}
+### Besoin d'aide pour ouvrir les données vecteur ?
+
+
+```{python}
+#| eval: false
+gdf = gpd.read_file('/chemin/vers/le/fichier')
+```
+
+:::
+
+::: {.callout-tip icon=false collapse="true"}
+### Comment connaitre la taille d'une cellule raster ?
+
+En utilisant les paramètres décrivant la matrice de transformation de géoréférencement du jeu de données raster en question (cette transformation fait correspondre les coordonnées ligne/colonne des pixels aux coordonnées du système de référence de l'ensemble de données) :
+
+```{python}
+#| eval: false
+transform = xds.rio.transform()
+```
+
+Puis en utilisant la première et la cinquième valeur qui représentent respectivement la largeur et la hauteur du pixel :
+
+```{python}
+#| eval: false
+area_pixel = transform[0] * abs(transform[4]) # la hauteur est généralement négative
+```
+
+:::
+
+::: {.callout-tip icon=false collapse="true"}
+### Comment faire pour qu'un *chunk* retourne du HTML ?
+
+Par exemple en stockant du Markdown dans une chaîne de caractère et en le transformant en HTML avec `IPython.display.Markdown` :
+
+```{python}
+#| eval: false
+from IPython.display import Markdown
+
+rendu = '''
+## Résumé
+
+| Catégorie | Superficie |
+|---------|----------|
+| Aahah | 21.34 |
+'''
+
+Markdown(rendu)
+```
+
+:::
+
 
 
 # Observable JavaScript
