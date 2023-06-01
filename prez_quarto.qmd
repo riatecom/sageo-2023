@@ -941,9 +941,11 @@ A noter...
 
 ````
 ```{{r}}
+#| out-width: "300px"
+#| out-height: "300px"
 library(leaflet)
 leaflet() %>%
-  addProviderTiles(providers$Stamen.Watercolor) %>%  
+  addProviderTiles(providers$Stamen.TonerHybrid) %>%  
   addMarkers(lng = -71.2818, lat = 46.7809, 
              popup="Sageo 2023")
 ```
@@ -952,6 +954,8 @@ leaflet() %>%
 
 ```{r}
 #| echo: false
+#| out-width: "300px"
+#| out-height: "300px"
 library(leaflet)
 x <- leaflet() |>
   addProviderTiles("Stamen.TonerHybrid") |>
