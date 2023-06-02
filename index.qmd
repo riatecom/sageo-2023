@@ -505,7 +505,9 @@ res <- unique_osmdata(res)
 res
 ```
 
-L'étape suivante consiste à utiliser extraire les points et les polygones, puis à extraire les centroides des polygones pour constituer une couche de points complète.
+L'étape suivante consiste à extraire les points et les polygones, puis à transformer
+les polygones en points en utilisant leurs centroides. Cela permet de constituer
+une couche de points complète et cohérente.
 
 ```{r build_layer}
 #| warning: false
