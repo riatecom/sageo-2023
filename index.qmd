@@ -652,7 +652,7 @@ dev.off()
 - Vous devez étudier la répartition des bars et pubs à Québec (dans OpenStreetMap key = "amenity", value = "pub" et value = "bar"). 
 
 
-Pour cela vous devrez construire un document quarto (au format de votre choix) et adapter quelques passage du code présenté précédemment. 
+Pour cela vous devrez construire un document quarto (au format de votre choix) et adapter quelques passages du code présenté précédemment. 
 
 
 
@@ -1171,7 +1171,7 @@ mrc.head()
 
 ## Python, Quarto et interactivité
 
-- Utilisation des *widgets Jupyter* possible (seulement si utilisation de l'engin de rendu `jupyter`, pas avec `knitr` - i.e. l'inverse des *htmlwidgets* en R qui ne fonctionne que si `knitr` est utilisé)
+- Utilisation des *widgets Jupyter* possible (seulement si utilisation de l'engin de rendu `jupyter`, pas avec `knitr` - i.e. l'inverse des *htmlwidgets* en R qui ne fonctionne que si `knitr` est utilisé).
 
 - Exemple :
 
@@ -1547,7 +1547,7 @@ d = {
 
 ### 👉 Des promesses sont résolues ✅
 
-Dons ojs, les promesses sont résolues d'une cellule à l'autre. Cela permet d'enlever de la complexité liée à la conception asynchrone du JavaCript. Ca va être très pratique quand on charge un jeu de données par exemple. 
+Dans ojs, les promesses sont résolues d'une cellule à l'autre. Cela permet d'enlever de la complexité liée à la conception asynchrone du JavaScript. Ca va être très pratique quand on charge un jeu de données par exemple. 
 
 ### 👉 L'ordre des cellules n'a pas d'importance 🤯
 
@@ -1716,7 +1716,7 @@ L'écosystème spatial de JavaScript est moins étoffé que ce qu'on peut trouve
 :::
 
 ::: {.column width="90%"}
-[**`plot`**](https://observablehq.com/plot/) est la bibliothèque de visualisation de donnée développée par Observable (Mike Bostock et Philippe Rivière). Au départ pensée pour la visualisation de données statistiques, elle permet aujourd'hui de réaliser des cartes. Plot est disponible par défaut dans les cellules {ojs}.
+[**`plot`**](https://observablehq.com/plot/) est la bibliothèque de visualisation de données développée par Observable (Mike Bostock et Philippe Rivière). Au départ pensée pour la visualisation de données statistiques, elle permet aujourd'hui de réaliser des cartes. Plot est disponible par défaut dans les cellules {ojs}.
 :::
 :::
 
@@ -1768,7 +1768,7 @@ L'écosystème spatial de JavaScript est moins étoffé que ce qu'on peut trouve
 :::
 
 ::: {.column width="90%"}
-[**`go-cart-wasm`**](https://github.com/riatelab/go-cart-wasm) est une bibliothèque JS/WASM permettant de réaliser des cartogrammes basés sur le flux (comme décrit dans "Gastner, Seguy, and More (2018).
+[**`go-cart-wasm`**](https://github.com/riatelab/go-cart-wasm) est une bibliothèque JS/WASM permettant de réaliser des cartogrammes basés sur le flux (comme décrit dans "Gastner, Seguy, and More (2018)).
 :::
 :::
 
@@ -1818,7 +1818,7 @@ library("geojsonsf")
 ojs_define(mun = sf_geojson(st_transform(mun, 4326)))
 ```
 
-`mun` existe desormais dans l'univers ojs et est correctement formaté. Mais c'est une chaine de caractere. On utilisera donc `JSON.parse` pour l'utiliser
+`mun` existe desormais dans l'univers ojs et est correctement formaté. Mais c'est une chaîne de caractères. On utilisera donc `JSON.parse` pour l'utiliser
 
 *Chunk ojs*
 
@@ -2208,7 +2208,7 @@ bertin.draw({
 })
 ```
 
-On peut utiliser les **`Inputs`** pour tester des visualisations, explorer les données ou proposer des interactions à un utilisatuer.
+On peut utiliser les **`Inputs`** pour tester des visualisations, explorer les données ou proposer des interactions à un utilisateur.
 
 ```{ojs}
 // Inputs
